@@ -1,0 +1,2 @@
+rootProject.name='TaskManagerUiKit'
+include ':app'
