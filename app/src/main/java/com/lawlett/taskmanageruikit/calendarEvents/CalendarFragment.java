@@ -1,25 +1,28 @@
-package com.lawlett.taskmanageruikit.quick;
+package com.lawlett.taskmanageruikit.calendarEvents;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
+import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QuickFragment extends Fragment {
+public class CalendarFragment extends Fragment {
+    Calendar calendar;
 
-    public QuickFragment() {
+    public CalendarFragment() {
         // Required empty public constructor
     }
 
@@ -28,14 +31,18 @@ public class QuickFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quick, container, false);
+        return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerViewQuick = view.findViewById(R.id.quick_recycler);
-        QuickAdapter adapter = new QuickAdapter(getContext());
-        recyclerViewQuick.setAdapter(adapter);
+        view.findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IOpenCalendar listener= (IOpenCalendar)getActivity();
+                listener.back();
+            }
+        });
     }
 }

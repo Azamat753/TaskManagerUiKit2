@@ -1,36 +1,32 @@
 package com.lawlett.taskmanageruikit.main;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
+import com.lawlett.taskmanageruikit.calendarEvents.CalendarFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.quick.QuickFragment;
 import com.lawlett.taskmanageruikit.todo.TodoFragment;
-import com.lawlett.taskmanageruikit.utils.PagerAdapter;
+import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity implements IOpenCalendar {
     private Toolbar toolbar;
     MenuItem prevMenuItem;
 
@@ -38,17 +34,59 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initBottomNavigation();
+        initToolbar();
         changeFragment(new DashboardFragment());
+        getSupportActionBar().setTitle("Прогресс");
 
         //todo viewPager    final ViewPager viewPager = findViewById(R.id.view_pager);
         //  viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
-//        viewPager.setOffscreenPageLimit(3);
+        //  viewPager.setOffscreenPageLimit(3);
+    }
 
+
+    public void changeFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Toast.makeText(this, "click..!!", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Dashboard");
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_settings);// set drawable icon
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void initBottomNavigation() {
+        Calendar c = Calendar.getInstance();
+        String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+                "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+        final int year = c.get(Calendar.YEAR);
+
+        final String month = monthName[c.get(Calendar.MONTH)];
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
                 ("Прогресс", ContextCompat.getColor(this, R.color.diagramaEvents), R.drawable.diagrama);
@@ -69,50 +107,35 @@ public class MainActivity extends AppCompatActivity {
             public void onNavigationItemClick(int index) {
                 switch (index) {
                     case 0:
-                        getSupportActionBar().setTitle("Dashboard");
                         changeFragment(new DashboardFragment());
-                        Toast.makeText(MainActivity.this, "0", Toast.LENGTH_SHORT).show();
+                        getSupportActionBar().setTitle("Прогресс");
                         break;
                     case 1:
                         changeFragment(new CalendarEventsFragment());
-                        Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
 
+                        getSupportActionBar().setTitle(month + " " + year);
                         break;
                     case 2:
                         changeFragment(new TodoFragment());
                         getSupportActionBar().setTitle("Задачи");
-                        Toast.makeText(MainActivity.this, "2", Toast.LENGTH_SHORT).show();
+
                         break;
                     case 3:
                         changeFragment(new QuickFragment());
-                        Toast.makeText(MainActivity.this, "3", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         });
     }
 
-    public void changeFragment(Fragment fragment) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
+
+    @Override
+    public void openCalendar() {
+        changeFragment(new CalendarFragment());
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-
-        return true;
+    public void back() {
+        changeFragment(new CalendarEventsFragment());
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
-            //todo  code
-        }
-        return true;
-    }
-
-
 }
