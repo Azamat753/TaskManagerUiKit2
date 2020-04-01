@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:id="@+id/edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="Введите название заметки"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edit_description"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:hint="Введите описание"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/edit_description">
+
+        <TextView
+            android:id="@+id/color_title"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:drawableStart="@drawable/ic_color_lens_black_24dp"
+            android:drawablePadding="20dp"
+            android:text="Выберите цвет"
+            android:textColor="@android:color/black"
+            android:textSize="27sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/open_color_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/color_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="460dp"
+        app:layout_constraintTop_toBottomOf="@id/edit_title">
+
+        <TextView
+            android:id="@+id/color_title_state_view"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:drawableStart="@drawable/ic_color_lens_black_24dp"
+            android:drawablePadding="20dp"
+            android:text="Выберите цвет"
+            android:textColor="@android:color/black"
+            android:textSize="27sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/exit_color_view"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/color_title_state_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider_0"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
+
+        <ImageView
+            android:id="@+id/gray_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/gray_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
+
+        <ImageView
+            android:id="@+id/orange_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/meet_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gray_c" />
+
+
+        <ImageView
+            android:id="@+id/purple_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/purple_circle"
+            app:layout_constraintStart_toEndOf="@id/gray_c"
+            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
+
+        <ImageView
+            android:id="@+id/green_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/green_circle"
+            app:layout_constraintStart_toEndOf="@id/orange_c"
+            app:layout_constraintTop_toBottomOf="@id/purple_c" />
+
+
+        <ImageView
+            android:id="@+id/blue_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/home_background"
+            app:layout_constraintStart_toEndOf="@id/purple_c"
+            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
+
+        <ImageView
+            android:id="@+id/light_blue_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/light_blue_circle"
+            app:layout_constraintStart_toEndOf="@id/green_c"
+            app:layout_constraintTop_toBottomOf="@id/blue_c" />
+
+
+        <ImageView
+            android:id="@+id/red_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/private_background"
+            app:layout_constraintStart_toEndOf="@id/blue_c"
+            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
+
+        <ImageView
+            android:id="@+id/black_c"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/black_circle"
+            app:layout_constraintStart_toEndOf="@id/light_blue_c"
+            app:layout_constraintTop_toBottomOf="@id/purple_c" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

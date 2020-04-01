@@ -1,6 +1,8 @@
 package com.lawlett.taskmanageruikit.onboard;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
+import com.lawlett.taskmanageruikit.utils.IBoardShow;
+import com.lawlett.taskmanageruikit.utils.Preference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +26,7 @@ import com.lawlett.taskmanageruikit.main.MainActivity;
 public class BoardFragment extends Fragment {
     LottieAnimationView calendar_anim, notes_anim, todo_anim;
     TextView title_tv, desc_tv, start_tv;
+
 
     public BoardFragment() {
         // Required empty public constructor
@@ -76,8 +81,10 @@ public class BoardFragment extends Fragment {
         start_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Preference.getInstance(getContext()).saveShown();
                 startActivity(new Intent(getContext(), MainActivity.class));
                 getActivity().finish();
+
             }
         });
 

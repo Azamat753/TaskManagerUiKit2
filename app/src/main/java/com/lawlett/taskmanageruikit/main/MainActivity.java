@@ -1,11 +1,14 @@
 package com.lawlett.taskmanageruikit.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -17,9 +20,11 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
+import com.lawlett.taskmanageruikit.onboard.BoardActivity;
 import com.lawlett.taskmanageruikit.quick.QuickFragment;
 import com.lawlett.taskmanageruikit.todo.TodoFragment;
 import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
+import com.lawlett.taskmanageruikit.utils.Preference;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
@@ -27,23 +32,22 @@ import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItem
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements IOpenCalendar {
-    private Toolbar toolbar;
     MenuItem prevMenuItem;
+    TextView toolbar_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //showBoard();
+
+
         initBottomNavigation();
-        initToolbar();
         changeFragment(new DashboardFragment());
-        getSupportActionBar().setTitle("Прогресс");
+        toolbar_title = findViewById(R.id.toolbar_title);
 
-        //todo viewPager    final ViewPager viewPager = findViewById(R.id.view_pager);
-        //  viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
-        //  viewPager.setOffscreenPageLimit(3);
+
     }
-
 
     public void changeFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
@@ -69,15 +73,6 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    public void initToolbar() {
-        toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_settings);// set drawable icon
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
     public void initBottomNavigation() {
         Calendar c = Calendar.getInstance();
         String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
@@ -108,20 +103,21 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                 switch (index) {
                     case 0:
                         changeFragment(new DashboardFragment());
-                        getSupportActionBar().setTitle("Прогресс");
+                        toolbar_title.setText("Прогресс");
                         break;
                     case 1:
                         changeFragment(new CalendarEventsFragment());
 
-                        getSupportActionBar().setTitle(month + " " + year);
+                        toolbar_title.setText(month + " " + year);
                         break;
                     case 2:
                         changeFragment(new TodoFragment());
-                        getSupportActionBar().setTitle("Задачи");
+                        toolbar_title.setText("Задачи");
 
                         break;
                     case 3:
                         changeFragment(new QuickFragment());
+                        toolbar_title.setText("Идеи");
                         break;
                 }
             }

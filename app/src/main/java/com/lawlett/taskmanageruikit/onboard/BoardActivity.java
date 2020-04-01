@@ -7,16 +7,21 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
+import com.lawlett.taskmanageruikit.utils.IBoardShow;
+import com.lawlett.taskmanageruikit.utils.Preference;
 
-public class BoardActivity extends AppCompatActivity {
+public class BoardActivity extends AppCompatActivity   {
     ViewPager viewPager;
 
 
@@ -29,9 +34,8 @@ public class BoardActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager, true);
 
-
-
     }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         public ViewPagerAdapter(@NonNull FragmentManager fm) {

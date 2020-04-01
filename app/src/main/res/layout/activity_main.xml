@@ -6,19 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".main.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        style="@style/Toolbar"
-        app:titleTextColor="@android:color/black"
-        android:background="@android:color/white"
-        android:textAlignment="center"/>
+    <include
+        android:id="@+id/toolbar_a"
+        layout="@layout/tool_bar" />
+
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation"
-        android:layout_height="match_parent"/>
+        android:layout_below="@id/toolbar_a" />
 
     <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
