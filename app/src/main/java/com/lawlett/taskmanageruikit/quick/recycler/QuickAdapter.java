@@ -11,26 +11,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.lawlett.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHolder> {
-    ArrayList<String> list;
+    List<QuickModel> list;
     Context context;
-    public QuickAdapter(Context context){
-        this.context= context;
-        list= new ArrayList<>();
+
+    public QuickAdapter(List<QuickModel> list,Context context) {
+        this.context = context;
+        this.list=list;
     }
+
     @NonNull
     @Override
     public QuickViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new QuickViewHolder(LayoutInflater.from(context).inflate(R.layout.quick_item,parent,false));
+        return new QuickViewHolder(LayoutInflater.from(context).inflate(R.layout.quick_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuickViewHolder holder, int position) {
-holder.onBind(list.get(position));
+        holder.onBind(list.get(position));
     }
 
     @Override
@@ -39,18 +43,20 @@ holder.onBind(list.get(position));
     }
 
     public class QuickViewHolder extends RecyclerView.ViewHolder {
-        TextView title,desc;
+        TextView title, desc;
         ImageView imageDesc;
+
         public QuickViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title_quick);
-            desc=itemView.findViewById(R.id.desc_quick);
-            imageDesc=itemView.findViewById(R.id.image_desc);
+            desc = itemView.findViewById(R.id.desc_quick);
+            imageDesc = itemView.findViewById(R.id.image_desc);
         }
-        public void onBind(String s){
-            title.setText(s);
-            desc.setText(s);
-            Glide.with(context).load(s).into(imageDesc);
+
+        public void onBind(QuickModel quickModel) {
+            title.setText(quickModel.getTitle());
+            desc.setText(quickModel.getDescription());
+            Glide.with(context).load(quickModel.getImage()).into(imageDesc);
 
         }
     }

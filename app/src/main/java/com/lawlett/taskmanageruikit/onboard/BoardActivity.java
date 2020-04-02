@@ -24,7 +24,6 @@ import com.lawlett.taskmanageruikit.utils.Preference;
 public class BoardActivity extends AppCompatActivity   {
     ViewPager viewPager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

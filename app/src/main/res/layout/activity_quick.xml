@@ -3,22 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".quick.QuickActivity">
 
+    <include
+        android:id="@+id/quick_toolbar_view"
+        layout="@layout/quick_toolbar" />
 
     <EditText
         android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:hint="Введите название заметки"
+        android:paddingStart="20dp"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/quick_toolbar_view" />
 
     <EditText
         android:id="@+id/edit_description"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
+        android:layout_height="wrap_content"
         android:hint="Введите описание"
+        android:paddingStart="20dp"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_title" />
@@ -53,10 +59,10 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="460dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/edit_title">
 
         <TextView
