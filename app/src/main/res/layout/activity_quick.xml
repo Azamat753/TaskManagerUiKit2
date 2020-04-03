@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,155 +30,95 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_title" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+
+<!--    <ListView-->
+<!--        android:id="@+id/list"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout_editor_absoluteX="0dp"-->
+<!--        tools:layout_editor_absoluteY="0dp" />-->
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu_floating"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/edit_description">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        fab:menu_animationDelayPerItem="50"
+        fab:menu_backgroundColor="@android:color/transparent"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_colorNormal="#DA4336"
+        fab:menu_colorPressed="#E75043"
+        fab:menu_colorRipple="#99FFFFFF"
+        fab:menu_fab_size="normal"
+        fab:menu_icon="@drawable/fab_add"
+        fab:menu_labels_colorNormal="#333333"
+        fab:menu_labels_colorPressed="#444444"
+        fab:menu_labels_colorRipple="#66FFFFFF"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_padding="8dp"
+        fab:menu_labels_paddingBottom="4dp"
+        fab:menu_labels_paddingLeft="8dp"
+        fab:menu_labels_paddingRight="8dp"
+        fab:menu_labels_paddingTop="4dp"
+        fab:menu_labels_position="left"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="false"
+        fab:menu_labels_textColor="#FFFFFF"
+        fab:menu_labels_textSize="14sp"
+        fab:menu_openDirection="up"
+        fab:menu_shadowColor="#66000000"
+        fab:menu_shadowRadius="4dp"
+        fab:menu_shadowXOffset="1dp"
+        fab:menu_shadowYOffset="3dp"
+        fab:menu_showShadow="true">
 
-        <TextView
-            android:id="@+id/color_title"
-            android:layout_width="250dp"
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:drawableStart="@drawable/ic_color_lens_black_24dp"
-            android:drawablePadding="20dp"
-            android:text="Выберите цвет"
-            android:textColor="@android:color/black"
-            android:textSize="27sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="bottom|right"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_color_lens_black_24dp"
+            app:fabSize="mini"
+            app:fab_label="Цвет"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-        <ImageView
-            android:id="@+id/open_color_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/color_title"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="460dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/edit_title">
-
-        <TextView
-            android:id="@+id/color_title_state_view"
-            android:layout_width="250dp"
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:drawableStart="@drawable/ic_color_lens_black_24dp"
-            android:drawablePadding="20dp"
-            android:text="Выберите цвет"
-            android:textColor="@android:color/black"
-            android:textSize="27sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/ic_location"
+            app:fabSize="mini"
+            app:fab_label="Локация" />
 
-        <ImageView
-            android:id="@+id/exit_color_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/color_title_state_view"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_choose_image"
+            app:fabSize="mini"
+            app:fab_label="Картинка" />
+    </com.github.clans.fab.FloatingActionMenu>
 
-        <View
-            android:id="@+id/divider_0"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@android:color/darker_gray"
-            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
-
-        <ImageView
-            android:id="@+id/gray_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/gray_circle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
-
-        <ImageView
-            android:id="@+id/orange_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/meet_background"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gray_c" />
-
-
-        <ImageView
-            android:id="@+id/purple_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/purple_circle"
-            app:layout_constraintStart_toEndOf="@id/gray_c"
-            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
-
-        <ImageView
-            android:id="@+id/green_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/green_circle"
-            app:layout_constraintStart_toEndOf="@id/orange_c"
-            app:layout_constraintTop_toBottomOf="@id/purple_c" />
-
-
-        <ImageView
-            android:id="@+id/blue_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/home_background"
-            app:layout_constraintStart_toEndOf="@id/purple_c"
-            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
-
-        <ImageView
-            android:id="@+id/light_blue_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/light_blue_circle"
-            app:layout_constraintStart_toEndOf="@id/green_c"
-            app:layout_constraintTop_toBottomOf="@id/blue_c" />
-
-
-        <ImageView
-            android:id="@+id/red_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/private_background"
-            app:layout_constraintStart_toEndOf="@id/blue_c"
-            app:layout_constraintTop_toBottomOf="@id/exit_color_view" />
-
-        <ImageView
-            android:id="@+id/black_c"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/black_circle"
-            app:layout_constraintStart_toEndOf="@id/light_blue_c"
-            app:layout_constraintTop_toBottomOf="@id/purple_c" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:src="@drawable/quick_background"
+        android:id="@+id/image_title"
+        app:layout_constraintTop_toBottomOf="@id/edit_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

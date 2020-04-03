@@ -3,9 +3,8 @@ package com.lawlett.taskmanageruikit.utils;
 import android.app.Application;
 
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
-import com.lawlett.data.room.AppDataBase;
+import com.lawlett.taskmanageruikit.quick.data.room.AppDataBase;
 
 public class App extends Application {
     public static App instance;

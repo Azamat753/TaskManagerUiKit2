@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
     }
     public void initBottomNavigation() {
         Calendar c = Calendar.getInstance();
+        final int year = c.get(Calendar.YEAR);
         String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
                 "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
-        final int year = c.get(Calendar.YEAR);
 
         final String month = monthName[c.get(Calendar.MONTH)];
 

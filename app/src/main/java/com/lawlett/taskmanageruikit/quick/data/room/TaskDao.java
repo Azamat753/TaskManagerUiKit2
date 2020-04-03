@@ -1,4 +1,4 @@
-package com.lawlett.data.room;
+package com.lawlett.taskmanageruikit.quick.data.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.lawlett.data.model.QuickModel;
+import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 
 import java.util.List;
 

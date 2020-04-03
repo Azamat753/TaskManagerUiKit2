@@ -1,11 +1,13 @@
-package com.lawlett.data.model;
+package com.lawlett.taskmanageruikit.quick.data.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-import com.bumptech.glide.annotation.Excludes;
+import com.lawlett.taskmanageruikit.quick.data.converters.DataConverter;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class QuickModel implements Serializable {
@@ -15,16 +17,30 @@ public class QuickModel implements Serializable {
     private String description;
     private String image;
     private int color;
+    //  @TypeConverters({DataConverter.class})
+    private String createData;
 
-    public QuickModel(String title, String description) {
+
+
+    public QuickModel(String title, String description,String createData,String image) {
         this.title = title;
         this.description = description;
-
+        this.createData = createData;
+        this.image=image;
     }
 
     public long getId() {
         return id;
     }
+
+    public String getCreateData() {
+        return createData;
+    }
+
+    public void setCreateData(String createData) {
+        this.createData = createData;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
