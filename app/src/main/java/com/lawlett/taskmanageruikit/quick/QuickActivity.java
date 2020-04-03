@@ -1,32 +1,31 @@
 package com.lawlett.taskmanageruikit.quick;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class QuickActivity extends AppCompatActivity {
     FloatingActionMenu materialDesignFAM;
@@ -45,7 +44,6 @@ public class QuickActivity extends AppCompatActivity {
         initView();
 
         getIncomingIntent();
-
 
 
         done_view.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +88,43 @@ public class QuickActivity extends AppCompatActivity {
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuickActivity.this, "color", Toast.LENGTH_SHORT).show();
+                final ColorPicker colorPicker = new ColorPicker(QuickActivity.this);
+                ArrayList<String> colors = new ArrayList<>();
+                colors.add("#82B926");
+                colors.add("#a276eb");
+                colors.add("#6a3ab2");
+                colors.add("#666666");
+                colors.add("#FFFF00");
+                colors.add("#3C8D2F");
+                colors.add("#FA9F00");
+                colors.add("#FF0000");
+                colors.add("#03DAC5");
+                colors.add("#005EFF");
 
+                colorPicker
+                        .setDefaultColorButton(Color.parseColor("#f84c44"))
+                        .setColors(colors)
+                        .setColumns(5)
+                        .setRoundColorButton(true)
+                        .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+                            @Override
+                            public void onChooseColor(int position, int color) {
+                                Toast.makeText(QuickActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                                e_title.setTextColor(color);
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        })
+                        .addListenerButton("Попробовать", new ColorPicker.OnButtonListener() {
+                            @Override
+                            public void onClick(View v, int position, int color) {
+                                Toast.makeText(QuickActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                                e_title.setTextColor(color);
+                            }
+                        }).show();
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +152,7 @@ public class QuickActivity extends AppCompatActivity {
         if (requestCode == 01 && resultCode == RESULT_OK) {
 
             final Uri imageUri = data.getData();
-             avatar = imageUri.toString();
+            avatar = imageUri.toString();
             Glide.with(this).load(avatar).into(image_title);
 
 
