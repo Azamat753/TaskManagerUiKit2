@@ -113,7 +113,6 @@
 
     <ImageView
         android:layout_marginTop="20dp"
-        android:src="@drawable/quick_background"
         android:id="@+id/image_title"
         app:layout_constraintTop_toBottomOf="@id/edit_description"
         app:layout_constraintStart_toStartOf="parent"

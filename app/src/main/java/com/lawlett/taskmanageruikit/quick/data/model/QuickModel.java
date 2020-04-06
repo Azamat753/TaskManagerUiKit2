@@ -22,11 +22,12 @@ public class QuickModel implements Serializable {
 
 
 
-    public QuickModel(String title, String description,String createData,String image) {
+    public QuickModel(String title, String description,String createData,String image,int color) {
         this.title = title;
         this.description = description;
         this.createData = createData;
         this.image=image;
+        this.color= color;
     }
 
     public long getId() {

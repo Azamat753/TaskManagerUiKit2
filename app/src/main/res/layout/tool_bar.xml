@@ -29,6 +29,14 @@
                 android:textColor="@android:color/black"
                 android:textSize="23dp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/more_btn"
+                android:layout_width="32sp"
+                android:layout_height="32sp"
+                android:src="@drawable/ic_more"
+                android:layout_marginStart="100dp"/>
+
         </LinearLayout>
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

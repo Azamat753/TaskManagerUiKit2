@@ -5,28 +5,24 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,8 +57,6 @@ public class QuickFragment extends Fragment  implements IOnClickListener {
         adapter = new QuickAdapter(list, this,getContext());
         recyclerViewQuick.setAdapter(adapter);
 
-
-
         addQuickBtn = root.findViewById(R.id.add_quick_btn);
         addQuickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,12 +68,28 @@ public class QuickFragment extends Fragment  implements IOnClickListener {
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(final int position) {
         this.position = position;
-        App.getDataBase().taskDao().delete(list.get(position));
-        Intent intent = new Intent(getActivity(), QuickActivity.class);
-        intent.putExtra("task", list.get(position));
-        getActivity().startActivityForResult(intent, 42);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
+        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), QuickActivity.class);
+                intent.putExtra("task", list.get(position));
+                getActivity().startActivityForResult(intent, 42);
+                App.getDataBase().taskDao().delete(list.get(position));
+            }
+        }).show();
+
+
+
     }
 
     @Override
@@ -99,4 +109,5 @@ public class QuickFragment extends Fragment  implements IOnClickListener {
             }
         }).show();
     }
+
 }

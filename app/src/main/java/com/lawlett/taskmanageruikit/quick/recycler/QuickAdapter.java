@@ -45,10 +45,6 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         return list.size();
     }
 
-//    public void setOnClickListener(IOnClickListener listener) {
-//        this.listener = listener;
-//    }
-
     public class QuickViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener, View.OnLongClickListener {
         TextView title, desc, data_created;
         ImageView imageDesc;
@@ -76,7 +72,12 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             title.setText(quickModel.getTitle());
             desc.setText(quickModel.getDescription());
             data_created.setText(quickModel.getCreateData() + month + "  " + year);
-            Glide.with(context).load(quickModel.getImage()).into(imageDesc);
+            if (quickModel.getColor()==0){
+             quickModel.setColor(R.color.black_de);
+            }else {
+                title.setTextColor(quickModel.getColor());
+            }
+                Glide.with(context).load(quickModel.getImage()).into(imageDesc);
 
         }
         @Override

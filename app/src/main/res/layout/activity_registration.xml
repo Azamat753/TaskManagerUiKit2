@@ -7,76 +7,35 @@
     android:padding="16dp"
     tools:context=".registration.RegistrationActivity">
 
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/image_icon" />
+
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_in_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="50dp"/>
+
     <ImageView
         android:id="@+id/image_icon"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
-        android:src="@color/calendarEvents"
+        android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_icon">
-
-        <EditText
-            android:id="@+id/number_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/edittext_background"
-            android:gravity="center"
-            android:inputType="number"
-            android:text="Hello world"
-            android:textSize="30sp"
-            app:layout_constraintTop_toBottomOf="@id/image_icon"
-            tools:layout_editor_absoluteX="16dp" />
-
-    <Button
-        android:id="@+id/number_btn"
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:background="@color/calendarEvents"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:text="Отправить"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/number_field"/>
-    </LinearLayout>
-
-<LinearLayout
-    android:orientation="vertical"
-    android:visibility="visible"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/image_icon"
-    app:layout_constraintStart_toStartOf="parent">
-
-    <EditText
-        android:id="@+id/edit_password"
-        android:layout_marginTop="20dp"
-        android:textSize="30sp"
-        android:text="password"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_background"/>
-
-    <Button
-        android:layout_gravity="center"
-        android:id="@+id/password_btn"
-        android:layout_width="wrap_content"
-        android:background="@color/calendarEvents"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Отправить" />
-</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

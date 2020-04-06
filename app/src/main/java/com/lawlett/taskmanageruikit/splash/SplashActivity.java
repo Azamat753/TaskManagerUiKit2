@@ -1,16 +1,16 @@
 package com.lawlett.taskmanageruikit.splash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Menu;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.onboard.BoardActivity;
+import com.lawlett.taskmanageruikit.registration.RegistrationActivity;
 import com.lawlett.taskmanageruikit.utils.Preference;
 
 public class SplashActivity extends AppCompatActivity {
@@ -31,6 +31,11 @@ public class SplashActivity extends AppCompatActivity {
                 }else {
                     startActivity(new Intent(getApplication(), BoardActivity.class));
                     finish();
+                }
+                if (FirebaseAuth.getInstance().getCurrentUser()==null){
+                    startActivity(new Intent(SplashActivity.this, RegistrationActivity.class));
+                    finish();
+                    return;
                 }
             }
         }, 10);

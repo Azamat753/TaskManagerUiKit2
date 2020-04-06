@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "366548567791",
+    "firebase_url": "https://taskmanageruikit.firebaseio.com",
+    "project_id": "taskmanageruikit",
+    "storage_bucket": "taskmanageruikit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366548567791:android:ce1dcbf76e895fc939bd1a",
+        "android_client_info": {
+          "package_name": "com.lawlett.taskmanageruikit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366548567791-jurvb1tb9f1m26nftui32hgg30ue7p22.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH3_lbMbxBw2mF_DtwQQFo7GDCr4WQyw0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366548567791-jurvb1tb9f1m26nftui32hgg30ue7p22.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,6 @@
 package com.lawlett.taskmanageruikit.quick;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
@@ -19,6 +19,10 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.ui.PlaceAutocompleteFragment;
+import com.mapbox.mapboxsdk.plugins.places.autocomplete.ui.PlaceSelectionListener;
+import com.shivtechs.maplocationpicker.MapUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,40 +32,70 @@ import java.util.Locale;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class QuickActivity extends AppCompatActivity {
+    public static final int ADDRESS_PICKER_REQUEST = 47;
+    private static final int PLACE_SELECTION_REQUEST_CODE = 56789;
+
     FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+    FloatingActionButton floatingActionButtonColorPicker, floatingActionButtonLocationPicker, floatingActionButtonImagePicker;
 
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
     QuickModel quickModel;
-    SharedPreferences preferences;
-    String avatar;
+    String avatar, textTitle, textDescription;
+    int choosedColor;
+    String imageUri;
+    String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick);
-        initView();
 
+        MapUtility.apiKey = getResources().getString(R.string.your_api_key);
+
+
+        initView();
         getIncomingIntent();
 
+        findViewById(R.id.back_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordDataRoom();
+            }
+        });
 
         done_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String textTitle = e_title.getText().toString();
-                String textDescription = e_description.getText().toString();
-                String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-                String image = avatar;
-                quickModel = new QuickModel(textTitle, textDescription, currentDate, image);
-                App.getDataBase().taskDao().insert(quickModel);
-                finish();
-
-
+                recordDataRoom();
             }
         });
 
+
     }
+
+    public void recordDataRoom() {
+        textTitle = e_title.getText().toString();
+        textDescription = e_description.getText().toString();
+        if (textTitle.equals("") && textDescription.equals("")) {
+            finish();
+        } else {
+            String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
+
+            image = avatar;
+            quickModel = new QuickModel(textTitle, textDescription, currentDate, image, choosedColor);
+
+            App.getDataBase().taskDao().insert(quickModel);
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        recordDataRoom();
+    }
+
 
     public void getIncomingIntent() {
         Intent intent = getIntent();
@@ -69,15 +103,17 @@ public class QuickActivity extends AppCompatActivity {
         if (quickModel != null) {
             e_title.setText(quickModel.getTitle());
             e_description.setText(quickModel.getDescription());
+            e_title.setTextColor(quickModel.getColor());
+            Glide.with(this).load(quickModel.getImage()).into(image_title);
 
         }
     }
 
     public void initView() {
         materialDesignFAM = findViewById(R.id.menu_floating);
-        floatingActionButton1 = findViewById(R.id.fab);
-        floatingActionButton2 = findViewById(R.id.fab2);
-        floatingActionButton3 = findViewById(R.id.fab3);
+        floatingActionButtonColorPicker = findViewById(R.id.fab);
+        floatingActionButtonLocationPicker = findViewById(R.id.fab2);
+        floatingActionButtonImagePicker = findViewById(R.id.fab3);
         image_title = findViewById(R.id.image_title);
 
         e_title = findViewById(R.id.edit_title);
@@ -85,7 +121,7 @@ public class QuickActivity extends AppCompatActivity {
         back_view = findViewById(R.id.back_view);
         done_view = findViewById(R.id.done_view);
 
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+        floatingActionButtonColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final ColorPicker colorPicker = new ColorPicker(QuickActivity.this);
@@ -111,6 +147,7 @@ public class QuickActivity extends AppCompatActivity {
                             public void onChooseColor(int position, int color) {
                                 Toast.makeText(QuickActivity.this, position + "", Toast.LENGTH_SHORT).show();
                                 e_title.setTextColor(color);
+                                choosedColor = color;
                             }
 
                             @Override
@@ -127,21 +164,30 @@ public class QuickActivity extends AppCompatActivity {
                         }).show();
             }
         });
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+        floatingActionButtonLocationPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuickActivity.this, "location", Toast.LENGTH_SHORT).show();
-            }
-        });
-        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                PlaceAutocompleteFragment autocompleteFragment;
 
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, 01);
+                autocompleteFragment = PlaceAutocompleteFragment.newInstance("<access_token>");
 
+                final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.fragment_container, autocompleteFragment);
+                transaction.commit();
 
+                autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                    @Override
+                    public void onPlaceSelected(CarmenFeature carmenFeature) {
+                        Toast.makeText(QuickActivity.this, carmenFeature.text(), Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        finish();
+
+                    }
+                });
             }
         });
     }
@@ -150,11 +196,9 @@ public class QuickActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 01 && resultCode == RESULT_OK) {
-
             final Uri imageUri = data.getData();
             avatar = imageUri.toString();
             Glide.with(this).load(avatar).into(image_title);
-
 
         }
     }
