@@ -29,7 +29,6 @@ public interface TaskDao {
     @Delete
     void deleteAll(List<QuickModel> quickModel);
 
-
     @Update
     void update(QuickModel quickModel);
 }

@@ -1,5 +1,7 @@
 package com.lawlett.taskmanageruikit.main;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,9 +24,10 @@ import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.quick.QuickFragment;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
-import com.lawlett.taskmanageruikit.todo.TodoFragment;
+import com.lawlett.taskmanageruikit.tasksPage.todo.TodoFragment;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
+import com.lawlett.taskmanageruikit.utils.ISetLayoutManager;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
@@ -41,12 +44,12 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
 
 
     QuickAdapter adapter;
+    ISetLayoutManager iSetLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         initBottomNavigation();
         changeFragment(new DashboardFragment());
@@ -136,9 +139,23 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                                                 adapter.notifyDataSetChanged();
                                                 break;
                                             case R.id.sort_popup:
+
                                                 Toast.makeText(MainActivity.this, "two", Toast.LENGTH_SHORT).show();
                                                 break;
                                             case R.id.set_view_list:
+                                                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                                                dialog.setTitle("Установить вид списка ?").setMessage("Задать вид")
+                                                        .setNegativeButton("Список", (dialog1, which) ->
+
+                                                                dialog1.cancel())
+
+                                                        .setPositiveButton("Столбцы", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }).show();
+
                                                 Toast.makeText(MainActivity.this, "three", Toast.LENGTH_SHORT).show();
                                                 break;
                                         }

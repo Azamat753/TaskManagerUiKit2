@@ -2,12 +2,8 @@ package com.lawlett.taskmanageruikit.quick.data.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.lawlett.taskmanageruikit.quick.data.converters.DataConverter;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 public class QuickModel implements Serializable {
@@ -17,21 +13,31 @@ public class QuickModel implements Serializable {
     private String description;
     private String image;
     private int color;
-    //  @TypeConverters({DataConverter.class})
     private String createData;
+    private String personalTask;
 
-
-
-    public QuickModel(String title, String description,String createData,String image,int color) {
+    public QuickModel(String title, String description, String createData, String image, int color,String personalTask) {
         this.title = title;
         this.description = description;
         this.createData = createData;
-        this.image=image;
-        this.color= color;
+        this.image = image;
+        this.color = color;
+        this.personalTask=personalTask;
+    }
+
+    public QuickModel() {
     }
 
     public long getId() {
         return id;
+    }
+
+    public String getPersonalTask() {
+        return personalTask;
+    }
+
+    public void setPersonalTask(String personalTask) {
+        this.personalTask = personalTask;
     }
 
     public String getCreateData() {

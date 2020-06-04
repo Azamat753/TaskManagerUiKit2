@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.onboard.BoardActivity;
 
 public class RegistrationActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -78,7 +79,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==RC_SIGN_IN&&resultCode==RESULT_OK&&data!=null){
+        if (requestCode==RC_SIGN_IN&&data!=null){
             Task<GoogleSignInAccount> task= GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignResult(task);
 
@@ -95,7 +96,7 @@ public class RegistrationActivity extends AppCompatActivity {
             FirebaseGoogleAuth(acc);
         } catch (ApiException e) {
             Toast.makeText(this, "Signed Failed", Toast.LENGTH_SHORT).show();
-//            FirebaseGoogleAuth(null);
+            FirebaseGoogleAuth(null);
 
         }
     }
@@ -109,9 +110,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(RegistrationActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                     FirebaseUser user = mAuth.getCurrentUser();
                     updateUI(user);
+
                 } else {
                     Toast.makeText(RegistrationActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-//                    updateUI(null);
+                    updateUI(null);
 
                 }
             }
@@ -130,7 +132,8 @@ public class RegistrationActivity extends AppCompatActivity {
             Uri personPhoto = account.getPhotoUrl();
 
             Toast.makeText(this, personName + personEmail, Toast.LENGTH_SHORT).show();
-
+            startActivity(new Intent(RegistrationActivity.this, BoardActivity.class));
+            finish();
         }
 
     }

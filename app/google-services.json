@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "366548567791-ma1hh4sj127nqp77onai2rao2bfs4lua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lawlett.taskmanageruikit",
+            "certificate_hash": "3f1b56597cd90203b582d9cb07e3416f229fcb69"
+          }
+        },
+        {
           "client_id": "366548567791-jurvb1tb9f1m26nftui32hgg30ue7p22.apps.googleusercontent.com",
           "client_type": 3
         }

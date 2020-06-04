@@ -24,19 +24,11 @@
         android:id="@+id/edit_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите описание"
+        android:hint="Введите описание или локацию"
         android:paddingStart="20dp"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_title" />
-
-
-<!--    <ListView-->
-<!--        android:id="@+id/list"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:layout_editor_absoluteX="0dp"-->
-<!--        tools:layout_editor_absoluteY="0dp" />-->
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu_floating"
@@ -98,26 +90,26 @@
             android:id="@+id/fab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_location"
             app:fabSize="mini"
-            app:fab_label="Локация" />
+            app:fab_label="Локация"
+            android:src="@drawable/ic_location" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_choose_image"
             app:fabSize="mini"
-            app:fab_label="Картинка" />
+            app:fab_label="Картинка"
+            android:src="@drawable/ic_choose_image" />
     </com.github.clans.fab.FloatingActionMenu>
 
     <ImageView
-        android:layout_marginTop="20dp"
         android:id="@+id/image_title"
-        app:layout_constraintTop_toBottomOf="@id/edit_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="150dp"
-        android:layout_height="150dp"/>
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

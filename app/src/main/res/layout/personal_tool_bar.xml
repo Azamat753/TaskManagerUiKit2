@@ -18,25 +18,25 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_settings" />
+                app:srcCompat="@drawable/ic_left_arrow_black" />
+
+            <ImageView
+                android:layout_width="11dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/circle_background" />
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="95dp"
-                android:text="Прогресс"
+                android:layout_marginStart="10dp"
+                android:text="Персональные"
                 android:textColor="@android:color/black"
                 android:textSize="23dp"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/more_btn"
-                android:layout_width="32sp"
-                android:layout_height="32sp"
-                app:srcCompat="@drawable/ic_more"
-                android:layout_marginStart="100dp"/>
 
         </LinearLayout>
     </RelativeLayout>

@@ -8,10 +8,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +20,7 @@ import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IOnClickListener;
+import com.lawlett.taskmanageruikit.utils.ISetLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +28,16 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QuickFragment extends Fragment  implements IOnClickListener {
+public class QuickFragment extends Fragment  implements IOnClickListener,ISetLayoutManager {
     QuickAdapter adapter;
     private List<QuickModel> list;
     FloatingActionButton addQuickBtn;
     int position;
+    QuickModel quickModel= new QuickModel();
 
     public QuickFragment() {
         // Required empty public constructor
+
     }
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -44,19 +47,15 @@ public class QuickFragment extends Fragment  implements IOnClickListener {
         View root = inflater.inflate(R.layout.fragment_quick, container, false);
 
         list = new ArrayList<>();
-
-        App.getDataBase().taskDao().getAllLive().observe(this, new Observer<List<QuickModel>>() {
-            @Override
-            public void onChanged(List<QuickModel> quickModels) {
-                list.clear();
-                list.addAll(quickModels);
-                adapter.notifyDataSetChanged();
-            }
-        });
         RecyclerView recyclerViewQuick = root.findViewById(R.id.quick_recycler);
         adapter = new QuickAdapter(list, this,getContext());
         recyclerViewQuick.setAdapter(adapter);
-
+        if (quickModel.getTitle()!=null)
+        App.getDataBase().taskDao().getAllLive().observe(this, quickModels -> {
+            list.clear();
+            list.addAll(quickModels);
+            adapter.notifyDataSetChanged();
+        });
         addQuickBtn = root.findViewById(R.id.add_quick_btn);
         addQuickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +65,10 @@ public class QuickFragment extends Fragment  implements IOnClickListener {
         });
         return root;
     }
+
+
+
+
 
     @Override
     public void onItemClick(final int position) {
@@ -85,11 +88,9 @@ public class QuickFragment extends Fragment  implements IOnClickListener {
                 intent.putExtra("task", list.get(position));
                 getActivity().startActivityForResult(intent, 42);
                 App.getDataBase().taskDao().delete(list.get(position));
+                adapter.notifyDataSetChanged();
             }
         }).show();
-
-
-
     }
 
     @Override
@@ -110,4 +111,9 @@ public class QuickFragment extends Fragment  implements IOnClickListener {
         }).show();
     }
 
+
+    @Override
+    public void grid(ViewGroup container) {
+        Toast.makeText(getContext(), "all ready", Toast.LENGTH_SHORT).show();
+    }
 }
