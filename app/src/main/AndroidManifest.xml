@@ -17,7 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tasksPage.personalTask.PersonalActivity"></activity>
+        <activity android:name=".tasksPage.workTask.WorkActivity"></activity>
+        <activity android:name=".tasksPage.privateTask.PrivateActivity" />
+        <activity android:name=".tasksPage.meetTask.MeetActivity" />
+        <activity android:name=".tasksPage.homeTask.HomeActivity" />
+        <activity android:name=".tasksPage.personalTask.PersonalActivity" />
         <activity android:name=".map.MapBoxActivity" />
         <activity android:name=".quick.QuickActivity" />
         <activity android:name=".splash.SplashActivity">

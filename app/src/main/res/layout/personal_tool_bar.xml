@@ -21,11 +21,47 @@
                 app:srcCompat="@drawable/ic_left_arrow_black" />
 
             <ImageView
+                android:id="@+id/personal_circle_image"
                 android:layout_width="11dp"
                 android:layout_height="15dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/circle_background" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/purple_circle_image"
+                android:layout_width="11dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/purple_circle" />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/orange_circle_image"
+                android:layout_width="11dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/meet_background" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/blue_circle_image"
+                android:layout_width="11dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/home_background" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/red_circle_image"
+                android:layout_width="11dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/private_background" />
 
             <TextView
                 android:id="@+id/toolbar_title"

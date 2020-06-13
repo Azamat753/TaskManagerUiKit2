@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.PersonalViewHolder> {
-    List<QuickModel> list;
+    ArrayList<TaskModel> list;
 
-    public PersonalAdapter(List<QuickModel> list) {
-        this.list = list;
+    public PersonalAdapter(ArrayList<TaskModel> tasks) {
+        this.list =tasks;
     }
 
     @NonNull
@@ -42,8 +42,8 @@ holder.onBind(list.get(position));
             super(itemView);
             personalTask =itemView.findViewById(R.id.personal_task);
         }
-        public void onBind(QuickModel quickModel){
-            personalTask.setText(quickModel.getPersonalTask());
+        public void onBind(TaskModel taskModel){
+            personalTask.setText(taskModel.personalTask);
         }
     }
 }

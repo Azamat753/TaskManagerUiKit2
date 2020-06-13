@@ -24,7 +24,7 @@ import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.quick.QuickFragment;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
-import com.lawlett.taskmanageruikit.tasksPage.todo.TodoFragment;
+import com.lawlett.taskmanageruikit.todo.TodoFragment;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
 import com.lawlett.taskmanageruikit.utils.ISetLayoutManager;
@@ -37,14 +37,12 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements IOpenCalendar {
-    MenuItem prevMenuItem;
     TextView toolbar_title;
     ImageView more_btn;
     private List<QuickModel> list;
-
+    private ISetLayoutManager iSetLayoutManager;
 
     QuickAdapter adapter;
-    ISetLayoutManager iSetLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +63,12 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                 list.clear();
                 list.addAll(tasks);
                 adapter.notifyDataSetChanged();
+
             }
         });
 
     }
+
 
     public void changeFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
@@ -152,7 +152,8 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                                                         .setPositiveButton("Столбцы", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-                                                                Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                                                             QuickFragment fragment = new QuickFragment();
+                                                                fragment.grid();
                                                             }
                                                         }).show();
 
@@ -166,14 +167,11 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                                 popupMenu.show();
                             }
                         });
-
                         break;
                 }
             }
         });
     }
-
-
     @Override
     public void openCalendar() {
         changeFragment(new CalendarFragment());

@@ -34,6 +34,7 @@ import com.shivtechs.maplocationpicker.MapUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -137,10 +138,19 @@ public class QuickActivity extends AppCompatActivity {
         if (textTitle.equals("") && textDescription.equals("")) {
             finish();
         } else {
+            Calendar c = Calendar.getInstance();
+
+            final int year = c.get(Calendar.YEAR);
+            String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+                    "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+
+
+            final String month = monthName[c.get(Calendar.MONTH)];
+
             String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
             if (pickImage == null) pickImage = image;
 
-            quickModel = new QuickModel(textTitle, textDescription, currentDate, pickImage, choosedColor,null);
+            quickModel = new QuickModel(textTitle, textDescription, currentDate+" "+month+" "+year, pickImage, choosedColor,null);
 
                 App.getDataBase().taskDao().insert(quickModel);
                 finish();

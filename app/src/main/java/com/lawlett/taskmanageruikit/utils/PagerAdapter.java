@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.quick.QuickFragment;
-import com.lawlett.taskmanageruikit.tasksPage.todo.TodoFragment;
+import com.lawlett.taskmanageruikit.todo.TodoFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
     public PagerAdapter(@NonNull FragmentManager fm) {

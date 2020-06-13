@@ -71,9 +71,8 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         public void onBind(QuickModel quickModel) {
             title.setText(quickModel.getTitle());
             desc.setText(quickModel.getDescription());
-            if (title!=null) {
-                data_created.setText(quickModel.getCreateData() + month + "  " + year);
 
+                data_created.setText(quickModel.getCreateData());
 
                 if (quickModel.getColor() == 0) {
                     quickModel.setColor(R.color.black_de);
@@ -81,7 +80,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
                     title.setTextColor(quickModel.getColor());
                 }
                 Glide.with(context).load(quickModel.getImage()).into(imageDesc);
-            }
+
         }
         @Override
         public void onClick(View v) {

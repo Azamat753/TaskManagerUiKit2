@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/delete_all_list"
+        android:title="Очистить список" />
+
+    <item
+        android:id="@+id/delete_popup"
+        android:title="Удалить список" />
+
+    <item
+        android:id="@+id/set_view_list_todo"
+        android:title="Задать вид списоа" />
+
+</menu>
