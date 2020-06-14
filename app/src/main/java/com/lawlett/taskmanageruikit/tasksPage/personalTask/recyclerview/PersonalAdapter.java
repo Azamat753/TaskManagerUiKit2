@@ -42,7 +42,7 @@ holder.onBind(list.get(position));
             super(itemView);
             personalTask =itemView.findViewById(R.id.personal_task);
         }
-        public void onBind(TaskModel taskModel){
+        public void onBind(TaskModel taskModel) {
             personalTask.setText(taskModel.personalTask);
         }
     }
