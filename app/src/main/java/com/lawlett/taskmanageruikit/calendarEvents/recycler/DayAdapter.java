@@ -41,7 +41,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
 
     public class DayViewHolder extends RecyclerView.ViewHolder {
-        TextView task, time, dataDay;
+        TextView task, time, dataDay,endTime;
         View left_view;
 
         public DayViewHolder(@NonNull View itemView) {
@@ -50,13 +50,15 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
             task = itemView.findViewById(R.id.task_title);
             time = itemView.findViewById(R.id.data_time);
             left_view = itemView.findViewById(R.id.left_view);
+            endTime=itemView.findViewById(R.id.end_time);
         }
 
         public void onBind(CalendarTaskModel calendarTaskModel) {
             dataDay.setText(calendarTaskModel.getDataTime());
             task.setText(calendarTaskModel.getTitle());
-            time.setText(calendarTaskModel.getStartTime());
+            time.setText(calendarTaskModel.getStartTime()+" -");
             left_view.setBackgroundColor(calendarTaskModel.chooseColor);
+            endTime.setText(calendarTaskModel.getEndTime());
             Log.e("day", "onBind: " + calendarTaskModel.dataTime);
 
         }

@@ -19,8 +19,8 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.HomeActivity;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.MeetActivity;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.PersonalActivity;
-import com.lawlett.taskmanageruikit.tasksPage.privateTask.PrivateActivity;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.WorkActivity;
+import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 
 
 public class TodoFragment extends Fragment {
@@ -55,138 +55,90 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
         dotsHome=view.findViewById(R.id.more_4);
         dotsPrivate=view.findViewById(R.id.more_5);
 
-        dotsPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu=new PopupMenu(getContext(),dotsPerson);
-                popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.delete_all_list:
+        dotsPerson.setOnClickListener(v -> {
+            PopupMenu popupMenu=new PopupMenu(getContext(),dotsPerson);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.delete_all_list:
 
-                                break;
-                        }
-                        return false;
+                            break;
                     }
-                });
-                popupMenu.show();
-            }
-
+                    return false;
+                }
+            });
+            popupMenu.show();
         });
-        dotsWork.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu=new PopupMenu(getContext(),dotsWork);
-                popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.delete_all_list:
+        dotsWork.setOnClickListener(v -> {
+            PopupMenu popupMenu=new PopupMenu(getContext(),dotsWork);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.delete_all_list:
 
-                                break;
-                        }
-                        return false;
+                            break;
                     }
-                });
-                popupMenu.show();
-            }
-
+                    return false;
+                }
+            });
+            popupMenu.show();
         });
-        dotsMeet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu=new PopupMenu(getContext(),dotsMeet);
-                popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.delete_all_list:
+        dotsMeet.setOnClickListener(v -> {
+            PopupMenu popupMenu=new PopupMenu(getContext(),dotsMeet);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.delete_all_list:
 
-                                break;
-                        }
-                        return false;
+                            break;
                     }
-                });
-                popupMenu.show();
-            }
-
+                    return false;
+                }
+            });
+            popupMenu.show();
         });
-        dotsHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu=new PopupMenu(getContext(),dotsHome);
-                popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.delete_all_list:
+        dotsHome.setOnClickListener(v -> {
+            PopupMenu popupMenu=new PopupMenu(getContext(),dotsHome);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.delete_all_list:
 
-                                break;
-                        }
-                        return false;
+                            break;
                     }
-                });
-                popupMenu.show();
-            }
+                    return false;
+                }
+            });
+            popupMenu.show();
         });
 
-        dotsPrivate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu=new PopupMenu(getContext(),dotsPrivate);
-                popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.delete_all_list:
+        dotsPrivate.setOnClickListener(v -> {
+            PopupMenu popupMenu=new PopupMenu(getContext(),dotsPrivate);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()){
+                    case R.id.delete_all_list:
 
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.show();
-            }
-
+                        break;
+                }
+                return false;
+            });
+            popupMenu.show();
         });
 
-        personalImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), PersonalActivity.class));
-            }
-        });
-        workImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), WorkActivity.class));
-            }
-        });
-        meetImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), MeetActivity.class));
-            }
-        });
-
-        homeImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), HomeActivity.class));
-            }
-        });
-        privateImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), PrivateActivity.class));
-            }
-        });
+        personalImage.setOnClickListener(v -> startActivity(new Intent(getContext(), PersonalActivity.class)));
+        workImage.setOnClickListener(v -> startActivity(new Intent(getContext(), WorkActivity.class)));
+        meetImage.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
+        homeImage.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
+        privateImage.setOnClickListener(v -> startActivity(new Intent(getContext(), PassCodeActivity.class)));
 
     }
 

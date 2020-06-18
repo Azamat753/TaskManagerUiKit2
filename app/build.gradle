@@ -87,6 +87,10 @@ dependencies {
     //mapbox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+
 //editText
     implementation "ss.anoop:awesome-textinput-layout:1.0.3"
+
+//passCode
+    implementation 'com.hanks:passcodeview:0.1.2'
 }

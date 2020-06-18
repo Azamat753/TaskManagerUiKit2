@@ -23,7 +23,6 @@ public class BoardFragment extends Fragment {
     LottieAnimationView calendar_anim, notes_anim, todo_anim;
     TextView title_tv, desc_tv, start_tv;
 
-
     public BoardFragment() {
         // Required empty public constructor
     }
@@ -46,7 +45,6 @@ public class BoardFragment extends Fragment {
         calendar_anim = view.findViewById(R.id.calendar_animation);
         todo_anim = view.findViewById(R.id.todo_animation);
         notes_anim = view.findViewById(R.id.notes_animation);
-
 
         int pos = getArguments().getInt("pos");
         switch (pos) {
@@ -74,16 +72,22 @@ public class BoardFragment extends Fragment {
                 break;
 
         }
-        start_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Preference.getInstance(getContext()).saveShown();
-                startActivity(new Intent(getContext(), MainActivity.class));
-                getActivity().finish();
 
-            }
+//        okBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PasswordPreference.getInstance(getContext()).savePassword(edit_password.getText().toString().trim());
+//                Preference.getInstance(getContext()).saveShown();
+//                startActivity(new Intent(getContext(), MainActivity.class));
+//                getActivity().finish();
+//            }
+//        });
+
+        start_tv.setOnClickListener(v -> {
+            Preference.getInstance(getContext()).saveShown();
+            startActivity(new Intent(getContext(), MainActivity.class));
+            getActivity().finish();
         });
 
     }
-
 }

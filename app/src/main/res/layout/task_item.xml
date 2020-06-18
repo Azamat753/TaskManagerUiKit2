@@ -34,13 +34,23 @@
 
         <TextView
             android:id="@+id/data_time"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:paddingStart="36dp"
             android:text="08:00"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09:00"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="40dp"/>
 
     </androidx.cardview.widget.CardView>
 

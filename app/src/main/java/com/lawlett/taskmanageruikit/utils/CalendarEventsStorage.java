@@ -5,13 +5,10 @@ import android.content.SharedPreferences;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
-
-import java.util.ArrayList;
 
 public class CalendarEventsStorage {
 
-    public static void save(ArrayList<CalendarTaskModel> tasks, Context context) {
+    public static void save(String tasks, Context context) {
         Gson gson = new Gson();
         String jsonTasks = gson.toJson(tasks);
         SharedPreferences sp = context.getSharedPreferences("my_calendar_sp", Context.MODE_PRIVATE);
@@ -20,15 +17,15 @@ public class CalendarEventsStorage {
         editor.commit();
     }
 
-    public static ArrayList<CalendarTaskModel> read(Context context) {
+    public static String read(Context context) {
         SharedPreferences sp = context.getSharedPreferences("my_calendar_sp", Context.MODE_PRIVATE);
         String jsonTasks = sp.getString("tasks", "");
 
         if (jsonTasks == "") {
-            return new ArrayList<>();
+            return new String();
         }
         Gson gson = new Gson();
-        ArrayList<CalendarTaskModel> tasks = gson.fromJson(jsonTasks, new TypeToken<ArrayList<CalendarTaskModel>>() {
+        String tasks = gson.fromJson(jsonTasks, new TypeToken<String>() {
         }.getType());
         return tasks;
     }
@@ -37,6 +34,5 @@ public class CalendarEventsStorage {
         SharedPreferences.Editor editor=sp.edit();
         editor.clear();
         editor.apply();
-
     }
 }

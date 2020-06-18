@@ -35,9 +35,8 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     CalendarTaskModel calendarTaskModel;
     ImageView backView, doneView;
     String currentDataString;
-    String hour, minuteCurrent;
+    String hour,endHour, minuteCurrent,endMinute;
     View colorView;
-    TextView colorText;
     int choosedColor;
 
     @Override
@@ -47,16 +46,36 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
         initViews();
 
-
         startData.setOnClickListener(v -> {
             DialogFragment dataPicker = new DatePickerFragment();
             dataPicker.show(getSupportFragmentManager(), "data picker");
-
         });
+
         startTime.setOnClickListener(v -> {
             DialogFragment timePicker = new TimePickerFragment();
             timePicker.show(getSupportFragmentManager(), "timePicker");
+
         });
+
+        endTime.setOnClickListener(v -> {
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    endHour=String.valueOf(selectedHour);
+                    endMinute=String.valueOf(selectedMinute);
+                    endTime.setText(selectedHour+":"+selectedMinute);
+
+                }
+            }, hour, minute, true);//Yes 24 hour time
+            mTimePicker.setTitle("Select Time");
+            mTimePicker.show();
+
+        });
+
         doneView.setOnClickListener(v -> recordDataRoom());
     }
 
@@ -77,13 +96,14 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         minuteCurrent = String.valueOf(minute);
         startTime.setText(hour + ":" + minute);
         Log.e("current", "onTimeSet: " + hourOfDay + "   " + minute);
-
     }
+
+
+
 
     public void initViews() {
         title = findViewById(R.id.edit_title);
         startData = findViewById(R.id.start_date_number);
-        endData = findViewById(R.id.end_date_number);
         startTime = findViewById(R.id.start_time_number);
         endTime = findViewById(R.id.end_time_number);
         constraintLayout = findViewById(R.id.topconstraint);
@@ -93,7 +113,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     }
 
     public void recordDataRoom() {
-        calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, null,choosedColor);
+        calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, endHour+":"+endMinute,choosedColor);
         App.getDataBase().dataDao().insert(calendarTaskModel);
         finish();
     }
@@ -137,10 +157,5 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     }
 
 
-//    public void changeFragment(Fragment fragment){
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.container,fragment)
-//                .commit();
-//    }
+
 }

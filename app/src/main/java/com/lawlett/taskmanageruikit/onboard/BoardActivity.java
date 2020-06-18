@@ -26,7 +26,6 @@ public class BoardActivity extends AppCompatActivity   {
 
     }
 
-
     class ViewPagerAdapter extends FragmentPagerAdapter {
         public ViewPagerAdapter(@NonNull FragmentManager fm) {
             super(fm);
