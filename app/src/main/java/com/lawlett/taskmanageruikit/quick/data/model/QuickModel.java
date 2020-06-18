@@ -16,13 +16,13 @@ public class QuickModel implements Serializable {
     private String createData;
     private String personalTask;
 
-    public QuickModel(String title, String description, String createData, String image, int color,String personalTask) {
+    public QuickModel(String title, String description, String createData, String image, int color, String personalTask) {
         this.title = title;
         this.description = description;
         this.createData = createData;
         this.image = image;
         this.color = color;
-        this.personalTask=personalTask;
+        this.personalTask = personalTask;
     }
 
     public QuickModel() {

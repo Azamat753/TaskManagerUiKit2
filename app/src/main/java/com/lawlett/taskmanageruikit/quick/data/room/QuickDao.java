@@ -12,7 +12,7 @@ import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import java.util.List;
 
 @Dao
-public interface TaskDao {
+public interface QuickDao {
 
     @Query("SELECT*FROM quickModel")
     List<QuickModel> getAll();
@@ -31,4 +31,5 @@ public interface TaskDao {
 
     @Update
     void update(QuickModel quickModel);
+
 }

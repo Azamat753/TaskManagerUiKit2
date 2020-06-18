@@ -10,43 +10,57 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
-import com.lawlett.taskmanageruikit.utils.MeetStorage;
+import com.lawlett.taskmanageruikit.utils.App;
 
 import java.util.ArrayList;
 
 public class MeetActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MeetAdapter adapter;
-    private ArrayList<TaskModel> list = new ArrayList<>();
+    private ArrayList<MeetModel> list;
     EditText editText;
-    TaskModel taskModel = new TaskModel();
+    MeetModel meetModel ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet);
+
+changeView();
+
+        list = new ArrayList<>();
+
+        App.getDataBase().meetDao().getAllLive().observe(this, meetModels -> {
+            if (meetModels != null) {
+                list.clear();
+                list.addAll(meetModels);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+        recyclerView = findViewById(R.id.recycler_meet);
+        adapter = new MeetAdapter(list);
+        recyclerView.setAdapter(adapter);
+        editText = findViewById(R.id.editText_meet);
+
+    }
+
+    public void addMeetTask(View view) {
+recordRoom();
+    }
+    public void recordRoom(){
+        meetModel=new MeetModel(editText.getText().toString().trim());
+        App.getDataBase().meetDao().insert(meetModel);
+    }
+    public void changeView(){
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText("Встречи");
         ImageView imageView = findViewById(R.id.personal_circle_image);
         ImageView imageView2 = findViewById(R.id.orange_circle_image);
         imageView.setVisibility(View.GONE);
         imageView2.setVisibility(View.VISIBLE);
-        recyclerView = findViewById(R.id.recycler_meet);
-        adapter = new MeetAdapter(list);
-        recyclerView.setAdapter(adapter);
-        editText = findViewById(R.id.editText_meet);
-
-        list.addAll(MeetStorage.read(this));
-        adapter.notifyDataSetChanged();
-    }
-
-    public void addMeetTask(View view) {
-        taskModel.meetTask = editText.getText().toString().trim();
-        list.add(taskModel);
-        adapter.notifyDataSetChanged();
-        MeetStorage.save(list, this);
-        editText.setText("");
     }
 }

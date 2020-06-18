@@ -9,14 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
-    ArrayList<TaskModel> list;
+    List<HomeModel> list;
 
-    public HomeAdapter(ArrayList<TaskModel> list) {
+    public HomeAdapter(ArrayList<HomeModel> list) {
         this.list = list;
     }
 
@@ -42,8 +43,8 @@ holder.onBind(list.get(position));
             super(itemView);
             homeTask=itemView.findViewById(R.id.home_task);
         }
-        public void onBind(TaskModel taskModel){
-            homeTask.setText(taskModel.homeTask);
+        public void onBind(HomeModel homeModel){
+            homeTask.setText(homeModel.getHomeTask());
         }
     }
 }

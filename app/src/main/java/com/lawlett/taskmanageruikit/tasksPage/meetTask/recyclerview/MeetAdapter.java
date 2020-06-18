@@ -9,14 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder> {
-    ArrayList<TaskModel> list;
+    List<MeetModel> list;
 
-    public MeetAdapter(ArrayList<TaskModel> list) {
+    public MeetAdapter(ArrayList<MeetModel> list) {
         this.list = list;
     }
 
@@ -44,8 +45,8 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
             meetTask = itemView.findViewById(R.id.meet_task);
         }
 
-        public void onBind(TaskModel taskModel) {
-            meetTask.setText(taskModel.meetTask);
+        public void onBind(MeetModel meetModel) {
+            meetTask.setText(meetModel.getMeetTask());
         }
     }
 }

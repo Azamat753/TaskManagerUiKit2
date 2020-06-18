@@ -10,28 +10,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
-import com.lawlett.taskmanageruikit.utils.PrivateStorage;
+import com.lawlett.taskmanageruikit.utils.App;
 
 import java.util.ArrayList;
 
 public class PrivateActivity extends AppCompatActivity {
 RecyclerView recyclerView;
 PrivateAdapter adapter;
-ArrayList<TaskModel> list= new ArrayList<>();
+ArrayList<PrivateModel> list;
 EditText editText;
-TaskModel taskModel= new TaskModel();
+PrivateModel privateModel ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private);
-        TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText("Частное");
-        ImageView imageView = findViewById(R.id.personal_circle_image);
-        ImageView imageView2 = findViewById(R.id.red_circle_image);
-        imageView.setVisibility(View.GONE);
-        imageView2.setVisibility(View.VISIBLE);
+     changeView();
+
+     list= new ArrayList<>();
+
+     App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
+         if (privateModels!=null){
+             list.clear();
+             list.addAll(privateModels);
+             adapter.notifyDataSetChanged();
+         }
+     });
 
         recyclerView= findViewById(R.id.recycler_private);
         adapter= new PrivateAdapter(list);
@@ -39,15 +44,22 @@ TaskModel taskModel= new TaskModel();
 
         editText=findViewById(R.id.editText_private);
 
-        list.addAll(PrivateStorage.read(this));
-        adapter.notifyDataSetChanged();
+
     }
 
     public void addPrivateTask(View view) {
-        taskModel.privateTask=editText.getText().toString().trim();
-        list.add(taskModel);
-        adapter.notifyDataSetChanged();
-        PrivateStorage.save(list,this);
-        editText.setText("");
+        recordRoom();
+    }
+    public void recordRoom(){
+        privateModel=new PrivateModel(editText.getText().toString().trim());
+        App.getDataBase().privateDao().insert(privateModel);
+    }
+    public void changeView(){
+        TextView toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText("Частное");
+        ImageView imageView = findViewById(R.id.personal_circle_image);
+        ImageView imageView2 = findViewById(R.id.red_circle_image);
+        imageView.setVisibility(View.GONE);
+        imageView2.setVisibility(View.VISIBLE);
     }
 }

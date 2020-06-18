@@ -24,11 +24,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.DayAdapter;
-import com.lawlett.taskmanageruikit.utils.CalendarEventsStorage;
+import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
@@ -36,12 +37,13 @@ import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class CalendarEventsFragment extends Fragment {
     CalendarView allCalendar;
-    RecyclerView recyclerViewToday, recyclerViewTomorrow, recyclerViewAfterTomorrow;
+    RecyclerView recyclerViewToday;
     FloatingActionButton addEventBtn;
-    ArrayList<CalendarTaskModel> list = new ArrayList<>();
-    CalendarTaskModel calendarTaskModel = new CalendarTaskModel();
+    List<CalendarTaskModel> list;
     DayAdapter adapter;
     TextView todayTv;
+    int color;
+    View colorView;
 
     public CalendarEventsFragment() {
         // Required empty public constructor
@@ -56,8 +58,16 @@ public class CalendarEventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
+        list= new ArrayList<>();
+
+        App.getDataBase().dataDao().getAllLive().observe(this, calendarTaskModels -> {
+            if (calendarTaskModels!=null){
+                list.clear();
+                list.addAll(calendarTaskModels);
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         return inflater.inflate(R.layout.fragment_calendar_events, container, false);
     }
@@ -67,8 +77,12 @@ public class CalendarEventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         allCalendar = view.findViewById(R.id.all_calendar_view);
 
-
         /* starts before 1 month from now */
+
+        colorView=view.findViewById(R.id.color_view);
+
+
+
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
 
@@ -88,13 +102,11 @@ public class CalendarEventsFragment extends Fragment {
                 Toast.makeText(getContext(), "" + date.getTime(), Toast.LENGTH_SHORT).show();
                 Log.e("date", "onDateSelected: " + "weekyear" + date.getWeekYear() + "firstdayofweek" + date.getFirstDayOfWeek() + "getTime" + date.getTime());
             }
-
             @Override
             public void onCalendarScroll(HorizontalCalendarView calendarView,
                                          int dx, int dy) {
                 Log.e("date", "onCalendarScroll: " + dx + dy);
             }
-
             @RequiresApi(api = Build.VERSION_CODES.O)
             @SuppressLint("LogNotTimber")
             @Override
@@ -109,17 +121,11 @@ public class CalendarEventsFragment extends Fragment {
         });
 
         recyclerViewToday = view.findViewById(R.id.today_recycler);
-        adapter = new DayAdapter(list);
+        adapter = new DayAdapter((ArrayList<CalendarTaskModel>) list);
         recyclerViewToday.setAdapter(adapter);
 
         addEventBtn = view.findViewById(R.id.add_task_btn);
-        addEventBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddEventActivity.class));
-            }
-        });
-        loadData();
+        addEventBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), AddEventActivity.class)));
     }
 
     public void changeFragment(Fragment fragment) {
@@ -129,9 +135,4 @@ public class CalendarEventsFragment extends Fragment {
         transaction.commit();
     }
 
-    public void loadData() {
-        list.addAll(CalendarEventsStorage.read(getContext()));
-        adapter.notifyDataSetChanged();
-
-    }
 }

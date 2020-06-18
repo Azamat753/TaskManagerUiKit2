@@ -21,11 +21,7 @@ import com.lawlett.taskmanageruikit.tasksPage.meetTask.MeetActivity;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.PersonalActivity;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.PrivateActivity;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.WorkActivity;
-import com.lawlett.taskmanageruikit.utils.HomeStorage;
-import com.lawlett.taskmanageruikit.utils.MeetStorage;
-import com.lawlett.taskmanageruikit.utils.PersonalStorage;
-import com.lawlett.taskmanageruikit.utils.PrivateStorage;
-import com.lawlett.taskmanageruikit.utils.WorkStorage;
+
 
 public class TodoFragment extends Fragment {
     ImageView personalImage, workImage, meetImage, homeImage, privateImage, addNewImage;
@@ -69,7 +65,7 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.delete_all_list:
-                                PersonalStorage.deleteAll(getContext());
+
                                 break;
                         }
                         return false;
@@ -89,7 +85,7 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.delete_all_list:
-                                WorkStorage.deleteAll(getContext());
+
                                 break;
                         }
                         return false;
@@ -109,7 +105,7 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.delete_all_list:
-                                MeetStorage.deleteAll(getContext());
+
                                 break;
                         }
                         return false;
@@ -129,7 +125,7 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.delete_all_list:
-                                HomeStorage.deleteAll(getContext());
+
                                 break;
                         }
                         return false;
@@ -149,7 +145,7 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.delete_all_list:
-                                PrivateStorage.deleteAll(getContext());
+
                                 break;
                         }
                         return false;

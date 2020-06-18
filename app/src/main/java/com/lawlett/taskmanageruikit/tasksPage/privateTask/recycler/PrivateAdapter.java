@@ -9,14 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateViewHolder> {
-    ArrayList<TaskModel> list;
+    List<PrivateModel> list;
 
-    public PrivateAdapter(ArrayList<TaskModel> list) {
+    public PrivateAdapter(ArrayList<PrivateModel> list) {
         this.list = list;
     }
 
@@ -44,8 +45,8 @@ public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateV
             privateTask = itemView.findViewById(R.id.private_task);
         }
 
-        public void onBind(TaskModel taskModel) {
-            privateTask.setText(taskModel.privateTask);
+        public void onBind(PrivateModel privateModel) {
+            privateTask.setText(privateModel.getPrivateTask());
         }
     }
 }

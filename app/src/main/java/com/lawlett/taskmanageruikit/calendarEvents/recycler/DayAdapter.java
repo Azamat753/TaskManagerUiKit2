@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.calendarEvents.recycler;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,11 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
 
-    ArrayList<CalendarTaskModel> list;
+    List<CalendarTaskModel> list;
 
     public DayAdapter(ArrayList<CalendarTaskModel> list) {
         this.list = list;
@@ -37,25 +39,25 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         return list.size();
     }
 
-    public void addText(CalendarTaskModel calendarTaskModel) {
-        list.add(calendarTaskModel);
-        notifyDataSetChanged();
-    }
 
     public class DayViewHolder extends RecyclerView.ViewHolder {
-        TextView task, data, dataDay;
+        TextView task, time, dataDay;
+        View left_view;
 
         public DayViewHolder(@NonNull View itemView) {
             super(itemView);
             dataDay = itemView.findViewById(R.id.data_day);
-            task = itemView.findViewById(R.id.task_tv);
-            data = itemView.findViewById(R.id.data_tv);
+            task = itemView.findViewById(R.id.task_title);
+            time = itemView.findViewById(R.id.data_time);
+            left_view = itemView.findViewById(R.id.left_view);
         }
 
         public void onBind(CalendarTaskModel calendarTaskModel) {
-            dataDay.setText(calendarTaskModel.dataTime);
-            task.setText(calendarTaskModel.title);
-            data.setText(calendarTaskModel.startTime);
+            dataDay.setText(calendarTaskModel.getDataTime());
+            task.setText(calendarTaskModel.getTitle());
+            time.setText(calendarTaskModel.getStartTime());
+            left_view.setBackgroundColor(calendarTaskModel.chooseColor);
+            Log.e("day", "onBind: " + calendarTaskModel.dataTime);
 
         }
     }

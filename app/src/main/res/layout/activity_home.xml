@@ -20,7 +20,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/personal_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar" />
 
     <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
         android:layout_marginStart="20dp"

@@ -10,44 +10,61 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
-import com.lawlett.taskmanageruikit.utils.WorkStorage;
+import com.lawlett.taskmanageruikit.utils.App;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WorkActivity extends AppCompatActivity {
-RecyclerView recyclerView;
-WorkAdapter adapter;
-EditText editText;
-TaskModel taskModel = new TaskModel();
-ArrayList<TaskModel> list= new ArrayList<>();
+    RecyclerView recyclerView;
+    WorkAdapter adapter;
+    EditText editText;
+    WorkModel workModel;
+    List<WorkModel> list ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
-        TextView toolbar= findViewById(R.id.toolbar_title);
+        changeView();
+
+        list = new ArrayList<>();
+
+        App.getDataBase().workDao().getAllLive().observe(this, workModels -> {
+            if (workModels != null) {
+                list.clear();
+                list.addAll(workModels);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        recyclerView = findViewById(R.id.recycler_work);
+        adapter = new WorkAdapter((ArrayList<WorkModel>) list);
+        recyclerView.setAdapter(adapter);
+
+        editText = findViewById(R.id.editText_work);
+
+
+
+    }
+
+    public void addWorkTask(View view) {
+        recordDataRoom();
+    }
+
+    public void recordDataRoom() {
+        workModel = new WorkModel(editText.getText().toString().trim());
+        App.getDataBase().workDao().insert(workModel);
+        editText.setText("");
+    }
+    public void changeView(){
+        TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText("Работа");
         ImageView imageView = findViewById(R.id.personal_circle_image);
         ImageView imageView2 = findViewById(R.id.purple_circle_image);
         imageView.setVisibility(View.GONE);
         imageView2.setVisibility(View.VISIBLE);
-
-        recyclerView=findViewById(R.id.recycler_work);
-        adapter= new WorkAdapter(list);
-        recyclerView.setAdapter(adapter);
-
-        editText= findViewById(R.id.editText_work);
-
-        list.addAll(WorkStorage.read(this));
-        adapter.notifyDataSetChanged();
-    }
-
-    public void addWorkTask(View view) {
-        taskModel.workTask=editText.getText().toString().trim();
-        list.add(taskModel);
-        adapter.notifyDataSetChanged();
-        WorkStorage.save(list,this);
-        editText.setText("");
     }
 }

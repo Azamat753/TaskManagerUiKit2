@@ -9,14 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.TaskModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.WorkViewHolder> {
-    ArrayList<TaskModel> list;
+    List<WorkModel> list;
 
-    public WorkAdapter(ArrayList<TaskModel> list) {
+    public WorkAdapter(ArrayList<WorkModel> list) {
         this.list = list;
     }
 
@@ -44,8 +45,8 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.WorkViewHolder
             workTask = itemView.findViewById(R.id.work_task);
         }
 
-        public void onBind(TaskModel taskModel) {
-            workTask.setText(taskModel.workTask);
+        public void onBind(WorkModel workModel) {
+            workTask.setText(workModel.getWorkTask());
         }
     }
 }

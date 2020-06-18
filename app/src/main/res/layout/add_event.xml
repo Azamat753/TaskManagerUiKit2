@@ -9,34 +9,37 @@
         layout="@layout/addevent_toolbar" />
 
     <TextView
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
         android:id="@+id/title"
         android:layout_width="wrap_content"
+        android:onClick="tryChange"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:text="Add title"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addEvent_toolbar_view" />
 
     <EditText
-        android:layout_marginStart="16dp"
         android:id="@+id/edit_title"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:maxLength="32"
+        android:layout_marginStart="16dp"
         android:text="Business Meeting at Junior's Cafe"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
-    <ImageView
+    <View
         android:id="@+id/color_view"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/purple_circle"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/purple_circle"
+        android:onClick="chooseColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/edit_title"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
     <View
@@ -48,11 +51,12 @@
         app:layout_constraintTop_toBottomOf="@id/color_view" />
 
     <TextView
-        android:layout_marginStart="16dp"
+
         android:id="@+id/start_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:text="Начало"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,10 +64,10 @@
 
 
     <TextView
-        android:layout_marginStart="16dp"
         android:id="@+id/start_date_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
         android:text="22 Oct 2017"
         android:textColor="@android:color/black"
@@ -86,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="Конец"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +112,10 @@
         app:layout_constraintTop_toBottomOf="@id/end_date" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginStart="16dp"
         android:id="@+id/topconstraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/start_date_number">
 
@@ -168,6 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
             android:text="Конец времени"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -180,6 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
             android:text="08:00 PM"
             android:textColor="@android:color/black"
             android:textSize="18sp"
@@ -229,5 +235,15 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <!--<FrameLayout
+        android:id="@+id/container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>-->
+<include
+    app:layout_constraintBottom_toBottomOf="parent"
+    layout="@layout/task_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>
