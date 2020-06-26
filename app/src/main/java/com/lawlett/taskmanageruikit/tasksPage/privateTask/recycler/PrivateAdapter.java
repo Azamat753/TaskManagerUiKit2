@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
+import com.lawlett.taskmanageruikit.utils.IPrivateOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateViewHolder> {
     List<PrivateModel> list;
+    Context context;
+    IPrivateOnClickListener listener;
 
-    public PrivateAdapter(ArrayList<PrivateModel> list) {
+    public PrivateAdapter(ArrayList<PrivateModel> list,Context context,IPrivateOnClickListener listener) {
         this.list = list;
+        this.context=context;
+        this.listener=listener;
     }
 
     @NonNull
@@ -37,16 +43,23 @@ public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateV
         return list.size();
     }
 
-    public class PrivateViewHolder extends RecyclerView.ViewHolder {
+    public class PrivateViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         TextView privateTask;
 
         public PrivateViewHolder(@NonNull View itemView) {
             super(itemView);
             privateTask = itemView.findViewById(R.id.private_task);
+            itemView.setOnLongClickListener(this);
         }
 
         public void onBind(PrivateModel privateModel) {
             privateTask.setText(privateModel.getPrivateTask());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            listener.onItemLongClick(getAdapterPosition());
+            return false;
         }
     }
 }

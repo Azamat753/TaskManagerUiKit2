@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".utils.PassCodeActivity"></activity>
+        <activity android:name=".tasksPage.doneTask.DoneTasksActivity"></activity>
+        <activity android:name=".utils.PassCodeActivity" />
         <activity android:name=".calendarEvents.AddEventActivity" />
         <activity android:name=".tasksPage.workTask.WorkActivity" />
         <activity android:name=".tasksPage.privateTask.PrivateActivity" />

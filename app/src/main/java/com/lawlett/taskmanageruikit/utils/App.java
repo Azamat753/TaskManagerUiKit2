@@ -6,7 +6,7 @@ import android.content.Context;
 import androidx.multidex.MultiDex;
 import androidx.room.Room;
 
-import com.lawlett.taskmanageruikit.quick.data.room.AppDataBase;
+import com.lawlett.taskmanageruikit.room.AppDataBase;
 
 public class App extends Application {
     public static App instance;

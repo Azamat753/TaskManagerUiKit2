@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.tasksPage.personalTask;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,11 +13,12 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.IPersonalOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalActivity extends AppCompatActivity {
+public class PersonalActivity extends AppCompatActivity implements IPersonalOnClickListener {
     EditText editText;
     PersonalAdapter adapter;
     PersonalModel personalModel;
@@ -39,7 +41,7 @@ public class PersonalActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recycler_personal);
-        adapter = new PersonalAdapter((ArrayList<PersonalModel>) list);
+        adapter = new PersonalAdapter((ArrayList<PersonalModel>) list,this,this);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_personal);
@@ -55,5 +57,15 @@ public class PersonalActivity extends AppCompatActivity {
         personalModel=new PersonalModel(personal);
         App.getDataBase().personalDao().insert(personalModel);
         editText.setText("");
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Вы хотите удалить ?").setMessage("Удалить задачу")
+                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", (dialog12, which) -> {
+                    App.getDataBase().personalDao().delete(list.get(position));
+                    adapter.notifyDataSetChanged();
+                }).show();
     }
 }

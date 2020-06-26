@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.quick.data.room;
+package com.lawlett.taskmanageruikit.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

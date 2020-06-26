@@ -1,6 +1,8 @@
 package com.lawlett.taskmanageruikit.calendarEvents;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.DayAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
 import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
 
 import java.util.ArrayList;
@@ -35,7 +38,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
-public class CalendarEventsFragment extends Fragment {
+public class CalendarEventsFragment extends Fragment implements IDayOnClickListener {
     CalendarView allCalendar;
     RecyclerView recyclerViewToday;
     FloatingActionButton addEventBtn;
@@ -44,7 +47,7 @@ public class CalendarEventsFragment extends Fragment {
     TextView todayTv;
     int color;
     View colorView;
-
+int position;
     public CalendarEventsFragment() {
         // Required empty public constructor
     }
@@ -120,7 +123,7 @@ public class CalendarEventsFragment extends Fragment {
         });
 
         recyclerViewToday = view.findViewById(R.id.today_recycler);
-        adapter = new DayAdapter((ArrayList<CalendarTaskModel>) list);
+        adapter = new DayAdapter((ArrayList<CalendarTaskModel>) list,this,getContext());
         recyclerViewToday.setAdapter(adapter);
 
         addEventBtn = view.findViewById(R.id.add_task_btn);
@@ -134,4 +137,44 @@ public class CalendarEventsFragment extends Fragment {
         transaction.commit();
     }
 
+    @Override
+    public void onItemClick(int position) {
+        this.position = position;
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
+        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), AddEventActivity.class);
+                intent.putExtra("calendar", list.get(position));
+                getActivity().startActivityForResult(intent, 42);
+                App.getDataBase().dataDao().delete(list.get(position));
+                adapter.notifyDataSetChanged();
+            }
+        }).show();
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
+        dialog.setTitle("Вы хотите удалить ?").setMessage("Удалить задачу")
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                App.getDataBase().dataDao().delete(list.get(position));
+                adapter.notifyDataSetChanged();
+            }
+        }).show();
+    }
 }

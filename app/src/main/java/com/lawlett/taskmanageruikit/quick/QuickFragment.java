@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,7 +35,7 @@ public class QuickFragment extends Fragment implements IOnClickListener {
     private List<QuickModel> list;
     FloatingActionButton addQuickBtn;
     int position;
-    QuickModel quickModel;
+    int pos;
     RecyclerView recyclerViewQuick;
 
     public QuickFragment() {
@@ -117,14 +119,19 @@ public class QuickFragment extends Fragment implements IOnClickListener {
         recyclerViewQuick.setAdapter(adapter);
         recyclerViewQuick.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
-    }
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
 
-    public void grid(){
-
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                pos= viewHolder.getAdapterPosition();
+                App.getDataBase().taskDao().delete(list.get(pos));
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerViewQuick);
     }
-//    @Override
-//    public void grid() {
-////        recyclerViewQuick.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//        Toast.makeText(getContext(), "yes", Toast.LENGTH_SHORT).show();
-//    }
 }

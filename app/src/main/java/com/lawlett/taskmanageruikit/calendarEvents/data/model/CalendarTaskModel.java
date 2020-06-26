@@ -23,6 +23,14 @@ public class CalendarTaskModel implements Serializable {
         this.chooseColor= chooseColor;
     }
 
+    public int getChooseColor() {
+        return chooseColor;
+    }
+
+    public void setChooseColor(int chooseColor) {
+        this.chooseColor = chooseColor;
+    }
+
     public long getId() {
         return id;
     }

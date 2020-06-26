@@ -3,6 +3,7 @@ package com.lawlett.taskmanageruikit.calendarEvents;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,13 +30,13 @@ import java.util.Calendar;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    TextView startData, endData, startTime, endTime;
+    TextView startData, startTime, endTime,startDataText;
     EditText title;
     ConstraintLayout constraintLayout;
     CalendarTaskModel calendarTaskModel;
     ImageView backView, doneView;
     String currentDataString;
-    String hour,endHour, minuteCurrent,endMinute;
+    String hour, endHour, minuteCurrent, endMinute;
     View colorView;
     int choosedColor;
 
@@ -45,8 +46,8 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         setContentView(R.layout.add_event);
 
         initViews();
-
-        startData.setOnClickListener(v -> {
+        getIncomingIntent();
+        startDataText.setOnClickListener(v -> {
             DialogFragment dataPicker = new DatePickerFragment();
             dataPicker.show(getSupportFragmentManager(), "data picker");
         });
@@ -54,7 +55,6 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         startTime.setOnClickListener(v -> {
             DialogFragment timePicker = new TimePickerFragment();
             timePicker.show(getSupportFragmentManager(), "timePicker");
-
         });
 
         endTime.setOnClickListener(v -> {
@@ -65,9 +65,9 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    endHour=String.valueOf(selectedHour);
-                    endMinute=String.valueOf(selectedMinute);
-                    endTime.setText(selectedHour+":"+selectedMinute);
+                    endHour = String.valueOf(selectedHour);
+                    endMinute = String.valueOf(selectedMinute);
+                    endTime.setText(selectedHour + ":" + selectedMinute);
 
                 }
             }, hour, minute, true);//Yes 24 hour time
@@ -98,9 +98,6 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         Log.e("current", "onTimeSet: " + hourOfDay + "   " + minute);
     }
 
-
-
-
     public void initViews() {
         title = findViewById(R.id.edit_title);
         startData = findViewById(R.id.start_date_number);
@@ -110,10 +107,11 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         backView = findViewById(R.id.back_view_event);
         doneView = findViewById(R.id.done_view_event);
         colorView = findViewById(R.id.color_view);
+        startDataText=findViewById(R.id.start_date);
     }
 
     public void recordDataRoom() {
-        calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, endHour+":"+endMinute,choosedColor);
+        calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, endHour + ":" + endMinute, choosedColor);
         App.getDataBase().dataDao().insert(calendarTaskModel);
         finish();
     }
@@ -156,6 +154,17 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 }).show();
     }
 
+    public void getIncomingIntent() {
+        Intent intent = getIntent();
+        calendarTaskModel = (CalendarTaskModel) intent.getSerializableExtra("calendar");
+        if (calendarTaskModel != null) {
+            title.setText(calendarTaskModel.getTitle());
+            startTime.setText(calendarTaskModel.getStartTime());
+            endTime.setText(calendarTaskModel.getEndTime());
+            colorView.setBackgroundColor(calendarTaskModel.getChooseColor());
+            startData.setText(calendarTaskModel.getDataTime());
 
+        }
+    }
 
 }

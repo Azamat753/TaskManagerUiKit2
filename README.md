@@ -62,5 +62,5 @@
   ## editText
     ###  implementation "ss.anoop:awesome-textinput-layout:1.0.3"
 
-  ##passCode
-    ###  implementation 'com.hanks:passcodeview:0.1.2'
+  ## passCode
+    ### implementation 'com.hanks:passcodeview:0.1.2'

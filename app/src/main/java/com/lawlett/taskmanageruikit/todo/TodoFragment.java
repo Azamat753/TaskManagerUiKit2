@@ -16,16 +16,30 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
+import com.lawlett.taskmanageruikit.tasksPage.doneTask.DoneTasksActivity;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.HomeActivity;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.MeetActivity;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.PersonalActivity;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.WorkActivity;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 
+import java.util.List;
+
 
 public class TodoFragment extends Fragment {
-    ImageView personalImage, workImage, meetImage, homeImage, privateImage, addNewImage;
-View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
+    ImageView personalImage, workImage, meetImage, homeImage, privateImage, addNewImage, doneImage;
+    View dotsPerson, dotsWork, dotsMeet, dotsHome, dotsPrivate;
+    private List<PersonalModel> listPersonal;
+    private List<WorkModel> listWork;
+    private List<MeetModel> listMeet;
+    private List<HomeModel> listHome;
+    private List<PrivateModel> listPrivate;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,53 +61,49 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
         meetImage = view.findViewById(R.id.meet_image);
         homeImage = view.findViewById(R.id.home_image);
         privateImage = view.findViewById(R.id.private_image);
-        addNewImage = view.findViewById(R.id.add_image);
+        addNewImage = view.findViewById(R.id.done_tasks_image);
+        doneImage = view.findViewById(R.id.done_tasks_image);
 
-        dotsPerson=view.findViewById(R.id.more_1);
-        dotsWork=view.findViewById(R.id.more_2);
-        dotsMeet =view.findViewById(R.id.more_3);
-        dotsHome=view.findViewById(R.id.more_4);
-        dotsPrivate=view.findViewById(R.id.more_5);
+        dotsPerson = view.findViewById(R.id.more_1);
+        dotsWork = view.findViewById(R.id.more_2);
+        dotsMeet = view.findViewById(R.id.more_3);
+        dotsHome = view.findViewById(R.id.more_4);
+        dotsPrivate = view.findViewById(R.id.more_5);
 
         dotsPerson.setOnClickListener(v -> {
-            PopupMenu popupMenu=new PopupMenu(getContext(),dotsPerson);
-            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.delete_all_list:
+            PopupMenu popupMenu = new PopupMenu(getContext(), dotsPerson);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.delete_all_list:
 
-                            break;
-                    }
-                    return false;
+
+                        break;
                 }
+                return false;
             });
             popupMenu.show();
         });
         dotsWork.setOnClickListener(v -> {
-            PopupMenu popupMenu=new PopupMenu(getContext(),dotsWork);
-            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.delete_all_list:
+            PopupMenu popupMenu = new PopupMenu(getContext(), dotsWork);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.delete_all_list:
 
-                            break;
-                    }
-                    return false;
+                        break;
                 }
+                return false;
             });
             popupMenu.show();
         });
         dotsMeet.setOnClickListener(v -> {
-            PopupMenu popupMenu=new PopupMenu(getContext(),dotsMeet);
-            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            PopupMenu popupMenu = new PopupMenu(getContext(), dotsMeet);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.delete_all_list:
 
                             break;
@@ -104,12 +114,12 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
             popupMenu.show();
         });
         dotsHome.setOnClickListener(v -> {
-            PopupMenu popupMenu=new PopupMenu(getContext(),dotsHome);
-            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            PopupMenu popupMenu = new PopupMenu(getContext(), dotsHome);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.delete_all_list:
 
                             break;
@@ -121,10 +131,10 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
         });
 
         dotsPrivate.setOnClickListener(v -> {
-            PopupMenu popupMenu=new PopupMenu(getContext(),dotsPrivate);
-            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo,popupMenu.getMenu());
+            PopupMenu popupMenu = new PopupMenu(getContext(), dotsPrivate);
+            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.delete_all_list:
 
                         break;
@@ -139,7 +149,10 @@ View dotsPerson,dotsWork,dotsMeet,dotsHome,dotsPrivate;
         meetImage.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
         homeImage.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
         privateImage.setOnClickListener(v -> startActivity(new Intent(getContext(), PassCodeActivity.class)));
+doneImage.setOnClickListener(v -> {
+    startActivity(new Intent(getContext(), DoneTasksActivity.class));
 
+});
     }
 
     public void changeFragment(Fragment fragment) {

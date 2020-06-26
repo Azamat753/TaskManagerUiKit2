@@ -1,5 +1,7 @@
 package com.lawlett.taskmanageruikit.tasksPage.meetTask;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,10 +15,11 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.IMeetOnClickListener;
 
 import java.util.ArrayList;
 
-public class MeetActivity extends AppCompatActivity {
+public class MeetActivity extends AppCompatActivity implements IMeetOnClickListener {
     RecyclerView recyclerView;
     MeetAdapter adapter;
     private ArrayList<MeetModel> list;
@@ -42,7 +45,7 @@ changeView();
 
 
         recyclerView = findViewById(R.id.recycler_meet);
-        adapter = new MeetAdapter(list);
+        adapter = new MeetAdapter(list,this,this);
         recyclerView.setAdapter(adapter);
         editText = findViewById(R.id.editText_meet);
 
@@ -62,5 +65,23 @@ recordRoom();
         ImageView imageView2 = findViewById(R.id.orange_circle_image);
         imageView.setVisibility(View.GONE);
         imageView2.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Вы хотите удалить ?").setMessage("Удалить задачу")
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                App.getDataBase().meetDao().delete(list.get(position));
+                adapter.notifyDataSetChanged();
+            }
+        }).show();
     }
 }

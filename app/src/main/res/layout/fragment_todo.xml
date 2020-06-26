@@ -303,37 +303,36 @@
         app:layout_constraintTop_toTopOf="@id/view_3">
 
         <ImageView
-            android:id="@+id/add_image"
+            android:id="@+id/done_tasks_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/add_background"
-            android:src="@drawable/ic_add"
+            android:background="@drawable/green_circle"
+            android:src="@drawable/ic_done"
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/add_task_title"
+            android:id="@+id/done_task_title"
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Добавить новый"
+            android:text="Выполнено"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_image" />
+            app:layout_constraintTop_toBottomOf="@id/done_tasks_image" />
 
         <TextView
             android:id="@+id/add_task_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text=""
+            android:text="16 tasks"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_task_title" />
+            app:layout_constraintTop_toBottomOf="@id/done_task_title" />
 
         <View
             android:id="@+id/more_6"

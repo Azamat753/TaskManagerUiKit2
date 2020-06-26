@@ -1,5 +1,7 @@
 package com.lawlett.taskmanageruikit.tasksPage.workTask;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,11 +15,12 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.IWorkOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkActivity extends AppCompatActivity {
+public class WorkActivity extends AppCompatActivity implements IWorkOnClickListener {
     RecyclerView recyclerView;
     WorkAdapter adapter;
     EditText editText;
@@ -41,7 +44,7 @@ public class WorkActivity extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.recycler_work);
-        adapter = new WorkAdapter((ArrayList<WorkModel>) list);
+        adapter = new WorkAdapter((ArrayList<WorkModel>) list,this,this);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_work);
@@ -66,5 +69,23 @@ public class WorkActivity extends AppCompatActivity {
         ImageView imageView2 = findViewById(R.id.purple_circle_image);
         imageView.setVisibility(View.GONE);
         imageView2.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Вы хотите удалить ?").setMessage("Удалить задачу")
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                App.getDataBase().workDao().delete(list.get(position));
+                adapter.notifyDataSetChanged();
+            }
+        }).show();
     }
 }

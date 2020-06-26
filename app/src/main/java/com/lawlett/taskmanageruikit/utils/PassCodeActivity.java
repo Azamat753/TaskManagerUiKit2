@@ -24,7 +24,6 @@ public class PassCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pass_code);
 
-
         editPassword = findViewById(R.id.edit_password);
 
         button = findViewById(R.id.ok_btn);
@@ -58,7 +57,6 @@ public class PassCodeActivity extends AppCompatActivity {
                     }
                 });
     }
-
     public void saveBtn(View view) {
         PasswordPreference.getInstance(this).savePassword(editPassword.getText().toString().trim());
         passcodeView.setVisibility(View.VISIBLE);
@@ -67,6 +65,4 @@ public class PassCodeActivity extends AppCompatActivity {
         PasswordDonePreference.getInstance(this).saveShown();
         finish();
     }
-
-
 }
