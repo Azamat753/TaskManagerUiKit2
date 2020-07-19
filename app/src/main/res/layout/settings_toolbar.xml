@@ -27,17 +27,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="35dp"
-                android:text="Записать идею"
+                android:text="Настройки"
                 android:textColor="@android:color/white"
                 android:textSize="23dp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/done_view"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="40dp"
-                android:src="@drawable/ic_done" />
+<!--            <ImageView-->
+<!--                android:id="@+id/done_view"-->
+<!--                android:layout_width="30dp"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:layout_marginStart="40dp"-->
+<!--                android:src="@drawable/ic_done" />-->
         </LinearLayout>
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

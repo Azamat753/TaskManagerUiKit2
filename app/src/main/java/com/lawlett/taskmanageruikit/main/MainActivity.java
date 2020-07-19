@@ -1,5 +1,9 @@
 package com.lawlett.taskmanageruikit.main;
 
+import android.app.ActivityOptions;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,6 +12,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -22,6 +28,7 @@ import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.quick.QuickFragment;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
+import com.lawlett.taskmanageruikit.settings.SettingsActivity;
 import com.lawlett.taskmanageruikit.todo.TodoFragment;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
@@ -35,11 +42,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements IOpenCalendar {
     TextView toolbar_title;
-    ImageView more_btn;
+    ImageView more_btn,settings_view;
     private List<QuickModel> list;
 
     QuickAdapter adapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
         changeFragment(new DashboardFragment());
         toolbar_title = findViewById(R.id.toolbar_title);
         more_btn = findViewById(R.id.more_btn);
+        settings_view=findViewById(R.id.settings_view);
 
         list = new ArrayList<>();
         adapter = new QuickAdapter(list, null, this);
@@ -60,9 +69,11 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                 list.addAll(tasks);
                 adapter.notifyDataSetChanged();
 
+
             }
         });
 
+        settings_view.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class), ActivityOptions.makeSceneTransitionAnimation(this).toBundle()));
     }
 
 
@@ -131,29 +142,29 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                                     public boolean onMenuItemClick(MenuItem item) {
                                         switch (item.getItemId()) {
                                             case R.id.delete_all_popup:
+                                                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                                                dialog.setTitle("Вы уверены ?").setMessage("Очистить список")
+                                                        .setNegativeButton("Нет", (dialog1, which) ->
+
+                                                                dialog1.cancel())
+
+                                                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+//
                                                 App.getDataBase().taskDao().deleteAll(list);
                                                 adapter.notifyDataSetChanged();
+                                                            }
+                                                        }).show();
+
                                                 break;
                                             case R.id.sort_popup:
 
-                                                Toast.makeText(MainActivity.this, "two", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MainActivity.this, "не работает", Toast.LENGTH_SHORT).show();
                                                 break;
                                             case R.id.set_view_list:
-//                                                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-//                                                dialog.setTitle("Установить вид списка ?").setMessage("Задать вид")
-//                                                        .setNegativeButton("Список", (dialog1, which) ->
 //
-//                                                                dialog1.cancel())
-//
-//                                                        .setPositiveButton("Столбцы", new DialogInterface.OnClickListener() {
-//                                                            @Override
-//                                                            public void onClick(DialogInterface dialog, int which) {
-////                                                             QuickFragment fragment = new QuickFragment();
-////                                                                fragment.grid();
-//                                                            }
-//                                                        }).show();
-
-                                                Toast.makeText(MainActivity.this, "three", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MainActivity.this, "не работает", Toast.LENGTH_SHORT).show();
                                                 break;
                                         }
 
@@ -173,7 +184,6 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
     public void openCalendar() {
         changeFragment(new CalendarFragment());
     }
-
     @Override
     public void back() {
         changeFragment(new CalendarEventsFragment());

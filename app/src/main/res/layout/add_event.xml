@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:text="Add title"
+        android:text="Добавить событие"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/addEvent_toolbar_view" />
@@ -23,9 +23,10 @@
         android:id="@+id/edit_title"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:maxLength="32"
+        android:maxLength="35"
+        android:inputType="textCapSentences"
         android:layout_marginStart="16dp"
-        android:text="Business Meeting at Junior's Cafe"
+        android:hint="Выгулить собаку"
         android:textColor="@android:color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +58,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:text="Начало"
-        android:textSize="18sp"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_1" />
 
@@ -68,9 +69,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:text="22 Oct 2017"
         android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/start_date" />
@@ -78,7 +78,7 @@
 
     <View
         android:layout_width="0.5dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,12 +125,12 @@
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toTopOf="parent">
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="ALL DAY"
-                android:textSize="18sp" />
+<!--            <CheckBox-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:text="ALL DAY"-->
+<!--                android:textSize="18sp" />-->
 
         </androidx.cardview.widget.CardView>
 
@@ -139,9 +139,9 @@
             android:id="@+id/start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="Начало времени"
-            android:textSize="18sp"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/first_cardView" />
 
@@ -150,9 +150,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="08:00 PM"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/start_time" />
@@ -173,7 +172,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
             android:text="Конец времени"
-            android:textSize="18sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/start_time"
             app:layout_constraintTop_toBottomOf="@id/first_cardView" />
@@ -185,9 +184,8 @@
             android:layout_marginStart="70dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
-            android:text="08:00 PM"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/start_time"
@@ -199,35 +197,35 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/end_time_number">
 
-            <CheckBox
-                android:id="@+id/remind_ch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:drawableEnd="@drawable/ic_ring"
-                android:drawablePadding="14dp"
-                android:text="Напомни мне заранее"
-                android:textSize="18sp" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/remind_ch"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:drawableEnd="@drawable/ic_ring"-->
+<!--                android:drawablePadding="14dp"-->
+<!--                android:text="Напомни мне заранее"-->
+<!--                android:textSize="18sp" />-->
 
-            <CheckBox
-                android:id="@+id/add_loc_ch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
-                android:drawableEnd="@drawable/ic_location"
-                android:drawablePadding="14dp"
-                android:text="Добавить место"
-                android:textSize="18sp" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/add_loc_ch"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="70dp"-->
+<!--                android:drawableEnd="@drawable/ic_location"-->
+<!--                android:drawablePadding="14dp"-->
+<!--                android:text="Добавить место"-->
+<!--                android:textSize="18sp" />-->
 
-            <CheckBox
-                android:id="@+id/add_note_ch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="120dp"
-                android:drawableEnd="@drawable/ic_editor"
-                android:drawablePadding="14dp"
-                android:text="Добавить заметки"
-                android:textSize="18sp" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/add_note_ch"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="120dp"-->
+<!--                android:drawableEnd="@drawable/ic_editor"-->
+<!--                android:drawablePadding="14dp"-->
+<!--                android:text="Добавить заметки"-->
+<!--                android:textSize="18sp" />-->
 
         </androidx.cardview.widget.CardView>
 

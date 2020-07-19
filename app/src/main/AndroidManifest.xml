@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tasksPage.doneTask.DoneTasksActivity"></activity>
+        <activity android:name=".todayEvent.TodayEvent"></activity>
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".tasksPage.doneTask.DoneTasksActivity" />
         <activity android:name=".utils.PassCodeActivity" />
         <activity android:name=".calendarEvents.AddEventActivity" />
         <activity android:name=".tasksPage.workTask.WorkActivity" />
@@ -25,7 +27,6 @@
         <activity android:name=".tasksPage.meetTask.MeetActivity" />
         <activity android:name=".tasksPage.homeTask.HomeActivity" />
         <activity android:name=".tasksPage.personalTask.PersonalActivity" />
-        <activity android:name=".map.MapBoxActivity" />
         <activity android:name=".quick.QuickActivity" />
         <activity android:name=".splash.SplashActivity">
             <intent-filter>
@@ -34,7 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registration.RegistrationActivity" />
+        <activity android:name=".registration.RegistrationActivity" >
+
+
+        </activity>
         <activity android:name=".onboard.BoardActivity" />
         <activity android:name=".main.MainActivity" />
     </application>

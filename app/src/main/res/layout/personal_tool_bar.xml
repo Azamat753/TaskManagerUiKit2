@@ -16,6 +16,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/personal_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_left_arrow_black" />
@@ -44,6 +45,15 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/meet_background" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/green_circle_image"
+                android:layout_width="11dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/done_background" />
 
             <ImageView
                 android:visibility="gone"

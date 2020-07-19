@@ -49,11 +49,11 @@
             app:layout_constraintTop_toBottomOf="@id/person_image" />
 
         <TextView
-            android:id="@+id/person_task_amount"
+            android:id="@+id/personal_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="14 tasks"
+            android:text="14"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +63,7 @@
         <View
             android:id="@+id/more_1"
             android:layout_width="20dp"
+            android:visibility="gone"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -101,11 +102,11 @@
             app:layout_constraintTop_toBottomOf="@id/work_image" />
 
         <TextView
-            android:id="@+id/work_task_amount"
+            android:id="@+id/work_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="212 tasks"
+            android:text="212"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -114,6 +115,7 @@
 
         <View
             android:id="@+id/more_2"
+            android:visibility="gone"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
@@ -165,7 +167,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="14 tasks"
+            android:text="14"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -175,6 +177,7 @@
         <View
             android:id="@+id/more_3"
             android:layout_width="20dp"
+            android:visibility="gone"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -217,7 +220,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="6 tasks"
+            android:text="6"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -227,6 +230,7 @@
         <View
             android:id="@+id/more_4"
             android:layout_width="20dp"
+            android:visibility="gone"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -264,11 +268,10 @@
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Частное"
+            android:text="Приватные"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/private_image" />
 
@@ -277,7 +280,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="10 tasks"
+            android:text="10"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -289,6 +292,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_more"
             app:layout_constraintEnd_toEndOf="parent"
@@ -323,11 +327,11 @@
             app:layout_constraintTop_toBottomOf="@id/done_tasks_image" />
 
         <TextView
-            android:id="@+id/add_task_amount"
+            android:id="@+id/done_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="16 tasks"
+            android:text="16"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

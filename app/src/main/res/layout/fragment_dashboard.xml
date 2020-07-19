@@ -50,7 +50,7 @@
             android:id="@+id/events_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="65 tasks"
+            android:text="65"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
             android:id="@+id/todo_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="112 tasks"
+            android:text="112"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -138,10 +138,10 @@
             app:layout_constraintTop_toBottomOf="@id/notes_view" />
 
         <TextView
-            android:id="@+id/quick_amount"
+            android:id="@+id/plans_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="68 tasks"
+            android:text=" 68 "
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +153,7 @@
         android:id="@+id/task_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="45dp"
         android:text="Выполненные задачи"
         android:textColor="@android:color/black"
         android:textSize="20sp"
@@ -165,7 +165,7 @@
         android:id="@+id/first_line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="35dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@id/task_progress" />
 
@@ -193,7 +193,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Всего задач"
+        android:text="Всего записей"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/total_amount" />
 
@@ -217,7 +217,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:text="Завершённые задачи"
+        android:text="Завершённых задач"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/total_amount" />
 
@@ -232,6 +232,7 @@
     <TextView
         android:id="@+id/first_pr_title"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="События"
@@ -243,6 +244,7 @@
 
     <ProgressBar
         android:id="@+id/event_progress"
+        android:visibility="gone"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
@@ -254,8 +256,9 @@
         android:id="@+id/event_percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="50dp"
-        android:text="75%"
+        android:text="0%"
         android:textColor="@color/calendarEvents"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -266,18 +269,18 @@
         android:id="@+id/second_pr_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:text="Задачи"
         android:textColor="@color/taskEvents"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/event_progress" />
+        app:layout_constraintTop_toBottomOf="@id/second_line" />
 
     <ProgressBar
         android:id="@+id/todo_progress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="280dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -288,15 +291,17 @@
         android:id="@+id/task_percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="45%"
+        android:layout_marginTop="80dp"
+        android:text="0%"
+        android:layout_marginStart="20dp"
         android:textColor="@color/taskEvents"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/event_progress"
-        app:layout_constraintTop_toBottomOf="@id/event_progress" />
+        app:layout_constraintStart_toEndOf="@id/todo_progress"
+        app:layout_constraintTop_toBottomOf="@id/second_line" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/third_pr_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -312,6 +317,7 @@
         android:id="@+id/quick_progress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="280dp"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -322,10 +328,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="82%"
+        android:text="0%"
+        android:visibility="gone"
         android:textColor="@color/quickEvents"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/event_progress"
         app:layout_constraintTop_toBottomOf="@id/task_percent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/settings_view"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_settings" />

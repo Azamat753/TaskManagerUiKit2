@@ -25,6 +25,11 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
 
                 boolean isShown = Preference.getInstance(getApplication()).isShown();
+                if (FirebaseAuth.getInstance().getCurrentUser()==null){
+                    startActivity(new Intent(SplashActivity.this, RegistrationActivity.class));
+                    finish();
+                    return;
+                }
                 if (isShown) {
                     startActivity(new Intent(getApplication(), MainActivity.class));
                     finish();
@@ -32,11 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplication(), BoardActivity.class));
                     finish();
                 }
-                if (FirebaseAuth.getInstance().getCurrentUser()==null){
-                    startActivity(new Intent(SplashActivity.this, RegistrationActivity.class));
-                    finish();
-                    return;
-                }
+
             }
         }, 10);
     }

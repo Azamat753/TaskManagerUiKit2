@@ -15,17 +15,19 @@
         android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:hint="Введите название заметки"
+        android:hint="Введите суть идеи"
         android:paddingStart="20dp"
         android:textSize="20sp"
+        android:inputType="textCapSentences"
         app:layout_constraintTop_toBottomOf="@id/quick_toolbar_view" />
 
     <EditText
         android:id="@+id/edit_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите описание или локацию"
+        android:hint="Введите описание"
         android:paddingStart="20dp"
+        android:inputType="textCapSentences"
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_title" />

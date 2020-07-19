@@ -12,8 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
@@ -29,8 +27,6 @@ import com.google.firebase.storage.UploadTask;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.QuickViewModel;
-import com.shivtechs.maplocationpicker.MapUtility;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +44,6 @@ public class QuickActivity extends AppCompatActivity {
     String userId;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonColorPicker, floatingActionButtonLocationPicker, floatingActionButtonImagePicker;
-    private QuickViewModel quickViewModel;
     QuickModel quickModel;
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
@@ -56,7 +51,6 @@ public class QuickActivity extends AppCompatActivity {
     int choosedColor;
     String imageUri;
     String image;
-    Integer amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,18 +59,6 @@ public class QuickActivity extends AppCompatActivity {
         userId = FirebaseAuth.getInstance().getUid();
         initView();
         getIncomingIntent();
-
-
-        quickViewModel = ViewModelProviders.of(this).get(QuickViewModel.class);
-
-        MapUtility.apiKey = getResources().getString(R.string.your_api_key);
-
-        quickViewModel.counter.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                amount = integer;
-            }
-        });
 
         findViewById(R.id.back_view).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,7 +194,6 @@ public class QuickActivity extends AppCompatActivity {
                         .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                             @Override
                             public void onChooseColor(int position, int color) {
-                                Toast.makeText(QuickActivity.this, position + "", Toast.LENGTH_SHORT).show();
                                 e_title.setTextColor(color);
                                 choosedColor = color;
                             }
@@ -223,7 +204,6 @@ public class QuickActivity extends AppCompatActivity {
                             }
                         })
                         .addListenerButton("Попробовать", (v1, position, color) -> {
-                            Toast.makeText(QuickActivity.this, position + "", Toast.LENGTH_SHORT).show();
                             e_title.setTextColor(color);
                         }).show();
             }
@@ -249,7 +229,6 @@ public class QuickActivity extends AppCompatActivity {
             final Uri imageUri = data.getData();
             pickImage = imageUri.toString();
             Glide.with(this).load(pickImage).into(image_title);
-
         }
     }
 

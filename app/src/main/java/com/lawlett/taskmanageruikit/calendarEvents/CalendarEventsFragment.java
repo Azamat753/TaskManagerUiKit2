@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,11 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarDoneModel;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.DayAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
-import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +47,7 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
     int color;
     View colorView;
 int position;
+CalendarDoneModel calendarDoneModel;
     public CalendarEventsFragment() {
         // Required empty public constructor
     }
@@ -101,23 +101,25 @@ int position;
             @SuppressLint({"LogNotTimber", "NewApi"})
             @Override
             public void onDateSelected(Calendar date, int position) {
-                Toast.makeText(getContext(), "" + date.getTime(), Toast.LENGTH_SHORT).show();
-                Log.e("date", "onDateSelected: " + "weekyear" + date.getWeekYear() + "firstdayofweek" + date.getFirstDayOfWeek() + "getTime" + date.getTime());
+//
+//                Intent intent = new Intent(getContext(), TodayEvent.class);
+//                intent.putExtra("month",String.valueOf(date.getTime().getMonth()));
+//                intent.putExtra("day",String.valueOf(date.getTime().getDate()));
+//
+//                startActivity(intent);
             }
             @Override
-            public void onCalendarScroll(HorizontalCalendarView calendarView,
-                                         int dx, int dy) {
-                Log.e("date", "onCalendarScroll: " + dx + dy);
+            public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy) {
+
             }
             @RequiresApi(api = Build.VERSION_CODES.O)
             @SuppressLint("LogNotTimber")
             @Override
             public boolean onDateLongClicked(Calendar date, int position) {
-                Toast.makeText(getContext(), "" + date.getTime(), Toast.LENGTH_SHORT).show();
                 Log.e("date", "onDateLongClicked: " + "weekyear" + date.getWeekYear() + "firstdayofweek" + date.getFirstDayOfWeek() + "getTime" + date.getTime());
 
-                IOpenCalendar listener = (IOpenCalendar) getActivity();
-                listener.openCalendar();
+//                IOpenCalendar listener = (IOpenCalendar) getActivity();
+//                listener.openCalendar();
                 return true;
             }
         });
@@ -141,23 +143,23 @@ int position;
     public void onItemClick(int position) {
         this.position = position;
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
-        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getActivity(), AddEventActivity.class);
-                intent.putExtra("calendar", list.get(position));
-                getActivity().startActivityForResult(intent, 42);
-                App.getDataBase().dataDao().delete(list.get(position));
-                adapter.notifyDataSetChanged();
-            }
-        }).show();
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
+//        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
+//                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                Intent intent = new Intent(getActivity(), AddEventActivity.class);
+//                intent.putExtra("calendar", list.get(position));
+//                App.getDataBase().dataDao().delete(list.get(position));
+//                adapter.notifyDataSetChanged();
+//                Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
+//            }
+//        }).show();
     }
 
     @Override
@@ -172,7 +174,12 @@ int position;
                 }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                calendarDoneModel= new CalendarDoneModel("123");
+
+                App.getDataBase().calendarDoneTaskDao().insert(calendarDoneModel);
+
                 App.getDataBase().dataDao().delete(list.get(position));
+
                 adapter.notifyDataSetChanged();
             }
         }).show();

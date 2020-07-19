@@ -10,10 +10,20 @@ public class DoneModel implements Serializable {
     private long id;
     public String doneTitle;
     public String doneDesc;
+    public int color;
 
-    public DoneModel(String doneTitle, String doneDesc) {
+    public DoneModel(String doneTitle, String doneDesc,int color) {
         this.doneTitle = doneTitle;
         this.doneDesc = doneDesc;
+        this.color= color;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public long getId() {

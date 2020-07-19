@@ -11,8 +11,7 @@
         android:text="Personal"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@android:color/black"/>
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/done_desc"
@@ -21,8 +20,5 @@
         android:text="Business meeting"
         android:textSize="30sp"
         android:textColor="@android:color/black"/>
-
-
-
 
 </LinearLayout>

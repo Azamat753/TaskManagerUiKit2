@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.quick.data.model.QuickDoneModel;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -37,12 +38,12 @@ public class QuickFragment extends Fragment implements IOnClickListener {
     int position;
     int pos;
     RecyclerView recyclerViewQuick;
+    QuickDoneModel quickDoneModel;
 
     public QuickFragment() {
         // Required empty public constructor
 
     }
-
     @SuppressLint("FragmentLiveDataObserve")
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
@@ -58,8 +59,6 @@ public class QuickFragment extends Fragment implements IOnClickListener {
             adapter.notifyDataSetChanged();
 
         });
-
-
         addQuickBtn = root.findViewById(R.id.add_quick_btn);
         addQuickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +104,8 @@ public class QuickFragment extends Fragment implements IOnClickListener {
                 }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                quickDoneModel= new QuickDoneModel("quickDone");
+                App.getDataBase().quickDoneTaskDao().insert(quickDoneModel);
                 App.getDataBase().taskDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
             }

@@ -50,50 +50,7 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
         public PersonalViewHolder(@NonNull View itemView) {
             super(itemView);
             personalTask = itemView.findViewById(R.id.personal_task);
-//            mLeftAnim = AnimationUtils.loadAnimation(context, R.anim.slide_in_left);
-//            mRightAnim = AnimationUtils.loadAnimation(context, R.anim.slide_in_right);
-//            mAnimator = itemView.findViewById(R.id.animator);
-//
-//            mLeftAnim.setAnimationListener(new Animation.AnimationListener() {
-//                @Override
-//                public void onAnimationStart(Animation animation) {
-//
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animation animation) {
-//                    itemView.setOnTouchListener(new OnSwipeTouchListener(context) {
-//
-//                        public void onSwipeRight() {
-//                            Toast.makeText(context, "right", Toast.LENGTH_SHORT).show();
-//                        }
-//                });
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animation animation) {
-//
-//                }
-//            });
-//
-//            itemView.setOnLongClickListener(this);
-//            itemView.setOnTouchListener(new OnSwipeTouchListener(context) {
-//                public void onSwipeTop() {
-//                    Toast.makeText(context, "top", Toast.LENGTH_SHORT).show();
-//                }
-////                public void onSwipeRight() {
-////                    Toast.makeText(context, "right", Toast.LENGTH_SHORT).show();
-////                }
-////
-//
-//                public void onSwipeLeft() {
-//                    Toast.makeText(context, "left", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                public void onSwipeBottom() {
-//                    Toast.makeText(context, "bottom", Toast.LENGTH_SHORT).show();
-//                }
-//            });
+            itemView.setOnLongClickListener(this);
 
         }
 

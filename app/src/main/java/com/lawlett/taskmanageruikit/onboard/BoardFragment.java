@@ -16,6 +16,8 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.Preference;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -63,8 +65,8 @@ public class BoardFragment extends Fragment {
                 notes_anim.setVisibility(View.GONE);
                 break;
             case 2:
-                title_tv.setText("Быстрые задачи");
-                desc_tv.setText("Самый быстрый способ перенести идеи, мысли и задачи, не теряя внимания");
+                title_tv.setText("Запись идей");
+                desc_tv.setText("Самый эффективный способ перенести идеи, мысли и задачи, не теряя внимания");
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.VISIBLE);
@@ -73,20 +75,10 @@ public class BoardFragment extends Fragment {
 
         }
 
-//        okBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PasswordPreference.getInstance(getContext()).savePassword(edit_password.getText().toString().trim());
-//                Preference.getInstance(getContext()).saveShown();
-//                startActivity(new Intent(getContext(), MainActivity.class));
-//                getActivity().finish();
-//            }
-//        });
-
         start_tv.setOnClickListener(v -> {
             Preference.getInstance(getContext()).saveShown();
             startActivity(new Intent(getContext(), MainActivity.class));
-            getActivity().finish();
+            Objects.requireNonNull(getActivity()).finish();
         });
 
     }

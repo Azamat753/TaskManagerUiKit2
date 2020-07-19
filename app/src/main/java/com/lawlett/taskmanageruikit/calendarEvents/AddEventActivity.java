@@ -30,11 +30,11 @@ import java.util.Calendar;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    TextView startData, startTime, endTime,startDataText;
+    TextView startData, startTime, endTime,startDataText,startTimeNumber,endTimeNumber;
     EditText title;
     ConstraintLayout constraintLayout;
     CalendarTaskModel calendarTaskModel;
-    ImageView backView, doneView;
+    ImageView backView, doneView,back;
     String currentDataString;
     String hour, endHour, minuteCurrent, endMinute;
     View colorView;
@@ -67,7 +67,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     endHour = String.valueOf(selectedHour);
                     endMinute = String.valueOf(selectedMinute);
-                    endTime.setText(selectedHour + ":" + selectedMinute);
+                    endTimeNumber.setText(selectedHour + ":" + selectedMinute);
 
                 }
             }, hour, minute, true);//Yes 24 hour time
@@ -76,7 +76,26 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
         });
 
-        doneView.setOnClickListener(v -> recordDataRoom());
+        doneView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordDataRoom();
+            }
+        });
+
+        back=findViewById(R.id.back_view_event);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordDataRoom();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        recordDataRoom();
     }
 
     @Override
@@ -94,15 +113,17 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         hour = String.valueOf(hourOfDay);
         minuteCurrent = String.valueOf(minute);
-        startTime.setText(hour + ":" + minute);
+        startTimeNumber.setText(hour + ":" + minute);
         Log.e("current", "onTimeSet: " + hourOfDay + "   " + minute);
     }
 
     public void initViews() {
         title = findViewById(R.id.edit_title);
         startData = findViewById(R.id.start_date_number);
-        startTime = findViewById(R.id.start_time_number);
-        endTime = findViewById(R.id.end_time_number);
+        startTime = findViewById(R.id.start_time);
+        startTimeNumber=findViewById(R.id.start_time_number);
+        endTimeNumber=findViewById(R.id.end_time_number);
+        endTime = findViewById(R.id.end_time);
         constraintLayout = findViewById(R.id.topconstraint);
         backView = findViewById(R.id.back_view_event);
         doneView = findViewById(R.id.done_view_event);
@@ -111,9 +132,13 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     }
 
     public void recordDataRoom() {
-        calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, endHour + ":" + endMinute, choosedColor);
-        App.getDataBase().dataDao().insert(calendarTaskModel);
-        finish();
+        if (currentDataString != null && title.getText() != null && hour != null && minuteCurrent != null && endHour != null && endMinute != null) {
+            calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, endHour + ":" + endMinute, choosedColor);
+            App.getDataBase().dataDao().insert(calendarTaskModel);
+            finish();
+        } else {
+            Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void chooseColor(View view) {
@@ -153,17 +178,15 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                     colorView.setBackgroundColor(color);
                 }).show();
     }
-
     public void getIncomingIntent() {
         Intent intent = getIntent();
         calendarTaskModel = (CalendarTaskModel) intent.getSerializableExtra("calendar");
         if (calendarTaskModel != null) {
             title.setText(calendarTaskModel.getTitle());
-            startTime.setText(calendarTaskModel.getStartTime());
-            endTime.setText(calendarTaskModel.getEndTime());
+            startTimeNumber.setText(calendarTaskModel.getStartTime());
+            endTimeNumber.setText(calendarTaskModel.getEndTime());
             colorView.setBackgroundColor(calendarTaskModel.getChooseColor());
             startData.setText(calendarTaskModel.getDataTime());
-
         }
     }
 

@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -25,8 +29,10 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     WorkAdapter adapter;
     EditText editText;
     WorkModel workModel;
+    DoneModel doneModel;
     List<WorkModel> list ;
-
+int pos;
+ImageView workBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +56,28 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
         editText = findViewById(R.id.editText_work);
 
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
 
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                pos= viewHolder.getAdapterPosition();
+                App.getDataBase().workDao().delete(list.get(pos));
+                adapter.notifyDataSetChanged();
+                Toast.makeText(WorkActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerView);
+
+        workBack=findViewById(R.id.personal_back);
+        workBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     public void addWorkTask(View view) {
@@ -58,9 +85,13 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     }
 
     public void recordDataRoom() {
-        workModel = new WorkModel(editText.getText().toString().trim());
-        App.getDataBase().workDao().insert(workModel);
-        editText.setText("");
+        if (editText.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
+        } else {
+            workModel = new WorkModel(editText.getText().toString().trim());
+            App.getDataBase().workDao().insert(workModel);
+            editText.setText("");
+        }
     }
     public void changeView(){
         TextView toolbar = findViewById(R.id.toolbar_title);
@@ -74,7 +105,7 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     @Override
     public void onItemLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы хотите удалить ?").setMessage("Удалить задачу")
+        dialog.setTitle("Вы выполнили задачу ?").setMessage("Убрать задачу")
                 .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -83,6 +114,8 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
                 }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                doneModel = new DoneModel("Работа", list.get(0).workTask,R.color.color10);
+                App.getDataBase().doneTaskDao().insert(doneModel);
                 App.getDataBase().workDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
             }

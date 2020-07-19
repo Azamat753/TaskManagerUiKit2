@@ -16,16 +16,19 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/awesomeTextInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_toolbar" />
 
     <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
-        android:layout_marginStart="20dp"
+        android:id="@+id/awesomeTextInputLayout2"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:padding="16dp"
         app:borderColor="#00BCD4"
         app:borderWidth="2dp"
@@ -36,8 +39,8 @@
         <EditText
             android:id="@+id/editText_home"
             android:layout_width="270dp"
-            android:layout_marginStart="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:hint="Задача" />
     </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
 
