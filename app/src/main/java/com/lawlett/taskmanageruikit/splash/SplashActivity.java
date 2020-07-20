@@ -6,11 +6,9 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.onboard.BoardActivity;
-import com.lawlett.taskmanageruikit.registration.RegistrationActivity;
 import com.lawlett.taskmanageruikit.utils.Preference;
 
 public class SplashActivity extends AppCompatActivity {
@@ -25,11 +23,11 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
 
                 boolean isShown = Preference.getInstance(getApplication()).isShown();
-                if (FirebaseAuth.getInstance().getCurrentUser()==null){
-                    startActivity(new Intent(SplashActivity.this, RegistrationActivity.class));
-                    finish();
-                    return;
-                }
+//                if (FirebaseAuth.getInstance().getCurrentUser()==null){
+//                    startActivity(new Intent(SplashActivity.this, RegistrationActivity.class));
+//                    finish();
+//                    return;
+//                }
                 if (isShown) {
                     startActivity(new Intent(getApplication(), MainActivity.class));
                     finish();
