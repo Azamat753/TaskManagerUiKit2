@@ -36,7 +36,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     CalendarTaskModel calendarTaskModel;
     ImageView backView, doneView,back;
     String currentDataString;
-    String hour, endHour, minuteCurrent, endMinute;
+    String hour, endHour, minuteCurrent, endMinute,titleT,getStart,getDataTime,getEndTime;
     View colorView;
     int choosedColor;
 
@@ -132,12 +132,19 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     }
 
     public void recordDataRoom() {
-        if (currentDataString != null && title.getText() != null && hour != null && minuteCurrent != null && endHour != null && endMinute != null) {
+        titleT=title.getText().toString();
+        if (currentDataString != null && titleT!= null && hour != null && minuteCurrent != null && endHour != null && endMinute != null) {
             calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, endHour + ":" + endMinute, choosedColor);
             App.getDataBase().dataDao().insert(calendarTaskModel);
             finish();
-        } else {
+
+        } else if (titleT!=null&&getStart!=null&&getDataTime!=null&&getEndTime!=null) {
+            calendarTaskModel = new CalendarTaskModel(getDataTime, titleT, getStart, getEndTime, choosedColor);
+            App.getDataBase().dataDao().insert(calendarTaskModel);
+            finish();
+        }else {
             Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -182,11 +189,20 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         Intent intent = getIntent();
         calendarTaskModel = (CalendarTaskModel) intent.getSerializableExtra("calendar");
         if (calendarTaskModel != null) {
-            title.setText(calendarTaskModel.getTitle());
-            startTimeNumber.setText(calendarTaskModel.getStartTime());
-            endTimeNumber.setText(calendarTaskModel.getEndTime());
+          titleT= calendarTaskModel.getTitle();
+          title.setText(titleT);
+
+          getStart=calendarTaskModel.getStartTime();
+            startTimeNumber.setText(getStart);
+
+            getEndTime=calendarTaskModel.getEndTime();
+            endTimeNumber.setText(getEndTime);
+
+            choosedColor=calendarTaskModel.getChooseColor();
             colorView.setBackgroundColor(calendarTaskModel.getChooseColor());
-            startData.setText(calendarTaskModel.getDataTime());
+
+            getDataTime=calendarTaskModel.getDataTime();
+            startData.setText(getDataTime);
         }
     }
 

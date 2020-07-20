@@ -32,6 +32,7 @@ import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
@@ -143,23 +144,23 @@ CalendarDoneModel calendarDoneModel;
     public void onItemClick(int position) {
         this.position = position;
 
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
-//        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
-//                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                Intent intent = new Intent(getActivity(), AddEventActivity.class);
-//                intent.putExtra("calendar", list.get(position));
-//                App.getDataBase().dataDao().delete(list.get(position));
-//                adapter.notifyDataSetChanged();
-//                Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
-//            }
-//        }).show();
+        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
+        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), AddEventActivity.class);
+                intent.putExtra("calendar", list.get(position));
+                App.getDataBase().dataDao().delete(list.get(position));
+                adapter.notifyDataSetChanged();
+                Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
+            }
+        }).show();
     }
 
     @Override
