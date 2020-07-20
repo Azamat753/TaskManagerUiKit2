@@ -22,8 +22,6 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,9 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
@@ -77,32 +73,32 @@ public class QuickActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recordDataRoom();
-                uploadTask();
+//                uploadTask();
                 //   uploadImage();
             }
         });
     }
 
-    public void uploadTask() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("description", e_description.getText().toString());
-        map.put("title", e_title.getText().toString());
-        userId = FirebaseAuth.getInstance().getUid();
-        FirebaseFirestore.getInstance()
-                .collection("tasks")
-
-                .add(map)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-//                            Toast.makeText(QuickActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                        } else {
-//                            Toast.makeText(QuickActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
+//    public void uploadTask() {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("description", e_description.getText().toString());
+//        map.put("title", e_title.getText().toString());
+//        userId = FirebaseAuth.getInstance().getUid();
+//        FirebaseFirestore.getInstance()
+//                .collection("tasks")
+//
+//                .add(map)
+//                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentReference> task) {
+//                        if (task.isSuccessful()) {
+////                            Toast.makeText(QuickActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                        } else {
+////                            Toast.makeText(QuickActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//    }
 
 
 //    private void getInfo() {
@@ -141,15 +137,14 @@ public class QuickActivity extends AppCompatActivity {
                 pickImage = captureImage;
             } else if (captureImage == null) {
                 pickImage = gallImage;
-            } else if (image!=null){
-                pickImage=image;
             }
+
             quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
 
-            App.getDataBase().taskDao().insert(quickModel);
-            finish();
-        }
-    }
+                App.getDataBase().taskDao().insert(quickModel);
+                finish();
+
+    }}
 
     @Override
     public void onBackPressed() {
@@ -161,12 +156,15 @@ public class QuickActivity extends AppCompatActivity {
         Intent intent = getIntent();
         quickModel = (QuickModel) intent.getSerializableExtra("task");
         if (quickModel != null) {
-            e_title.setText(quickModel.getTitle());
-            e_description.setText(quickModel.getDescription());
-            e_title.setTextColor(quickModel.getColor());
-            image = quickModel.getImage();
-            Glide.with(this).load(quickModel.getImage()).into(image_title);
-            pickImage = quickModel.getImage();
+             textTitle= quickModel.getTitle();
+            e_title.setText(textTitle);
+            textDescription=quickModel.getDescription();
+            e_description.setText(textDescription);
+            choosedColor = quickModel.getColor();
+            e_title.setTextColor(choosedColor);
+            gallImage = quickModel.getImage();
+            Glide.with(this).load(gallImage).into(image_title);
+
         }
     }
 
