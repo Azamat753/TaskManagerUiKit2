@@ -36,11 +36,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".registration.RegistrationActivity" >
-
-
         </activity>
         <activity android:name=".onboard.BoardActivity" />
         <activity android:name=".main.MainActivity" />
+
+
     </application>
+
 
 </manifest>

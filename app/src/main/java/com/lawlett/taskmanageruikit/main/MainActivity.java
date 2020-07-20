@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -157,14 +156,6 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                                                             }
                                                         }).show();
 
-                                                break;
-                                            case R.id.sort_popup:
-
-                                                Toast.makeText(MainActivity.this, "не работает", Toast.LENGTH_SHORT).show();
-                                                break;
-                                            case R.id.set_view_list:
-//
-                                                Toast.makeText(MainActivity.this, "не работает", Toast.LENGTH_SHORT).show();
                                                 break;
                                         }
 

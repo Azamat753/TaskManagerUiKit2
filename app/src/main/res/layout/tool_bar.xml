@@ -36,6 +36,7 @@
                 android:id="@+id/more_btn"
                 android:layout_width="32sp"
                 android:layout_height="32sp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_more"
                 android:layout_marginStart="100dp"/>
 

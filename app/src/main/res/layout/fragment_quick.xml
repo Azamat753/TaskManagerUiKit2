@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".quick.QuickFragment">
 
     <View
@@ -14,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:padding="16dp"
         android:id="@+id/quick_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

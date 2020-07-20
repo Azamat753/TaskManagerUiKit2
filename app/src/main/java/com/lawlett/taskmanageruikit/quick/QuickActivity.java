@@ -1,9 +1,12 @@
 package com.lawlett.taskmanageruikit.quick;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +31,7 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,16 +44,18 @@ import java.util.Random;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class QuickActivity extends AppCompatActivity {
+    public static final int CAMERA_REQUEST = 500;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    String currentPhotoPath;
 
     String userId;
     FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButtonColorPicker, floatingActionButtonLocationPicker, floatingActionButtonImagePicker;
+    FloatingActionButton floatingActionButtonColorPicker, floatingActionButtonCameraPicker, floatingActionButtonImagePicker;
     QuickModel quickModel;
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
-    String pickImage, textTitle, textDescription;
+    String pickImage, textTitle, textDescription, captureImage, gallImage;
     int choosedColor;
-    String imageUri;
     String image;
 
     @Override
@@ -72,7 +78,7 @@ public class QuickActivity extends AppCompatActivity {
             public void onClick(View v) {
                 recordDataRoom();
                 uploadTask();
-             //   uploadImage();
+                //   uploadImage();
             }
         });
     }
@@ -81,7 +87,7 @@ public class QuickActivity extends AppCompatActivity {
         Map<String, Object> map = new HashMap<>();
         map.put("description", e_description.getText().toString());
         map.put("title", e_title.getText().toString());
-//        userId = FirebaseAuth.getInstance().getUid();
+        userId = FirebaseAuth.getInstance().getUid();
         FirebaseFirestore.getInstance()
                 .collection("tasks")
 
@@ -90,9 +96,9 @@ public class QuickActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(QuickActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(QuickActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(QuickActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(QuickActivity.this, "Failure", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -129,14 +135,20 @@ public class QuickActivity extends AppCompatActivity {
 
             final String month = monthName[c.get(Calendar.MONTH)];
 
+
             String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-            if (pickImage == null) pickImage = image;
-
-            quickModel = new QuickModel(textTitle, textDescription, currentDate+" "+month+" "+year, pickImage, choosedColor,null);
-
-                App.getDataBase().taskDao().insert(quickModel);
-                finish();
+            if (gallImage == null) {
+                pickImage = captureImage;
+            } else if (captureImage == null) {
+                pickImage = gallImage;
+            } else if (image!=null){
+                pickImage=image;
             }
+            quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
+
+            App.getDataBase().taskDao().insert(quickModel);
+            finish();
+        }
     }
 
     @Override
@@ -154,14 +166,14 @@ public class QuickActivity extends AppCompatActivity {
             e_title.setTextColor(quickModel.getColor());
             image = quickModel.getImage();
             Glide.with(this).load(quickModel.getImage()).into(image_title);
-
+            pickImage = quickModel.getImage();
         }
     }
 
     public void initView() {
         materialDesignFAM = findViewById(R.id.menu_floating);
         floatingActionButtonColorPicker = findViewById(R.id.fab);
-        floatingActionButtonLocationPicker = findViewById(R.id.fab2);
+        floatingActionButtonCameraPicker = findViewById(R.id.fab2);
         floatingActionButtonImagePicker = findViewById(R.id.fab3);
         image_title = findViewById(R.id.image_title);
 
@@ -208,10 +220,15 @@ public class QuickActivity extends AppCompatActivity {
                         }).show();
             }
         });
-        floatingActionButtonLocationPicker.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("geo:0,0?q=Скопируйте+локацию"));
-            startActivity(intent);
+
+        floatingActionButtonCameraPicker.setOnClickListener(v -> {
+
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+//            Intent intent = new Intent(Intent.ACTION_VIEW,
+//                    Uri.parse("geo:0,0?q=Скопируйте+локацию"));
+//            startActivity(intent);
         });
         floatingActionButtonImagePicker.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -222,19 +239,34 @@ public class QuickActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 01 && resultCode == RESULT_OK) {
             final Uri imageUri = data.getData();
-            pickImage = imageUri.toString();
-            Glide.with(this).load(pickImage).into(image_title);
+            gallImage = imageUri.toString();
+            Glide.with(this).load(imageUri).into(image_title);
         }
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Bitmap thumbnailBitmap = (Bitmap) data.getExtras().get("data");
+            assert thumbnailBitmap != null;
+            Uri a = getImageUri(this, thumbnailBitmap);
+            captureImage = a.toString();
+            Glide.with(this).load(captureImage).into(image_title);
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     public void uploadImage() {
         Random random = new Random();
-        Integer counter =random.nextInt(20000);
+        Integer counter = random.nextInt(20000);
 
         StorageReference reference = FirebaseStorage.getInstance()
                 .getReference().child("save/image.jpg" + counter);
@@ -253,5 +285,6 @@ public class QuickActivity extends AppCompatActivity {
         });
 
     }
+
 }
 

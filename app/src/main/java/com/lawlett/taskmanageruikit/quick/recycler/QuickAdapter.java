@@ -1,6 +1,9 @@
 package com.lawlett.taskmanageruikit.quick.recycler;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.IOnClickListener;
 
 import java.util.Calendar;
@@ -81,6 +84,17 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
                 }
                 Glide.with(context).load(quickModel.getImage()).into(imageDesc);
 
+
+        }
+        public Bitmap stringToBitMap(String encodedString){
+            try {
+                byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+                Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+                return bitmap;
+            } catch(Exception e) {
+                e.getMessage();
+                return null;
+            }
         }
         @Override
         public void onClick(View v) {

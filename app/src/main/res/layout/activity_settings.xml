@@ -6,28 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".settings.SettingsActivity">
 
-<include
-    android:id="@+id/settings_tool_bar"
-    layout="@layout/settings_toolbar"/>
+    <include
+        android:id="@+id/settings_tool_bar"
+        layout="@layout/settings_toolbar" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settings_tool_bar" />
 
     <androidx.cardview.widget.CardView
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@id/settings_tool_bar"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo">
+
         <TextView
             android:id="@+id/clear_password"
-            android:elevation="5dp"
-            app:layout_constraintTop_toBottomOf="@id/settings_tool_bar"
-            android:textSize="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:drawablePadding="5dp"
-            android:drawableEnd="@drawable/ic_trash_forever_24"
-            android:textColor="@color/black_de"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Очистить данные о пароле"/>
+            android:drawableEnd="@drawable/ic_trash_forever_24"
+            android:drawablePadding="5dp"
+            android:elevation="5dp"
+            android:text="Очистить данные о пароле"
+            android:textColor="@color/black_de"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settings_tool_bar" />
 
     </androidx.cardview.widget.CardView>
 
