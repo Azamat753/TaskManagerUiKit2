@@ -19,6 +19,7 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IPersonalOnClickListener;
+import com.lawlett.taskmanageruikit.utils.PersonalSizePreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class PersonalActivity extends AppCompatActivity implements IPersonalOnCl
     String personal;
     ImageView personalBack;
     int pos;
-
+    int counter=0 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +80,11 @@ onBackPressed();
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+    }
 
     public void addPersonalTask(View view) {
         recordDataRoom();
@@ -107,6 +112,8 @@ onBackPressed();
             App.getDataBase().personalDao().delete(list.get(position));
             adapter.notifyDataSetChanged();
 
+            counter=PersonalSizePreference.getInstance(this).getPersonalSize()+1;
+            PersonalSizePreference.getInstance(this).savePersonalSize(counter);
         }).show();
     }
 

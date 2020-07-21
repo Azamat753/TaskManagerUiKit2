@@ -9,4 +9,6 @@
     <color name="calendarEvents">#005EFF</color>
     <color name="taskEvents">#EC1C1C</color>
     <color name="quickEvents">#673AB7</color>
+    <color name="meetColor">#FF9800</color>
+    <color name="allTaskColor">#4CAF50</color>
 </resources>

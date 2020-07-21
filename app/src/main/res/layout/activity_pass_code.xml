@@ -44,6 +44,7 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="100dp"
         android:maxLength="4"
+        android:hint="4 цифры"
         android:inputType="numberPassword"
         android:textColor="@android:color/holo_green_light"
         android:textSize="40sp" />

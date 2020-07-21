@@ -26,7 +26,7 @@ public class DoneTasksActivity extends AppCompatActivity implements IDoneOnClick
     List<DoneModel> list;
     int pos;
     ImageView doneBack;
-
+ArrayList<String> work= new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,7 @@ public class DoneTasksActivity extends AppCompatActivity implements IDoneOnClick
             list.clear();
             list.addAll(doneModels);
             adapter.notifyDataSetChanged();
+
         });
 
         recyclerView = findViewById(R.id.done_recyclerview);

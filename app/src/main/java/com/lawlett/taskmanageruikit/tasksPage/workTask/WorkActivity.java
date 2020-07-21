@@ -20,6 +20,7 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IWorkOnClickListener;
+import com.lawlett.taskmanageruikit.utils.WorkSizePreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +31,11 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     EditText editText;
     WorkModel workModel;
     DoneModel doneModel;
-    List<WorkModel> list ;
-int pos;
-ImageView workBack;
+    List<WorkModel> list;
+    int pos;
+    ImageView workBack;
+    int counter=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,13 +53,13 @@ ImageView workBack;
         });
 
         recyclerView = findViewById(R.id.recycler_work);
-        adapter = new WorkAdapter((ArrayList<WorkModel>) list,this,this);
+        adapter = new WorkAdapter((ArrayList<WorkModel>) list, this, this);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_work);
 
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -64,14 +67,14 @@ ImageView workBack;
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                pos= viewHolder.getAdapterPosition();
+                pos = viewHolder.getAdapterPosition();
                 App.getDataBase().workDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(WorkActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
 
-        workBack=findViewById(R.id.personal_back);
+        workBack = findViewById(R.id.personal_back);
         workBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +96,8 @@ ImageView workBack;
             editText.setText("");
         }
     }
-    public void changeView(){
+
+    public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText("Работа");
         ImageView imageView = findViewById(R.id.personal_circle_image);
@@ -106,18 +110,17 @@ ImageView workBack;
     public void onItemLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Вы выполнили задачу ?").setMessage("Убрать задачу")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                doneModel = new DoneModel("Работа", list.get(0).workTask,R.color.color10);
+                doneModel = new DoneModel("Работа", list.get(0).workTask, R.color.color10);
                 App.getDataBase().doneTaskDao().insert(doneModel);
                 App.getDataBase().workDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
+
+
+                counter= WorkSizePreference.getInstance(WorkActivity.this).getWorkSize()+1;
+                WorkSizePreference.getInstance(WorkActivity.this).saveWorkSize(counter);
             }
         }).show();
     }

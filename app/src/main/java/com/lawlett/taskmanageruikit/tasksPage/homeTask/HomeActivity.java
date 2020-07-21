@@ -20,6 +20,7 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
 import com.lawlett.taskmanageruikit.todo.TodoFragment;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.HomeSizePreference;
 import com.lawlett.taskmanageruikit.utils.IHomeOnClickListener;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeOnClickListe
     HomeModel homeModel;
     DoneModel doneModel;
     EditText editText;
-int pos;
+int pos,counter=0;
 TodoFragment todoFragment;
 ImageView homeBack;
     @Override
@@ -122,6 +123,9 @@ ImageView homeBack;
                 App.getDataBase().doneTaskDao().insert(doneModel);
                 App.getDataBase().homeDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
+
+                counter= HomeSizePreference.getInstance(HomeActivity.this).getHomeSize()+1;
+                HomeSizePreference.getInstance(HomeActivity.this).saveHomeSize(counter);
             }
         }).show();
     }

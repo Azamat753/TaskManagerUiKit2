@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.doneTask.DoneTasksActivity;
@@ -34,7 +32,6 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 
@@ -62,14 +59,9 @@ public class TodoFragment extends Fragment {
         private_amount = view.findViewById(R.id.private_task_amount);
         done_amount = view.findViewById(R.id.done_amount);
 
-        doneAmount = App.getDataBase().doneTaskDao().getAll().size();
-        personalAmount = App.getDataBase().personalDao().getAll().size();
-        workAmount = App.getDataBase().workDao().getAll().size();
-        meetAmount = App.getDataBase().meetDao().getAll().size();
-        homeAmount = App.getDataBase().homeDao().getAll().size();
-        privateAmount = App.getDataBase().privateDao().getAll().size();
 
-        notifyView();
+
+
 
         dotsPerson = view.findViewById(R.id.more_1);
         dotsWork = view.findViewById(R.id.more_2);
@@ -152,7 +144,13 @@ public class TodoFragment extends Fragment {
 //            popupMenu.show();
 //        });
 
-        personalImage.setOnClickListener(v -> startActivity(new Intent(getContext(), PersonalActivity.class)));
+        personalImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), PersonalActivity.class));
+
+            }
+        });
         workImage.setOnClickListener(v -> startActivity(new Intent(getContext(), WorkActivity.class)));
         meetImage.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
         homeImage.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
@@ -161,15 +159,8 @@ public class TodoFragment extends Fragment {
             startActivity(new Intent(getContext(), DoneTasksActivity.class));
 
         });
-    }
 
-    public void changeFragment(Fragment fragment) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
     }
-
     public void notifyView() {
         personal_amount.setText(personalAmount + "");
         work_amount.setText(workAmount + "");
@@ -178,4 +169,18 @@ public class TodoFragment extends Fragment {
         private_amount.setText(privateAmount + "");
         done_amount.setText(doneAmount + "");
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        doneAmount = App.getDataBase().doneTaskDao().getAll().size();
+        personalAmount = App.getDataBase().personalDao().getAll().size();
+        workAmount = App.getDataBase().workDao().getAll().size();
+        meetAmount = App.getDataBase().meetDao().getAll().size();
+        homeAmount = App.getDataBase().homeDao().getAll().size();
+        privateAmount = App.getDataBase().privateDao().getAll().size();
+
+        notifyView();
+    }
+
 }

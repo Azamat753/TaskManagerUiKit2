@@ -43,7 +43,6 @@ IDoneOnClickListener listener;
 
     public class DoneViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         TextView title, description;
-
         public DoneViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.done_title);

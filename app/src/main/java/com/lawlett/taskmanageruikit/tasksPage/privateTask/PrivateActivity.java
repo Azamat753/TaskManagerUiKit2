@@ -20,41 +20,43 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IPrivateOnClickListener;
+import com.lawlett.taskmanageruikit.utils.PrivateSizePreference;
 
 import java.util.ArrayList;
 
 public class PrivateActivity extends AppCompatActivity implements IPrivateOnClickListener {
-RecyclerView recyclerView;
-PrivateAdapter adapter;
-ArrayList<PrivateModel> list;
-EditText editText;
-PrivateModel privateModel ;
-DoneModel doneModel;
-int pos;
-ImageView privateBack;
+    RecyclerView recyclerView;
+    PrivateAdapter adapter;
+    ArrayList<PrivateModel> list;
+    EditText editText;
+    PrivateModel privateModel;
+    DoneModel doneModel;
+    int pos, counter = 0;
+    ImageView privateBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private);
-     changeView();
+        changeView();
 
-     list= new ArrayList<>();
+        list = new ArrayList<>();
 
-     App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
-         if (privateModels!=null){
-             list.clear();
-             list.addAll(privateModels);
-             adapter.notifyDataSetChanged();
-         }
-     });
+        App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
+            if (privateModels != null) {
+                list.clear();
+                list.addAll(privateModels);
+                adapter.notifyDataSetChanged();
+            }
+        });
 
-        recyclerView= findViewById(R.id.recycler_private);
-        adapter= new PrivateAdapter(list,this,this);
+        recyclerView = findViewById(R.id.recycler_private);
+        adapter = new PrivateAdapter(list, this, this);
         recyclerView.setAdapter(adapter);
 
-        editText=findViewById(R.id.editText_private);
+        editText = findViewById(R.id.editText_private);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -62,14 +64,14 @@ ImageView privateBack;
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                pos= viewHolder.getAdapterPosition();
+                pos = viewHolder.getAdapterPosition();
                 App.getDataBase().privateDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(PrivateActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
 
-        privateBack=findViewById(R.id.personal_back);
+        privateBack = findViewById(R.id.personal_back);
         privateBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +83,7 @@ ImageView privateBack;
     public void addPrivateTask(View view) {
         recordRoom();
     }
+
     public void recordRoom() {
         if (editText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
@@ -90,7 +93,8 @@ ImageView privateBack;
             editText.setText("");
         }
     }
-    public void changeView(){
+
+    public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText("Приватные");
         ImageView imageView = findViewById(R.id.personal_circle_image);
@@ -112,10 +116,13 @@ ImageView privateBack;
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                doneModel = new DoneModel("Приватные", list.get(0).privateTask,R.color.color2);
+                doneModel = new DoneModel("Приватные", list.get(0).privateTask, R.color.color2);
                 App.getDataBase().doneTaskDao().insert(doneModel);
                 App.getDataBase().privateDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
+
+                counter = PrivateSizePreference.getInstance(PrivateActivity.this).getPrivateSize() + 1;
+                PrivateSizePreference.getInstance(PrivateActivity.this).savePrivateSize(counter);
             }
         }).show();
     }
