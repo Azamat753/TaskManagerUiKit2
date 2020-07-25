@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.tasksPage.workTask;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,12 +16,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.WorkDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IWorkOnClickListener;
-import com.lawlett.taskmanageruikit.utils.WorkSizePreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     WorkAdapter adapter;
     EditText editText;
     WorkModel workModel;
+    WorkDoneModel workDoneModel;
     DoneModel doneModel;
     List<WorkModel> list;
     int pos;
@@ -40,6 +42,9 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+
         changeView();
 
         list = new ArrayList<>();
@@ -109,18 +114,18 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     @Override
     public void onItemLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу ?").setMessage("Убрать задачу")
+        dialog.setTitle("Вы выполнили задачу?")
                 .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                doneModel = new DoneModel("Работа", list.get(0).workTask, R.color.color10);
+                doneModel = new DoneModel("Работа", list.get(0).workTask);
                 App.getDataBase().doneTaskDao().insert(doneModel);
+
+                workDoneModel= new WorkDoneModel(list.get(0).workTask);
+                App.getDataBase().workDoneTaskDao().insert(workDoneModel);
+
                 App.getDataBase().workDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
-
-
-                counter= WorkSizePreference.getInstance(WorkActivity.this).getWorkSize()+1;
-                WorkSizePreference.getInstance(WorkActivity.this).saveWorkSize(counter);
             }
         }).show();
     }

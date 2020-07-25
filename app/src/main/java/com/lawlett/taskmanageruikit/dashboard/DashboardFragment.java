@@ -1,5 +1,8 @@
 package com.lawlett.taskmanageruikit.dashboard;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.HomeSizePreference;
-import com.lawlett.taskmanageruikit.utils.MeetSizePreference;
-import com.lawlett.taskmanageruikit.utils.PersonalSizePreference;
-import com.lawlett.taskmanageruikit.utils.PrivateSizePreference;
-import com.lawlett.taskmanageruikit.utils.WorkSizePreference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +24,11 @@ public class DashboardFragment extends Fragment {
     TextView plans_amount, todo_amount, event_amount, allTask_amount,
             complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent;
     ProgressBar allTaskProgress, personalProgress, workProgress, meetProgress, homeProgress, privateProgress;
+    int personalDoneAmount, workDoneAmount, meetDoneAmount, homeDoneAmount, privateDoneAmount, plansAmount, doneAmount,
+            personalAmount, workAmount, meetAmount, homeAmount, privateAmount, todoAmount, eventAmount, allTaskAmount,
+            allTaskDoneAndNotDone, personalDoneAndNotDone, workDoneAndNotDone,
+            homeDoneAndNotDone, meetDoneAndNotDone, privateDoneAndNotDone;
+    int todoPercent, personalPercentAmount, workPercentAmount, meetPercentAmount, homePercentAmount, privatePercentAmount;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -60,71 +63,98 @@ public class DashboardFragment extends Fragment {
         homeProgress = view.findViewById(R.id.homeTask_progress);
         privateProgress = view.findViewById(R.id.private_progress);
 
-        int personalDoneAmount = PersonalSizePreference.getInstance(getContext()).getPersonalSize();
-        int workDoneAmount = WorkSizePreference.getInstance(getContext()).getWorkSize();
-        int meetDoneAmount = MeetSizePreference.getInstance(getContext()).getMeetSize();
-        int homeDoneAmount = HomeSizePreference.getInstance(getContext()).getHomeSize();
-        int privateDoneAmount = PrivateSizePreference.getInstance(getContext()).getPrivateSize();
+        getDataFromBD();
+        getTasksDoneAmount();
+        getAllTasks();
+        getAllDoneAndNotDoneTasks();
+        countUpPercent();
 
-        int plansAmount = App.getDataBase().taskDao().getAll().size();
-        int doneAmount = App.getDataBase().doneTaskDao().getAll().size();
-        int personalAmount = App.getDataBase().personalDao().getAll().size();
-        int workAmount = App.getDataBase().workDao().getAll().size();
-        int meetAmount = App.getDataBase().meetDao().getAll().size();
-        int homeAmount = App.getDataBase().homeDao().getAll().size();
-        int privateAmount = App.getDataBase().privateDao().getAll().size();
-        int todoAmount = personalAmount + workAmount + meetAmount + homeAmount + privateAmount;
-        int eventAmount = App.getDataBase().dataDao().getAll().size();
-        int allTaskAmount = todoAmount + eventAmount + plansAmount;
-        int allTaskDoneAndNotDone = doneAmount + allTaskAmount;
-        int personalDoneAndNotDone = personalDoneAmount + personalAmount;
-        int workDoneAndNotDone = workDoneAmount + workAmount;
-        int meetDoneAndNotDone = meetDoneAmount + meetAmount;
-        int homeDoneAndNotDone = homeDoneAmount + homeAmount;
-        int privateDoneAndNotDone = privateDoneAmount + privateAmount;
+        setShow();
+    }
 
-
-        plans_amount.setText(plansAmount + "");
-        todo_amount.setText(todoAmount + "");
-        event_amount.setText(eventAmount + "");
-        complete_task_amount.setText(doneAmount + "");
-        allTask_amount.setText(allTaskAmount + "");
-
+    public void countUpPercent() {
         try {
-            int todoPercent = doneAmount * 100 / allTaskDoneAndNotDone;
-            int personalPercentAmount = personalDoneAmount * 100 / personalDoneAndNotDone;
-            int workPercentAmount = workDoneAmount * 100 / workDoneAndNotDone;
-            int meetPercentAmount = meetDoneAmount * 100 / meetDoneAndNotDone;
-            int homePercentAmount = homeDoneAmount * 100 / homeDoneAndNotDone;
-            int privatePercentAmount = privateDoneAmount * 100 / privateDoneAndNotDone;
-
-            todo_percent.setText(todoPercent + "%");
-            personalPercent.setText(personalPercentAmount + "%");
-            workPercent.setText(workPercentAmount + "%");
-            meetPercent.setText(meetPercentAmount + "%");
-            homePercent.setText(homePercentAmount + "%");
-            privatePercent.setText(privatePercentAmount + "%");
+            meetPercentAmount = meetDoneAmount * 100 / meetDoneAndNotDone;
+            todoPercent = doneAmount * 100 / allTaskDoneAndNotDone;
+            personalPercentAmount = personalDoneAmount * 100 / personalDoneAndNotDone;
+            workPercentAmount = workDoneAmount * 100 / workDoneAndNotDone;
+            homePercentAmount = homeDoneAmount * 100 / homeDoneAndNotDone;
+            privatePercentAmount = privateDoneAmount * 100 / privateDoneAndNotDone;
         } catch (ArithmeticException e) {
             e.printStackTrace();
-
         }
+    }
+
+    public void getTasksDoneAmount() {
+        personalDoneAmount = App.getDataBase().personalDoneTaskDao().getAll().size();//Персональные выполненные
+        workDoneAmount = App.getDataBase().workDoneTaskDao().getAll().size();//Работа выполненные
+        meetDoneAmount = App.getDataBase().meetDoneTaskDao().getAll().size();//Встречи выполненные
+        homeDoneAmount = App.getDataBase().homeDoneTaskDao().getAll().size();//Дом выполненные
+        privateDoneAmount = App.getDataBase().privateDoneTaskDao().getAll().size();//Приватные выполненные
+    }
+
+    public void getDataFromBD() {
+        plansAmount = App.getDataBase().taskDao().getAll().size(); //идеи кол=во
+        doneAmount = App.getDataBase().doneTaskDao().getAll().size();//Выполненные задачи
+        personalAmount = App.getDataBase().personalDao().getAll().size();//Персональные задачи кол-во
+        workAmount = App.getDataBase().workDao().getAll().size();//Работа задачи кол-во
+        meetAmount = App.getDataBase().meetDao().getAll().size();//Встречи задачи кол-во
+        homeAmount = App.getDataBase().homeDao().getAll().size();//Дом задачи кол-во
+        privateAmount = App.getDataBase().privateDao().getAll().size();//Приватные задачи кол-во
+        eventAmount = App.getDataBase().dataDao().getAll().size();//События задачи кол-во
+    }
+
+    public void getAllDoneAndNotDoneTasks() {
+        allTaskDoneAndNotDone = doneAmount + allTaskAmount; //Все задачи для получение % Всех задач
+        personalDoneAndNotDone = personalDoneAmount + personalAmount;//Все Персональные задачи
+        workDoneAndNotDone = workDoneAmount + workAmount;
+        meetDoneAndNotDone = meetDoneAmount + meetAmount;
+        homeDoneAndNotDone = homeDoneAmount + homeAmount;
+        privateDoneAndNotDone = privateDoneAmount + privateAmount;
+    }
+
+    public void getAllTasks() {
+        todoAmount = personalAmount + workAmount + meetAmount + homeAmount + privateAmount; //Все задачи
+        allTaskAmount = todoAmount + eventAmount + plansAmount;//Всего записей
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void setShow() {
+        plans_amount.setText(String.valueOf(plansAmount)); //Отображеие кол-во идей
+        todo_amount.setText(String.valueOf(todoAmount));  //Отображение кол-во Задач
+        event_amount.setText(String.valueOf(eventAmount)); //Отображение кол-во Событий
+        complete_task_amount.setText(String.valueOf(doneAmount)); //Отображение кол-во Завершённых Задач
+        allTask_amount.setText(String.valueOf(allTaskAmount)); //Отображение кол-во Всех Задач
+
+        todo_percent.setText(todoPercent + "%");
+        personalPercent.setText(personalPercentAmount + "%");
+        workPercent.setText(workPercentAmount + "%");
+        meetPercent.setText(meetPercentAmount + "%");
+        homePercent.setText(homePercentAmount + "%");
+        privatePercent.setText(privatePercentAmount + "%");
+
         allTaskProgress.setProgress(doneAmount);
         allTaskProgress.setMax(allTaskDoneAndNotDone);
+        allTaskProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         personalProgress.setProgress(personalDoneAmount);
         personalProgress.setMax(personalDoneAndNotDone);
+        personalProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         workProgress.setProgress(workDoneAmount);
         workProgress.setMax(workDoneAndNotDone);
+        workProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         meetProgress.setProgress(meetDoneAmount);
         meetProgress.setMax(meetDoneAndNotDone);
+        meetProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         homeProgress.setProgress(homeDoneAmount);
         homeProgress.setMax(homeDoneAndNotDone);
+        homeProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         privateProgress.setProgress(privateDoneAmount);
         privateProgress.setMax(privateDoneAndNotDone);
+        privateProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
     }
-
 }

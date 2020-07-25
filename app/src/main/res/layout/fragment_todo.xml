@@ -16,25 +16,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view_1"
-        style="@style/ViewStyles"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="200dp"
         android:layout_height="180dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/view_1">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/person_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/circle_background"
             android:src="@drawable/ic_person"
             tools:ignore="MissingConstraints" />
+<!--        android:background="@drawable/circle_background"-->
 
         <TextView
             android:id="@+id/person_task_title"
@@ -42,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Персональные"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +45,11 @@
 
         <TextView
             android:id="@+id/personal_amount"
+            style="@style/todoAmountTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="14"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,11 +58,11 @@
         <View
             android:id="@+id/more_1"
             android:layout_width="20dp"
-            android:visibility="gone"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_more"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,15 +73,15 @@
         android:layout_width="200dp"
         android:layout_height="180dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/view_1">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/work_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/work_background"
             android:src="@drawable/ic_work"
             tools:ignore="MissingConstraints" />
+<!--        android:background="@drawable/work_background"-->
 
         <TextView
             android:id="@+id/work_task_title"
@@ -94,7 +89,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Работа"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
 
@@ -103,11 +97,11 @@
 
         <TextView
             android:id="@+id/work_amount"
+            style="@style/todoAmountTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="212"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -115,12 +109,12 @@
 
         <View
             android:id="@+id/more_2"
-            android:visibility="gone"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_more"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,9 +139,9 @@
             android:id="@+id/meet_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/meet_background"
             android:src="@drawable/ic_meet"
             tools:ignore="MissingConstraints" />
+<!--        android:background="@drawable/meet_background"-->
 
         <TextView
             android:id="@+id/meet_task_title"
@@ -155,7 +149,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Встречи"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
 
@@ -164,11 +157,11 @@
 
         <TextView
             android:id="@+id/meet_task_amount"
+            style="@style/todoAmountTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="14"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -177,11 +170,11 @@
         <View
             android:id="@+id/more_3"
             android:layout_width="20dp"
-            android:visibility="gone"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_more"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -198,9 +191,9 @@
             android:id="@+id/home_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/home_background"
             android:src="@drawable/ic_home"
             tools:ignore="MissingConstraints" />
+<!--        android:background="@drawable/home_background"-->
 
         <TextView
             android:id="@+id/home_task_title"
@@ -208,7 +201,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Дом"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
 
@@ -221,7 +213,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="6"
-            android:textColor="@android:color/black"
+            style="@style/todoAmountTextColor"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -230,11 +222,11 @@
         <View
             android:id="@+id/more_4"
             android:layout_width="20dp"
-            android:visibility="gone"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_more"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -259,9 +251,9 @@
             android:id="@+id/private_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/private_background"
             android:src="@drawable/ic_lock"
             tools:ignore="MissingConstraints" />
+<!--        android:background="@drawable/private_background"-->
 
         <TextView
             android:id="@+id/private_task_title"
@@ -269,7 +261,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Приватные"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -281,7 +272,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="10"
-            android:textColor="@android:color/black"
+            style="@style/todoAmountTextColor"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -292,9 +283,9 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_more"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -310,9 +301,9 @@
             android:id="@+id/done_tasks_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/green_circle"
             android:src="@drawable/ic_done"
             tools:ignore="MissingConstraints" />
+<!--        android:background="@drawable/green_circle"-->
 
         <TextView
             android:id="@+id/done_task_title"
@@ -320,7 +311,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Выполнено"
-            android:textColor="@android:color/black"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -332,7 +322,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="16"
-            android:textColor="@android:color/black"
+            style="@style/todoAmountTextColor"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

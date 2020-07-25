@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.quick.data.model;
+package com.lawlett.taskmanageruikit;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class QuickDoneModel implements Serializable {
+public class MeetDoneModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String title;
 
-    public QuickDoneModel(String title) {
+    public MeetDoneModel(String title) {
         this.title = title;
     }
 

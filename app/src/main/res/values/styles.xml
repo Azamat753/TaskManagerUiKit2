@@ -6,8 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor" tools:ignore="NewApi">#FFFFFF</item>
-        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:windowBackground">@drawable/royal</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/black</item>
+<!--        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>-->
 
     </style>
 
@@ -40,7 +41,25 @@
 
     <style name="TextTitleQuick">
         <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
+    <style name="todoAmountTextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="textDashboard">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="todoTextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="backgroundApp">
+        <item name="background">@drawable/royal</item>
+    </style>
 </resources>

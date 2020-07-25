@@ -4,27 +4,19 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+
 @Entity
 public class DoneModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String doneTitle;
     public String doneDesc;
-    public int color;
 
-    public DoneModel(String doneTitle, String doneDesc,int color) {
+    public DoneModel(String doneTitle, String doneDesc) {
         this.doneTitle = doneTitle;
         this.doneDesc = doneDesc;
-        this.color= color;
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 
     public long getId() {
         return id;

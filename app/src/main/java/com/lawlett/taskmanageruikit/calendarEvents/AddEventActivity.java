@@ -87,17 +87,10 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recordDataRoom();
+                onBackPressed();
             }
         });
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        recordDataRoom();
-    }
-
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -144,9 +137,9 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             finish();
         }else {
             Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
-
         }
     }
+
 
     public void chooseColor(View view) {
         final ColorPicker colorPicker = new ColorPicker(AddEventActivity.this);

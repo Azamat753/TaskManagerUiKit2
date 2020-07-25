@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.calendarEvents.data.model;
+package com.lawlett.taskmanageruikit;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class CalendarDoneModel implements Serializable {
+public class PrivateDoneModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String title;
 
-    public CalendarDoneModel(String title) {
+    public PrivateDoneModel(String title) {
         this.title = title;
     }
 

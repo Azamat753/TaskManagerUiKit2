@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickDoneModel;
+import com.lawlett.taskmanageruikit.WorkDoneModel;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -38,7 +38,7 @@ public class QuickFragment extends Fragment implements IOnClickListener {
     int position;
     int pos;
     RecyclerView recyclerViewQuick;
-    QuickDoneModel quickDoneModel;
+    WorkDoneModel workDoneModel;
 
     public QuickFragment() {
         // Required empty public constructor
@@ -104,8 +104,8 @@ public class QuickFragment extends Fragment implements IOnClickListener {
                 }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                quickDoneModel= new QuickDoneModel("quickDone");
-                App.getDataBase().quickDoneTaskDao().insert(quickDoneModel);
+                workDoneModel = new WorkDoneModel("quickDone");
+
                 App.getDataBase().taskDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
             }

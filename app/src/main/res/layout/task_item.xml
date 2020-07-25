@@ -1,58 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/data_day"
-        android:text="20 july"
+        style="@style/todoTextColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
+        android:text="20 july"
         android:textSize="30sp" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginBottom="40dp"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:id="@+id/task_title"
+            style="@style/todoTextColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="36dp"
             android:text=""
-            android:textColor="@android:color/black"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/left_view"
             android:layout_width="20dp"
             android:layout_height="70dp"
-            android:background="@android:color/black"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/data_time"
+            style="@style/todoTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:paddingStart="36dp"
             android:text="08:00"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/end_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="09:00"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginStart="110dp"
-            android:layout_marginTop="40dp"/>
+            app:layout_constraintStart_toEndOf="@id/left_view"
+            app:layout_constraintTop_toBottomOf="@id/task_title" />
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/task_title"
+            app:layout_constraintStart_toEndOf="@id/data_time"
+            android:id="@+id/end_time"
+            style="@style/todoTextColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:text="09:00"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="55dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/task_title"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

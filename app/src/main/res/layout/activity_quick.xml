@@ -17,6 +17,8 @@
         android:layout_height="80dp"
         android:hint="Введите суть идеи"
         android:paddingStart="20dp"
+        style="@style/todoTextColor"
+        android:textColorHint="@color/white"
         android:textSize="20sp"
         android:inputType="textCapSentences"
         app:layout_constraintTop_toBottomOf="@id/quick_toolbar_view" />
@@ -24,6 +26,8 @@
     <EditText
         android:id="@+id/edit_description"
         android:layout_width="match_parent"
+        android:textColorHint="@color/white"
+        style="@style/todoTextColor"
         android:layout_height="wrap_content"
         android:hint="Введите описание"
         android:paddingStart="20dp"

@@ -51,7 +51,7 @@
         android:layout_marginTop="330dp"
         android:gravity="center"
         android:text="Calendar Events"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -62,6 +62,7 @@
         android:layout_marginTop="400dp"
         android:text="Quickly add your events &amp; easy to switch beetween month &amp; week view"
         android:textSize="24sp"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 
     <TextView

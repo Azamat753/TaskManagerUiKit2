@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,13 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lawlett.taskmanageruikit.HomeDoneModel;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
-import com.lawlett.taskmanageruikit.todo.TodoFragment;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.HomeSizePreference;
 import com.lawlett.taskmanageruikit.utils.IHomeOnClickListener;
 
 import java.util.ArrayList;
@@ -30,15 +30,18 @@ public class HomeActivity extends AppCompatActivity implements IHomeOnClickListe
     HomeAdapter adapter;
     ArrayList<HomeModel> list;
     HomeModel homeModel;
+    HomeDoneModel homeDoneModel;
     DoneModel doneModel;
     EditText editText;
 int pos,counter=0;
-TodoFragment todoFragment;
 ImageView homeBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
         changeView();
 
@@ -100,7 +103,7 @@ ImageView homeBack;
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText("Дом");
         ImageView imageView = findViewById(R.id.personal_circle_image);
-        ImageView imageView2 = findViewById(R.id.purple_circle_image);
+        ImageView imageView2 = findViewById(R.id.blue_circle_image);
         imageView.setVisibility(View.GONE);
         imageView2.setVisibility(View.VISIBLE);
 
@@ -109,7 +112,7 @@ ImageView homeBack;
     @Override
     public void onItemLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу ?").setMessage("Убрать задачу")
+        dialog.setTitle("Вы выполнили задачу?")
                 .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -119,13 +122,14 @@ ImageView homeBack;
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                doneModel = new DoneModel("Дом", list.get(0).homeTask, R.color.color1);
+                doneModel = new DoneModel("Дом", list.get(0).homeTask);
                 App.getDataBase().doneTaskDao().insert(doneModel);
+
+                homeDoneModel= new HomeDoneModel(list.get(0).homeTask);
+                App.getDataBase().homeDoneTaskDao().insert(homeDoneModel);
+
                 App.getDataBase().homeDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
-
-                counter= HomeSizePreference.getInstance(HomeActivity.this).getHomeSize()+1;
-                HomeSizePreference.getInstance(HomeActivity.this).saveHomeSize(counter);
             }
         }).show();
     }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lawlett.taskmanageruikit">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.lawlett.taskmanageruikit"
+    android:screenOrientation="portrait">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -17,30 +16,60 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".todayEvent.TodayEvent"></activity>
-        <activity android:name=".settings.SettingsActivity" />
-        <activity android:name=".tasksPage.doneTask.DoneTasksActivity" />
-        <activity android:name=".utils.PassCodeActivity" />
-        <activity android:name=".calendarEvents.AddEventActivity" />
-        <activity android:name=".tasksPage.workTask.WorkActivity" />
-        <activity android:name=".tasksPage.privateTask.PrivateActivity" />
-        <activity android:name=".tasksPage.meetTask.MeetActivity" />
-        <activity android:name=".tasksPage.homeTask.HomeActivity" />
-        <activity android:name=".tasksPage.personalTask.PersonalActivity" />
-        <activity android:name=".quick.QuickActivity" />
-        <activity android:name=".splash.SplashActivity">
+        <activity android:name=".todayEvent.TodayEvent"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity">
+
+        </activity>
+        <activity android:name=".settings.SettingsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".tasksPage.doneTask.DoneTasksActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".utils.PassCodeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".calendarEvents.AddEventActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".tasksPage.workTask.WorkActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".tasksPage.privateTask.PrivateActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".tasksPage.meetTask.MeetActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".tasksPage.homeTask.HomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".tasksPage.personalTask.PersonalActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".quick.QuickActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".splash.SplashActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registration.RegistrationActivity" >
+        <activity android:name=".registration.RegistrationActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity">
         </activity>
-        <activity android:name=".onboard.BoardActivity" />
-        <activity android:name=".main.MainActivity" />
-
-
+        <activity android:name=".onboard.BoardActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <activity android:name=".main.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
     </application>
 
 

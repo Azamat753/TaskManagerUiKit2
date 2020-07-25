@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.tasksPage.meetTask;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,13 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lawlett.taskmanageruikit.MeetDoneModel;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IMeetOnClickListener;
-import com.lawlett.taskmanageruikit.utils.MeetSizePreference;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class MeetActivity extends AppCompatActivity implements IMeetOnClickListe
     private ArrayList<MeetModel> list;
     EditText editText;
     MeetModel meetModel;
+    MeetDoneModel meetDoneModel;
     DoneModel doneModel;
     int position,counter=0;
     ImageView meetBack;
@@ -38,6 +40,8 @@ public class MeetActivity extends AppCompatActivity implements IMeetOnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet);
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
         changeView();
 
@@ -108,18 +112,21 @@ public class MeetActivity extends AppCompatActivity implements IMeetOnClickListe
     @Override
     public void onItemLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу ?").setMessage("Убрать задачу")
+        dialog.setTitle("Вы выполнили задачу?")
                 .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                doneModel = new DoneModel("Встречи", list.get(0).meetTask, R.color.color2);
+                doneModel = new DoneModel("Встречи", list.get(0).meetTask);
                 App.getDataBase().doneTaskDao().insert(doneModel);
+
+                meetDoneModel= new MeetDoneModel(list.get(0).meetTask);
+
+                App.getDataBase().meetDoneTaskDao().insert(meetDoneModel);
+
                 App.getDataBase().meetDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
 
-                counter= MeetSizePreference.getInstance(MeetActivity.this).getMeetSize()+1;
-                MeetSizePreference.getInstance(MeetActivity.this).saveMeetSize(counter);
             }
         }).show();
     }

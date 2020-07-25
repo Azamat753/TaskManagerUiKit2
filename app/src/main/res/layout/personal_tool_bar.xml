@@ -9,88 +9,84 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/personal_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_left_arrow_black" />
-
-            <ImageView
-                android:id="@+id/personal_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/circle_background" />
-
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/purple_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/purple_circle" />
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/orange_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/meet_background" />
-
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/green_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/done_background" />
-
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/blue_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/home_background" />
-
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/red_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/private_background" />
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:background="@drawable/royal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:text="Персональные"
-                android:textColor="@android:color/black"
-                android:textSize="23dp"
-                android:textStyle="bold" />
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
 
-        </LinearLayout>
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/personal_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_left_arrow_black" />
 
+                <ImageView
+                    android:id="@+id/personal_circle_image"
+                    android:layout_width="11dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/circle_background" />
+
+                <ImageView
+                    android:id="@+id/purple_circle_image"
+                    android:layout_width="11dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/purple_circle"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/orange_circle_image"
+                    android:layout_width="11dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/meet_background"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/green_circle_image"
+                    android:layout_width="11dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/done_background"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/blue_circle_image"
+                    android:layout_width="11dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/home_background"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/red_circle_image"
+                    android:layout_width="11dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/private_background"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:text="Персональные"
+                    android:textColor="@android:color/white"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.appcompat.widget.Toolbar>

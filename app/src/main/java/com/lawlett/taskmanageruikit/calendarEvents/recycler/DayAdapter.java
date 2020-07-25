@@ -67,20 +67,15 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
         public void onBind(CalendarTaskModel calendarTaskModel) {
             dataDay.setText(calendarTaskModel.getDataTime());
             task.setText(calendarTaskModel.getTitle());
-            time.setText(calendarTaskModel.getStartTime() + " -");
+            time.setText(calendarTaskModel.getStartTime());
             left_view.setBackgroundColor(calendarTaskModel.chooseColor);
             endTime.setText(calendarTaskModel.getEndTime());
         }
-
-
-
-
         @Override
         public boolean onLongClick(View v) {
             listener.onItemLongClick(getAdapterPosition());
             return false;
         }
-
         @Override
         public void onClick(View v) {
             listener.onItemClick(getAdapterPosition());

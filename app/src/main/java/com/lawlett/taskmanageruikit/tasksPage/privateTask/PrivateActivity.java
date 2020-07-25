@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.tasksPage.privateTask;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,13 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lawlett.taskmanageruikit.PrivateDoneModel;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IPrivateOnClickListener;
-import com.lawlett.taskmanageruikit.utils.PrivateSizePreference;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class PrivateActivity extends AppCompatActivity implements IPrivateOnClic
     PrivateAdapter adapter;
     ArrayList<PrivateModel> list;
     EditText editText;
+    PrivateDoneModel privateDoneModel;
     PrivateModel privateModel;
     DoneModel doneModel;
     int pos, counter = 0;
@@ -38,6 +40,10 @@ public class PrivateActivity extends AppCompatActivity implements IPrivateOnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private);
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+
         changeView();
 
         list = new ArrayList<>();
@@ -106,7 +112,7 @@ public class PrivateActivity extends AppCompatActivity implements IPrivateOnClic
     @Override
     public void onItemLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу ?").setMessage("Убрать задачу")
+        dialog.setTitle("Вы выполнили задачу?")
                 .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -116,13 +122,15 @@ public class PrivateActivity extends AppCompatActivity implements IPrivateOnClic
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                doneModel = new DoneModel("Приватные", list.get(0).privateTask, R.color.color2);
+                doneModel = new DoneModel("Приватные", list.get(0).privateTask);
                 App.getDataBase().doneTaskDao().insert(doneModel);
+
+                privateDoneModel = new PrivateDoneModel(list.get(0).privateTask);
+                App.getDataBase().privateDoneTaskDao().insert(privateDoneModel);
+
                 App.getDataBase().privateDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
 
-                counter = PrivateSizePreference.getInstance(PrivateActivity.this).getPrivateSize() + 1;
-                PrivateSizePreference.getInstance(PrivateActivity.this).savePrivateSize(counter);
             }
         }).show();
     }

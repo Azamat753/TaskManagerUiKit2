@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.utils;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +31,8 @@ public class PassCodeActivity extends AppCompatActivity {
         passcodeView = findViewById(R.id.passcode_view);
 
         password = PasswordPreference.getInstance(this).returnPassword();
+
+        Log.e("myPassword", "onCreate: "+password );
 
         boolean isShown = PasswordDonePreference.getInstance(getApplication()).isShown();
         if (isShown) {

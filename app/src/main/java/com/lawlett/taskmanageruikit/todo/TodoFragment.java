@@ -23,10 +23,9 @@ import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 
 
 public class TodoFragment extends Fragment {
-    ImageView personalImage, workImage, meetImage, homeImage, privateImage, addNewImage, doneImage;
+    ImageView personalImage, workImage, meetImage, homeImage, privateImage, doneImage;
     View dotsPerson, dotsWork, dotsMeet, dotsHome, dotsPrivate;
     TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount;
-
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;
 
     @Override
@@ -84,65 +83,6 @@ public class TodoFragment extends Fragment {
 //            });
 //            popupMenu.show();
 //        });
-//        dotsWork.setOnClickListener(v -> {
-//            PopupMenu popupMenu = new PopupMenu(getContext(), dotsWork);
-//            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
-//            popupMenu.setOnMenuItemClickListener(item -> {
-//                switch (item.getItemId()) {
-//                    case R.id.delete_all_list:
-//
-//                        break;
-//                }
-//                return false;
-//            });
-//            popupMenu.show();
-//        });
-//        dotsMeet.setOnClickListener(v -> {
-//            PopupMenu popupMenu = new PopupMenu(getContext(), dotsMeet);
-//            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
-//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem item) {
-//                    switch (item.getItemId()) {
-//                        case R.id.delete_all_list:
-//
-//                            break;
-//                    }
-//                    return false;
-//                }
-//            });
-//            popupMenu.show();
-//        });
-//        dotsHome.setOnClickListener(v -> {
-//            PopupMenu popupMenu = new PopupMenu(getContext(), dotsHome);
-//            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
-//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem item) {
-//                    switch (item.getItemId()) {
-//                        case R.id.delete_all_list:
-//
-//                            break;
-//                    }
-//                    return false;
-//                }
-//            });
-//            popupMenu.show();
-//        });
-//
-//        dotsPrivate.setOnClickListener(v -> {
-//            PopupMenu popupMenu = new PopupMenu(getContext(), dotsPrivate);
-//            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
-//            popupMenu.setOnMenuItemClickListener(item -> {
-//                switch (item.getItemId()) {
-//                    case R.id.delete_all_list:
-//
-//                        break;
-//                }
-//                return false;
-//            });
-//            popupMenu.show();
-//        });
 
         personalImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,8 +99,8 @@ public class TodoFragment extends Fragment {
             startActivity(new Intent(getContext(), DoneTasksActivity.class));
 
         });
-
     }
+    
     public void notifyView() {
         personal_amount.setText(personalAmount + "");
         work_amount.setText(workAmount + "");

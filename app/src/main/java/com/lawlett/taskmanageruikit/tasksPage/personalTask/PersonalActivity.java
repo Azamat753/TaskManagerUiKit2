@@ -1,6 +1,7 @@
 package com.lawlett.taskmanageruikit.tasksPage.personalTask;
 
 import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,13 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lawlett.taskmanageruikit.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IPersonalOnClickListener;
-import com.lawlett.taskmanageruikit.utils.PersonalSizePreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +30,19 @@ public class PersonalActivity extends AppCompatActivity implements IPersonalOnCl
     PersonalAdapter adapter;
     PersonalModel personalModel;
     DoneModel doneModel;
+    PersonalDoneModel personalDoneModel;
     List<PersonalModel> list;
     String personal;
     ImageView personalBack;
     int pos;
     int counter=0 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
         list = new ArrayList<>();
 
@@ -104,16 +109,19 @@ onBackPressed();
     @Override
     public void onItemLongClick(int position) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу ?").setMessage("Убрать задачу")
+        dialog.setTitle("Вы выполнили задачу?")
                 .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", (dialog12, which) -> {
 
-            doneModel = new DoneModel("Персональные", list.get(0).personalTask, R.color.color2);
+            doneModel = new DoneModel("Персональные", list.get(0).personalTask);
             App.getDataBase().doneTaskDao().insert(doneModel);
+
+            personalDoneModel= new PersonalDoneModel(list.get(0).personalTask);
+            App.getDataBase().personalDoneTaskDao().insert(personalDoneModel);
+
             App.getDataBase().personalDao().delete(list.get(position));
             adapter.notifyDataSetChanged();
 
-            counter=PersonalSizePreference.getInstance(this).getPersonalSize()+1;
-            PersonalSizePreference.getInstance(this).savePersonalSize(counter);
+
         }).show();
     }
 

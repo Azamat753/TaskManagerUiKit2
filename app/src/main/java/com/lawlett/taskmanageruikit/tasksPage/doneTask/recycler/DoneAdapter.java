@@ -52,7 +52,6 @@ IDoneOnClickListener listener;
 
         public void onBind(DoneModel doneModel) {
             title.setText(doneModel.doneTitle );
-            title.setTextColor(doneModel.getColor());
             description.setText(doneModel.doneDesc);
         }
 

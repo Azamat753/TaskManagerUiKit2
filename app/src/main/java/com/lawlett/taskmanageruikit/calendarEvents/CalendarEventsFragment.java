@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarDoneModel;
+import com.lawlett.taskmanageruikit.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.DayAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -48,7 +45,7 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
     int color;
     View colorView;
 int position;
-CalendarDoneModel calendarDoneModel;
+PersonalDoneModel personalDoneModel;
     public CalendarEventsFragment() {
         // Required empty public constructor
     }
@@ -117,10 +114,7 @@ CalendarDoneModel calendarDoneModel;
             @SuppressLint("LogNotTimber")
             @Override
             public boolean onDateLongClicked(Calendar date, int position) {
-                Log.e("date", "onDateLongClicked: " + "weekyear" + date.getWeekYear() + "firstdayofweek" + date.getFirstDayOfWeek() + "getTime" + date.getTime());
 
-//                IOpenCalendar listener = (IOpenCalendar) getActivity();
-//                listener.openCalendar();
                 return true;
             }
         });
@@ -132,14 +126,6 @@ CalendarDoneModel calendarDoneModel;
         addEventBtn = view.findViewById(R.id.add_task_btn);
         addEventBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), AddEventActivity.class)));
     }
-
-    public void changeFragment(Fragment fragment) {
-        FragmentManager manager = getChildFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
-    }
-
     @Override
     public void onItemClick(int position) {
         this.position = position;
@@ -175,9 +161,7 @@ CalendarDoneModel calendarDoneModel;
                 }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                calendarDoneModel= new CalendarDoneModel("123");
-
-                App.getDataBase().calendarDoneTaskDao().insert(calendarDoneModel);
+                personalDoneModel = new PersonalDoneModel("123");
 
                 App.getDataBase().dataDao().delete(list.get(position));
 
