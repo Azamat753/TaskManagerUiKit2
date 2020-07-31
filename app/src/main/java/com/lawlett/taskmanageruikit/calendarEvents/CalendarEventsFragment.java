@@ -23,6 +23,7 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.DayAdapter;
+import com.lawlett.taskmanageruikit.timing.TimingActivity;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
 
@@ -44,8 +45,9 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
     TextView todayTv;
     int color;
     View colorView;
-int position;
-PersonalDoneModel personalDoneModel;
+    int position;
+    PersonalDoneModel personalDoneModel;
+
     public CalendarEventsFragment() {
         // Required empty public constructor
     }
@@ -59,10 +61,10 @@ PersonalDoneModel personalDoneModel;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        list= new ArrayList<>();
+        list = new ArrayList<>();
 
         App.getDataBase().dataDao().getAllLive().observe(this, calendarTaskModels -> {
-            if (calendarTaskModels!=null){
+            if (calendarTaskModels != null) {
                 list.clear();
                 list.addAll(calendarTaskModels);
                 adapter.notifyDataSetChanged();
@@ -79,8 +81,7 @@ PersonalDoneModel personalDoneModel;
 
         /* starts before 1 month from now */
 
-        colorView=view.findViewById(R.id.color_view);
-
+        colorView = view.findViewById(R.id.color_view);
 
 
         Calendar startDate = Calendar.getInstance();
@@ -106,26 +107,29 @@ PersonalDoneModel personalDoneModel;
 //
 //                startActivity(intent);
             }
+
             @Override
             public void onCalendarScroll(HorizontalCalendarView calendarView, int dx, int dy) {
 
             }
+
             @RequiresApi(api = Build.VERSION_CODES.O)
             @SuppressLint("LogNotTimber")
             @Override
             public boolean onDateLongClicked(Calendar date, int position) {
-
+                startActivity(new Intent(getContext(), new TimingActivity().getClass()));
                 return true;
             }
         });
 
         recyclerViewToday = view.findViewById(R.id.today_recycler);
-        adapter = new DayAdapter((ArrayList<CalendarTaskModel>) list,this,getContext());
+        adapter = new DayAdapter((ArrayList<CalendarTaskModel>) list, this, getContext());
         recyclerViewToday.setAdapter(adapter);
 
         addEventBtn = view.findViewById(R.id.add_task_btn);
         addEventBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), AddEventActivity.class)));
     }
+
     @Override
     public void onItemClick(int position) {
         this.position = position;
