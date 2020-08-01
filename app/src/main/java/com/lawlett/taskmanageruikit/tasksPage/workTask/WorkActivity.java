@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.WorkDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.model.WorkDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;

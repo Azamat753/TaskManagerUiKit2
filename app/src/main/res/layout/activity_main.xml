@@ -24,11 +24,13 @@
         android:layout_above="@id/bottomNavigation"
         android:layout_below="@id/toolbar_a" />
 
-    <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
-        android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+
 
 
 </RelativeLayout>

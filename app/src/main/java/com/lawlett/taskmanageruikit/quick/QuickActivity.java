@@ -42,8 +42,6 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class QuickActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST = 500;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    String currentPhotoPath;
 
     String userId;
     FloatingActionMenu materialDesignFAM;
@@ -53,7 +51,6 @@ public class QuickActivity extends AppCompatActivity {
     ImageView back_view, done_view, image_title;
     String pickImage, textTitle, textDescription, captureImage, gallImage;
     int choosedColor;
-    String image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

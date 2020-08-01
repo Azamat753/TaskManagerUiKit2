@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.WorkDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.model.WorkDoneModel;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;

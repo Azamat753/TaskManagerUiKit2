@@ -21,15 +21,14 @@ import androidx.lifecycle.Observer;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
-import com.lawlett.taskmanageruikit.calendarEvents.CalendarFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.quick.QuickFragment;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.settings.SettingsActivity;
+import com.lawlett.taskmanageruikit.timing.fragment.TimingFragment;
 import com.lawlett.taskmanageruikit.todo.TodoFragment;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IOpenCalendar;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
@@ -38,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements IOpenCalendar {
+public class MainActivity extends AppCompatActivity  {
     TextView toolbar_title;
     ImageView more_btn, settings_view;
     private List<QuickModel> list;
@@ -93,17 +92,21 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
+
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
                 ("Прогресс", ContextCompat.getColor(this, R.color.transparent), R.drawable.diagrama);
         BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
-                ("Задачи", ContextCompat.getColor(this, R.color.transparent), R.drawable.check);
+                ("Задачи", ContextCompat.getColor(this, R.color.transparent), R.drawable.whitecheck);
+        BottomNavigationItem bottomNavigationItem4 = new BottomNavigationItem
+                ("Тайминг", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_timer);
         BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
-                ("События", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_date);
+                ("События", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_date_white);
         BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
-                ("Идеи", ContextCompat.getColor(this, R.color.transparent), R.drawable.notes);
+                ("Идеи", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_idea);
 
         bottomNavigationView.addTab(bottomNavigationItem);
         bottomNavigationView.addTab(bottomNavigationItem1);
+        bottomNavigationView.addTab(bottomNavigationItem4);
         bottomNavigationView.addTab(bottomNavigationItem2);
         bottomNavigationView.addTab(bottomNavigationItem3);
 
@@ -122,11 +125,16 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                         more_btn.setVisibility(View.GONE);
                         break;
                     case 2:
+                        changeFragment(new TimingFragment());
+                        toolbar_title.setText("Тайминг");
+                        more_btn.setVisibility(View.GONE);
+                        break;
+                    case 3:
                         changeFragment(new CalendarEventsFragment());
                         more_btn.setVisibility(View.GONE);
                         toolbar_title.setText(month + " " + year);
                         break;
-                    case 3:
+                    case 4:
                         changeFragment(new QuickFragment());
                         toolbar_title.setText("Идеи");
                         more_btn.setVisibility(View.VISIBLE);
@@ -150,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
                                                         .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-//
+
                                                                 App.getDataBase().taskDao().deleteAll(list);
                                                                 adapter.notifyDataSetChanged();
                                                             }
@@ -158,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
 
                                                 break;
                                         }
-
                                         return false;
                                     }
                                 });
@@ -170,16 +177,4 @@ public class MainActivity extends AppCompatActivity implements IOpenCalendar {
             }
         });
     }
-
-    @Override
-    public void openCalendar() {
-        changeFragment(new CalendarFragment());
-    }
-
-    @Override
-    public void back() {
-        changeFragment(new CalendarEventsFragment());
-    }
-
-
 }

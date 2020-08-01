@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lawlett.taskmanageruikit"
     android:screenOrientation="portrait">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,45 +14,56 @@
         android:allowBackup="true"
         android:icon="@mipmap/app_logo_foreground"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".timing.TimingActivity"
+        <activity android:name=".timing.activity.TimerActivity"></activity>
+        <activity
+            android:name=".timing.activity.StopwatchActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity">
-
-        </activity>
-        <activity android:name=".settings.SettingsActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"></activity>
+        <activity
+            android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".tasksPage.doneTask.DoneTasksActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".tasksPage.doneTask.DoneTasksActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".utils.PassCodeActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".utils.PassCodeActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".calendarEvents.AddEventActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".calendarEvents.AddEventActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".tasksPage.workTask.WorkActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".tasksPage.workTask.WorkActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".tasksPage.privateTask.PrivateActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".tasksPage.privateTask.PrivateActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".tasksPage.meetTask.MeetActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".tasksPage.meetTask.MeetActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".tasksPage.homeTask.HomeActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".tasksPage.homeTask.HomeActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".tasksPage.personalTask.PersonalActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".tasksPage.personalTask.PersonalActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".quick.QuickActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".quick.QuickActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".splash.SplashActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".splash.SplashActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity">
             <intent-filter>
@@ -60,17 +72,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registration.RegistrationActivity"
+        <activity
+            android:name=".registration.RegistrationActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity">
-        </activity>
-        <activity android:name=".onboard.BoardActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"></activity>
+        <activity
+            android:name=".onboard.BoardActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <activity android:name=".main.MainActivity"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+        <activity
+            android:name=".main.MainActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
     </application>
-
 
 </manifest>

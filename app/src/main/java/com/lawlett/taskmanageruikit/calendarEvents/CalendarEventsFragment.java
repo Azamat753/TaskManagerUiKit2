@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,10 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.DayAdapter;
-import com.lawlett.taskmanageruikit.timing.TimingActivity;
+import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
+import com.lawlett.taskmanageruikit.timing.activity.StopwatchActivity;
+import com.lawlett.taskmanageruikit.timing.activity.TimerActivity;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
 
@@ -37,13 +37,11 @@ import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 public class CalendarEventsFragment extends Fragment implements IDayOnClickListener {
-    CalendarView allCalendar;
     RecyclerView recyclerViewToday;
     FloatingActionButton addEventBtn;
     List<CalendarTaskModel> list;
     DayAdapter adapter;
     TextView todayTv;
-    int color;
     View colorView;
     int position;
     PersonalDoneModel personalDoneModel;
@@ -77,7 +75,6 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        allCalendar = view.findViewById(R.id.all_calendar_view);
 
         /* starts before 1 month from now */
 
@@ -101,6 +98,7 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
             @Override
             public void onDateSelected(Calendar date, int position) {
 //
+                startActivity(new Intent(getContext(), TimerActivity.class));
 //                Intent intent = new Intent(getContext(), TodayEvent.class);
 //                intent.putExtra("month",String.valueOf(date.getTime().getMonth()));
 //                intent.putExtra("day",String.valueOf(date.getTime().getDate()));
@@ -117,7 +115,7 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
             @SuppressLint("LogNotTimber")
             @Override
             public boolean onDateLongClicked(Calendar date, int position) {
-                startActivity(new Intent(getContext(), new TimingActivity().getClass()));
+                startActivity(new Intent(getContext(), new StopwatchActivity().getClass()));
                 return true;
             }
         });
