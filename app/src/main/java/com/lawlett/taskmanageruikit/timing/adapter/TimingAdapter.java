@@ -1,5 +1,7 @@
 package com.lawlett.taskmanageruikit.timing.adapter;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,10 @@ import java.util.List;
 
 public class TimingAdapter extends RecyclerView.Adapter<TimingAdapter.TimingViewHolder> {
     List<TimingModel> list;
-
-    public TimingAdapter(List<TimingModel> list) {
+Context context;
+    public TimingAdapter(List<TimingModel> list,Context context) {
         this.list = list;
+        this.context=context;
     }
 
     @NonNull
@@ -29,7 +32,7 @@ public class TimingAdapter extends RecyclerView.Adapter<TimingAdapter.TimingView
 
     @Override
     public void onBindViewHolder(@NonNull TimingViewHolder holder, int position) {
-        holder.onBind(list.get(position));
+        holder.onBind(list.get(position),context);
 
     }
 
@@ -48,7 +51,9 @@ public class TimingAdapter extends RecyclerView.Adapter<TimingAdapter.TimingView
             taskDate = itemView.findViewById(R.id.task_day);
         }
 
-        public void onBind(TimingModel timingModel) {
+        public void onBind(TimingModel timingModel,Context context) {
+            Typeface mLight = Typeface.createFromAsset(context.getAssets(), "MLight.ttf");
+
             if (timingModel.getTimerTitle() == null) {
                 taskTitle.setText(timingModel.getStopwatchTitle());
                 taskMinute.setText(timingModel.getStopwatchMinutes() + " " + "минут");
@@ -58,6 +63,9 @@ public class TimingAdapter extends RecyclerView.Adapter<TimingAdapter.TimingView
                 taskMinute.setText(timingModel.getTimerMinutes() + " " + "минут");
                 taskDate.setText(timingModel.getTimerDay());
             }
+            taskTitle.setTypeface(mLight);
+            taskMinute.setTypeface(mLight);
+            taskDate.setTypeface(mLight);
         }
     }
 }

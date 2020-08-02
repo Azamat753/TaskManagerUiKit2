@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
+    android:layout_marginStart="10dp"
     tools:context=".dashboard.DashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -334,9 +333,10 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timing_second_line">
 
@@ -497,26 +497,26 @@
                 style="@style/dashboardTextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
                 android:text="Дом"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/personal_pr_title"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/personal_pr_title"
-                app:layout_constraintTop_toTopOf="@+id/personal_pr_title" />
+                app:layout_constraintTop_toBottomOf="@id/meetTask_progress" />
 
             <ProgressBar
                 android:id="@+id/homeTask_progress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="110dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:visibility="gone"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/personal_progress"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/personal_progress"
-                app:layout_constraintTop_toTopOf="@id/personal_progress" />
+                app:layout_constraintEnd_toStartOf="@+id/homeTask_percent"
+                app:layout_constraintStart_toEndOf="@+id/personal_percent"
+                app:layout_constraintTop_toBottomOf="@+id/homeTask_pr_title" />
 
             <TextView
                 android:id="@+id/homeTask_percent"
@@ -526,38 +526,36 @@
                 android:layout_marginStart="20dp"
                 android:text="0%"
                 android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/personal_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/homeTask_progress"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/meetTask_progress"
-                app:layout_constraintTop_toTopOf="@id/personal_percent" />
+                app:layout_constraintStart_toEndOf="@id/homeTask_progress"
+                app:layout_constraintTop_toTopOf="@id/homeTask_progress" />
 
             <TextView
                 android:id="@+id/private_pr_title"
                 style="@style/textDashboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
                 android:text="Приватные"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/work_pr_title"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/work_pr_title"
-                app:layout_constraintTop_toTopOf="@+id/work_pr_title" />
+                app:layout_constraintTop_toBottomOf="@+id/homeTask_progress" />
 
             <ProgressBar
                 android:id="@+id/private_progress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="110dp"
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:visibility="gone"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toBottomOf="@+id/work_progress"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/work_progress"
-                app:layout_constraintTop_toTopOf="@+id/work_progress" />
+                app:layout_constraintEnd_toStartOf="@+id/privateTask_percent"
+                app:layout_constraintStart_toEndOf="@+id/work_percent"
+                app:layout_constraintTop_toBottomOf="@+id/private_pr_title" />
 
             <TextView
                 android:id="@+id/privateTask_percent"
@@ -567,11 +565,10 @@
                 android:layout_marginStart="20dp"
                 android:text="0%"
                 android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@+id/work_percent"
+                app:layout_constraintBottom_toBottomOf="@+id/private_progress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/meetTask_progress"
-                app:layout_constraintTop_toTopOf="@+id/work_percent" />
+                app:layout_constraintTop_toTopOf="@+id/private_progress" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

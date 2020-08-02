@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +44,7 @@ holder.onBind(list.get(position));
     }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        TextView homeTask;
+        CheckBox homeTask;
         public HomeViewHolder(@NonNull View itemView) {
             super(itemView);
             homeTask=itemView.findViewById(R.id.home_task);

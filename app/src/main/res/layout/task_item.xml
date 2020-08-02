@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/data_day"
         style="@style/todoTextColor"
+        android:fontFamily="@font/m_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"

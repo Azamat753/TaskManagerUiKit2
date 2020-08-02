@@ -1,9 +1,6 @@
 package com.lawlett.taskmanageruikit.quick.recycler;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +15,6 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.IOnClickListener;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHolder> {
@@ -51,14 +47,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
     public class QuickViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener, View.OnLongClickListener {
         TextView title, desc, data_created;
         ImageView imageDesc;
-        Calendar c = Calendar.getInstance();
         IOnClickListener listeneer;
-        final int year = c.get(Calendar.YEAR);
-        String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
-                "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
-
-
-        final String month = monthName[c.get(Calendar.MONTH)];
 
         public QuickViewHolder(@NonNull View itemView,IOnClickListener listeneer) {
             super(itemView);
@@ -78,7 +67,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
                 data_created.setText(quickModel.getCreateData());
 
                 if (quickModel.getColor() == 0) {
-                    quickModel.setColor(R.color.black_de);
+                    quickModel.setColor(R.color.white);
                 } else {
                     title.setTextColor(quickModel.getColor());
                 }
@@ -86,16 +75,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
 
 
         }
-        public Bitmap stringToBitMap(String encodedString){
-            try {
-                byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-                Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-                return bitmap;
-            } catch(Exception e) {
-                e.getMessage();
-                return null;
-            }
-        }
+
         @Override
         public void onClick(View v) {
             listeneer.onItemClick(getAdapterPosition());

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +43,7 @@ IWorkOnClickListener listener;
     }
 
     public class WorkViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        TextView workTask;
+        CheckBox workTask;
 
         public WorkViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -54,7 +54,6 @@ IWorkOnClickListener listener;
         public void onBind(WorkModel workModel) {
             workTask.setText(workModel.getWorkTask());
         }
-
         @Override
         public boolean onLongClick(View v) {
             listener.onItemLongClick(getAdapterPosition());

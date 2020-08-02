@@ -15,10 +15,11 @@
             android:id="@+id/done_title"
             style="@style/todoTextColor"
             android:layout_width="match_parent"
+            android:fontFamily="@font/m_light"
+            android:textSize="20sp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Personal"
-            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Business meeting"
+            android:fontFamily="@font/m_light"
             android:textSize="16sp" />
     </LinearLayout>
 

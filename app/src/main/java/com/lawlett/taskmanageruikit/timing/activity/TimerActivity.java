@@ -32,11 +32,10 @@ public class TimerActivity extends AppCompatActivity {
     private TextView countdownText;
     private Button countdownButton, exitButton, timerTaskApply, applyDone;
     MediaPlayer mp;
-    ImageView icanchor;
-    ImageView backButton;
+    ImageView icanchor, backButton, phoneImage;
     EditText timerTaskEdit;
     String timeLeftText;
-    Animation roundingalone;
+    Animation roundingalone, atg, btgone, btgtwo;
     TimingModel timingModel;
     String myTask;
     EditText editText;
@@ -47,6 +46,10 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+        phoneImage = findViewById(R.id.image_timerPhone);
+        atg = AnimationUtils.loadAnimation(this, R.anim.atg);
+        btgone = AnimationUtils.loadAnimation(this, R.anim.btgone);
+        btgtwo = AnimationUtils.loadAnimation(this, R.anim.btgtwo);
         backButton = findViewById(R.id.back_button);
         timerTaskEdit = findViewById(R.id.timer_task_edit);
         editText = findViewById(R.id.editText);
@@ -61,6 +64,20 @@ public class TimerActivity extends AppCompatActivity {
         countdownButton.setTypeface(MMedium);
         imageConst = findViewById(R.id.image_const);
         timerConst = findViewById(R.id.timerConst);
+
+        phoneImage.startAnimation(atg);
+        countdownButton.startAnimation(btgone);
+        timerTaskApply.startAnimation(btgtwo);
+        timerTaskEdit.startAnimation(btgone);
+
+        Typeface medium = Typeface.createFromAsset(getAssets(), "MMedium.ttf");
+        Typeface mLight = Typeface.createFromAsset(getAssets(), "MLight.ttf");
+        Typeface mRegular = Typeface.createFromAsset(getAssets(), "MRegular.ttf");
+
+        countdownButton.setTypeface(medium);
+        timerTaskApply.setTypeface(mLight);//try
+        timerTaskEdit.setTypeface(mRegular);
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +167,6 @@ public class TimerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "Таймер ещё не окончен", Toast.LENGTH_SHORT).show();
     }
 
     public void dataRoom() {
@@ -164,6 +180,6 @@ public class TimerActivity extends AppCompatActivity {
         timingModel = new TimingModel(myTask, editText.getText().toString(), currentDate + " " + month + " " + year, null, null, null);
         App.getDataBase().timingDao().insert(timingModel);
         finish();
-        Log.e("myTask1", "dataRoom: "+myTask+"timeleft:"+editText.getText().toString());
+        Log.e("myTask1", "dataRoom: " + myTask + "timeleft:" + editText.getText().toString());
     }
 }

@@ -5,10 +5,11 @@
     android:background="@drawable/royal"
     android:layout_height="wrap_content">
 
-    <TextView
+    <CheckBox
         android:layout_margin="16dp"
         android:id="@+id/private_task"
         android:textSize="20sp"
+        android:fontFamily="@font/m_light"
         style="@style/todoTextColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

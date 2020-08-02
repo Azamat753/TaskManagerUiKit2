@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
-import com.lawlett.taskmanageruikit.calendarEvents.recycler.DayAdapter;
+import com.lawlett.taskmanageruikit.calendarEvents.recycler.CalendarEventAdapter;
 import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.timing.activity.StopwatchActivity;
 import com.lawlett.taskmanageruikit.timing.activity.TimerActivity;
@@ -40,7 +40,7 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
     RecyclerView recyclerViewToday;
     FloatingActionButton addEventBtn;
     List<CalendarTaskModel> list;
-    DayAdapter adapter;
+    CalendarEventAdapter adapter;
     TextView todayTv;
     View colorView;
     int position;
@@ -121,7 +121,7 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
         });
 
         recyclerViewToday = view.findViewById(R.id.today_recycler);
-        adapter = new DayAdapter((ArrayList<CalendarTaskModel>) list, this, getContext());
+        adapter = new CalendarEventAdapter((ArrayList<CalendarTaskModel>) list, this, getContext());
         recyclerViewToday.setAdapter(adapter);
 
         addEventBtn = view.findViewById(R.id.add_task_btn);

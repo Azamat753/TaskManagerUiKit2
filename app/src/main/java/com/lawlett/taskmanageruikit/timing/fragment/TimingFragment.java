@@ -25,7 +25,6 @@ import java.util.List;
 
 public class TimingFragment extends Fragment {
     TimingAdapter adapter;
-    TimingModel timingModel;
     private List<TimingModel> list;
     FloatingActionButton floatingActionTimer, floatingActionStopwatch;
 
@@ -57,7 +56,7 @@ public class TimingFragment extends Fragment {
 
 
         RecyclerView recyclerView = view.findViewById(R.id.timing_recycler);
-        adapter = new TimingAdapter(list);
+        adapter = new TimingAdapter(list,getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

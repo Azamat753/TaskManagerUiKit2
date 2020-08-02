@@ -15,7 +15,7 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_timerPhone"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:src="@drawable/icget"
@@ -41,11 +41,12 @@
             android:hint="Что вы хотите сделать"
             android:maxLength="21"
             android:textColor="#FFF"
+            android:inputType="textCapSentences"
             android:textColorHint="#FFF"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image" />
+            app:layout_constraintTop_toBottomOf="@id/image_timerPhone" />
 
         <Button
             android:id="@+id/timer_task_apply"
@@ -170,7 +171,7 @@
         android:layout_margin="8dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_left_arrow"
+        app:srcCompat="@drawable/ic_left_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

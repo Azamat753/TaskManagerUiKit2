@@ -1,6 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.personalTask;
 
-import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,14 +9,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
+import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IPersonalOnClickListener;
@@ -35,7 +35,6 @@ public class PersonalActivity extends AppCompatActivity implements IPersonalOnCl
     String personal;
     ImageView personalBack;
     int pos;
-    int counter=0 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +84,6 @@ onBackPressed();
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-    }
-
     public void addPersonalTask(View view) {
         recordDataRoom();
     }
@@ -100,7 +93,7 @@ onBackPressed();
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
             personal = editText.getText().toString().trim();
-            personalModel = new PersonalModel(personal);
+            personalModel = new PersonalModel(personal,false);
             App.getDataBase().personalDao().insert(personalModel);
             editText.setText("");
         }
@@ -120,7 +113,6 @@ onBackPressed();
 
             App.getDataBase().personalDao().delete(list.get(position));
             adapter.notifyDataSetChanged();
-
 
         }).show();
     }

@@ -5,8 +5,9 @@
     android:background="@drawable/royal"
     android:layout_height="wrap_content">
 
-    <TextView
+    <CheckBox
         android:id="@+id/meet_task"
+        android:fontFamily="@font/m_light"
         android:textSize="20sp"
         android:layout_margin="16dp"
         style="@style/todoTextColor"

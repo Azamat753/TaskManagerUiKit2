@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/image_phone"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:src="@drawable/icget"
@@ -45,7 +45,7 @@
             android:inputType="textCapSentences"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image" />
+            app:layout_constraintTop_toBottomOf="@id/image_phone" />
 
         <Button
             android:id="@+id/stopwatch_task_apply"

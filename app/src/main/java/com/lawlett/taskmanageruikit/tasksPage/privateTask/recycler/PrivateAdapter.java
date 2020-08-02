@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +44,7 @@ public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateV
     }
 
     public class PrivateViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        TextView privateTask;
+        CheckBox privateTask;
 
         public PrivateViewHolder(@NonNull View itemView) {
             super(itemView);

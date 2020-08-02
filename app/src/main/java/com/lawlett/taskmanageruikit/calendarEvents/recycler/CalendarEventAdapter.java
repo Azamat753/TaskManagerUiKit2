@@ -17,13 +17,13 @@ import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayAdapter extends RecyclerView.Adapter<DayAdapter.DayViewHolder> {
+public class CalendarEventAdapter extends RecyclerView.Adapter<CalendarEventAdapter.DayViewHolder> {
 
     List<CalendarTaskModel> list;
     Context context;
     IDayOnClickListener listener;
 
-    public DayAdapter(ArrayList<CalendarTaskModel> list, IDayOnClickListener listener, Context context) {
+    public CalendarEventAdapter(ArrayList<CalendarTaskModel> list, IDayOnClickListener listener, Context context) {
         this.list = list;
         this.listener = listener;
         this.context = context;

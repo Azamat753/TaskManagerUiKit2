@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +43,7 @@ IMeetOnClickListener listener;
     }
 
     public class MeetViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        TextView meetTask;
+        CheckBox meetTask;
 
         public MeetViewHolder(@NonNull View itemView) {
             super(itemView);
