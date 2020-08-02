@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:hint="Что вы будете делать"
             android:textColor="#FFF"
+            android:maxLength="21"
             android:textColorHint="#FFF"
             android:textSize="30sp"
             android:inputType="textCapSentences"

@@ -69,7 +69,6 @@ public class StopwatchActivity extends AppCompatActivity {
         btnstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 icanchor.startAnimation(roundingalone);
                 btnstop.animate().alpha(1).translationY(-80).setDuration(300).start();
                 btnstart.animate().alpha(0).setDuration(300).start();
@@ -82,11 +81,6 @@ public class StopwatchActivity extends AppCompatActivity {
         btnstop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                btnstart.setVisibility(View.VISIBLE);
-//                btnstart.animate().alpha(1).translationY(-80).setDuration(300).start();
-//                timerHere.stop();
-//                btnstop.setVisibility(View.GONE);
-//                icanchor.clearAnimation();
                 showElapsedTime();
                 dataRoom();
             }

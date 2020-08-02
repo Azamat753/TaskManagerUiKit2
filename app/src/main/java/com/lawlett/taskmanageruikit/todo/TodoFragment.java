@@ -62,12 +62,6 @@ public class TodoFragment extends Fragment {
 
 
 
-        dotsPerson = view.findViewById(R.id.more_1);
-        dotsWork = view.findViewById(R.id.more_2);
-        dotsMeet = view.findViewById(R.id.more_3);
-        dotsHome = view.findViewById(R.id.more_4);
-        dotsPrivate = view.findViewById(R.id.more_5);
-
 
 //        dotsPerson.setOnClickListener(v -> {
 //            PopupMenu popupMenu = new PopupMenu(getContext(), dotsPerson);

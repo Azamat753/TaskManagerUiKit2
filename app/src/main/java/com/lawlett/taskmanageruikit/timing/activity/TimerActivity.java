@@ -20,27 +20,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.timing.model.TimingModel;
+import com.lawlett.taskmanageruikit.utils.App;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class TimerActivity extends AppCompatActivity {
     private TextView countdownText;
-    private Button countdownButton, exitButton, applybutton;
+    private Button countdownButton, exitButton, timerTaskApply, applyDone;
     MediaPlayer mp;
     ImageView icanchor;
+    ImageView backButton;
     EditText timerTaskEdit;
     String timeLeftText;
     Animation roundingalone;
+    TimingModel timingModel;
     String myTask;
     EditText editText;
-    ConstraintLayout imageConst,timerConst;
+    ConstraintLayout imageConst, timerConst;
     private Integer timeLeftInMilliseconds = 0;//600.000  10min ||1000//1 second
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
-        timerTaskEdit=findViewById(R.id.timer_task_edit);
+        backButton = findViewById(R.id.back_button);
+        timerTaskEdit = findViewById(R.id.timer_task_edit);
         editText = findViewById(R.id.editText);
-        applybutton = findViewById(R.id.apply_button);
+        timerTaskApply = findViewById(R.id.timer_task_apply);
+        applyDone = findViewById(R.id.apply_button);
         icanchor = findViewById(R.id.icanchor);
         countdownText = findViewById(R.id.countdown_text);
         countdownButton = findViewById(R.id.countdown_button);
@@ -48,19 +59,34 @@ public class TimerActivity extends AppCompatActivity {
         roundingalone = AnimationUtils.loadAnimation(this, R.anim.roundingalone);
         Typeface MMedium = Typeface.createFromAsset(getAssets(), "MMedium.ttf");
         countdownButton.setTypeface(MMedium);
-        imageConst=findViewById(R.id.image_const);
-        timerConst=findViewById(R.id.timerConst);
-    
+        imageConst = findViewById(R.id.image_const);
+        timerConst = findViewById(R.id.timerConst);
 
-        applybutton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(editText.getText().toString()) <1||editText.getText()==null) {
+                finish();
+            }
+        });
+
+        timerTaskApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myTask = timerTaskEdit.getText().toString();
+                imageConst.setVisibility(View.GONE);
+                timerConst.setVisibility(View.VISIBLE);
+            }
+        });
+
+        applyDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Integer.parseInt(editText.getText().toString()) < 1 || editText.getText() == null) {
                     Toast.makeText(TimerActivity.this, "0 минут прошло", Toast.LENGTH_SHORT).show();
                 } else {
                     timeLeftInMilliseconds = Integer.parseInt(editText.getText().toString()) * 60000;
                     timeLeftText = timeLeftInMilliseconds.toString();
-                    applybutton.setVisibility(View.GONE);
+                    applyDone.setVisibility(View.GONE);
                     editText.setVisibility(View.GONE);
                     countdownText.setText("Готовы ?");
                     countdownButton.setVisibility(View.VISIBLE);
@@ -80,6 +106,7 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (countdownText.getText().toString().equals("0:00")) {
+                    dataRoom();
                     mp.stop();
                     finish();
                 } else {
@@ -117,15 +144,26 @@ public class TimerActivity extends AppCompatActivity {
                 mp.start();
                 icanchor.clearAnimation();
                 countdownButton.setVisibility(View.VISIBLE);
-
             }
         }.start();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Toast.makeText(this, "Таймер ещё не окончен", Toast.LENGTH_SHORT).show();
     }
-    public void applyClick(View view) {
+
+    public void dataRoom() {
+        Calendar c = Calendar.getInstance();
+        final int year = c.get(Calendar.YEAR);
+        String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+                "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+        final String month = monthName[c.get(Calendar.MONTH)];
+        String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
+
+        timingModel = new TimingModel(myTask, editText.getText().toString(), currentDate + " " + month + " " + year, null, null, null);
+        App.getDataBase().timingDao().insert(timingModel);
+        finish();
+        Log.e("myTask1", "dataRoom: "+myTask+"timeleft:"+editText.getText().toString());
     }
 }

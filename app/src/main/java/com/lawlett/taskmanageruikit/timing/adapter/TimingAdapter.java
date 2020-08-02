@@ -49,14 +49,15 @@ public class TimingAdapter extends RecyclerView.Adapter<TimingAdapter.TimingView
         }
 
         public void onBind(TimingModel timingModel) {
+            if (timingModel.getTimerTitle() == null) {
                 taskTitle.setText(timingModel.getStopwatchTitle());
-                taskMinute.setText(timingModel.getStopwatchMinutes() +" "+ "минут");
+                taskMinute.setText(timingModel.getStopwatchMinutes() + " " + "минут");
                 taskDate.setText(timingModel.getStopwatchDay());
-//
-//                taskTitle.setText(timingModel.getTimerTitle());
-//                taskMinute.setText(timingModel.getTimerMinutes()+" " + "минуты");
-//                taskDate.setText(timingModel.getTimerDay());
-
+            } else {
+                taskTitle.setText(timingModel.getTimerTitle());
+                taskMinute.setText(timingModel.getTimerMinutes() + " " + "минут");
+                taskDate.setText(timingModel.getTimerDay());
+            }
         }
     }
 }
