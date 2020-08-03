@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lawlett.taskmanageruikit.tasksPage.model.HomeDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.MeetDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.PrivateDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.HomeDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.MeetDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PersonalDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PrivateDoneModel;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.model.WorkDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.WorkDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.doneTask.recycler.DoneAdapter;
 import com.lawlett.taskmanageruikit.utils.App;

@@ -12,7 +12,6 @@ public class PersonalModel implements Serializable {
     public String personalTask;
     public Boolean isDone;
 
-
     public PersonalModel(String personalTask,Boolean isDone) {
         this.personalTask = personalTask;
         this.isDone=isDone;

@@ -1,6 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
-import com.lawlett.taskmanageruikit.utils.IMeetOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder> {
-    List<MeetModel> list;
-Context context;
-IMeetOnClickListener listener;
-    public MeetAdapter(ArrayList<MeetModel> list,Context context,IMeetOnClickListener listener) {
-        this.list = list;
-        this.listener=listener;
-        this.context=context;
+    List<MeetModel> list=new ArrayList<>();
+
+    public MeetAdapter() {
+
     }
 
     @NonNull
@@ -42,23 +37,23 @@ IMeetOnClickListener listener;
         return list.size();
     }
 
-    public class MeetViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    public void updateList(List<MeetModel>list){
+        this.list=list;
+        notifyDataSetChanged();
+    }
+
+    public class MeetViewHolder extends RecyclerView.ViewHolder {
         CheckBox meetTask;
 
         public MeetViewHolder(@NonNull View itemView) {
             super(itemView);
             meetTask = itemView.findViewById(R.id.meet_task);
-            itemView.setOnLongClickListener(this);
         }
 
         public void onBind(MeetModel meetModel) {
             meetTask.setText(meetModel.getMeetTask());
         }
 
-        @Override
-        public boolean onLongClick(View v) {
-            listener.onItemLongClick(getAdapterPosition());
-            return false;
-        }
+
     }
 }

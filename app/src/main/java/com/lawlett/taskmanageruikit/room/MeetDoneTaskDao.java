@@ -7,7 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.lawlett.taskmanageruikit.tasksPage.model.MeetDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.MeetDoneModel;
 
 import java.util.List;
 

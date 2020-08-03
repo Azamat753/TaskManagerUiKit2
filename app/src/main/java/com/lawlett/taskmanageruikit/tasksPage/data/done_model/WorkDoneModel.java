@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.tasksPage.model;
+package com.lawlett.taskmanageruikit.tasksPage.data.done_model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class PersonalDoneModel implements Serializable {
+public class WorkDoneModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String title;
 
-    public PersonalDoneModel(String title) {
+    public WorkDoneModel(String title) {
         this.title = title;
     }
 

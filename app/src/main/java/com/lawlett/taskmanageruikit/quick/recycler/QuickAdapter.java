@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
-import com.lawlett.taskmanageruikit.utils.IOnClickListener;
+import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
 
 import java.util.List;
 
 public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHolder> {
     List<QuickModel> list;
     Context context;
-    IOnClickListener listener;
+    IQuickOnClickListener listener;
 
-    public QuickAdapter(List<QuickModel> list,IOnClickListener listener, Context context) {
+    public QuickAdapter(List<QuickModel> list, IQuickOnClickListener listener, Context context) {
         this.context = context;
         this.list = list;
         this.listener=listener;
@@ -47,9 +47,9 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
     public class QuickViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener, View.OnLongClickListener {
         TextView title, desc, data_created;
         ImageView imageDesc;
-        IOnClickListener listeneer;
+        IQuickOnClickListener listeneer;
 
-        public QuickViewHolder(@NonNull View itemView,IOnClickListener listeneer) {
+        public QuickViewHolder(@NonNull View itemView, IQuickOnClickListener listeneer) {
             super(itemView);
             title = itemView.findViewById(R.id.title_quick);
             desc = itemView.findViewById(R.id.desc_quick);

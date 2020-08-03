@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.tasksPage.model;
+package com.lawlett.taskmanageruikit.tasksPage.data.done_model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

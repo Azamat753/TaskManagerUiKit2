@@ -21,11 +21,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.CalendarEventAdapter;
-import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.timing.activity.StopwatchActivity;
 import com.lawlett.taskmanageruikit.timing.activity.TimerActivity;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
+import com.lawlett.taskmanageruikit.utils.ICalendarEventOnClickListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +36,7 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
-public class CalendarEventsFragment extends Fragment implements IDayOnClickListener {
+public class CalendarEventsFragment extends Fragment implements ICalendarEventOnClickListener {
     RecyclerView recyclerViewToday;
     FloatingActionButton addEventBtn;
     List<CalendarTaskModel> list;
@@ -142,9 +142,10 @@ public class CalendarEventsFragment extends Fragment implements IDayOnClickListe
                 }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getActivity(), AddEventActivity.class);
+                Intent intent = new Intent(getContext(), AddEventActivity.class);
                 intent.putExtra("calendar", list.get(position));
                 App.getDataBase().dataDao().delete(list.get(position));
+                App.getDataBase().dataDao().update(list.get(position));
                 adapter.notifyDataSetChanged();
                 Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
             }

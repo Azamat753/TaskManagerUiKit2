@@ -1,7 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.workTask;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -16,17 +14,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.model.WorkDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.WorkDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IWorkOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkActivity extends AppCompatActivity implements IWorkOnClickListener {
+public class WorkActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     WorkAdapter adapter;
     EditText editText;
@@ -36,7 +33,6 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
     List<WorkModel> list;
     int pos;
     ImageView workBack;
-    int counter=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +44,17 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
         changeView();
 
         list = new ArrayList<>();
+        adapter = new WorkAdapter();
 
         App.getDataBase().workDao().getAllLive().observe(this, workModels -> {
             if (workModels != null) {
                 list.clear();
                 list.addAll(workModels);
-                adapter.notifyDataSetChanged();
+                adapter.updateList(list);
             }
         });
 
         recyclerView = findViewById(R.id.recycler_work);
-        adapter = new WorkAdapter((ArrayList<WorkModel>) list, this, this);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_work);
@@ -111,22 +107,4 @@ public class WorkActivity extends AppCompatActivity implements IWorkOnClickListe
         imageView2.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onItemLongClick(int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу?")
-                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                doneModel = new DoneModel("Работа", list.get(0).workTask);
-                App.getDataBase().doneTaskDao().insert(doneModel);
-
-                workDoneModel= new WorkDoneModel(list.get(0).workTask);
-                App.getDataBase().workDoneTaskDao().insert(workDoneModel);
-
-                App.getDataBase().workDao().delete(list.get(position));
-                adapter.notifyDataSetChanged();
-            }
-        }).show();
-    }
 }

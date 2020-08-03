@@ -1,6 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
-import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IPersonalOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.PersonalViewHolder> {
-    List<PersonalModel> list;
-    IPersonalOnClickListener listener;
-    Context context;
+    List<PersonalModel> list = new ArrayList<>();
+    ICheckedListener listener;
 
-    public PersonalAdapter(ArrayList<PersonalModel> list, Context context, IPersonalOnClickListener listener) {
-        this.list = list;
+    public PersonalAdapter(ICheckedListener listener) {
         this.listener = listener;
-        this.context = context;
     }
 
     @NonNull
@@ -37,24 +31,6 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
     @Override
     public void onBindViewHolder(@NonNull PersonalViewHolder holder, int position) {
         holder.onBind(list.get(position));
-        holder.personalTask.setChecked(list.get(position).isDone=false);
-
-        if (holder.personalTask.isChecked()){
-            holder.personalTask.setChecked(true);
-            PersonalModel personalModel = null;
-            personalModel.setDone(true);
-            App.getDataBase().personalDao().insert(personalModel);
-        }
-
-//        holder.personalTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                list.get(position).isDone=true;
-//                PersonalModel personalModel = null;
-//                personalModel.setDone(list.get(position).isDone=true);
-//                App.getDataBase().personalDao().insert(personalModel);
-//            }
-//        });
     }
 
     @Override
@@ -62,27 +38,38 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
         return list.size();
     }
 
+    public void updateList(List<PersonalModel> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
 
-    public class PersonalViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+
+    public class PersonalViewHolder extends RecyclerView.ViewHolder {
         CheckBox personalTask;
 
         public PersonalViewHolder(@NonNull View itemView) {
             super(itemView);
             personalTask = itemView.findViewById(R.id.personal_task);
-            itemView.setOnLongClickListener(this);
-
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                }
+//            });
         }
 
         public void onBind(PersonalModel personalModel) {
             personalTask.setText(personalModel.getPersonalTask());
-
+            personalTask.setChecked(personalModel.isDone);
+            personalTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemCheckClick(getAdapterPosition());
+                }
+            });
         }
+    }
 
-
-        @Override
-        public boolean onLongClick(View v) {
-            listener.onItemLongClick(getAdapterPosition());
-            return false;
-        }
+    public interface ICheckedListener {
+        void onItemCheckClick(int id);
     }
 }

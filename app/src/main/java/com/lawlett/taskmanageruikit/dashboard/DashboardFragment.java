@@ -149,8 +149,6 @@ public class DashboardFragment extends Fragment {
         meetProgress.setMax(meetDoneAndNotDone);
         meetProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
-//        meetProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-
         homeProgress.setProgress(homeDoneAmount);
         homeProgress.setMax(homeDoneAndNotDone);
         homeProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);

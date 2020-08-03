@@ -1,7 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.meetTask;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,17 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lawlett.taskmanageruikit.tasksPage.model.MeetDoneModel;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.MeetDoneModel;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IMeetOnClickListener;
 
 import java.util.ArrayList;
 
-public class MeetActivity extends AppCompatActivity implements IMeetOnClickListener {
+public class MeetActivity extends AppCompatActivity  {
     RecyclerView recyclerView;
     MeetAdapter adapter;
     private ArrayList<MeetModel> list;
@@ -33,7 +30,7 @@ public class MeetActivity extends AppCompatActivity implements IMeetOnClickListe
     MeetModel meetModel;
     MeetDoneModel meetDoneModel;
     DoneModel doneModel;
-    int position,counter=0;
+    int position;
     ImageView meetBack;
 
     @Override
@@ -46,18 +43,18 @@ public class MeetActivity extends AppCompatActivity implements IMeetOnClickListe
         changeView();
 
         list = new ArrayList<>();
+        adapter = new MeetAdapter();
 
         App.getDataBase().meetDao().getAllLive().observe(this, meetModels -> {
             if (meetModels != null) {
                 list.clear();
                 list.addAll(meetModels);
-                adapter.notifyDataSetChanged();
+                adapter.updateList(list);
             }
         });
 
 
         recyclerView = findViewById(R.id.recycler_meet);
-        adapter = new MeetAdapter(list, this, this);
         recyclerView.setAdapter(adapter);
         editText = findViewById(R.id.editText_meet);
 
@@ -109,26 +106,26 @@ public class MeetActivity extends AppCompatActivity implements IMeetOnClickListe
         imageView2.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onItemLongClick(int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу?")
-                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                doneModel = new DoneModel("Встречи", list.get(0).meetTask);
-                App.getDataBase().doneTaskDao().insert(doneModel);
-
-                meetDoneModel= new MeetDoneModel(list.get(0).meetTask);
-
-                App.getDataBase().meetDoneTaskDao().insert(meetDoneModel);
-
-                App.getDataBase().meetDao().delete(list.get(position));
-                adapter.notifyDataSetChanged();
-
-            }
-        }).show();
-    }
+//    @Override
+//    public void onItemLongClick(int position) {
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("Вы выполнили задачу?")
+//                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                doneModel = new DoneModel("Встречи", list.get(0).meetTask);
+//                App.getDataBase().doneTaskDao().insert(doneModel);
+//
+//                meetDoneModel= new MeetDoneModel(list.get(0).meetTask);
+//
+//                App.getDataBase().meetDoneTaskDao().insert(meetDoneModel);
+//
+//                App.getDataBase().meetDao().delete(list.get(position));
+//                adapter.notifyDataSetChanged();
+//
+//            }
+//        }).show();
+//    }
 
 }

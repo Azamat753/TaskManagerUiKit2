@@ -2,30 +2,27 @@ package com.lawlett.taskmanageruikit.tasksPage.personalTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IPersonalOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonalActivity extends AppCompatActivity implements IPersonalOnClickListener {
+public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener {
     EditText editText;
     PersonalAdapter adapter;
     PersonalModel personalModel;
@@ -44,18 +41,17 @@ public class PersonalActivity extends AppCompatActivity implements IPersonalOnCl
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
         list = new ArrayList<>();
+        adapter = new PersonalAdapter(this);
 
         App.getDataBase().personalDao().getAllLive().observe(this, personalModels -> {
             if (personalModels != null) {
                 list.clear();
                 list.addAll(personalModels);
-                adapter.notifyDataSetChanged();
-                Log.e("personal", "onChanged: " + personalModels);
+                adapter.updateList(list);
             }
         });
 
         RecyclerView recyclerView = findViewById(R.id.recycler_personal);
-        adapter = new PersonalAdapter((ArrayList<PersonalModel>) list, this, this);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_personal);
@@ -79,7 +75,7 @@ public class PersonalActivity extends AppCompatActivity implements IPersonalOnCl
         personalBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-onBackPressed();
+                onBackPressed();
             }
         });
     }
@@ -93,28 +89,39 @@ onBackPressed();
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
             personal = editText.getText().toString().trim();
-            personalModel = new PersonalModel(personal,false);
+            personalModel = new PersonalModel(personal, false);
             App.getDataBase().personalDao().insert(personalModel);
             editText.setText("");
         }
     }
 
     @Override
-    public void onItemLongClick(int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу?")
-                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", (dialog12, which) -> {
-
-            doneModel = new DoneModel("Персональные", list.get(0).personalTask);
-            App.getDataBase().doneTaskDao().insert(doneModel);
-
-            personalDoneModel= new PersonalDoneModel(list.get(0).personalTask);
-            App.getDataBase().personalDoneTaskDao().insert(personalDoneModel);
-
-            App.getDataBase().personalDao().delete(list.get(position));
-            adapter.notifyDataSetChanged();
-
-        }).show();
+    public void onItemCheckClick(int id) {
+        PersonalModel personalModel = list.get(id);
+        if (!personalModel.isDone) {
+            personalModel.isDone = true;
+        } else {
+            personalModel.isDone=false;
+        }
+        App.getDataBase().personalDao().update(list.get(id));
     }
+
+//    @Override
+//    public void onItemLongClick(int position) {
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("Вы выполнили задачу?")
+//                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", (dialog12, which) -> {
+//
+//            doneModel = new DoneModel("Персональные", list.get(0).personalTask);
+//            App.getDataBase().doneTaskDao().insert(doneModel);
+//
+//            personalDoneModel = new PersonalDoneModel(list.get(0).personalTask);
+//            App.getDataBase().personalDoneTaskDao().insert(personalDoneModel);
+//
+//            App.getDataBase().personalDao().delete(list.get(position));
+//            adapter.notifyDataSetChanged();
+//
+//        }).show();
+//    }
 
 }

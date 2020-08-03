@@ -11,11 +11,11 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.HomeDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.MeetDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.PersonalDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.PrivateDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.model.WorkDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.HomeDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.MeetDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PersonalDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PrivateDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.WorkDoneModel;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 
 

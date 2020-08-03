@@ -1,7 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.privateTask;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,17 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lawlett.taskmanageruikit.tasksPage.model.PrivateDoneModel;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PrivateDoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IPrivateOnClickListener;
 
 import java.util.ArrayList;
 
-public class PrivateActivity extends AppCompatActivity implements IPrivateOnClickListener {
+public class PrivateActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     PrivateAdapter adapter;
     ArrayList<PrivateModel> list;
@@ -47,17 +44,17 @@ public class PrivateActivity extends AppCompatActivity implements IPrivateOnClic
         changeView();
 
         list = new ArrayList<>();
+        adapter = new PrivateAdapter();
 
         App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
             if (privateModels != null) {
                 list.clear();
                 list.addAll(privateModels);
-                adapter.notifyDataSetChanged();
+                adapter.updateList(list);
             }
         });
 
         recyclerView = findViewById(R.id.recycler_private);
-        adapter = new PrivateAdapter(list, this, this);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_private);
@@ -109,29 +106,29 @@ public class PrivateActivity extends AppCompatActivity implements IPrivateOnClic
         imageView2.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onItemLongClick(int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу?")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                doneModel = new DoneModel("Приватные", list.get(0).privateTask);
-                App.getDataBase().doneTaskDao().insert(doneModel);
-
-                privateDoneModel = new PrivateDoneModel(list.get(0).privateTask);
-                App.getDataBase().privateDoneTaskDao().insert(privateDoneModel);
-
-                App.getDataBase().privateDao().delete(list.get(position));
-                adapter.notifyDataSetChanged();
-
-            }
-        }).show();
-    }
+//    @Override
+//    public void onItemLongClick(int position) {
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("Вы выполнили задачу?")
+//                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                doneModel = new DoneModel("Приватные", list.get(0).privateTask);
+//                App.getDataBase().doneTaskDao().insert(doneModel);
+//
+//                privateDoneModel = new PrivateDoneModel(list.get(0).privateTask);
+//                App.getDataBase().privateDoneTaskDao().insert(privateDoneModel);
+//
+//                App.getDataBase().privateDao().delete(list.get(position));
+//                adapter.notifyDataSetChanged();
+//
+//            }
+//        }).show();
+//    }
 }

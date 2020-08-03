@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
-import com.lawlett.taskmanageruikit.utils.IDayOnClickListener;
+import com.lawlett.taskmanageruikit.utils.ICalendarEventOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,9 @@ public class CalendarEventAdapter extends RecyclerView.Adapter<CalendarEventAdap
 
     List<CalendarTaskModel> list;
     Context context;
-    IDayOnClickListener listener;
+    ICalendarEventOnClickListener listener;
 
-    public CalendarEventAdapter(ArrayList<CalendarTaskModel> list, IDayOnClickListener listener, Context context) {
+    public CalendarEventAdapter(ArrayList<CalendarTaskModel> list, ICalendarEventOnClickListener listener, Context context) {
         this.list = list;
         this.listener = listener;
         this.context = context;
@@ -49,9 +49,9 @@ public class CalendarEventAdapter extends RecyclerView.Adapter<CalendarEventAdap
     public class DayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView task, time, dataDay, endTime;
         View left_view;
-        IDayOnClickListener listener;
+        ICalendarEventOnClickListener listener;
 
-        public DayViewHolder(@NonNull View itemView, IDayOnClickListener listener) {
+        public DayViewHolder(@NonNull View itemView, ICalendarEventOnClickListener listener) {
             super(itemView);
             dataDay = itemView.findViewById(R.id.data_day);
             task = itemView.findViewById(R.id.task_title);

@@ -1,7 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,17 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lawlett.taskmanageruikit.tasksPage.model.HomeDoneModel;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.HomeDoneModel;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IHomeOnClickListener;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity implements IHomeOnClickListener {
+public class HomeActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     HomeAdapter adapter;
     ArrayList<HomeModel> list;
@@ -33,8 +30,9 @@ public class HomeActivity extends AppCompatActivity implements IHomeOnClickListe
     HomeDoneModel homeDoneModel;
     DoneModel doneModel;
     EditText editText;
-int pos,counter=0;
-ImageView homeBack;
+    int pos;
+    ImageView homeBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,23 +44,23 @@ ImageView homeBack;
         changeView();
 
         list = new ArrayList<>();
+        adapter = new HomeAdapter();
 
         App.getDataBase().homeDao().getAllLive().observe(this, homeModels -> {
             if (homeModels != null) {
                 list.clear();
                 list.addAll(homeModels);
-                adapter.notifyDataSetChanged();
+                adapter.updateList(list);
             }
         });
 
 
         recyclerView = findViewById(R.id.recycler_home);
-        adapter = new HomeAdapter(list, this, this);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_home);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -70,14 +68,14 @@ ImageView homeBack;
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                pos= viewHolder.getAdapterPosition();
+                pos = viewHolder.getAdapterPosition();
                 App.getDataBase().homeDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(HomeActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
 
-        homeBack=findViewById(R.id.personal_back);
+        homeBack = findViewById(R.id.personal_back);
         homeBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +97,7 @@ ImageView homeBack;
             editText.setText("");
         }
     }
+
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText("Дом");
@@ -109,28 +108,28 @@ ImageView homeBack;
 
     }
 
-    @Override
-    public void onItemLongClick(int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Вы выполнили задачу?")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                doneModel = new DoneModel("Дом", list.get(0).homeTask);
-                App.getDataBase().doneTaskDao().insert(doneModel);
-
-                homeDoneModel= new HomeDoneModel(list.get(0).homeTask);
-                App.getDataBase().homeDoneTaskDao().insert(homeDoneModel);
-
-                App.getDataBase().homeDao().delete(list.get(position));
-                adapter.notifyDataSetChanged();
-            }
-        }).show();
-    }
+//    @Override
+//    public void onItemLongClick(int position) {
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("Вы выполнили задачу?")
+//                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                    }
+//                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                doneModel = new DoneModel("Дом", list.get(0).homeTask);
+//                App.getDataBase().doneTaskDao().insert(doneModel);
+//
+//                homeDoneModel = new HomeDoneModel(list.get(0).homeTask);
+//                App.getDataBase().homeDoneTaskDao().insert(homeDoneModel);
+//
+//                App.getDataBase().homeDao().delete(list.get(position));
+//                adapter.notifyDataSetChanged();
+//            }
+//        }).show();
+//    }
 }

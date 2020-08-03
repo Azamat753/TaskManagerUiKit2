@@ -19,11 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.model.WorkDoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.done_model.WorkDoneModel;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.IOnClickListener;
+import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QuickFragment extends Fragment implements IOnClickListener {
+public class QuickFragment extends Fragment implements IQuickOnClickListener {
     QuickAdapter adapter;
     private List<QuickModel> list;
     FloatingActionButton addQuickBtn;
