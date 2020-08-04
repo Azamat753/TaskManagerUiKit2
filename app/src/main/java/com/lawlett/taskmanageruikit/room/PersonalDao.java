@@ -31,7 +31,7 @@ public interface PersonalDao {
 
     @Update
     void update(PersonalModel personalModel);
-    
+
 //    @Query("UPDATE Tour SET endAddress = :end_address WHERE id = :tid")
 //    int updateTour(long tid, String end_address);
 

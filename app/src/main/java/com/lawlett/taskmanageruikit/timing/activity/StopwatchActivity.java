@@ -3,6 +3,7 @@ package com.lawlett.taskmanageruikit.timing.activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -106,7 +108,6 @@ public class StopwatchActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
     }
 
-
     public void dataRoom() {
         Calendar c = Calendar.getInstance();
         final int year = c.get(Calendar.YEAR);
@@ -114,8 +115,11 @@ public class StopwatchActivity extends AppCompatActivity {
                 "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-
-        timingModel = new TimingModel(null, null, null, myTask, stopwatchTime, currentDate + " " + month + " " + year);
+        int stopwatchTimePref = Integer.parseInt(stopwatchTime);
+        int previousTimePref=TimingSizePreference.getInstance(this).getPersonalSize();
+        TimingSizePreference.getInstance(this).savePersonalSize(stopwatchTimePref+previousTimePref);
+        timingModel = new TimingModel(null, null, null, myTask, Integer.valueOf(stopwatchTime), currentDate + " " + month + " " + year);
+        Log.e("stopwatchMinutes", "dataRoom: " + stopwatchTime);
         App.getDataBase().timingDao().insert(timingModel);
         finish();
     }

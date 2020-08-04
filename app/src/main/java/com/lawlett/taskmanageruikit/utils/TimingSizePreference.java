@@ -3,18 +3,18 @@ package com.lawlett.taskmanageruikit.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class PersonalSizePreference {
+public class TimingSizePreference {
 
-    public static volatile PersonalSizePreference instance;
+    public static volatile TimingSizePreference instance;
     private SharedPreferences preferences;
 
-    public PersonalSizePreference(Context context) {
+    public TimingSizePreference(Context context) {
         instance = this;
         preferences = context.getSharedPreferences("personalSize", Context.MODE_PRIVATE);
     }
 
-    public static PersonalSizePreference getInstance(Context context) {
-        if (instance == null) new PersonalSizePreference(context);
+    public static TimingSizePreference getInstance(Context context) {
+        if (instance == null) new TimingSizePreference(context);
         return instance;
     }
 

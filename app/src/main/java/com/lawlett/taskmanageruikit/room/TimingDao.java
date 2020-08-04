@@ -31,4 +31,6 @@ public interface TimingDao {
 
     @Update
     void update(TimingModel timingModel);
+
+
 }

@@ -50,11 +50,7 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
         public PersonalViewHolder(@NonNull View itemView) {
             super(itemView);
             personalTask = itemView.findViewById(R.id.personal_task);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                }
-//            });
+
         }
 
         public void onBind(PersonalModel personalModel) {

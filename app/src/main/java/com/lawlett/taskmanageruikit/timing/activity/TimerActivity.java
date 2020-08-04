@@ -22,6 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +42,7 @@ public class TimerActivity extends AppCompatActivity {
     EditText editText;
     ConstraintLayout imageConst, timerConst;
     private Integer timeLeftInMilliseconds = 0;//600.000  10min ||1000//1 second
+    CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class TimerActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countDownTimer.cancel();
                 finish();
             }
         });
@@ -137,7 +140,7 @@ public class TimerActivity extends AppCompatActivity {
         icanchor.startAnimation(roundingalone);
         countdownButton.animate().alpha(0).setDuration(300).start();
 
-        CountDownTimer countDownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -168,7 +171,6 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }
-
     public void dataRoom() {
         Calendar c = Calendar.getInstance();
         final int year = c.get(Calendar.YEAR);
@@ -176,10 +178,12 @@ public class TimerActivity extends AppCompatActivity {
                 "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-
-        timingModel = new TimingModel(myTask, editText.getText().toString(), currentDate + " " + month + " " + year, null, null, null);
+        int previousTime=TimingSizePreference.getInstance(this).getPersonalSize();
+        int timerTime=Integer.parseInt(editText.getText().toString());
+        TimingSizePreference.getInstance(this).savePersonalSize(timerTime+previousTime);
+                timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);
         App.getDataBase().timingDao().insert(timingModel);
         finish();
-        Log.e("myTask1", "dataRoom: " + myTask + "timeleft:" + editText.getText().toString());
+        Log.e("myTask1", "dataRoom: " + myTask + "timeleft:" + timerTime);
     }
 }

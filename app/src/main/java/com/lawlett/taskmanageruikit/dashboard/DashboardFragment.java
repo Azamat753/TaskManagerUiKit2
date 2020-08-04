@@ -15,20 +15,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DashboardFragment extends Fragment {
     TextView plans_amount, todo_amount, event_amount, allTask_amount,
-            complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent;
+            complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent, timing_task_amount, timing_minute_amount;
     ProgressBar allTaskProgress, personalProgress, workProgress, meetProgress, homeProgress, privateProgress;
     int personalDoneAmount, workDoneAmount, meetDoneAmount, homeDoneAmount, privateDoneAmount, plansAmount, doneAmount,
             personalAmount, workAmount, meetAmount, homeAmount, privateAmount, todoAmount, eventAmount, allTaskAmount,
             allTaskDoneAndNotDone, personalDoneAndNotDone, workDoneAndNotDone,
             homeDoneAndNotDone, meetDoneAndNotDone, privateDoneAndNotDone;
-    int todoPercent, personalPercentAmount, workPercentAmount, meetPercentAmount, homePercentAmount, privatePercentAmount;
+    int todoPercent, personalPercentAmount, workPercentAmount, meetPercentAmount, homePercentAmount,
+            privatePercentAmount, timingTaskAmountInt, timingMinuteAmountInt;
+    private List<TimingModel> list;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -38,13 +45,22 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View root= inflater.inflate(R.layout.fragment_dashboard, container, false);
+        list = new ArrayList<>();
 
+        App.getDataBase().timingDao().getAllLive().observe(this, timingModels -> {
+            if (timingModels != null)
+                list.clear();
+            list.addAll(timingModels);
+        });
+        return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        timing_task_amount = view.findViewById(R.id.timing_task_amount);
+        timing_minute_amount = view.findViewById(R.id.timing_minute_amount);
         plans_amount = view.findViewById(R.id.plans_amount);
         todo_amount = view.findViewById(R.id.todo_amount);
         event_amount = view.findViewById(R.id.events_amount);
@@ -64,8 +80,8 @@ public class DashboardFragment extends Fragment {
         privateProgress = view.findViewById(R.id.private_progress);
 
         getDataFromBD();
-        getTasksDoneAmount();
         getAllTasks();
+        getTasksDoneAmount();
         getAllDoneAndNotDoneTasks();
         countUpPercent();
 
@@ -74,12 +90,12 @@ public class DashboardFragment extends Fragment {
 
     public void countUpPercent() {
         try {
-            meetPercentAmount = meetDoneAmount * 100 / meetDoneAndNotDone;
-            todoPercent = doneAmount * 100 / allTaskDoneAndNotDone;
-            personalPercentAmount = personalDoneAmount * 100 / personalDoneAndNotDone;
-            workPercentAmount = workDoneAmount * 100 / workDoneAndNotDone;
-            homePercentAmount = homeDoneAmount * 100 / homeDoneAndNotDone;
-            privatePercentAmount = privateDoneAmount * 100 / privateDoneAndNotDone;
+//            meetPercentAmount = meetDoneAmount * 100 / meetDoneAndNotDone;
+//            todoPercent = doneAmount * 100 / allTaskDoneAndNotDone;
+            personalPercentAmount = personalDoneAmount * 100 / personalAmount;
+//            workPercentAmount = workDoneAmount * 100 / workDoneAndNotDone;
+//            homePercentAmount = homeDoneAmount * 100 / homeDoneAndNotDone;
+//            privatePercentAmount = privateDoneAmount * 100 / privateDoneAndNotDone;
         } catch (ArithmeticException e) {
             e.printStackTrace();
         }
@@ -94,6 +110,8 @@ public class DashboardFragment extends Fragment {
     }
 
     public void getDataFromBD() {
+        timingTaskAmountInt = App.getDataBase().timingDao().getAll().size();//тайминг кол-во задач
+        timingMinuteAmountInt= TimingSizePreference.getInstance(getContext()).getPersonalSize();
         plansAmount = App.getDataBase().taskDao().getAll().size(); //идеи кол=во
         doneAmount = App.getDataBase().doneTaskDao().getAll().size();//Выполненные задачи
         personalAmount = App.getDataBase().personalDao().getAll().size();//Персональные задачи кол-во
@@ -120,6 +138,9 @@ public class DashboardFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void setShow() {
+        timing_task_amount.setText(String.valueOf(timingTaskAmountInt));
+        timing_minute_amount.setText(String.valueOf(timingMinuteAmountInt));
+
         plans_amount.setText(String.valueOf(plansAmount)); //Отображеие кол-во идей
         todo_amount.setText(String.valueOf(todoAmount));  //Отображение кол-во Задач
         event_amount.setText(String.valueOf(eventAmount)); //Отображение кол-во Событий
@@ -138,7 +159,7 @@ public class DashboardFragment extends Fragment {
         allTaskProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         personalProgress.setProgress(personalDoneAmount);
-        personalProgress.setMax(personalDoneAndNotDone);
+        personalProgress.setMax(personalAmount);
         personalProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
         workProgress.setProgress(workDoneAmount);

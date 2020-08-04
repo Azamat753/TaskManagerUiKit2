@@ -11,14 +11,14 @@ public class TimingModel implements Serializable {
     private long id;
 
     public String timerTitle;
-    public String timerMinutes;
+    public Integer timerMinutes;
     public String timerDay;
 
     public String stopwatchTitle;
-    public String stopwatchMinutes;
+    public Integer stopwatchMinutes;
     public String stopwatchDay;
 
-    public TimingModel(String timerTitle, String timerMinutes, String timerDay, String stopwatchTitle, String stopwatchMinutes, String stopwatchDay) {
+    public TimingModel(String timerTitle, Integer timerMinutes, String timerDay, String stopwatchTitle, Integer stopwatchMinutes, String stopwatchDay) {
         this.timerTitle = timerTitle;
         this.timerMinutes = timerMinutes;
         this.timerDay = timerDay;
@@ -43,11 +43,11 @@ public class TimingModel implements Serializable {
         this.timerTitle = timerTitle;
     }
 
-    public String getTimerMinutes() {
+    public Integer getTimerMinutes() {
         return timerMinutes;
     }
 
-    public void setTimerMinutes(String timerMinutes) {
+    public void setTimerMinutes(String Integer) {
         this.timerMinutes = timerMinutes;
     }
 
@@ -67,11 +67,11 @@ public class TimingModel implements Serializable {
         this.stopwatchTitle = stopwatchTitle;
     }
 
-    public String getStopwatchMinutes() {
+    public Integer getStopwatchMinutes() {
         return stopwatchMinutes;
     }
 
-    public void setStopwatchMinutes(String stopwatchMinutes) {
+    public void setStopwatchMinutes(Integer stopwatchMinutes) {
         this.stopwatchMinutes = stopwatchMinutes;
     }
 

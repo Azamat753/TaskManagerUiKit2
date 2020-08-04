@@ -102,6 +102,7 @@ public class TodoFragment extends Fragment {
         home_amount.setText(homeAmount + "");
         private_amount.setText(privateAmount + "");
         done_amount.setText(doneAmount + "");
+
     }
 
     @Override

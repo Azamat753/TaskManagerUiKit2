@@ -29,9 +29,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     DoneModel doneModel;
     PersonalDoneModel personalDoneModel;
     List<PersonalModel> list;
+    List<PersonalDoneModel> listDone;
     String personal;
     ImageView personalBack;
     int pos;
+    int myId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,16 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             }
         });
 
+        listDone = new ArrayList<>();
+
+        App.getDataBase().personalDoneTaskDao().getAllLive().observe(this, personalDoneModels -> {
+            if (personalDoneModels != null) {
+                listDone.clear();
+                listDone.addAll(personalDoneModels);
+            }
+        });
+
+
         RecyclerView recyclerView = findViewById(R.id.recycler_personal);
         recyclerView.setAdapter(adapter);
 
@@ -65,9 +77,13 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
+
+                App.getDataBase().personalDoneTaskDao().delete(listDone.get(pos));
+
                 App.getDataBase().personalDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(PersonalActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -97,31 +113,17 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
     @Override
     public void onItemCheckClick(int id) {
-        PersonalModel personalModel = list.get(id);
+        personalModel = list.get(id);
+        myId = id;
         if (!personalModel.isDone) {
             personalModel.isDone = true;
+            PersonalDoneModel personalDoneModel;
+            personalDoneModel = new PersonalDoneModel("1");
+            App.getDataBase().personalDoneTaskDao().insert(personalDoneModel);
         } else {
-            personalModel.isDone=false;
+            personalModel.isDone = false;
+            App.getDataBase().personalDoneTaskDao().delete(listDone.get(id));
         }
         App.getDataBase().personalDao().update(list.get(id));
     }
-
-//    @Override
-//    public void onItemLongClick(int position) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//        dialog.setTitle("Вы выполнили задачу?")
-//                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", (dialog12, which) -> {
-//
-//            doneModel = new DoneModel("Персональные", list.get(0).personalTask);
-//            App.getDataBase().doneTaskDao().insert(doneModel);
-//
-//            personalDoneModel = new PersonalDoneModel(list.get(0).personalTask);
-//            App.getDataBase().personalDoneTaskDao().insert(personalDoneModel);
-//
-//            App.getDataBase().personalDao().delete(list.get(position));
-//            adapter.notifyDataSetChanged();
-//
-//        }).show();
-//    }
-
 }
