@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.CalendarEventAdapter;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PersonalDoneModel;
 import com.lawlett.taskmanageruikit.timing.activity.StopwatchActivity;
 import com.lawlett.taskmanageruikit.timing.activity.TimerActivity;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -44,7 +43,6 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
     TextView todayTv;
     View colorView;
     int position;
-    PersonalDoneModel personalDoneModel;
 
     public CalendarEventsFragment() {
         // Required empty public constructor
@@ -144,8 +142,6 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(getContext(), AddEventActivity.class);
                 intent.putExtra("calendar", list.get(position));
-                App.getDataBase().dataDao().delete(list.get(position));
-                App.getDataBase().dataDao().update(list.get(position));
                 adapter.notifyDataSetChanged();
                 Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
             }
@@ -164,8 +160,6 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
                 }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                personalDoneModel = new PersonalDoneModel("123");
-
                 App.getDataBase().dataDao().delete(list.get(position));
 
                 adapter.notifyDataSetChanged();

@@ -7,4 +7,5 @@
     <string name="очистить">Очистить список</string>
     <string name="clearSetting">Очистить данные о пароле</string>
     <string name="progress">Прогресс</string>
+    <string name="clear_minutes">Очистить поле всего минут</string>
 </resources>

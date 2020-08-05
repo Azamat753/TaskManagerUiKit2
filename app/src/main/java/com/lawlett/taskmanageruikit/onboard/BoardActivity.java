@@ -23,7 +23,6 @@ public class BoardActivity extends AppCompatActivity   {
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager, true);
-
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -43,7 +42,7 @@ public class BoardActivity extends AppCompatActivity   {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     }
 }

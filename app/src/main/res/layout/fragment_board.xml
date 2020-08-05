@@ -41,6 +41,18 @@
         app:lottie_fileName="notes.json"
         app:lottie_loop="true" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/time_animation"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="time.json"
+        app:lottie_loop="true" />
+
 
     <TextView
         android:id="@+id/title_tv"
@@ -69,6 +81,7 @@
 
     <TextView
         android:visibility="gone"
+        android:layout_marginTop="25dp"
         android:id="@+id/start_tv"
         android:fontFamily="@font/m_light"
         android:layout_width="wrap_content"

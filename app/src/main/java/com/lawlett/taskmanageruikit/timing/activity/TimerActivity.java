@@ -84,7 +84,8 @@ public class TimerActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                countDownTimer.cancel();
+                if (countDownTimer != null)
+                    countDownTimer.cancel();
                 finish();
             }
         });
@@ -92,16 +93,21 @@ public class TimerActivity extends AppCompatActivity {
         timerTaskApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myTask = timerTaskEdit.getText().toString();
-                imageConst.setVisibility(View.GONE);
-                timerConst.setVisibility(View.VISIBLE);
+                if (timerTaskEdit.getText().toString().isEmpty()) {
+                    Toast.makeText(TimerActivity.this, "Пусто", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    myTask = timerTaskEdit.getText().toString();
+                    imageConst.setVisibility(View.GONE);
+                    timerConst.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         applyDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(editText.getText().toString()) < 1 || editText.getText() == null) {
+                if (editText.getText().toString().equals("")||Integer.parseInt(editText.getText().toString())<1) {
                     Toast.makeText(TimerActivity.this, "0 минут прошло", Toast.LENGTH_SHORT).show();
                 } else {
                     timeLeftInMilliseconds = Integer.parseInt(editText.getText().toString()) * 60000;
@@ -118,7 +124,7 @@ public class TimerActivity extends AppCompatActivity {
         countdownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startTimer();
+                    startTimer();
             }
         });
 
@@ -155,13 +161,18 @@ public class TimerActivity extends AppCompatActivity {
                 countdownText.setText(timeLeftText);
                 countdownButton.setVisibility(View.GONE);
                 exitButton.setVisibility(View.VISIBLE);
+
             }
 
             @Override
             public void onFinish() {
                 Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
                 mp = MediaPlayer.create(getApplicationContext(), notification);
-                mp.start();
+                if (mp!=null) {
+                    mp.start();
+                }else {
+                    Toast.makeText(TimerActivity.this, "Таймер закончил свою работу", Toast.LENGTH_SHORT).show();
+                }
                 icanchor.clearAnimation();
                 countdownButton.setVisibility(View.VISIBLE);
             }
@@ -171,6 +182,7 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
     }
+
     public void dataRoom() {
         Calendar c = Calendar.getInstance();
         final int year = c.get(Calendar.YEAR);
@@ -178,10 +190,10 @@ public class TimerActivity extends AppCompatActivity {
                 "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-        int previousTime=TimingSizePreference.getInstance(this).getTimingSize();
-        int timerTime=Integer.parseInt(editText.getText().toString());
-        TimingSizePreference.getInstance(this).saveTimingSize(timerTime+previousTime);
-                timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);
+        int previousTime = TimingSizePreference.getInstance(this).getTimingSize();
+        int timerTime = Integer.parseInt(editText.getText().toString());
+        TimingSizePreference.getInstance(this).saveTimingSize(timerTime + previousTime);
+        timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);
         App.getDataBase().timingDao().insert(timingModel);
         finish();
         Log.e("myTask1", "dataRoom: " + myTask + "timeleft:" + timerTime);

@@ -117,37 +117,47 @@ public class QuickActivity extends AppCompatActivity {
 //                   }
 //                    }
 //                });
-
+private void getCurrentPhoto(){
+    if (gallImage == null) {
+        pickImage = captureImage;
+        gallImage="";
+    } else if (captureImage == null) {
+        pickImage = gallImage;
+        captureImage="";
+    }
+}
 
     public void recordDataRoom() {
+        getCurrentPhoto();
         textTitle = e_title.getText().toString();
         textDescription = e_description.getText().toString();
-        if (textTitle.equals("") && textDescription.equals("")) {
-            finish();
-        } else {
+        if (!textTitle.equals("") || !textDescription.equals("")) {
             Calendar c = Calendar.getInstance();
-
             final int year = c.get(Calendar.YEAR);
             String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
                     "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
-
-
             final String month = monthName[c.get(Calendar.MONTH)];
-
-
             String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-            if (gallImage == null) {
-                pickImage = captureImage;
-            } else if (captureImage == null) {
-                pickImage = gallImage;
-            }
 
-            quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
+            String myTitle = e_title.getText().toString();
+            String myDesk = e_description.getText().toString();
+            String myPickImage = pickImage;
+            int myChoosedColor = choosedColor;
 
+            if (quickModel != null) {
+                quickModel.setTitle(myTitle);
+                quickModel.setDescription(myDesk);
+                quickModel.setImage(myPickImage);
+                quickModel.setColor(myChoosedColor);
+                quickModel.setCreateData(currentDate + " " + month + " " + year);
+                App.getDataBase().taskDao().update(quickModel);
+            } else {
+                quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
                 App.getDataBase().taskDao().insert(quickModel);
-                finish();
-
-    }}
+            }
+        }
+        finish();
+    }
 
     @Override
     public void onBackPressed() {
@@ -167,7 +177,6 @@ public class QuickActivity extends AppCompatActivity {
             e_title.setTextColor(choosedColor);
             gallImage = quickModel.getImage();
             Glide.with(this).load(gallImage).into(image_title);
-
         }
     }
 
@@ -192,7 +201,7 @@ public class QuickActivity extends AppCompatActivity {
                 colors.add("#a276eb");
                 colors.add("#6a3ab2");
                 colors.add("#666666");
-                colors.add("#FFFF00");
+                colors.add("#FFFFFF");
                 colors.add("#3C8D2F");
                 colors.add("#FA9F00");
                 colors.add("#FF0000");

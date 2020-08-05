@@ -11,23 +11,18 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.HomeDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.MeetDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PersonalDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PrivateDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.WorkDoneModel;
+
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 
 
 @Database(entities = {QuickModel.class, PersonalModel.class, WorkModel.class, MeetModel.class,
         HomeModel.class, PrivateModel.class, CalendarTaskModel.class, DoneModel.class,
-        PersonalDoneModel.class, WorkDoneModel.class, MeetDoneModel.class,
-        HomeDoneModel.class, PrivateDoneModel.class, TimingModel.class}, version = 1, exportSchema = false)
+        TimingModel.class}, version = 1, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract QuickDao taskDao();
 
-    public abstract DataDao dataDao();
+    public abstract CalendarDao dataDao();
 
     public abstract PersonalDao personalDao();
 
@@ -40,16 +35,6 @@ public abstract class AppDataBase extends RoomDatabase {
     public abstract PrivateDao privateDao();
 
     public abstract DoneTaskDao doneTaskDao();
-
-    public abstract PersonalDoneTaskDao personalDoneTaskDao();
-
-    public abstract WorkDoneTaskDao workDoneTaskDao();
-
-    public abstract MeetDoneTaskDao meetDoneTaskDao();
-
-    public abstract HomeDoneTaskDao homeDoneTaskDao();
-
-    public abstract PrivateDoneTaskDao privateDoneTaskDao();
 
     public abstract TimingDao timingDao();
 }

@@ -17,9 +17,11 @@ import com.lawlett.taskmanageruikit.tasksPage.doneTask.DoneTasksActivity;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.HomeActivity;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.MeetActivity;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.PersonalActivity;
+import com.lawlett.taskmanageruikit.tasksPage.privateTask.PrivateActivity;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.WorkActivity;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
+import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 
 
 public class TodoFragment extends Fragment {
@@ -58,10 +60,6 @@ public class TodoFragment extends Fragment {
         done_amount = view.findViewById(R.id.done_amount);
 
 
-
-
-
-
 //        dotsPerson.setOnClickListener(v -> {
 //            PopupMenu popupMenu = new PopupMenu(getContext(), dotsPerson);
 //            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
@@ -87,13 +85,22 @@ public class TodoFragment extends Fragment {
         workImage.setOnClickListener(v -> startActivity(new Intent(getContext(), WorkActivity.class)));
         meetImage.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
         homeImage.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
-        privateImage.setOnClickListener(v -> startActivity(new Intent(getContext(), PassCodeActivity.class)));
+        privateImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!PasswordPassDonePreference.getInstance(getContext()).isPass()) {
+                    startActivity(new Intent(getContext(), PassCodeActivity.class));
+                } else {
+                    startActivity(new Intent(getContext(), PrivateActivity.class));
+                }
+            }
+        });
         doneImage.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), DoneTasksActivity.class));
 
         });
     }
-    
+
     public void notifyView() {
         personal_amount.setText(personalAmount + "");
         work_amount.setText(workAmount + "");

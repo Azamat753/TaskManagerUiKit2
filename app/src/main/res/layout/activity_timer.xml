@@ -15,6 +15,7 @@
         android:visibility="visible">
 
         <ImageView
+            app:layout_constraintBottom_toTopOf="@id/timer_task_edit"
             android:id="@+id/image_timerPhone"
             android:layout_width="match_parent"
             android:layout_height="500dp"
@@ -39,7 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Что вы хотите сделать"
+            app:layout_constraintBottom_toTopOf="@id/timer_task_apply"
             android:maxLength="21"
+            android:layout_marginBottom="50dp"
             android:textColor="#FFF"
             android:inputType="textCapSentences"
             android:textColorHint="#FFF"
@@ -56,7 +59,9 @@
             android:background="@drawable/rectangle_bg"
             android:text="Принять"
             android:textColor="#FFF"
+            android:layout_marginBottom="200dp"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/timer_task_edit" />
@@ -94,6 +99,7 @@
 
 
         <TextView
+            android:layout_marginTop="50dp"
             android:id="@+id/countdown_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,6 +145,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/rectangle_bg"
             android:text="Принять"
             android:textColor="#FFF"
@@ -148,12 +155,14 @@
             app:layout_constraintTop_toBottomOf="@id/countdown_text" />
 
         <EditText
+            android:layout_marginTop="50dp"
             android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
             android:hint="Количество минут"
             android:inputType="number"
             android:maxLength="3"
+            android:background="@drawable/edittext_background"
             android:shadowColor="@color/withoutColoredBackground"
             android:textAlignment="center"
             android:textColor="#FFF"

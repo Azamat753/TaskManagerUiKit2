@@ -56,6 +56,7 @@ public class PassCodeActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(String number) {
                         startActivity(new Intent(PassCodeActivity.this, PrivateActivity.class));
+                        PasswordPassDonePreference.getInstance(PassCodeActivity.this).savePass();
                         finish();
                     }
                 });

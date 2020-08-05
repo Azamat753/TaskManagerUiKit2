@@ -32,13 +32,13 @@ import java.util.Calendar;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
-    TextView startData, startTime, endTime,startDataText,startTimeNumber,endTimeNumber;
+    TextView startData, startTime, endTime, startDataText, startTimeNumber, endTimeNumber;
     EditText title;
     ConstraintLayout constraintLayout;
     CalendarTaskModel calendarTaskModel;
-    ImageView backView, doneView,back;
+    ImageView backView, doneView, back;
     String currentDataString;
-    String hour, endHour, minuteCurrent, endMinute,titleT,getStart,getDataTime,getEndTime;
+    String hour, endHour, minuteCurrent, endMinute, titleT, getStart, getDataTime, getEndTime;
     View colorView;
     int choosedColor;
 
@@ -85,7 +85,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             }
         });
 
-        back=findViewById(R.id.back_view_event);
+        back = findViewById(R.id.back_view_event);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +93,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             }
         });
     }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -116,32 +117,46 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         title = findViewById(R.id.edit_title);
         startData = findViewById(R.id.start_date_number);
         startTime = findViewById(R.id.start_time);
-        startTimeNumber=findViewById(R.id.start_time_number);
-        endTimeNumber=findViewById(R.id.end_time_number);
+        startTimeNumber = findViewById(R.id.start_time_number);
+        endTimeNumber = findViewById(R.id.end_time_number);
         endTime = findViewById(R.id.end_time);
         constraintLayout = findViewById(R.id.topconstraint);
         backView = findViewById(R.id.back_view_event);
         doneView = findViewById(R.id.done_view_event);
         colorView = findViewById(R.id.color_view);
-        startDataText=findViewById(R.id.start_date);
+        startDataText = findViewById(R.id.start_date);
     }
 
     public void recordDataRoom() {
-        titleT=title.getText().toString();
-        if (currentDataString != null && titleT!= null && hour != null && minuteCurrent != null && endHour != null && endMinute != null) {
-            calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(), hour + ":" + minuteCurrent, endHour + ":" + endMinute, choosedColor);
-            App.getDataBase().dataDao().insert(calendarTaskModel);
+        String myTitle = title.getText().toString();
+        String myStartData = startData.getText().toString();
+        String myStartTime = startTimeNumber.getText().toString();
+        String myEndTime = endTimeNumber.getText().toString();
+        int myColor = choosedColor;
+        if (calendarTaskModel != null) {
+            calendarTaskModel.setTitle(myTitle);
+            calendarTaskModel.setDataTime(myStartData);
+            calendarTaskModel.setStartTime(myStartTime);
+            calendarTaskModel.setEndTime(myEndTime);
+            calendarTaskModel.setChooseColor(myColor);
+            App.getDataBase().dataDao().update(calendarTaskModel);
             finish();
+        } else {
+            titleT = title.getText().toString();
+            if (currentDataString != null && titleT != null && hour != null && minuteCurrent != null && endHour != null && endMinute != null) {
+                if (Integer.parseInt(hour)<10){
+                    
+                    hour+="0";
 
-        } else if (titleT!=null&&getStart!=null&&getDataTime!=null&&getEndTime!=null) {
-            calendarTaskModel = new CalendarTaskModel(getDataTime, titleT, getStart, getEndTime, choosedColor);
-            App.getDataBase().dataDao().insert(calendarTaskModel);
-            finish();
-        }else {
-            Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
+                calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(),
+                        hour + ":" + minuteCurrent, endHour + ":" + endMinute, choosedColor);
+                App.getDataBase().dataDao().insert(calendarTaskModel);
+                finish();
+            }else {
+                Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
+            }}
         }
     }
-
 
     public void chooseColor(View view) {
         final ColorPicker colorPicker = new ColorPicker(AddEventActivity.this);
@@ -180,25 +195,26 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                     colorView.setBackgroundColor(color);
                 }).show();
     }
+
     public void getIncomingIntent() {
         Intent intent = getIntent();
         calendarTaskModel = (CalendarTaskModel) intent.getSerializableExtra("calendar");
         if (calendarTaskModel != null) {
-          titleT= calendarTaskModel.getTitle();
-          title.setText(titleT);
+            titleT = calendarTaskModel.getTitle();
+            title.setText(titleT);
 
-          getStart=calendarTaskModel.getStartTime();
+            getStart = calendarTaskModel.getStartTime();
             startTimeNumber.setText(getStart);
 
-            getEndTime=calendarTaskModel.getEndTime();
+            getEndTime = calendarTaskModel.getEndTime();
             endTimeNumber.setText(getEndTime);
 
-            choosedColor=calendarTaskModel.getChooseColor();
+            choosedColor = calendarTaskModel.getChooseColor();
             colorView.setBackgroundColor(calendarTaskModel.getChooseColor());
 
-            getDataTime=calendarTaskModel.getDataTime();
+            getDataTime = calendarTaskModel.getDataTime();
             startData.setText(getDataTime);
         }
     }
-
 }
+

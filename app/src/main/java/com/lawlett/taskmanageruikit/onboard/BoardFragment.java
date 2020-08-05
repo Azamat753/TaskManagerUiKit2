@@ -22,7 +22,7 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class BoardFragment extends Fragment {
-    LottieAnimationView calendar_anim, notes_anim, todo_anim;
+    LottieAnimationView calendar_anim, notes_anim, todo_anim,time_anim;
     TextView title_tv, desc_tv, start_tv;
 
     public BoardFragment() {
@@ -47,6 +47,7 @@ public class BoardFragment extends Fragment {
         calendar_anim = view.findViewById(R.id.calendar_animation);
         todo_anim = view.findViewById(R.id.todo_animation);
         notes_anim = view.findViewById(R.id.notes_animation);
+        time_anim=view.findViewById(R.id.time_animation);
 
         int pos = getArguments().getInt("pos");
         switch (pos) {
@@ -70,6 +71,14 @@ public class BoardFragment extends Fragment {
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                title_tv.setText("Отслеживание тайминга");
+                desc_tv.setText("Один из лучших способов повысить свой КПД");
+                calendar_anim.setVisibility(View.GONE);
+                todo_anim.setVisibility(View.GONE);
+                notes_anim.setVisibility(View.GONE);
+                time_anim.setVisibility(View.VISIBLE);
                 start_tv.setVisibility(View.VISIBLE);
                 break;
 
