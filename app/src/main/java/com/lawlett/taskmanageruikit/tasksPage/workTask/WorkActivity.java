@@ -14,24 +14,20 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.WorkDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
+public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener {
     WorkAdapter adapter;
     EditText editText;
     WorkModel workModel;
-    WorkDoneModel workDoneModel;
-    DoneModel doneModel;
     List<WorkModel> list;
-    int pos;
+    int pos, previousData, currentData, updateData;
     ImageView workBack;
 
     @Override
@@ -44,7 +40,7 @@ public class WorkActivity extends AppCompatActivity {
         changeView();
 
         list = new ArrayList<>();
-        adapter = new WorkAdapter();
+        adapter = new WorkAdapter(this);
 
         App.getDataBase().workDao().getAllLive().observe(this, workModels -> {
             if (workModels != null) {
@@ -54,7 +50,7 @@ public class WorkActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView = findViewById(R.id.recycler_work);
+        RecyclerView recyclerView = findViewById(R.id.recycler_work);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_work);
@@ -69,6 +65,11 @@ public class WorkActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
+                workModel = list.get(pos);
+                workModel.isDone = false;
+
+                decrementDone();
+
                 App.getDataBase().workDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(WorkActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
@@ -92,7 +93,7 @@ public class WorkActivity extends AppCompatActivity {
         if (editText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
-            workModel = new WorkModel(editText.getText().toString().trim());
+            workModel = new WorkModel(editText.getText().toString().trim(), false);
             App.getDataBase().workDao().insert(workModel);
             editText.setText("");
         }
@@ -107,4 +108,28 @@ public class WorkActivity extends AppCompatActivity {
         imageView2.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onItemCheckClick(int id) {
+        workModel = list.get(id);
+        if (!workModel.isDone) {
+            workModel.isDone = true;
+            incrementDone();
+        } else {
+            workModel.isDone = false;
+            decrementDone();
+        }
+        App.getDataBase().workDao().update(list.get(id));
+    }
+
+    private void incrementDone() {
+        previousData = WorkDoneSizePreference.getInstance(this).getDataSize();
+        WorkDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+    }
+
+    private void decrementDone() {
+        currentData = WorkDoneSizePreference.getInstance(this).getDataSize();
+        updateData = currentData - 1;
+        WorkDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
 }
+

@@ -10,9 +10,19 @@ public class WorkModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String workTask;
+    public boolean isDone;
 
-    public WorkModel(String workTask) {
+    public WorkModel(String workTask, boolean isDone) {
         this.workTask = workTask;
+        this.isDone = isDone;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     public long getId() {

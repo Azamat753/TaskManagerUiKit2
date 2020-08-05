@@ -10,7 +10,7 @@ public class TimingSizePreference {
 
     public TimingSizePreference(Context context) {
         instance = this;
-        preferences = context.getSharedPreferences("personalSize", Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences("timingSize", Context.MODE_PRIVATE);
     }
 
     public static TimingSizePreference getInstance(Context context) {
@@ -18,12 +18,12 @@ public class TimingSizePreference {
         return instance;
     }
 
-    public int getPersonalSize() {
-        return preferences.getInt("personal", 0);
+    public int getTimingSize() {
+        return preferences.getInt("timing", 0);
     }
 
-    public void savePersonalSize(int size) {
-        preferences.edit().putInt("personal",size).apply();
+    public void saveTimingSize(int size) {
+        preferences.edit().putInt("timing",size).apply();
     }
 
     public void clearSettings() {

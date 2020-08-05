@@ -15,9 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.WorkViewHolder> {
-    List<WorkModel> list=new ArrayList<>();
-    public WorkAdapter() {
+    List<WorkModel> list = new ArrayList<>();
+    IWCheckedListener listener;
 
+    public WorkAdapter(IWCheckedListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -35,8 +37,9 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.WorkViewHolder
     public int getItemCount() {
         return list.size();
     }
-    public void updateList(List<WorkModel>list){
-        this.list=list;
+
+    public void updateList(List<WorkModel> list) {
+        this.list = list;
         notifyDataSetChanged();
     }
 
@@ -50,6 +53,17 @@ public class WorkAdapter extends RecyclerView.Adapter<WorkAdapter.WorkViewHolder
 
         public void onBind(WorkModel workModel) {
             workTask.setText(workModel.getWorkTask());
+            workTask.setChecked(workModel.isDone);
+            workTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemCheckClick(getAdapterPosition());
+                }
+            });
         }
+    }
+
+    public interface IWCheckedListener {
+        void onItemCheckClick(int id);
     }
 }

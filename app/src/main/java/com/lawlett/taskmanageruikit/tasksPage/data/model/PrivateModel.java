@@ -10,9 +10,19 @@ public class PrivateModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String privateTask;
+    public Boolean isDone;
 
-    public PrivateModel(String privateTask) {
+    public PrivateModel(String privateTask, Boolean isDone) {
         this.privateTask = privateTask;
+        this.isDone = isDone;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     public String getPrivateTask() {

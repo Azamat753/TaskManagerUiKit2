@@ -116,8 +116,8 @@ public class StopwatchActivity extends AppCompatActivity {
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
         int stopwatchTimePref = Integer.parseInt(stopwatchTime);
-        int previousTimePref=TimingSizePreference.getInstance(this).getPersonalSize();
-        TimingSizePreference.getInstance(this).savePersonalSize(stopwatchTimePref+previousTimePref);
+        int previousTimePref=TimingSizePreference.getInstance(this).getTimingSize();
+        TimingSizePreference.getInstance(this).saveTimingSize(stopwatchTimePref+previousTimePref);
         timingModel = new TimingModel(null, null, null, myTask, Integer.valueOf(stopwatchTime), currentDate + " " + month + " " + year);
         Log.e("stopwatchMinutes", "dataRoom: " + stopwatchTime);
         App.getDataBase().timingDao().insert(timingModel);

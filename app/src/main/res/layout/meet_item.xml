@@ -10,6 +10,7 @@
         android:fontFamily="@font/m_light"
         android:textSize="20sp"
         android:layout_margin="16dp"
+        android:checked="false"
         style="@style/todoTextColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

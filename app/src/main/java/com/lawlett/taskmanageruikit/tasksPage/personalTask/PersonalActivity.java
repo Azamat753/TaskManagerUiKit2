@@ -13,11 +13,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PersonalDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +25,10 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     EditText editText;
     PersonalAdapter adapter;
     PersonalModel personalModel;
-    DoneModel doneModel;
-    PersonalDoneModel personalDoneModel;
     List<PersonalModel> list;
-    List<PersonalDoneModel> listDone;
     String personal;
     ImageView personalBack;
-    int pos;
-    int myId;
+    int pos, previousPersonalDone, currentData, updateData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +48,6 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             }
         });
 
-        listDone = new ArrayList<>();
-
-        App.getDataBase().personalDoneTaskDao().getAllLive().observe(this, personalDoneModels -> {
-            if (personalDoneModels != null) {
-                listDone.clear();
-                listDone.addAll(personalDoneModels);
-            }
-        });
-
 
         RecyclerView recyclerView = findViewById(R.id.recycler_personal);
         recyclerView.setAdapter(adapter);
@@ -77,13 +63,15 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
+                personalModel = list.get(pos);
+                personalModel.isDone = false;
 
-                App.getDataBase().personalDoneTaskDao().delete(listDone.get(pos));
+                decrementDone();
 
+                App.getDataBase().personalDao().update(list.get(pos));
                 App.getDataBase().personalDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(PersonalActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
-
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -114,16 +102,24 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     @Override
     public void onItemCheckClick(int id) {
         personalModel = list.get(id);
-        myId = id;
         if (!personalModel.isDone) {
             personalModel.isDone = true;
-            PersonalDoneModel personalDoneModel;
-            personalDoneModel = new PersonalDoneModel("1");
-            App.getDataBase().personalDoneTaskDao().insert(personalDoneModel);
+            incrementDone();
         } else {
             personalModel.isDone = false;
-            App.getDataBase().personalDoneTaskDao().delete(listDone.get(id));
+            decrementDone();
         }
         App.getDataBase().personalDao().update(list.get(id));
+    }
+
+    private void incrementDone() {
+        previousPersonalDone = PersonDoneSizePreference.getInstance(this).getPersonalSize();
+        PersonDoneSizePreference.getInstance(this).savePersonalSize(previousPersonalDone + 1);
+    }
+
+    private void decrementDone() {
+        currentData = PersonDoneSizePreference.getInstance(this).getPersonalSize();
+        updateData = currentData - 1;
+        PersonDoneSizePreference.getInstance(this).savePersonalSize(updateData);
     }
 }

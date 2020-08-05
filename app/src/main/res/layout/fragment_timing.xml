@@ -68,18 +68,20 @@
             android:layout_gravity="bottom|right"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/fab_timer"
+            android:src="@drawable/fab_timer"
             app:fabSize="mini"
             app:fab_label="Таймер"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="VectorDrawableCompat" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_stopwatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/fab_stopwatch"
+            android:src="@drawable/fab_stopwatch"
             app:fabSize="mini"
-            app:fab_label="Секундомер" />
+            app:fab_label="Секундомер"
+            tools:ignore="VectorDrawableCompat" />
     </com.github.clans.fab.FloatingActionMenu>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -178,9 +178,9 @@ public class TimerActivity extends AppCompatActivity {
                 "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-        int previousTime=TimingSizePreference.getInstance(this).getPersonalSize();
+        int previousTime=TimingSizePreference.getInstance(this).getTimingSize();
         int timerTime=Integer.parseInt(editText.getText().toString());
-        TimingSizePreference.getInstance(this).savePersonalSize(timerTime+previousTime);
+        TimingSizePreference.getInstance(this).saveTimingSize(timerTime+previousTime);
                 timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);
         App.getDataBase().timingDao().insert(timingModel);
         finish();

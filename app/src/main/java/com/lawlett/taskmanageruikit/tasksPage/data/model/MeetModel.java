@@ -10,10 +10,19 @@ public class MeetModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String meetTask;
+    public Boolean isDone;
 
-
-    public MeetModel(String meetTask) {
+    public MeetModel(String meetTask, Boolean isDone) {
         this.meetTask = meetTask;
+        this.isDone = isDone;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     public String getMeetTask() {

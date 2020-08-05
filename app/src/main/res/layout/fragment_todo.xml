@@ -30,8 +30,11 @@
             android:id="@+id/person_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/ic_person"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_person" />
 
         <TextView
             android:id="@+id/person_task_title"
@@ -41,10 +44,12 @@
             android:text="Персональные"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/personal_amount"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/person_image" />
 
         <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/personal_amount"
             style="@style/todoAmountTextColor"
             android:layout_width="wrap_content"
@@ -72,8 +77,11 @@
             android:id="@+id/work_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/ic_work"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_work" />
 
         <TextView
             android:id="@+id/work_task_title"
@@ -83,11 +91,12 @@
             android:text="Работа"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-
+app:layout_constraintBottom_toTopOf="@id/work_amount"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/work_image" />
 
         <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/work_amount"
             style="@style/todoAmountTextColor"
             android:layout_width="wrap_content"
@@ -104,11 +113,13 @@
 
     <View
         android:id="@+id/view_2"
-        style="@style/ViewStyles"
-        android:layout_marginTop="200dp"
+        android:layout_height="0.5dp"
+        android:layout_width="match_parent"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@id/meetconst"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/personconst" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/meetconst"
@@ -123,8 +134,11 @@
             android:id="@+id/meet_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/ic_meet"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_meet" />
 
         <TextView
             android:id="@+id/meet_task_title"
@@ -133,6 +147,7 @@
             android:layout_height="wrap_content"
             android:text="Встречи"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/meet_task_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/meet_image" />
@@ -145,6 +160,7 @@
             android:layout_marginTop="5dp"
             android:text="14"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/meet_task_title" />
@@ -165,13 +181,17 @@
             android:id="@+id/home_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/ic_home"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_home" />
 
         <TextView
             android:id="@+id/home_task_title"
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/home_task_amount"
             android:layout_height="wrap_content"
             android:text="Дом"
             android:textStyle="bold"
@@ -180,6 +200,7 @@
             app:layout_constraintTop_toBottomOf="@id/home_image" />
 
         <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/home_task_amount"
             style="@style/todoAmountTextColor"
             android:layout_width="wrap_content"
@@ -196,12 +217,13 @@
 
     <View
         android:id="@+id/view_3"
-        style="@style/ViewStyles"
-        android:layout_marginTop="410dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        app:layout_constraintBottom_toTopOf="@id/privateconst"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="NotSibling" />
+        app:layout_constraintTop_toBottomOf="@id/meetconst"
+        android:background="@android:color/darker_gray"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/privateconst"
@@ -210,14 +232,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/doneconst"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/view_3">
+        app:layout_constraintTop_toBottomOf="@id/meetconst">
 
         <ImageView
             android:id="@+id/private_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
-            app:srcCompat="@drawable/ic_lock"
-            tools:ignore="MissingConstraints" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_lock" />
 
         <TextView
             android:id="@+id/private_task_title"
@@ -226,6 +251,7 @@
             android:layout_height="wrap_content"
             android:text="Приватные"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/private_task_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/private_image" />
@@ -238,6 +264,7 @@
             android:layout_marginTop="5dp"
             android:text="10"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/private_task_title" />
@@ -247,19 +274,23 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/doneconst"
         android:layout_width="200dp"
-        android:visibility="invisible"
         android:layout_height="180dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/privateconst"
-        app:layout_constraintTop_toTopOf="@id/view_3">
+        app:layout_constraintTop_toBottomOf="@id/homeconst">
 
         <ImageView
             android:id="@+id/done_tasks_image"
             style="@style/ImageForTodo"
             android:layout_marginBottom="50dp"
             app:srcCompat="@drawable/ic_done"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/done_task_title"
@@ -267,12 +298,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Выполнено"
+            app:layout_constraintBottom_toTopOf="@id/done_amount"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/done_tasks_image" />
 
         <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/done_amount"
             style="@style/todoAmountTextColor"
             android:layout_width="wrap_content"

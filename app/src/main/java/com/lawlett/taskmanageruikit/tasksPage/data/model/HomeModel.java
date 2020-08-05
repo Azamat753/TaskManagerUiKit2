@@ -10,9 +10,19 @@ public class HomeModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     public String homeTask;
+    public Boolean isDone;
 
-    public HomeModel(String homeTask) {
+    public HomeModel(String homeTask, Boolean isDone) {
         this.homeTask = homeTask;
+        this.isDone = isDone;
+    }
+
+    public Boolean getDone() {
+        return isDone;
+    }
+
+    public void setDone(Boolean done) {
+        isDone = done;
     }
 
     public String getHomeTask() {

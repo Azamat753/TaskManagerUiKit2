@@ -14,23 +14,20 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.PrivateDoneModel;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
 
 import java.util.ArrayList;
 
-public class PrivateActivity extends AppCompatActivity {
+public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener {
     RecyclerView recyclerView;
     PrivateAdapter adapter;
     ArrayList<PrivateModel> list;
     EditText editText;
-    PrivateDoneModel privateDoneModel;
     PrivateModel privateModel;
-    DoneModel doneModel;
-    int pos, counter = 0;
+    int pos, previousData,currentData,updateData;
     ImageView privateBack;
 
     @Override
@@ -44,7 +41,7 @@ public class PrivateActivity extends AppCompatActivity {
         changeView();
 
         list = new ArrayList<>();
-        adapter = new PrivateAdapter();
+        adapter = new PrivateAdapter(this);
 
         App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
             if (privateModels != null) {
@@ -68,6 +65,11 @@ public class PrivateActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
+                privateModel = list.get(pos);
+                privateModel.isDone = false;
+
+                decrementDone();
+
                 App.getDataBase().privateDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(PrivateActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
@@ -91,7 +93,7 @@ public class PrivateActivity extends AppCompatActivity {
         if (editText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
-            privateModel = new PrivateModel(editText.getText().toString().trim());
+            privateModel = new PrivateModel(editText.getText().toString().trim(),false);
             App.getDataBase().privateDao().insert(privateModel);
             editText.setText("");
         }
@@ -106,29 +108,25 @@ public class PrivateActivity extends AppCompatActivity {
         imageView2.setVisibility(View.VISIBLE);
     }
 
-//    @Override
-//    public void onItemLongClick(int position) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//        dialog.setTitle("Вы выполнили задачу?")
-//                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//                doneModel = new DoneModel("Приватные", list.get(0).privateTask);
-//                App.getDataBase().doneTaskDao().insert(doneModel);
-//
-//                privateDoneModel = new PrivateDoneModel(list.get(0).privateTask);
-//                App.getDataBase().privateDoneTaskDao().insert(privateDoneModel);
-//
-//                App.getDataBase().privateDao().delete(list.get(position));
-//                adapter.notifyDataSetChanged();
-//
-//            }
-//        }).show();
-//    }
+    @Override
+    public void onItemCheckClick(int id) {
+        privateModel = list.get(id);
+        if (!privateModel.isDone) {
+            privateModel.isDone = true;
+           incrementDone();
+        } else {
+            privateModel.isDone = false;
+            decrementDone();
+        }
+        App.getDataBase().privateDao().update(list.get(id));
+    }
+    private void incrementDone() {
+        previousData = PrivateDoneSizePreference.getInstance(this).getDataSize();
+        PrivateDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+    }
+    private void decrementDone() {
+        currentData = PrivateDoneSizePreference.getInstance(this).getDataSize();
+        updateData = currentData - 1;
+        PrivateDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
 }

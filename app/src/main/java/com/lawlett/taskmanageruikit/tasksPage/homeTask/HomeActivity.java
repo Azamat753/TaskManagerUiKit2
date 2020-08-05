@@ -14,23 +14,21 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.HomeDoneModel;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener {
     RecyclerView recyclerView;
     HomeAdapter adapter;
-    ArrayList<HomeModel> list;
+    List<HomeModel> list;
     HomeModel homeModel;
-    HomeDoneModel homeDoneModel;
-    DoneModel doneModel;
     EditText editText;
-    int pos;
+    int pos, previousData,currentData,updateData;
     ImageView homeBack;
 
     @Override
@@ -44,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         changeView();
 
         list = new ArrayList<>();
-        adapter = new HomeAdapter();
+        adapter = new HomeAdapter(this);
 
         App.getDataBase().homeDao().getAllLive().observe(this, homeModels -> {
             if (homeModels != null) {
@@ -69,6 +67,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
+                homeModel = list.get(pos);
+                homeModel.isDone = false;
+
+                decrementDone();
+
+                App.getDataBase().homeDao().update(list.get(pos));
                 App.getDataBase().homeDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(HomeActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
@@ -92,7 +96,7 @@ public class HomeActivity extends AppCompatActivity {
         if (editText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
-            homeModel = new HomeModel(editText.getText().toString().trim());
+            homeModel = new HomeModel(editText.getText().toString().trim(),false);
             App.getDataBase().homeDao().insert(homeModel);
             editText.setText("");
         }
@@ -108,28 +112,26 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public void onItemLongClick(int position) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//        dialog.setTitle("Вы выполнили задачу?")
-//                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//                doneModel = new DoneModel("Дом", list.get(0).homeTask);
-//                App.getDataBase().doneTaskDao().insert(doneModel);
-//
-//                homeDoneModel = new HomeDoneModel(list.get(0).homeTask);
-//                App.getDataBase().homeDoneTaskDao().insert(homeDoneModel);
-//
-//                App.getDataBase().homeDao().delete(list.get(position));
-//                adapter.notifyDataSetChanged();
-//            }
-//        }).show();
-//    }
-}
+    @Override
+    public void onItemCheckClick(int id) {
+        homeModel = list.get(id);
+        if (!homeModel.isDone) {
+            homeModel.isDone = true;
+            incrementDone();
+        } else {
+            homeModel.isDone = false;
+            decrementDone();
+        }
+        App.getDataBase().homeDao().update(list.get(id));
+    }
+    private void incrementDone() {
+        previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
+        HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+    }
+
+    private void decrementDone() {
+        currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
+        updateData = currentData - 1;
+        HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+    }

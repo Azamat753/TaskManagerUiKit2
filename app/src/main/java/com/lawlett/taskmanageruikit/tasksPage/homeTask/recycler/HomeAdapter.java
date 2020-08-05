@@ -16,8 +16,10 @@ import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
     List<HomeModel> list = new ArrayList<>();
+    IHCheckedListener listener;
 
-    public HomeAdapter() {
+    public HomeAdapter(IHCheckedListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -51,8 +53,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
         public void onBind(HomeModel homeModel) {
             homeTask.setText(homeModel.getHomeTask());
+            homeTask.setChecked(homeModel.isDone);
+            homeTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemCheckClick(getAdapterPosition());
+                }
+            });
         }
+    }
 
-
+    public interface IHCheckedListener {
+        void onItemCheckClick(int id);
     }
 }
+

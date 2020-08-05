@@ -24,7 +24,6 @@ import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 
 public class TodoFragment extends Fragment {
     ImageView personalImage, workImage, meetImage, homeImage, privateImage, doneImage;
-    View dotsPerson, dotsWork, dotsMeet, dotsHome, dotsPrivate;
     TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount;
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;
 

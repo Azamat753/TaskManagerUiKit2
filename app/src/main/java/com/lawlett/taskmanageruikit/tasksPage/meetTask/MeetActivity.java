@@ -14,23 +14,21 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
-import com.lawlett.taskmanageruikit.tasksPage.data.done_model.MeetDoneModel;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MeetActivity extends AppCompatActivity  {
+public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener {
     RecyclerView recyclerView;
     MeetAdapter adapter;
-    private ArrayList<MeetModel> list;
+    private List<MeetModel> list;
     EditText editText;
     MeetModel meetModel;
-    MeetDoneModel meetDoneModel;
-    DoneModel doneModel;
-    int position;
+    int position, currentData, updateData, previousData;
     ImageView meetBack;
 
     @Override
@@ -43,7 +41,7 @@ public class MeetActivity extends AppCompatActivity  {
         changeView();
 
         list = new ArrayList<>();
-        adapter = new MeetAdapter();
+        adapter = new MeetAdapter(this);
 
         App.getDataBase().meetDao().getAllLive().observe(this, meetModels -> {
             if (meetModels != null) {
@@ -68,6 +66,11 @@ public class MeetActivity extends AppCompatActivity  {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 position = viewHolder.getAdapterPosition();
+                meetModel = list.get(position);
+                meetModel.isDone = false;
+
+                decrementDone();
+
                 App.getDataBase().meetDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(MeetActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
@@ -91,7 +94,7 @@ public class MeetActivity extends AppCompatActivity  {
         if (editText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
-            meetModel = new MeetModel(editText.getText().toString().trim());
+            meetModel = new MeetModel(editText.getText().toString().trim(), false);
             App.getDataBase().meetDao().insert(meetModel);
             editText.setText("");
         }
@@ -106,26 +109,27 @@ public class MeetActivity extends AppCompatActivity  {
         imageView2.setVisibility(View.VISIBLE);
     }
 
-//    @Override
-//    public void onItemLongClick(int position) {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//        dialog.setTitle("Вы выполнили задачу?")
-//                .setNegativeButton("Нет", (dialog1, which) -> dialog1.cancel()).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//                doneModel = new DoneModel("Встречи", list.get(0).meetTask);
-//                App.getDataBase().doneTaskDao().insert(doneModel);
-//
-//                meetDoneModel= new MeetDoneModel(list.get(0).meetTask);
-//
-//                App.getDataBase().meetDoneTaskDao().insert(meetDoneModel);
-//
-//                App.getDataBase().meetDao().delete(list.get(position));
-//                adapter.notifyDataSetChanged();
-//
-//            }
-//        }).show();
-//    }
+    @Override
+    public void onItemCheckClick(int id) {
+        meetModel = list.get(id);
+        if (!meetModel.isDone) {
+            meetModel.isDone = true;
+            incrementDone();
+        } else {
+            meetModel.isDone = false;
+            decrementDone();
+        }
+        App.getDataBase().meetDao().update(list.get(id));
+    }
 
+    private void incrementDone() {
+        previousData = MeetDoneSizePreference.getInstance(this).getDataSize();
+        MeetDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+    }
+
+    private void decrementDone() {
+        currentData = MeetDoneSizePreference.getInstance(this).getDataSize();
+        updateData = currentData - 1;
+        MeetDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
 }

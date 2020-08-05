@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder> {
-    List<MeetModel> list=new ArrayList<>();
+    List<MeetModel> list = new ArrayList<>();
+    IMCheckedListener listener;
 
-    public MeetAdapter() {
-
+    public MeetAdapter(IMCheckedListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,8 +38,8 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
         return list.size();
     }
 
-    public void updateList(List<MeetModel>list){
-        this.list=list;
+    public void updateList(List<MeetModel> list) {
+        this.list = list;
         notifyDataSetChanged();
     }
 
@@ -52,8 +53,16 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
 
         public void onBind(MeetModel meetModel) {
             meetTask.setText(meetModel.getMeetTask());
+            meetTask.setChecked(meetModel.isDone);
+            meetTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemCheckClick(getAdapterPosition());
+                }
+            });
         }
-
-
+    }
+    public interface IMCheckedListener {
+        void onItemCheckClick(int id);
     }
 }

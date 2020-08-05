@@ -8,6 +8,7 @@
         android:id="@+id/work_task"
         android:fontFamily="@font/m_light"
         android:layout_margin="16dp"
+        android:checked="false"
         android:textSize="20sp"
         style="@style/todoTextColor"
         android:layout_width="match_parent"

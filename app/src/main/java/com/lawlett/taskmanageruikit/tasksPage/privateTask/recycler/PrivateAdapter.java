@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateViewHolder> {
-    List<PrivateModel> list=new ArrayList<>();
+    List<PrivateModel> list = new ArrayList<>();
+    IPCheckedListener listener;
 
-
-    public PrivateAdapter() {
+    public PrivateAdapter(IPCheckedListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -36,12 +37,13 @@ public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateV
     public int getItemCount() {
         return list.size();
     }
-    public void updateList(List<PrivateModel>list){
-        this.list=list;
+
+    public void updateList(List<PrivateModel> list) {
+        this.list = list;
         notifyDataSetChanged();
     }
 
-    public class PrivateViewHolder extends RecyclerView.ViewHolder  {
+    public class PrivateViewHolder extends RecyclerView.ViewHolder {
         CheckBox privateTask;
 
         public PrivateViewHolder(@NonNull View itemView) {
@@ -51,6 +53,18 @@ public class PrivateAdapter extends RecyclerView.Adapter<PrivateAdapter.PrivateV
 
         public void onBind(PrivateModel privateModel) {
             privateTask.setText(privateModel.getPrivateTask());
+            privateTask.setChecked(privateModel.isDone);
+            privateTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemCheckClick(getAdapterPosition());
+                }
+            });
         }
     }
+
+    public interface IPCheckedListener {
+        void onItemCheckClick(int id);
+    }
 }
+
