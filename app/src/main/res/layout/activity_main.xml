@@ -24,13 +24,18 @@
         android:layout_above="@id/bottomNavigation"
         android:layout_below="@id/toolbar_a" />
 
-        <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
-            android:id="@+id/bottomNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true" />
-
-
+    <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/transparent"
+        app:itemIconTint="@color/white"
+        app:itemRippleColor="@android:color/white"
+        app:bnv_active_text_size="10sp"
+        app:bnv_inactive_text_size="10sp"
+        app:itemTextColor="@android:color/white"
+        app:menu="@menu/bottom_nav_menu"
+        android:layout_alignParentBottom="true" />
 
 
 </RelativeLayout>

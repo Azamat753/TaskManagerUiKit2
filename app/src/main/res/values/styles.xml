@@ -60,7 +60,6 @@
 
     <style name="todoTextColor">
         <item name="android:fontFamily">@font/m_light</item>
-
         <item name="android:textColor">@color/white</item>
 </style>
     <style name="dashboardTextColor">

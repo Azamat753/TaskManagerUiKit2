@@ -58,22 +58,20 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener( this);
             this.listeneer=listeneer;
-
         }
+
         public void onBind(QuickModel quickModel) {
             title.setText(quickModel.getTitle());
             desc.setText(quickModel.getDescription());
 
                 data_created.setText(quickModel.getCreateData());
 
-                if (quickModel.getColor() == 0) {
+                if (quickModel.getColor()==0){
                     quickModel.setColor(R.color.white);
                 } else {
                     title.setTextColor(quickModel.getColor());
                 }
                 Glide.with(context).load(quickModel.getImage()).into(imageDesc);
-
-
         }
 
         @Override

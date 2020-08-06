@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.quick;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,8 +52,10 @@ public class QuickActivity extends AppCompatActivity {
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
     String pickImage, textTitle, textDescription, captureImage, gallImage;
-    int choosedColor;
+    int choosedColor = R.color.white;
+    boolean isGallery = false;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +64,10 @@ public class QuickActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
-
         userId = FirebaseAuth.getInstance().getUid();
         initView();
         getIncomingIntent();
+
 
         findViewById(R.id.back_view).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +108,7 @@ public class QuickActivity extends AppCompatActivity {
 //    }
 
 
-//    private void getInfo() {
+    //    private void getInfo() {
 //        FirebaseFirestore.getInstance()
 //                .collection("tasks")
 //                .document(userId)
@@ -117,18 +121,16 @@ public class QuickActivity extends AppCompatActivity {
 //                   }
 //                    }
 //                });
-private void getCurrentPhoto(){
-    if (gallImage == null) {
-        pickImage = captureImage;
-        gallImage="";
-    } else if (captureImage == null) {
-        pickImage = gallImage;
-        captureImage="";
+    private void getCurrentPhoto() {
+        if (isGallery) {
+            pickImage = gallImage;
+        } else {
+            pickImage = captureImage;
+        }
     }
-}
 
+    @SuppressLint("ResourceAsColor")
     public void recordDataRoom() {
-        getCurrentPhoto();
         textTitle = e_title.getText().toString();
         textDescription = e_description.getText().toString();
         if (!textTitle.equals("") || !textDescription.equals("")) {
@@ -138,7 +140,7 @@ private void getCurrentPhoto(){
                     "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
             final String month = monthName[c.get(Calendar.MONTH)];
             String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
-
+            getCurrentPhoto();
             String myTitle = e_title.getText().toString();
             String myDesk = e_description.getText().toString();
             String myPickImage = pickImage;
@@ -151,9 +153,13 @@ private void getCurrentPhoto(){
                 quickModel.setColor(myChoosedColor);
                 quickModel.setCreateData(currentDate + " " + month + " " + year);
                 App.getDataBase().taskDao().update(quickModel);
+
+                Log.e("pickImage", "recordDataRoom: " + myPickImage);
+
             } else {
-                quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
+                quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, myPickImage, choosedColor, null);
                 App.getDataBase().taskDao().insert(quickModel);
+
             }
         }
         finish();
@@ -165,13 +171,14 @@ private void getCurrentPhoto(){
         recordDataRoom();
     }
 
+    @SuppressLint("ResourceAsColor")
     public void getIncomingIntent() {
         Intent intent = getIntent();
         quickModel = (QuickModel) intent.getSerializableExtra("task");
         if (quickModel != null) {
-             textTitle= quickModel.getTitle();
+            textTitle = quickModel.getTitle();
             e_title.setText(textTitle);
-            textDescription=quickModel.getDescription();
+            textDescription = quickModel.getDescription();
             e_description.setText(textDescription);
             choosedColor = quickModel.getColor();
             e_title.setTextColor(choosedColor);
@@ -186,8 +193,8 @@ private void getCurrentPhoto(){
         floatingActionButtonCameraPicker = findViewById(R.id.fab2);
         floatingActionButtonImagePicker = findViewById(R.id.fab3);
         image_title = findViewById(R.id.image_title);
-
-        e_title = findViewById(R.id.edit_title);
+        e_title = findViewById(R.id.edit_title2);
+        e_title.setTextColor(Color.parseColor("#FFFFFF"));
         e_description = findViewById(R.id.edit_description);
         back_view = findViewById(R.id.back_view);
         done_view = findViewById(R.id.done_view);
@@ -209,7 +216,7 @@ private void getCurrentPhoto(){
                 colors.add("#005EFF");
 
                 colorPicker
-                        .setDefaultColorButton(Color.parseColor("#f84c44"))
+                        .setDefaultColorButton(Color.parseColor("#FFFFFF"))
                         .setColors(colors)
                         .setColumns(5)
                         .setRoundColorButton(true)
@@ -232,19 +239,13 @@ private void getCurrentPhoto(){
         });
 
         floatingActionButtonCameraPicker.setOnClickListener(v -> {
-
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cameraIntent, CAMERA_REQUEST);
-
-//            Intent intent = new Intent(Intent.ACTION_VIEW,
-//                    Uri.parse("geo:0,0?q=Скопируйте+локацию"));
-//            startActivity(intent);
         });
         floatingActionButtonImagePicker.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent, 01);
-
         });
 
     }
@@ -253,24 +254,29 @@ private void getCurrentPhoto(){
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 01 && resultCode == RESULT_OK) {
-            final Uri imageUri = data.getData();
-            gallImage = imageUri.toString();
-            Glide.with(this).load(imageUri).into(image_title);
-        }
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Bitmap thumbnailBitmap = (Bitmap) data.getExtras().get("data");
-            assert thumbnailBitmap != null;
-            Uri a = getImageUri(this, thumbnailBitmap);
-            captureImage = a.toString();
-            Glide.with(this).load(captureImage).into(image_title);
+        if (data != null && resultCode == RESULT_OK) {
+            if (requestCode == 01) {
+                final Uri imageUri = data.getData();
+                gallImage = imageUri.toString();
+                isGallery = true;
+                Glide.with(this).load(imageUri).into(image_title);
+            } else if (requestCode == CAMERA_REQUEST) {
+                Bitmap thumbnailBitmap = (Bitmap) data.getExtras().get("data");
+                assert thumbnailBitmap != null;
+                Uri a = getImageUri(this, thumbnailBitmap);
+                isGallery = false;
+                if (captureImage == null) {
+                    captureImage = a.toString();
+                    Glide.with(this).load(captureImage).into(image_title);
+                }
+            }
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    public static Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "IMG_" + Calendar.getInstance().getTime(), null);
         return Uri.parse(path);
     }
 
@@ -293,8 +299,6 @@ private void getCurrentPhoto(){
                 }
             }
         });
-
     }
-
 }
 

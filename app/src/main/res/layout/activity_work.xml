@@ -32,6 +32,7 @@
         android:padding="16dp"
         app:borderColor="#00BCD4"
         app:borderWidth="2dp"
+        android:layout_marginBottom="20dp"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -52,7 +53,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="30dp"
         android:src="@drawable/ic_send"
         android:onClick="addWorkTask"
         app:layout_constraintBottom_toBottomOf="parent"

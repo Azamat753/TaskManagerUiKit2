@@ -84,7 +84,6 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
                 Intent intent = new Intent(getActivity(), QuickActivity.class);
                 intent.putExtra("task", list.get(position));
                 getActivity().startActivityForResult(intent, 42);
-//                App.getDataBase().taskDao().delete(list.get(position));
                 adapter.notifyDataSetChanged();
             }
         }).show();

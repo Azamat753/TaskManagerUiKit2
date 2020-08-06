@@ -67,9 +67,11 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    endHour = String.valueOf(selectedHour);
-                    endMinute = String.valueOf(selectedMinute);
-                    endTimeNumber.setText(selectedHour + ":" + selectedMinute);
+                    Calendar calendar= Calendar.getInstance();
+                    calendar.set(0,0,0,selectedHour,selectedMinute);
+//                    endHour = String.valueOf(selectedHour);
+//                    endMinute = String.valueOf(selectedMinute);
+                    endTimeNumber.setText(android.text.format.DateFormat.format("HH:mm",calendar));
 
                 }
             }, hour, minute, true);//Yes 24 hour time
@@ -107,9 +109,10 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        hour = String.valueOf(hourOfDay);
-        minuteCurrent = String.valueOf(minute);
-        startTimeNumber.setText(hour + ":" + minute);
+        Calendar calendar= Calendar.getInstance();
+        calendar.set(0,0,0,hourOfDay,minute);
+
+        startTimeNumber.setText(android.text.format.DateFormat.format("HH:mm",calendar));
         Log.e("current", "onTimeSet: " + hourOfDay + "   " + minute);
     }
 
@@ -145,7 +148,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             titleT = title.getText().toString();
             if (currentDataString != null && titleT != null && hour != null && minuteCurrent != null && endHour != null && endMinute != null) {
                 if (Integer.parseInt(hour)<10){
-                    
+
                     hour+="0";
 
                 calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(),

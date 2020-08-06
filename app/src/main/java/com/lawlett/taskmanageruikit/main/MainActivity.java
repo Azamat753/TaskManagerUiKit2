@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         settings_view.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
     }
 
-
     public void changeFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
