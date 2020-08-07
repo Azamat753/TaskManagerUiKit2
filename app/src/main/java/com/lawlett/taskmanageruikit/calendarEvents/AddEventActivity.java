@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -41,6 +40,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     String hour, endHour, minuteCurrent, endMinute, titleT, getStart, getDataTime, getEndTime;
     View colorView;
     int choosedColor;
+    String startHour, endingHour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +67,12 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             mTimePicker = new TimePickerDialog(AddEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    Calendar calendar= Calendar.getInstance();
-                    calendar.set(0,0,0,selectedHour,selectedMinute);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(0, 0, 0, selectedHour, selectedMinute);
 //                    endHour = String.valueOf(selectedHour);
 //                    endMinute = String.valueOf(selectedMinute);
-                    endTimeNumber.setText(android.text.format.DateFormat.format("HH:mm",calendar));
-
+                    endTimeNumber.setText(android.text.format.DateFormat.format("HH:mm", calendar));
+                    endingHour = String.valueOf(android.text.format.DateFormat.format("HH:mm", calendar));
                 }
             }, hour, minute, true);//Yes 24 hour time
             mTimePicker.setTitle("Select Time");
@@ -109,11 +109,11 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Calendar calendar= Calendar.getInstance();
-        calendar.set(0,0,0,hourOfDay,minute);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(0, 0, 0, hourOfDay, minute);
 
-        startTimeNumber.setText(android.text.format.DateFormat.format("HH:mm",calendar));
-        Log.e("current", "onTimeSet: " + hourOfDay + "   " + minute);
+        startTimeNumber.setText(android.text.format.DateFormat.format("HH:mm", calendar));
+        startHour = String.valueOf(android.text.format.DateFormat.format("HH:mm", calendar));
     }
 
     public void initViews() {
@@ -146,18 +146,14 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             finish();
         } else {
             titleT = title.getText().toString();
-            if (currentDataString != null && titleT != null && hour != null && minuteCurrent != null && endHour != null && endMinute != null) {
-                if (Integer.parseInt(hour)<10){
-
-                    hour+="0";
-
+            if (currentDataString != null && titleT != null && startHour != null && endingHour != null) {
                 calendarTaskModel = new CalendarTaskModel(currentDataString, title.getText().toString().trim(),
-                        hour + ":" + minuteCurrent, endHour + ":" + endMinute, choosedColor);
+                        startHour, endingHour, choosedColor);
                 App.getDataBase().dataDao().insert(calendarTaskModel);
                 finish();
-            }else {
+            } else {
                 Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
-            }}
+            }
         }
     }
 
@@ -168,7 +164,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         colors.add("#a276eb");
         colors.add("#6a3ab2");
         colors.add("#666666");
-        colors.add("#FFFF00");
+        colors.add("#FFFFFF");
         colors.add("#3C8D2F");
         colors.add("#FA9F00");
         colors.add("#FF0000");
@@ -183,7 +179,6 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                     @Override
                     public void onChooseColor(int position, int color) {
-                        Toast.makeText(AddEventActivity.this, position + "", Toast.LENGTH_SHORT).show();
                         choosedColor = color;
                         colorView.setBackgroundColor(color);
                     }
@@ -194,7 +189,6 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                     }
                 })
                 .addListenerButton("Попробовать", (v1, position, color) -> {
-                    Toast.makeText(AddEventActivity.this, position + "", Toast.LENGTH_SHORT).show();
                     colorView.setBackgroundColor(color);
                 }).show();
     }

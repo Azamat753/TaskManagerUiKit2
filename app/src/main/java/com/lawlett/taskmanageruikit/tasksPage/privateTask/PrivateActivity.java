@@ -27,7 +27,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
     ArrayList<PrivateModel> list;
     EditText editText;
     PrivateModel privateModel;
-    int pos, previousData,currentData,updateData;
+    int pos, previousData, currentData, updateData;
     ImageView privateBack;
 
     @Override
@@ -66,13 +66,16 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
                 privateModel = list.get(pos);
-                privateModel.isDone = false;
+                if (!privateModel.isDone) {
+                    App.getDataBase().privateDao().delete(list.get(pos));
+                } else {
+                    decrementDone();
 
-                decrementDone();
-
-                App.getDataBase().privateDao().delete(list.get(pos));
-                adapter.notifyDataSetChanged();
-                Toast.makeText(PrivateActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    App.getDataBase().privateDao().update(list.get(pos));
+                    App.getDataBase().privateDao().delete(list.get(pos));
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(PrivateActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                }
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -93,7 +96,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         if (editText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
-            privateModel = new PrivateModel(editText.getText().toString().trim(),false);
+            privateModel = new PrivateModel(editText.getText().toString().trim(), false);
             App.getDataBase().privateDao().insert(privateModel);
             editText.setText("");
         }
@@ -113,17 +116,19 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         privateModel = list.get(id);
         if (!privateModel.isDone) {
             privateModel.isDone = true;
-           incrementDone();
+            incrementDone();
         } else {
             privateModel.isDone = false;
             decrementDone();
         }
         App.getDataBase().privateDao().update(list.get(id));
     }
+
     private void incrementDone() {
         previousData = PrivateDoneSizePreference.getInstance(this).getDataSize();
         PrivateDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
     }
+
     private void decrementDone() {
         currentData = PrivateDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;

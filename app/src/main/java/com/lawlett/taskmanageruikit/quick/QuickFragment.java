@@ -1,8 +1,6 @@
 package com.lawlett.taskmanageruikit.quick;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,6 +40,7 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
         // Required empty public constructor
 
     }
+
     @SuppressLint("FragmentLiveDataObserve")
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
@@ -70,42 +69,12 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
     @Override
     public void onItemClick(final int position) {
         this.position = position;
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
-        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getActivity(), QuickActivity.class);
-                intent.putExtra("task", list.get(position));
-                getActivity().startActivityForResult(intent, 42);
-                adapter.notifyDataSetChanged();
-            }
-        }).show();
+        Intent intent = new Intent(getActivity(), QuickActivity.class);
+        intent.putExtra("task", list.get(position));
+        getActivity().startActivityForResult(intent, 42);
+        adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onItemLongClick(final int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
-        dialog.setTitle("Вы хотите удалить ?").setMessage("Удалить задачу")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                App.getDataBase().taskDao().delete(list.get(position));
-                adapter.notifyDataSetChanged();
-            }
-        }).show();
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -115,7 +84,7 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
         recyclerViewQuick.setAdapter(adapter);
         recyclerViewQuick.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -123,11 +92,12 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                pos= viewHolder.getAdapterPosition();
+                pos = viewHolder.getAdapterPosition();
                 App.getDataBase().taskDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerViewQuick);
     }
+
 }

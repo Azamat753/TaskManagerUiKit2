@@ -66,13 +66,16 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
                 workModel = list.get(pos);
-                workModel.isDone = false;
+                if (!workModel.isDone) {
+                    App.getDataBase().workDao().delete(list.get(pos));
+                } else {
+                    decrementDone();
 
-                decrementDone();
-
-                App.getDataBase().workDao().delete(list.get(pos));
-                adapter.notifyDataSetChanged();
-                Toast.makeText(WorkActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    App.getDataBase().workDao().update(list.get(pos));
+                    App.getDataBase().workDao().delete(list.get(pos));
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(WorkActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                }
             }
         }).attachToRecyclerView(recyclerView);
 

@@ -47,7 +47,7 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@drawable/edittext_background"
-        android:hint="4 цифры"
+        android:hint="****"
         android:inputType="numberPassword"
         android:maxLength="4"
         android:textAlignment="center"

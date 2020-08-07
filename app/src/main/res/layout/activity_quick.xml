@@ -9,30 +9,40 @@
 
     <include
         android:id="@+id/quick_toolbar_view"
-        layout="@layout/quick_toolbar" />
+        layout="@layout/quick_toolbar"
+        app:layout_constraintBottom_toTopOf="@id/edit_title2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edit_title2"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:hint="Введите суть идеи"
-        android:paddingStart="20dp"
         style="@style/todoTextColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Введите суть идеи"
+        android:inputType="textCapSentences"
+        android:paddingStart="20dp"
         android:textColorHint="@color/white"
         android:textSize="20sp"
-        android:inputType="textCapSentences"
+        app:layout_constraintBottom_toTopOf="@id/edit_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/quick_toolbar_view" />
 
     <EditText
         android:id="@+id/edit_description"
-        android:layout_width="match_parent"
-        android:textColorHint="@color/white"
         style="@style/todoTextColor"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Введите описание"
+        android:inputType="textMultiLine|textCapSentences"
+        android:maxLines="20"
         android:paddingStart="20dp"
-        android:inputType="textCapSentences"
+        android:textColorHint="@color/white"
         android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_title2" />
 
@@ -52,7 +62,7 @@
         fab:menu_colorPressed="#E75043"
         fab:menu_colorRipple="#99FFFFFF"
         fab:menu_fab_size="normal"
-        fab:menu_icon="@drawable/fab_add"
+        fab:menu_icon="@drawable/ic_baseline"
         fab:menu_labels_colorNormal="#333333"
         fab:menu_labels_colorPressed="#444444"
         fab:menu_labels_colorRipple="#66FFFFFF"
@@ -96,17 +106,17 @@
             android:id="@+id/fab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera"
             app:fabSize="mini"
-            app:fab_label="Камера"
-            android:src="@drawable/ic_camera" />
+            app:fab_label="Камера" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_choose_image"
             app:fabSize="mini"
-            app:fab_label="Картинка"
-            android:src="@drawable/ic_choose_image" />
+            app:fab_label="Картинка" />
     </com.github.clans.fab.FloatingActionMenu>
 
     <ImageView

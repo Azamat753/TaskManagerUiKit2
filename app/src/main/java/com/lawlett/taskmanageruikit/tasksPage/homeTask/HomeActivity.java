@@ -68,14 +68,16 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
                 homeModel = list.get(pos);
-                homeModel.isDone = false;
+                if (!homeModel.isDone) {
+                    App.getDataBase().homeDao().delete(list.get(pos));
+                } else {
+                    decrementDone();
 
-                decrementDone();
-
-                App.getDataBase().homeDao().update(list.get(pos));
-                App.getDataBase().homeDao().delete(list.get(pos));
-                adapter.notifyDataSetChanged();
-                Toast.makeText(HomeActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    App.getDataBase().homeDao().update(list.get(pos));
+                    App.getDataBase().homeDao().delete(list.get(pos));
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(HomeActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                }
             }
         }).attachToRecyclerView(recyclerView);
 

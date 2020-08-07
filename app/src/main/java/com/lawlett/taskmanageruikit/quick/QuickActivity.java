@@ -157,10 +157,12 @@ public class QuickActivity extends AppCompatActivity {
                 Log.e("pickImage", "recordDataRoom: " + myPickImage);
 
             } else {
-                quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, myPickImage, choosedColor, null);
-                App.getDataBase().taskDao().insert(quickModel);
-
+                choosedColor=e_title.getCurrentTextColor();
+                    quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, myPickImage, choosedColor, null);
+                    App.getDataBase().taskDao().insert(quickModel);
             }
+        }else {
+            Toast.makeText(this, "Колонка пуста", Toast.LENGTH_SHORT).show();
         }
         finish();
     }

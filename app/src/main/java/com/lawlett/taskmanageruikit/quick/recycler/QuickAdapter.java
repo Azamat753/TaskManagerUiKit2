@@ -44,7 +44,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         return list.size();
     }
 
-    public class QuickViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener, View.OnLongClickListener {
+    public class QuickViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
         TextView title, desc, data_created;
         ImageView imageDesc;
         IQuickOnClickListener listeneer;
@@ -56,7 +56,6 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             data_created = itemView.findViewById(R.id.data_quick);
             imageDesc = itemView.findViewById(R.id.image_desc);
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener( this);
             this.listeneer=listeneer;
         }
 
@@ -77,12 +76,6 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         @Override
         public void onClick(View v) {
             listeneer.onItemClick(getAdapterPosition());
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            listeneer.onItemLongClick(getAdapterPosition());
-            return false;
         }
     }
 }

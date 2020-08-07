@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.lawlett.taskmanageruikit.R;
@@ -28,6 +29,7 @@ public class TodoFragment extends Fragment {
     ImageView personalImage, workImage, meetImage, homeImage, privateImage, doneImage;
     TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount;
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;
+    ConstraintLayout personConst, workConst, meetConst, homeConst, privateConst;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,11 @@ public class TodoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        personConst = view.findViewById(R.id.personconst);
+        workConst = view.findViewById(R.id.workconst);
+        meetConst = view.findViewById(R.id.meetconst);
+        homeConst = view.findViewById(R.id.homeconst);
+        privateConst = view.findViewById(R.id.privateconst);
         personalImage = view.findViewById(R.id.person_image);
         workImage = view.findViewById(R.id.work_image);
         meetImage = view.findViewById(R.id.meet_image);
@@ -59,22 +66,17 @@ public class TodoFragment extends Fragment {
         private_amount = view.findViewById(R.id.private_task_amount);
         done_amount = view.findViewById(R.id.done_amount);
 
-
-//        dotsPerson.setOnClickListener(v -> {
-//            PopupMenu popupMenu = new PopupMenu(getContext(), dotsPerson);
-//            popupMenu.getMenuInflater().inflate(R.menu.popupmenutodo, popupMenu.getMenu());
-//            popupMenu.setOnMenuItemClickListener(item -> {
-//                switch (item.getItemId()) {
-//                    case R.id.delete_all_list:
-//App.getDataBase().personalDao().deleteAll();
-//
-//                        break;
-//                }
-//                return false;
-//            });
-//            popupMenu.show();
-//        });
-
+        privateConst.setOnClickListener(v -> startActivity(new Intent(getContext(), PersonalActivity.class)));
+        workConst.setOnClickListener(v -> startActivity(new Intent(getContext(), WorkActivity.class)));
+        meetConst.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
+        homeConst.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
+        privateConst.setOnClickListener(v -> {
+            if (!PasswordPassDonePreference.getInstance(getContext()).isPass()) {
+                startActivity(new Intent(getContext(), PassCodeActivity.class));
+            } else {
+                startActivity(new Intent(getContext(), PrivateActivity.class));
+            }
+        });
         personalImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,14 +87,11 @@ public class TodoFragment extends Fragment {
         workImage.setOnClickListener(v -> startActivity(new Intent(getContext(), WorkActivity.class)));
         meetImage.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
         homeImage.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
-        privateImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!PasswordPassDonePreference.getInstance(getContext()).isPass()) {
-                    startActivity(new Intent(getContext(), PassCodeActivity.class));
-                } else {
-                    startActivity(new Intent(getContext(), PrivateActivity.class));
-                }
+        privateImage.setOnClickListener(v -> {
+            if (!PasswordPassDonePreference.getInstance(getContext()).isPass()) {
+                startActivity(new Intent(getContext(), PassCodeActivity.class));
+            } else {
+                startActivity(new Intent(getContext(), PrivateActivity.class));
             }
         });
         doneImage.setOnClickListener(v -> {
@@ -100,7 +99,6 @@ public class TodoFragment extends Fragment {
 
         });
     }
-
     public void notifyView() {
         personal_amount.setText(personalAmount + "");
         work_amount.setText(workAmount + "");
@@ -120,8 +118,6 @@ public class TodoFragment extends Fragment {
         meetAmount = App.getDataBase().meetDao().getAll().size();
         homeAmount = App.getDataBase().homeDao().getAll().size();
         privateAmount = App.getDataBase().privateDao().getAll().size();
-
         notifyView();
     }
-
 }

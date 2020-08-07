@@ -2,28 +2,37 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="56dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="horizontal">
 
             <ImageView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/back_view"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_left_arrow" />
+                app:srcCompat="@drawable/ic_left_arrow" />
 
             <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/toolbar_title_quick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="35dp"
                 android:text="Записать идею"
@@ -32,11 +41,15 @@
                 android:textStyle="bold" />
 
             <ImageView
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="15dp"
                 android:id="@+id/done_view"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="40dp"
-                android:src="@drawable/ic_done" />
-        </LinearLayout>
+                app:srcCompat="@drawable/ic_done" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

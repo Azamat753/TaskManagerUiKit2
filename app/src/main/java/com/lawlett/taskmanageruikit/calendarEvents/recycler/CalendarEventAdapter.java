@@ -46,7 +46,7 @@ public class CalendarEventAdapter extends RecyclerView.Adapter<CalendarEventAdap
     }
 
 
-    public class DayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    public class DayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView task, time, dataDay, endTime;
         View left_view;
         ICalendarEventOnClickListener listener;
@@ -59,7 +59,6 @@ public class CalendarEventAdapter extends RecyclerView.Adapter<CalendarEventAdap
             left_view = itemView.findViewById(R.id.left_view);
             endTime = itemView.findViewById(R.id.end_time);
             itemView.setOnClickListener((View.OnClickListener) this);
-          itemView.setOnLongClickListener(this);
             this.listener = listener;
         }
 
@@ -71,11 +70,7 @@ public class CalendarEventAdapter extends RecyclerView.Adapter<CalendarEventAdap
             left_view.setBackgroundColor(calendarTaskModel.chooseColor);
             endTime.setText(calendarTaskModel.getEndTime());
         }
-        @Override
-        public boolean onLongClick(View v) {
-            listener.onItemLongClick(getAdapterPosition());
-            return false;
-        }
+
         @Override
         public void onClick(View v) {
             listener.onItemClick(getAdapterPosition());

@@ -15,11 +15,12 @@
         android:visibility="visible">
 
         <ImageView
-            app:layout_constraintBottom_toTopOf="@id/timer_task_edit"
             android:id="@+id/image_timerPhone"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/icget"
+            app:layout_constraintBottom_toTopOf="@id/timer_task_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,25 +29,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:text="Таймер"
             android:textColor="#FFF"
-            android:textSize="40sp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:text="Что вы будете делать?"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/timer_task_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/image_timerPhone" />
+
 
         <EditText
             android:id="@+id/timer_task_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Что вы хотите сделать"
-            app:layout_constraintBottom_toTopOf="@id/timer_task_apply"
-            android:maxLength="21"
-            android:layout_marginBottom="50dp"
-            android:textColor="#FFF"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/edittext_background"
             android:inputType="textCapSentences"
+            android:maxLength="21"
+            android:textAlignment="center"
+            android:textColor="#FFF"
             android:textColorHint="#FFF"
-            android:textSize="30sp"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toTopOf="@id/timer_task_apply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_timerPhone" />
@@ -55,11 +71,11 @@
             android:id="@+id/timer_task_apply"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="200dp"
             android:background="@drawable/rectangle_bg"
             android:text="Принять"
             android:textColor="#FFF"
-            android:layout_marginBottom="200dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +87,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/timerConst"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/bgcircle"
@@ -99,10 +115,10 @@
 
 
         <TextView
-            android:layout_marginTop="50dp"
             android:id="@+id/countdown_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:text="Время"
             android:textColor="#FFF"
             android:textSize="50sp"
@@ -145,24 +161,24 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/rectangle_bg"
             android:text="Принять"
             android:textColor="#FFF"
             android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/countdown_text" />
 
         <EditText
-            android:layout_marginTop="50dp"
             android:id="@+id/editText"
             android:layout_width="350dp"
             android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/edittext_background"
             android:hint="Количество минут"
             android:inputType="number"
             android:maxLength="3"
-            android:background="@drawable/edittext_background"
             android:shadowColor="@color/withoutColoredBackground"
             android:textAlignment="center"
             android:textColor="#FFF"
@@ -175,12 +191,13 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/back_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="8dp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/ic_left_arrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_left_arrow" />
 </androidx.constraintlayout.widget.ConstraintLayout>

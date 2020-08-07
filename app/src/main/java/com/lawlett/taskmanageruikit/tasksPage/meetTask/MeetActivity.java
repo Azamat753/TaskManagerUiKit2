@@ -67,13 +67,16 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 position = viewHolder.getAdapterPosition();
                 meetModel = list.get(position);
-                meetModel.isDone = false;
+                if (!meetModel.isDone) {
+                    App.getDataBase().meetDao().delete(list.get(position));
+                } else {
+                    decrementDone();
 
-                decrementDone();
-
-                App.getDataBase().meetDao().delete(list.get(position));
-                adapter.notifyDataSetChanged();
-                Toast.makeText(MeetActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    App.getDataBase().meetDao().update(list.get(position));
+                    App.getDataBase().meetDao().delete(list.get(position));
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(MeetActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                }
             }
         }).attachToRecyclerView(recyclerView);
 

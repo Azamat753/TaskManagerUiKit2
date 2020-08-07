@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
         initBottomNavigation();
-        changeFragment(new DashboardFragment());
+        changeFragment(new TodoFragment());
         toolbar_title = findViewById(R.id.toolbar_title);
         more_btn = findViewById(R.id.more_btn);
         settings_view = findViewById(R.id.settings_view);
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     case 4:
                         changeFragment(new QuickFragment());
                         toolbar_title.setText("Идеи");
-                        more_btn.setVisibility(View.VISIBLE);
+                        more_btn.setVisibility(View.GONE);
                         more_btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -158,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
                                                         .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int which) {
-
                                                                 App.getDataBase().taskDao().deleteAll(list);
                                                                 adapter.notifyDataSetChanged();
                                                             }

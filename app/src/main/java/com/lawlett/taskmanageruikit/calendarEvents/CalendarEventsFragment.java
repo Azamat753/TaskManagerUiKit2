@@ -9,20 +9,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.CalendarEventAdapter;
-import com.lawlett.taskmanageruikit.timing.activity.StopwatchActivity;
-import com.lawlett.taskmanageruikit.timing.activity.TimerActivity;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.ICalendarEventOnClickListener;
 
@@ -40,9 +39,8 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
     FloatingActionButton addEventBtn;
     List<CalendarTaskModel> list;
     CalendarEventAdapter adapter;
-    TextView todayTv;
     View colorView;
-    int position;
+    int position,pos;
 
     public CalendarEventsFragment() {
         // Required empty public constructor
@@ -76,6 +74,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
 
         /* starts before 1 month from now */
 
+
         colorView = view.findViewById(R.id.color_view);
 
 
@@ -95,12 +94,9 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
             @SuppressLint({"LogNotTimber", "NewApi"})
             @Override
             public void onDateSelected(Calendar date, int position) {
-//
-                startActivity(new Intent(getContext(), TimerActivity.class));
 //                Intent intent = new Intent(getContext(), TodayEvent.class);
 //                intent.putExtra("month",String.valueOf(date.getTime().getMonth()));
 //                intent.putExtra("day",String.valueOf(date.getTime().getDate()));
-//
 //                startActivity(intent);
             }
 
@@ -113,7 +109,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
             @SuppressLint("LogNotTimber")
             @Override
             public boolean onDateLongClicked(Calendar date, int position) {
-                startActivity(new Intent(getContext(), new StopwatchActivity().getClass()));
+
                 return true;
             }
         });
@@ -124,6 +120,8 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
 
         addEventBtn = view.findViewById(R.id.add_task_btn);
         addEventBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), AddEventActivity.class)));
+
+
     }
 
     @Override
@@ -146,24 +144,23 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
                 Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
             }
         }).show();
-    }
 
-    @Override
-    public void onItemLongClick(int position) {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
-        dialog.setTitle("Вы хотите удалить ?").setMessage("Удалить задачу")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                App.getDataBase().dataDao().delete(list.get(position));
-
-                adapter.notifyDataSetChanged();
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
             }
-        }).show();
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                pos= viewHolder.getAdapterPosition();
+                App.getDataBase().dataDao().delete(list.get(pos));
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(recyclerViewToday);
     }
+
+
 }
