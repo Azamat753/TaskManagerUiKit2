@@ -7,6 +7,7 @@
     tools:context=".main.MainActivity">
 
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/toolbar_a"
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation"
         android:layout_below="@id/toolbar_a" />
+
 
     <com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

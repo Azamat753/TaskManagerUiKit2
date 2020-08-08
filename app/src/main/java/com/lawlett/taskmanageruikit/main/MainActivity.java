@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
         initBottomNavigation();
-        changeFragment(new TodoFragment());
+        changeFragment(new DashboardFragment());
+
         toolbar_title = findViewById(R.id.toolbar_title);
         more_btn = findViewById(R.id.more_btn);
         settings_view = findViewById(R.id.settings_view);
@@ -92,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
                 ("Прогресс", ContextCompat.getColor(this, R.color.transparent), R.drawable.diagrama);
         BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                         changeFragment(new TodoFragment());
                         toolbar_title.setText("Задачи");
                         more_btn.setVisibility(View.GONE);
+
                         break;
                     case 2:
                         changeFragment(new TimingFragment());

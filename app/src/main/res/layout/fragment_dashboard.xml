@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="10dp"
+    android:layout_marginStart="12dp"
     tools:context=".dashboard.DashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -112,7 +112,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/whitenotes"
+            android:background="@drawable/ic_idea"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -147,12 +147,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="50dp"
         android:text="Выполненные задачи"
+        android:layout_marginStart="10dp"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/first_line"
-        app:layout_constraintEnd_toEndOf="@id/second_const"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/first_con" />
 
@@ -194,7 +193,7 @@
         style="@style/dashboardTextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="70dp"
+        android:layout_marginEnd="60dp"
         android:text="Всего записей"
         app:layout_constraintBottom_toTopOf="@id/second_line"
         app:layout_constraintEnd_toStartOf="@id/medium_line"
@@ -243,6 +242,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Тайминг"
+        android:layout_marginStart="10dp"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/second_line" />
@@ -286,7 +286,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginEnd="60dp"
         android:text="Всего записей"
         app:layout_constraintEnd_toStartOf="@id/second_medium_line"
         app:layout_constraintStart_toStartOf="parent"
@@ -350,6 +350,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
                 android:text="Задачи"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -423,6 +424,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Работа"
+                android:layout_marginStart="10dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

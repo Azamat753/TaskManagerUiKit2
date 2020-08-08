@@ -41,7 +41,7 @@
 
         <EditText
             android:id="@+id/editText_home"
-            android:layout_width="270dp"
+            android:layout_width="230dp"
             android:inputType="textCapSentences"
             android:textColorHint="#FFF"
             android:textColor="#FFF"

@@ -10,11 +10,11 @@
 
     <TextView
         android:id="@+id/title"
+        style="@style/todoTextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        style="@style/todoTextColor"
         android:text="Добавить событие"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,14 +22,14 @@
 
     <EditText
         android:id="@+id/edit_title"
+        style="@style/todoTextColor"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:maxLength="35"
-        android:inputType="textCapSentences"
-        style="@style/todoTextColor"
         android:layout_marginStart="16dp"
-        android:textColorHint="@color/white"
         android:hint="Выгулить собаку"
+        android:inputType="textCapSentences"
+        android:maxLength="35"
+        android:textColorHint="@color/white"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
@@ -37,8 +37,9 @@
     <View
         android:id="@+id/color_view"
         android:layout_width="30dp"
-        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toEndOf="@id/edit_title"
         android:layout_height="60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="28dp"
         android:background="@color/bluePersonal"
         android:onClick="chooseColor"
@@ -52,27 +53,28 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@id/color_view" />
-
+d
     <TextView
         android:id="@+id/start_date"
+        style="@style/todoTextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        style="@style/todoTextColor"
         android:text="Начало"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_1" />
 
 
     <TextView
         android:id="@+id/start_date_number"
+        style="@style/todoTextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        style="@style/todoTextColor"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +92,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topconstraint"
         android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,27 +110,30 @@
 
         <TextView
             android:id="@+id/start_time"
+            style="@style/todoTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            style="@style/todoTextColor"
             android:text="Начало времени"
-            android:textSize="20sp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/midle_line"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/first_cardView" />
 
         <TextView
             android:id="@+id/start_time_number"
+            style="@style/todoTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            style="@style/todoTextColor"
             android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/start_time" />
 
         <View
+            android:id="@+id/midle_line"
             android:layout_width="0.5dp"
             android:layout_height="80dp"
             android:background="@android:color/darker_gray"
@@ -137,26 +143,27 @@
 
         <TextView
             android:id="@+id/end_time"
+            style="@style/todoTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
             android:text="Конец времени"
-            android:textSize="20sp"
-            style="@style/todoTextColor"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/start_time"
             app:layout_constraintTop_toBottomOf="@id/first_cardView" />
 
         <TextView
             android:id="@+id/end_time_number"
+            style="@style/todoTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
-            style="@style/todoTextColor"
             android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
