@@ -62,8 +62,6 @@ public class TimerActivity extends AppCompatActivity {
         countdownButton = findViewById(R.id.countdown_button);
         exitButton = findViewById(R.id.exit_button);
         roundingalone = AnimationUtils.loadAnimation(this, R.anim.roundingalone);
-        Typeface MMedium = Typeface.createFromAsset(getAssets(), "MMedium.ttf");
-        countdownButton.setTypeface(MMedium);
         imageConst = findViewById(R.id.image_const);
         timerConst = findViewById(R.id.timerConst);
 
@@ -131,9 +129,12 @@ public class TimerActivity extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (countdownText.getText().toString().equals("0:00")) {
+                String myTime=countdownText.getText().toString();
+                if (myTime.equals("0:00")||myTime.equals("0:01")||myTime.equals("0:02")) {
                     dataRoom();
+                    if (mp!=null)
                     mp.stop();
+                    countDownTimer.cancel();
                     finish();
                 } else {
                     Toast.makeText(TimerActivity.this, "Таймер ещё не окончен", Toast.LENGTH_SHORT).show();
@@ -191,7 +192,8 @@ public class TimerActivity extends AppCompatActivity {
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
         int previousTime = TimingSizePreference.getInstance(this).getTimingSize();
-        int timerTime = Integer.parseInt(editText.getText().toString());
+        int a =Integer.parseInt(editText.getText().toString());
+        int timerTime = a;
         TimingSizePreference.getInstance(this).saveTimingSize(timerTime + previousTime);
         timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);
         App.getDataBase().timingDao().insert(timingModel);

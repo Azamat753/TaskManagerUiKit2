@@ -7,7 +7,6 @@
     android:background="#211D44"
     tools:context=".timing.activity.TimerActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/image_const"
         android:layout_width="match_parent"
@@ -81,7 +80,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/timer_task_edit" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -188,8 +186,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -199,5 +195,5 @@
         android:layout_margin="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_left_arrow" />
+        app:srcCompat="@drawable/ic_exit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

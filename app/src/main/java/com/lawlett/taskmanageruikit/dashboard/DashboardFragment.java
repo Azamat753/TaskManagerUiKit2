@@ -140,7 +140,7 @@ public class DashboardFragment extends Fragment {
         meetDoneAmount = MeetDoneSizePreference.getInstance(getContext()).getDataSize(); //Встречи выполненные
         homeDoneAmount = HomeDoneSizePreference.getInstance(getContext()).getDataSize(); //Дом выполненные
         privateDoneAmount = PrivateDoneSizePreference.getInstance(getContext()).getDataSize(); //Приватные выполненные
-        doneAmount = personalDoneAmount+workDoneAndNotDone+meetDoneAmount+homeDoneAmount+privateDoneAmount;//Выполненные задачи
+        doneAmount = personalDoneAmount+workAmount+meetDoneAmount+homeDoneAmount+privateDoneAmount;//Выполненные задачи
     }
 
     public void getDataFromBD() {
