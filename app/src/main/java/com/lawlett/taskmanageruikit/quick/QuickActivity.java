@@ -117,20 +117,21 @@ public class QuickActivity extends AppCompatActivity {
     }
 
 
-        private void getInfo() {
+    private void getInfo() {
         FirebaseFirestore.getInstance()
                 .collection("tasks")
                 .document(userId)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                   if (documentSnapshot!=null){
-                       String title = documentSnapshot.getString("title");
-                       e_title.setText(title);
-                   }
+                        if (documentSnapshot != null) {
+                            String title = documentSnapshot.getString("title");
+                            e_title.setText(title);
+                        }
                     }
                 });
     }
+
     private void getCurrentPhoto() {
         if (isGallery) {
             pickImage = gallImage;
@@ -167,11 +168,11 @@ public class QuickActivity extends AppCompatActivity {
                 Log.e("pickImage", "recordDataRoom: " + myPickImage);
 
             } else {
-                choosedColor=e_title.getCurrentTextColor();
-                    quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, myPickImage, choosedColor, null);
-                    App.getDataBase().taskDao().insert(quickModel);
+                choosedColor = e_title.getCurrentTextColor();
+                quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, myPickImage, choosedColor, null);
+                App.getDataBase().taskDao().insert(quickModel);
             }
-        }else {
+        } else {
             Toast.makeText(this, "Колонка пуста", Toast.LENGTH_SHORT).show();
         }
         finish();

@@ -23,7 +23,7 @@ public class PrivateDoneSizePreference {
     }
 
     public void saveDataSize(int size) {
-        preferences.edit().putInt("private",size).apply();
+        preferences.edit().putInt("private", size).apply();
     }
 
     public void clearSettings() {

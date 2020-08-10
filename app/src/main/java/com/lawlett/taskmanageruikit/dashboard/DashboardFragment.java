@@ -95,8 +95,8 @@ public class DashboardFragment extends Fragment {
 
     public void countUpPercent() {
         try {
-            todoPercent=doneAmount*100/todoAmount;
-        }catch (ArithmeticException e){
+            todoPercent = doneAmount * 100 / todoAmount;
+        } catch (ArithmeticException e) {
             e.printStackTrace();
         }
         try {
@@ -132,7 +132,8 @@ public class DashboardFragment extends Fragment {
             privatePercentAmount = privateDoneAmount * 100 / privateAmount;
         } catch (ArithmeticException e) {
             e.printStackTrace();
-        }    }
+        }
+    }
 
     public void getTasksDoneAmount() {
         personalDoneAmount = PersonDoneSizePreference.getInstance(getContext()).getPersonalSize();//Персональные выполненные
@@ -140,7 +141,7 @@ public class DashboardFragment extends Fragment {
         meetDoneAmount = MeetDoneSizePreference.getInstance(getContext()).getDataSize(); //Встречи выполненные
         homeDoneAmount = HomeDoneSizePreference.getInstance(getContext()).getDataSize(); //Дом выполненные
         privateDoneAmount = PrivateDoneSizePreference.getInstance(getContext()).getDataSize(); //Приватные выполненные
-        doneAmount = personalDoneAmount+workAmount+meetDoneAmount+homeDoneAmount+privateDoneAmount;//Выполненные задачи
+        doneAmount = personalDoneAmount + workAmount + meetDoneAmount + homeDoneAmount + privateDoneAmount;//Выполненные задачи
     }
 
     public void getDataFromBD() {
@@ -168,6 +169,7 @@ public class DashboardFragment extends Fragment {
         todoAmount = personalAmount + workAmount + meetAmount + homeAmount + privateAmount; //Все задачи
         allTaskAmount = todoAmount + eventAmount + plansAmount;//Всего записей
     }
+
     @SuppressLint("SetTextI18n")
     public void setShow() {
         timing_task_amount.setText(String.valueOf(timingTaskAmountInt));

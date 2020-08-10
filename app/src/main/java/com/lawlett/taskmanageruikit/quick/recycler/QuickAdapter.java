@@ -25,13 +25,13 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
     public QuickAdapter(List<QuickModel> list, IQuickOnClickListener listener, Context context) {
         this.context = context;
         this.list = list;
-        this.listener=listener;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public QuickViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new QuickViewHolder(LayoutInflater.from(context).inflate(R.layout.quick_item, parent, false),listener);
+        return new QuickViewHolder(LayoutInflater.from(context).inflate(R.layout.quick_item, parent, false), listener);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         return list.size();
     }
 
-    public class QuickViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
+    public class QuickViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView title, desc, data_created;
         ImageView imageDesc;
         IQuickOnClickListener listeneer;
@@ -56,21 +56,21 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             data_created = itemView.findViewById(R.id.data_quick);
             imageDesc = itemView.findViewById(R.id.image_desc);
             itemView.setOnClickListener(this);
-            this.listeneer=listeneer;
+            this.listeneer = listeneer;
         }
 
         public void onBind(QuickModel quickModel) {
             title.setText(quickModel.getTitle());
             desc.setText(quickModel.getDescription());
 
-                data_created.setText(quickModel.getCreateData());
+            data_created.setText(quickModel.getCreateData());
 
-                if (quickModel.getColor()==0){
-                    quickModel.setColor(R.color.white);
-                } else {
-                    title.setTextColor(quickModel.getColor());
-                }
-                Glide.with(context).load(quickModel.getImage()).into(imageDesc);
+            if (quickModel.getColor() == 0) {
+                quickModel.setColor(R.color.white);
+            } else {
+                title.setTextColor(quickModel.getColor());
+            }
+            Glide.with(context).load(quickModel.getImage()).into(imageDesc);
         }
 
         @Override

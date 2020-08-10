@@ -17,10 +17,11 @@ import java.util.List;
 
 public class TimingAdapter extends RecyclerView.Adapter<TimingAdapter.TimingViewHolder> {
     List<TimingModel> list;
-Context context;
-    public TimingAdapter(List<TimingModel> list,Context context) {
+    Context context;
+
+    public TimingAdapter(List<TimingModel> list, Context context) {
         this.list = list;
-        this.context=context;
+        this.context = context;
     }
 
     @NonNull
@@ -32,7 +33,7 @@ Context context;
 
     @Override
     public void onBindViewHolder(@NonNull TimingViewHolder holder, int position) {
-        holder.onBind(list.get(position),context);
+        holder.onBind(list.get(position), context);
 
     }
 
@@ -51,7 +52,7 @@ Context context;
             taskDate = itemView.findViewById(R.id.task_day);
         }
 
-        public void onBind(TimingModel timingModel,Context context) {
+        public void onBind(TimingModel timingModel, Context context) {
             Typeface mLight = Typeface.createFromAsset(context.getAssets(), "MLight.ttf");
 
             if (timingModel.getTimerTitle() == null) {

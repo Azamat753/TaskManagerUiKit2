@@ -1,6 +1,7 @@
 package com.lawlett.taskmanageruikit.timing.activity;
 
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -42,6 +43,10 @@ public class StopwatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+
         phoneImage = findViewById(R.id.image_phone);
         btnstart = findViewById(R.id.btnstart);
         applyClick = findViewById(R.id.stopwatch_task_apply);
@@ -116,8 +121,8 @@ public class StopwatchActivity extends AppCompatActivity {
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
         int stopwatchTimePref = Integer.parseInt(stopwatchTime);
-        int previousTimePref=TimingSizePreference.getInstance(this).getTimingSize();
-        TimingSizePreference.getInstance(this).saveTimingSize(stopwatchTimePref+previousTimePref);
+        int previousTimePref = TimingSizePreference.getInstance(this).getTimingSize();
+        TimingSizePreference.getInstance(this).saveTimingSize(stopwatchTimePref + previousTimePref);
         timingModel = new TimingModel(null, null, null, myTask, Integer.valueOf(stopwatchTime), currentDate + " " + month + " " + year);
         Log.e("stopwatchMinutes", "dataRoom: " + stopwatchTime);
         App.getDataBase().timingDao().insert(timingModel);

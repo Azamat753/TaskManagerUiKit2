@@ -23,7 +23,7 @@ public class WorkDoneSizePreference {
     }
 
     public void saveDataSize(int size) {
-        preferences.edit().putInt("work",size).apply();
+        preferences.edit().putInt("work", size).apply();
     }
 
     public void clearSettings() {

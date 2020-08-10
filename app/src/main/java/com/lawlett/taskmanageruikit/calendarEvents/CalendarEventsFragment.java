@@ -40,7 +40,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
     List<CalendarTaskModel> list;
     CalendarEventAdapter adapter;
     View colorView;
-    int position,pos;
+    int position, pos;
 
     public CalendarEventsFragment() {
         // Required empty public constructor
@@ -146,7 +146,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
         }).show();
 
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -154,7 +154,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                pos= viewHolder.getAdapterPosition();
+                pos = viewHolder.getAdapterPosition();
                 App.getDataBase().dataDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();

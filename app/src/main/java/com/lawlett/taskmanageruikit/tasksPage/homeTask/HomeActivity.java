@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     List<HomeModel> list;
     HomeModel homeModel;
     EditText editText;
-    int pos, previousData,currentData,updateData;
+    int pos, previousData, currentData, updateData;
     ImageView homeBack;
 
     @Override
@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         if (editText.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
         } else {
-            homeModel = new HomeModel(editText.getText().toString().trim(),false);
+            homeModel = new HomeModel(editText.getText().toString().trim(), false);
             App.getDataBase().homeDao().insert(homeModel);
             editText.setText("");
         }
@@ -126,6 +126,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         }
         App.getDataBase().homeDao().update(list.get(id));
     }
+
     private void incrementDone() {
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
@@ -136,4 +137,4 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         updateData = currentData - 1;
         HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
     }
-    }
+}

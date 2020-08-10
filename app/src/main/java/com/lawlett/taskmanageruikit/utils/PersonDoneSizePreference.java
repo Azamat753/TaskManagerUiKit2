@@ -23,7 +23,7 @@ public class PersonDoneSizePreference {
     }
 
     public void savePersonalSize(int size) {
-        preferences.edit().putInt("personal",size).apply();
+        preferences.edit().putInt("personal", size).apply();
     }
 
     public void clearSettings() {

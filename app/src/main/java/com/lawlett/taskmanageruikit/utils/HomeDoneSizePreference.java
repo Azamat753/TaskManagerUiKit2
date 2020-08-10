@@ -23,7 +23,7 @@ public class HomeDoneSizePreference {
     }
 
     public void saveDataSize(int size) {
-        preferences.edit().putInt("home",size).apply();
+        preferences.edit().putInt("home", size).apply();
     }
 
     public void clearSettings() {

@@ -15,12 +15,12 @@ public class CalendarTaskModel implements Serializable {
     public String endTime;
     public int chooseColor;
 
-    public CalendarTaskModel(String dataTime, String title, String startTime, String endTime,int chooseColor) {
+    public CalendarTaskModel(String dataTime, String title, String startTime, String endTime, int chooseColor) {
         this.dataTime = dataTime;
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.chooseColor= chooseColor;
+        this.chooseColor = chooseColor;
     }
 
     public int getChooseColor() {

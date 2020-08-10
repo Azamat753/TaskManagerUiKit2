@@ -1,6 +1,5 @@
 package com.lawlett.taskmanageruikit.settings;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,13 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextView clearPassword_tv,clearMinutes_tv;
+    TextView clearPassword_tv, clearMinutes_tv;
     ImageView back;
 
     @Override
@@ -24,7 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         clearPassword_tv = findViewById(R.id.clear_password);
-        clearMinutes_tv=findViewById(R.id.clear_time);
+        clearMinutes_tv = findViewById(R.id.clear_time);
         back = findViewById(R.id.back_view);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +47,5 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
-    }
+
 }

@@ -17,12 +17,13 @@ import java.util.List;
 
 public class DoneAdapter extends RecyclerView.Adapter<DoneAdapter.DoneViewHolder> {
     List<DoneModel> list;
-Context context;
-IDoneOnClickListener listener;
-    public DoneAdapter(List<DoneModel> list,Context context,IDoneOnClickListener listener) {
+    Context context;
+    IDoneOnClickListener listener;
+
+    public DoneAdapter(List<DoneModel> list, Context context, IDoneOnClickListener listener) {
         this.list = list;
-        this.context=context;
-        this.listener=listener;
+        this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +44,7 @@ IDoneOnClickListener listener;
 
     public class DoneViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         TextView title, description;
+
         public DoneViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.done_title);
@@ -51,7 +53,7 @@ IDoneOnClickListener listener;
         }
 
         public void onBind(DoneModel doneModel) {
-            title.setText(doneModel.doneTitle );
+            title.setText(doneModel.doneTitle);
             description.setText(doneModel.doneDesc);
         }
 

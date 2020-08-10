@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -48,6 +49,11 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+
+
         phoneImage = findViewById(R.id.image_timerPhone);
         atg = AnimationUtils.loadAnimation(this, R.anim.atg);
         btgone = AnimationUtils.loadAnimation(this, R.anim.btgone);
@@ -105,7 +111,7 @@ public class TimerActivity extends AppCompatActivity {
         applyDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editText.getText().toString().equals("")||Integer.parseInt(editText.getText().toString())<1) {
+                if (editText.getText().toString().equals("") || Integer.parseInt(editText.getText().toString()) < 1) {
                     Toast.makeText(TimerActivity.this, "0 минут прошло", Toast.LENGTH_SHORT).show();
                 } else {
                     timeLeftInMilliseconds = Integer.parseInt(editText.getText().toString()) * 60000;
@@ -122,18 +128,18 @@ public class TimerActivity extends AppCompatActivity {
         countdownButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    startTimer();
+                startTimer();
             }
         });
 
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String myTime=countdownText.getText().toString();
-                if (myTime.equals("0:00")||myTime.equals("0:01")||myTime.equals("0:02")) {
+                String myTime = countdownText.getText().toString();
+                if (myTime.equals("0:00") || myTime.equals("0:01") || myTime.equals("0:02")) {
                     dataRoom();
-                    if (mp!=null)
-                    mp.stop();
+                    if (mp != null)
+                        mp.stop();
                     countDownTimer.cancel();
                     finish();
                 } else {
@@ -169,9 +175,9 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
                 mp = MediaPlayer.create(getApplicationContext(), notification);
-                if (mp!=null) {
+                if (mp != null) {
                     mp.start();
-                }else {
+                } else {
                     Toast.makeText(TimerActivity.this, "Таймер закончил свою работу", Toast.LENGTH_SHORT).show();
                 }
                 icanchor.clearAnimation();
@@ -192,7 +198,7 @@ public class TimerActivity extends AppCompatActivity {
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
         int previousTime = TimingSizePreference.getInstance(this).getTimingSize();
-        int a =Integer.parseInt(editText.getText().toString());
+        int a = Integer.parseInt(editText.getText().toString());
         int timerTime = a;
         TimingSizePreference.getInstance(this).saveTimingSize(timerTime + previousTime);
         timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);

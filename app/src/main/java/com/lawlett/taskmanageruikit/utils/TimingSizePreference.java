@@ -23,7 +23,7 @@ public class TimingSizePreference {
     }
 
     public void saveTimingSize(int size) {
-        preferences.edit().putInt("timing",size).apply();
+        preferences.edit().putInt("timing", size).apply();
     }
 
     public void clearSettings() {

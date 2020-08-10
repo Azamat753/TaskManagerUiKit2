@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.lawlett.taskmanageruikit.R;
 
-public class BoardActivity extends AppCompatActivity   {
+public class BoardActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     @Override

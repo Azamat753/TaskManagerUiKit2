@@ -73,19 +73,19 @@ public class RegistrationActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        Log.e("ololo", "signIn: "+signInIntent );
+        Log.e("ololo", "signIn: " + signInIntent);
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==RC_SIGN_IN&&data!=null){
-            Task<GoogleSignInAccount> task= GoogleSignIn.getSignedInAccountFromIntent(data);
+        if (requestCode == RC_SIGN_IN && data != null) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignResult(task);
 
-            Log.e("ololo", "onActivityResult: "+data );
-        }else {
+            Log.e("ololo", "onActivityResult: " + data);
+        } else {
             Toast.makeText(this, "ничего не пришло", Toast.LENGTH_SHORT).show();
         }
     }

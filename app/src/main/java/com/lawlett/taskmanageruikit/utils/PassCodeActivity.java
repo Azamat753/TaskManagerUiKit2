@@ -32,14 +32,14 @@ public class PassCodeActivity extends AppCompatActivity {
 
         password = PasswordPreference.getInstance(this).returnPassword();
 
-        Log.e("myPassword", "onCreate: "+password );
+        Log.e("myPassword", "onCreate: " + password);
 
         boolean isShown = PasswordDonePreference.getInstance(getApplication()).isShown();
         if (isShown) {
             passcodeView.setVisibility(View.VISIBLE);
             editPassword.setVisibility(View.GONE);
             button.setVisibility(View.GONE);
-        }else {
+        } else {
             passcodeView.setVisibility(View.GONE);
             editPassword.setVisibility(View.VISIBLE);
             button.setVisibility(View.VISIBLE);
@@ -61,6 +61,7 @@ public class PassCodeActivity extends AppCompatActivity {
                     }
                 });
     }
+
     public void saveBtn(View view) {
         PasswordPreference.getInstance(this).savePassword(editPassword.getText().toString().trim());
         passcodeView.setVisibility(View.VISIBLE);

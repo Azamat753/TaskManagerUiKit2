@@ -19,6 +19,7 @@ import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener {
@@ -54,9 +55,13 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
         editText = findViewById(R.id.editText_personal);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+                Collections.swap(list, fromPosition, toPosition);
+                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
                 return false;
             }
 

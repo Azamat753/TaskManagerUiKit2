@@ -23,7 +23,7 @@ public class MeetDoneSizePreference {
     }
 
     public void saveDataSize(int size) {
-        preferences.edit().putInt("meet",size).apply();
+        preferences.edit().putInt("meet", size).apply();
     }
 
     public void clearSettings() {

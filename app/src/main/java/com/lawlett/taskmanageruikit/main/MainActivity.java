@@ -183,4 +183,5 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         PasswordPassDonePreference.getInstance(this).clearSettings();
     }
+
 }

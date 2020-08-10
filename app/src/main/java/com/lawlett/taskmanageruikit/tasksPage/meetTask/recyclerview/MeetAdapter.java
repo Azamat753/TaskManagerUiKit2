@@ -62,6 +62,7 @@ public class MeetAdapter extends RecyclerView.Adapter<MeetAdapter.MeetViewHolder
             });
         }
     }
+
     public interface IMCheckedListener {
         void onItemCheckClick(int id);
     }

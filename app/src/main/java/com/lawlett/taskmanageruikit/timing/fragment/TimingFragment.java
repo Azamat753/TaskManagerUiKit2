@@ -29,7 +29,8 @@ public class TimingFragment extends Fragment {
     TimingAdapter adapter;
     private List<TimingModel> list;
     FloatingActionButton floatingActionTimer, floatingActionStopwatch;
-int pos;
+    int pos;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,7 @@ int pos;
 
 
         RecyclerView recyclerView = view.findViewById(R.id.timing_recycler);
-        adapter = new TimingAdapter(list,getContext());
+        adapter = new TimingAdapter(list, getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

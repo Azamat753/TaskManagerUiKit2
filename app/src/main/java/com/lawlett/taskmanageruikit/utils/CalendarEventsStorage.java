@@ -22,16 +22,17 @@ public class CalendarEventsStorage {
         String jsonTasks = sp.getString("tasks", "");
 
         if (jsonTasks == "") {
-            return new String();
+            return "";
         }
         Gson gson = new Gson();
         String tasks = gson.fromJson(jsonTasks, new TypeToken<String>() {
         }.getType());
         return tasks;
     }
+
     public static void deleteAll(Context context) {
         SharedPreferences sp = context.getSharedPreferences("my_calendar_sp", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=sp.edit();
+        SharedPreferences.Editor editor = sp.edit();
         editor.clear();
         editor.apply();
     }
