@@ -8,24 +8,31 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
 
     <application
-        android:largeHeap="true"
-        android:hardwareAccelerated="false"
-        android:usesCleartextTraffic="true"
         android:name=".utils.App"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/app_logo_foreground"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".timing.activity.TimerActivity"></activity>
+
+        <activity
+            android:name=".timing.activity.TimerActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+
         <activity
             android:name=".timing.activity.StopwatchActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"></activity>
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+        <receiver android:name=".utils.NotificationReceiver"/>
         <activity
             android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait"
@@ -77,10 +84,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".registration.RegistrationActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"></activity>
-        <activity
             android:name=".onboard.BoardActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
@@ -89,5 +92,6 @@
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
     </application>
+
 
 </manifest>

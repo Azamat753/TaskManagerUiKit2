@@ -1,5 +1,8 @@
 package com.lawlett.taskmanageruikit.timing.activity;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,20 +15,26 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.NotificationReceiver;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.lawlett.taskmanageruikit.utils.App.CHANNEL_ID;
 
 public class StopwatchActivity extends AppCompatActivity {
     Button btnstart, btnstop, applyClick;
@@ -39,13 +48,18 @@ public class StopwatchActivity extends AppCompatActivity {
     ConstraintLayout imageConstrain, stopwatchConstraint;
     String stopwatchTime;
 
+    private NotificationManagerCompat notificationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
 
+
+
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+
+        notificationManager = NotificationManagerCompat.from(this);
 
         phoneImage = findViewById(R.id.image_phone);
         btnstart = findViewById(R.id.btnstart);
@@ -64,6 +78,7 @@ public class StopwatchActivity extends AppCompatActivity {
         applyClick.startAnimation(btgtwo);
         taskEdit.startAnimation(btgone);
         btnstop.setAlpha(0);
+
 
         roundingalone = AnimationUtils.loadAnimation(this, R.anim.roundingalone);
 
@@ -88,6 +103,9 @@ public class StopwatchActivity extends AppCompatActivity {
         btnstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                showCustomNotification();
+
                 icanchor.startAnimation(roundingalone);
                 btnstop.animate().alpha(1).translationY(-80).setDuration(300).start();
                 btnstart.animate().alpha(0).setDuration(300).start();
@@ -95,6 +113,7 @@ public class StopwatchActivity extends AppCompatActivity {
                 btnstart.setVisibility(View.GONE);
                 timerHere.setBase(SystemClock.elapsedRealtime());
                 timerHere.start();
+
             }
         });
         btnstop.setOnClickListener(new View.OnClickListener() {
@@ -127,5 +146,37 @@ public class StopwatchActivity extends AppCompatActivity {
         Log.e("stopwatchMinutes", "dataRoom: " + stopwatchTime);
         App.getDataBase().timingDao().insert(timingModel);
         finish();
+    }
+
+    public void showCustomNotification() {
+        RemoteViews collapsedView = new RemoteViews(getPackageName(),
+                R.layout.notification_custom);
+        RemoteViews expandedView = new RemoteViews(getPackageName(),
+                R.layout.notification_expanded);
+
+
+        Intent clickIntent = new Intent(this, NotificationReceiver.class);
+        PendingIntent clickPendingIntent = PendingIntent.getBroadcast(this,
+                0, clickIntent, 0);
+
+        expandedView.setChronometer(R.id.timerHere_expanded, SystemClock.elapsedRealtime(), null, true);
+
+        expandedView.setOnClickPendingIntent(R.id.notification_const, clickPendingIntent);
+
+        Intent intent= new Intent(this, StopwatchActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent= PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.app_logo_foreground)
+                .setCustomContentView(collapsedView)
+                .setCustomBigContentView(expandedView)
+                .setContentTitle("Секундомер")
+                .setContentText("Идёт отсчёт")
+//                .addAction(R.drawable.ic_timer,"Done",pendingIntent)
+                .build();
+
+        notification.flags=Notification.FLAG_ONGOING_EVENT;
+        notificationManager.notify(1, notification);
     }
 }

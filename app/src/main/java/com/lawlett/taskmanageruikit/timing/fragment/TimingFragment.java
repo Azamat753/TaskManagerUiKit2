@@ -23,6 +23,7 @@ import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 import com.lawlett.taskmanageruikit.utils.App;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TimingFragment extends Fragment {
@@ -80,9 +81,13 @@ public class TimingFragment extends Fragment {
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+                Collections.swap(list, fromPosition, toPosition);
+                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
                 return false;
             }
 

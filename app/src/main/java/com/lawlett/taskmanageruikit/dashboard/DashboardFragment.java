@@ -87,7 +87,6 @@ public class DashboardFragment extends Fragment {
         getDataFromBD();
         getAllTasks();
         getTasksDoneAmount();
-        getAllDoneAndNotDoneTasks();
         countUpPercent();
 
         setShow();
@@ -117,14 +116,7 @@ public class DashboardFragment extends Fragment {
             e.printStackTrace();
         }
         try {
-            todoPercent = doneAmount * 100 / allTaskAmount;
-
-        } catch (ArithmeticException e) {
-            e.printStackTrace();
-        }
-        try {
             workPercentAmount = workDoneAmount * 100 / workAmount;
-
         } catch (ArithmeticException e) {
             e.printStackTrace();
         }
@@ -141,7 +133,7 @@ public class DashboardFragment extends Fragment {
         meetDoneAmount = MeetDoneSizePreference.getInstance(getContext()).getDataSize(); //Встречи выполненные
         homeDoneAmount = HomeDoneSizePreference.getInstance(getContext()).getDataSize(); //Дом выполненные
         privateDoneAmount = PrivateDoneSizePreference.getInstance(getContext()).getDataSize(); //Приватные выполненные
-        doneAmount = personalDoneAmount + workAmount + meetDoneAmount + homeDoneAmount + privateDoneAmount;//Выполненные задачи
+        doneAmount = personalDoneAmount + workDoneAmount + meetDoneAmount + homeDoneAmount + privateDoneAmount;//Выполненные задачи
     }
 
     public void getDataFromBD() {
@@ -156,14 +148,6 @@ public class DashboardFragment extends Fragment {
         eventAmount = App.getDataBase().dataDao().getAll().size();//События задачи кол-во
     }
 
-    public void getAllDoneAndNotDoneTasks() {
-        allTaskDoneAndNotDone = doneAmount + allTaskAmount; //Все задачи для получение % Всех задач
-        personalDoneAndNotDone = personalDoneAmount + personalAmount;//Все Персональные задачи
-        workDoneAndNotDone = workDoneAmount + workAmount;
-        meetDoneAndNotDone = meetDoneAmount + meetAmount;
-        homeDoneAndNotDone = homeDoneAmount + homeAmount;
-        privateDoneAndNotDone = privateDoneAmount + privateAmount;
-    }
 
     public void getAllTasks() {
         todoAmount = personalAmount + workAmount + meetAmount + homeAmount + privateAmount; //Все задачи

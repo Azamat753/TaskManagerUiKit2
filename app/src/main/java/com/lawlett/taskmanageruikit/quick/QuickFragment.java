@@ -87,6 +87,10 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                int fromPosition = viewHolder.getAdapterPosition();
+//                int toPosition = target.getAdapterPosition();
+//                Collections.swap(list, fromPosition, toPosition);
+//                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
                 return false;
             }
 

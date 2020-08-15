@@ -15,24 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -42,10 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
@@ -68,10 +53,12 @@ public class QuickActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick);
 
+
+
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
-        userId = FirebaseAuth.getInstance().getUid();
+//        userId = FirebaseAuth.getInstance().getUid();
         initView();
         getIncomingIntent();
 
@@ -95,42 +82,42 @@ public class QuickActivity extends AppCompatActivity {
 //        getInfo();
     }
 
-    public void uploadTask() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("description", e_description.getText().toString());
-        map.put("title", e_title.getText().toString());
-        userId = FirebaseAuth.getInstance().getUid();
-        FirebaseFirestore.getInstance()
-                .collection("tasks")
+//    public void uploadTask() {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("description", e_description.getText().toString());
+//        map.put("title", e_title.getText().toString());
+//        userId = FirebaseAuth.getInstance().getUid();
+//        FirebaseFirestore.getInstance()
+//                .collection("tasks")
+//
+//                .add(map)
+//                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentReference> task) {
+//                        if (task.isSuccessful()) {
+//                            Toast.makeText(QuickActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            Toast.makeText(QuickActivity.this, "Failure", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//    }
 
-                .add(map)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(QuickActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(QuickActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-
-    private void getInfo() {
-        FirebaseFirestore.getInstance()
-                .collection("tasks")
-                .document(userId)
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        if (documentSnapshot != null) {
-                            String title = documentSnapshot.getString("title");
-                            e_title.setText(title);
-                        }
-                    }
-                });
-    }
+//
+//    private void getInfo() {
+//        FirebaseFirestore.getInstance()
+//                .collection("tasks")
+//                .document(userId)
+//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+//                        if (documentSnapshot != null) {
+//                            String title = documentSnapshot.getString("title");
+//                            e_title.setText(title);
+//                        }
+//                    }
+//                });
+//    }
 
     private void getCurrentPhoto() {
         if (isGallery) {
@@ -246,8 +233,9 @@ public class QuickActivity extends AppCompatActivity {
         });
 
         floatingActionButtonCameraPicker.setOnClickListener(v -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
         });
         floatingActionButtonImagePicker.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -287,25 +275,25 @@ public class QuickActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    public void uploadImage() {
-        Random random = new Random();
-        Integer counter = random.nextInt(20000);
-
-        StorageReference reference = FirebaseStorage.getInstance()
-                .getReference().child("save/image.jpg" + counter);
-        UploadTask task = reference.putFile(Uri.parse(pickImage));
-
-        task.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(QuickActivity.this, "All Right!", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(QuickActivity.this, "Danger!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//    public void uploadImage() {
+//        Random random = new Random();
+//        Integer counter = random.nextInt(20000);
+//
+//        StorageReference reference = FirebaseStorage.getInstance()
+//                .getReference().child("save/image.jpg" + counter);
+//        UploadTask task = reference.putFile(Uri.parse(pickImage));
+//
+//        task.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    Toast.makeText(QuickActivity.this, "All Right!", Toast.LENGTH_SHORT).show();
+//
+//                } else {
+//                    Toast.makeText(QuickActivity.this, "Danger!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
 }
 
