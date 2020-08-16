@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.timing.activity;
 
+import android.app.Notification;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
@@ -14,11 +15,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
@@ -29,6 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.lawlett.taskmanageruikit.utils.App.CHANNEL_ID;
 
 public class TimerActivity extends AppCompatActivity {
     private TextView countdownText;
@@ -44,6 +50,8 @@ public class TimerActivity extends AppCompatActivity {
     ConstraintLayout imageConst, timerConst;
     private Integer timeLeftInMilliseconds = 0;//600.000  10min ||1000//1 second
     CountDownTimer countDownTimer;
+    private NotificationManagerCompat notificationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,7 @@ public class TimerActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
+        notificationManager = NotificationManagerCompat.from(this);
 
         phoneImage = findViewById(R.id.image_timerPhone);
         atg = AnimationUtils.loadAnimation(this, R.anim.atg);
@@ -206,4 +215,25 @@ public class TimerActivity extends AppCompatActivity {
         finish();
         Log.e("myTask1", "dataRoom: " + myTask + "timeleft:" + timerTime);
     }
+
+    public void showNotification() {
+        RemoteViews collapsedView = new RemoteViews(getPackageName(),
+                R.layout.notification_custom_timer);
+        RemoteViews expandedView = new RemoteViews(getPackageName(),
+                R.layout.notification_expanded_timer);
+        expandedView.setTextViewText(R.id.timer_expanded, editText.getText().toString());
+
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.app_logo_foreground)
+                .setCustomContentView(collapsedView)
+                .setCustomBigContentView(expandedView)
+                .setContentTitle("Таймер")
+                .setContentText("Идёт отсчёт")
+                .build();
+
+        notification.flags = Notification.FLAG_ONGOING_EVENT;
+        notificationManager.notify(1, notification);
+
+    }
+
 }

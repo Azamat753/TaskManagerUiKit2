@@ -14,31 +14,35 @@ import com.lawlett.taskmanageruikit.room.AppDataBase;
 public class App extends Application {
     public static App instance;
     private static AppDataBase dataBase;
-public static final String CHANNEL_ID="exampleChannel";
+    public static final String CHANNEL_ID = "exampleChannel";
+
     @Override
     public void onCreate() {
         super.onCreate();
         dataBase = Room.databaseBuilder(this, AppDataBase.class, "database")
                 .allowMainThreadQueries().build();
-createNotificationChannel();
-    }
+        createNotificationChannel();
 
+
+    }
     public static AppDataBase getDataBase() {
         return dataBase;
     }
+
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
-    public void createNotificationChannel(){
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,"Example Channel",
+                    CHANNEL_ID, "Example Channel",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            NotificationManager manager =getSystemService(NotificationManager.class);
+            NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
     }

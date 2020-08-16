@@ -26,22 +26,48 @@
         android:layout_height="45dp"
         android:layout_margin="20dp"
         android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
         android:background="@drawable/royal"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/logo">
 
         <TextView
             android:id="@+id/clear_password"
             android:layout_width="wrap_content"
-            android:layout_marginStart="40dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             android:drawableEnd="@drawable/ic_trash_forever_24"
             android:drawablePadding="15dp"
-            android:textStyle="bold"
             android:text="@string/clearSetting"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/second_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/royal"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/first_layout">
+
+        <TextView
+            android:id="@+id/clear_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:drawableEnd="@drawable/ic_trash_forever_24"
+            android:drawablePadding="15dp"
+            android:text="@string/clear_minutes"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -49,22 +75,20 @@
         android:layout_height="45dp"
         android:layout_margin="20dp"
         android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
         android:background="@drawable/royal"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/first_layout">
+        app:layout_constraintTop_toBottomOf="@id/second_layout">
 
-        <TextView
-            android:id="@+id/clear_time"
+        <Switch
+            android:id="@+id/mySwitch"
             android:layout_width="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_trash_forever_24"
-            android:drawablePadding="15dp"
-            android:textStyle="bold"
-            android:text="@string/clear_minutes"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:text="День/Ночь"
+            android:textColor="@color/white" />
     </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

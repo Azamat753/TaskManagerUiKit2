@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -32,7 +33,6 @@ public interface PersonalDao {
     @Update
     void update(PersonalModel personalModel);
 
-//    @Query("UPDATE Tour SET endAddress = :end_address WHERE id = :tid")
-//    int updateTour(long tid, String end_address);
-
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void updateWord(List<PersonalModel> personalModel);
 }

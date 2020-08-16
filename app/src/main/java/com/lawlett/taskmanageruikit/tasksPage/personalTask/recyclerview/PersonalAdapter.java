@@ -43,6 +43,17 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
         notifyDataSetChanged();
     }
 
+    public void myListClear(List<PersonalModel> list) {
+        this.list = list;
+        list.clear();
+        notifyDataSetChanged();
+    }
+
+    public void myListAddAll(List<PersonalModel> list) {
+        this.list = list;
+        list.addAll(list);
+        notifyDataSetChanged();
+    }
 
     public class PersonalViewHolder extends RecyclerView.ViewHolder {
         CheckBox personalTask;
@@ -60,10 +71,13 @@ public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.Person
                 @Override
                 public void onClick(View v) {
                     listener.onItemCheckClick(getAdapterPosition());
+
                 }
             });
         }
+
     }
+
 
     public interface ICheckedListener {
         void onItemCheckClick(int id);

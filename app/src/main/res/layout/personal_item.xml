@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/animator"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/royal">
-
+    android:layout_height="wrap_content">
     <CheckBox
         android:id="@+id/personal_task"
         style="@style/todoTextColor"

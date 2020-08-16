@@ -150,9 +150,9 @@ public class StopwatchActivity extends AppCompatActivity {
 
     public void showCustomNotification() {
         RemoteViews collapsedView = new RemoteViews(getPackageName(),
-                R.layout.notification_custom);
+                R.layout.notification_custom_stopwatch);
         RemoteViews expandedView = new RemoteViews(getPackageName(),
-                R.layout.notification_expanded);
+                R.layout.notification_expanded_stopwatch);
 
 
         Intent clickIntent = new Intent(this, NotificationReceiver.class);

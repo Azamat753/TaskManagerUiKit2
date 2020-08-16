@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
         settings_view.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
     }
 
@@ -94,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
-                ("Прогресс", ContextCompat.getColor(this, R.color.transparent), R.drawable.diagrama);
+                ("Прогресс", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_progress);
         BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
-                ("Задачи", ContextCompat.getColor(this, R.color.transparent), R.drawable.whitecheck);
+                ("Задачи", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_check);
         BottomNavigationItem bottomNavigationItem4 = new BottomNavigationItem
                 ("Тайминг", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_timer);
         BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem

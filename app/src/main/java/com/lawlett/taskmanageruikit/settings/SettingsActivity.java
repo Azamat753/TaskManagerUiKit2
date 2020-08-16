@@ -1,12 +1,16 @@
 package com.lawlett.taskmanageruikit.settings;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
@@ -16,6 +20,7 @@ import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 public class SettingsActivity extends AppCompatActivity {
     TextView clearPassword_tv, clearMinutes_tv;
     ImageView back;
+    Switch mySwich;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +28,22 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         clearPassword_tv = findViewById(R.id.clear_password);
         clearMinutes_tv = findViewById(R.id.clear_time);
+        mySwich = findViewById(R.id.mySwitch);
         back = findViewById(R.id.back_view);
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+
+        mySwich.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
