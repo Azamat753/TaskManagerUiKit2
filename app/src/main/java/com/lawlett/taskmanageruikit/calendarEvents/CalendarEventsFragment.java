@@ -1,8 +1,6 @@
 package com.lawlett.taskmanageruikit.calendarEvents;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +25,7 @@ import com.lawlett.taskmanageruikit.utils.ICalendarEventOnClickListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,38 +121,46 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
         addEventBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), AddEventActivity.class)));
 
 
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        this.position = position;
-
-        AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
-        dialog.setTitle("Вы хотите отредактировать ?").setMessage("Редактировать задачу")
-                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Да", new DialogInterface.OnClickListener() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(getContext(), AddEventActivity.class);
-                intent.putExtra("calendar", list.get(position));
-                adapter.notifyDataSetChanged();
-                Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
-        }).show();
 
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                int fromPosition = viewHolder.getAdapterPosition();
-//                int toPosition = target.getAdapterPosition();
-//                Collections.swap(list, fromPosition, toPosition);
-//                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-                return false;
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+
+                if (fromPosition < toPosition) {
+                    for (int i = fromPosition; i < toPosition; i++) {
+                        Collections.swap(list, i, i + 1);
+
+                        int order1 = (int) list.get(i).getId();
+                        int order2 = (int) list.get(i + 1).getId();
+                        list.get(i).setId(order2);
+                        list.get(i + 1).setId(order1);
+                    }
+                } else {
+                    for (int i = fromPosition; i > toPosition; i--) {
+                        Collections.swap(list, i, i - 1);
+
+                        int order1 = (int) list.get(i).getId();
+                        int order2 = (int) list.get(i - 1).getId();
+                        list.get(i).setId(order2);
+                        list.get(i - 1).setId(order1);
+                    }
+                }
+                adapter.notifyItemMoved(fromPosition, toPosition);
+                return true;
+            }
+
+
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                App.getDataBase().dataDao().updateWord(list);
             }
 
             @Override
@@ -164,7 +171,14 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
                 Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerViewToday);
+
     }
-
-
+    @Override
+    public void onItemClick(int position) {
+        this.position = position;
+        Intent intent = new Intent(getContext(), AddEventActivity.class);
+        intent.putExtra("calendar", list.get(position));
+        adapter.notifyDataSetChanged();
+        Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
+    }
 }

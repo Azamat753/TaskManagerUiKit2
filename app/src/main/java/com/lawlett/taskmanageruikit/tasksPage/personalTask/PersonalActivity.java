@@ -56,13 +56,12 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         editText = findViewById(R.id.editText_personal);
 
 
-
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        0);
+                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
             }
 
             @Override
@@ -93,6 +92,13 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 return true;
 
             }
+
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                App.getDataBase().personalDao().updateWord(list);
+            }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 pos = viewHolder.getAdapterPosition();
@@ -110,11 +116,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 }
             }
 
-            @Override
-            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                super.clearView(recyclerView, viewHolder);
-                App.getDataBase().personalDao().updateWord(list);
-            }
+
         }).attachToRecyclerView(recyclerView);
 
 
@@ -126,6 +128,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             }
         });
     }
+
     public void addPersonalTask(View view) {
         recordDataRoom();
     }

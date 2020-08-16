@@ -20,6 +20,7 @@ import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener {
@@ -58,14 +59,45 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
 
         editText = findViewById(R.id.editText_home);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+            }
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-//                int fromPosition = viewHolder.getAdapterPosition();
-//                int toPosition = target.getAdapterPosition();
-//                Collections.swap(list, fromPosition, toPosition);
-//                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-                return false;
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+                if (fromPosition < toPosition) {
+                    for (int i = fromPosition; i < toPosition; i++) {
+                        Collections.swap(list, i, i + 1);
+
+                        int order1 = (int) list.get(i).getId();
+                        int order2 = (int) list.get(i + 1).getId();
+                        list.get(i).setId(order2);
+                        list.get(i + 1).setId(order1);
+                    }
+                } else {
+                    for (int i = fromPosition; i > toPosition; i--) {
+                        Collections.swap(list, i, i - 1);
+
+                        int order1 = (int) list.get(i).getId();
+                        int order2 = (int) list.get(i - 1).getId();
+                        list.get(i).setId(order2);
+                        list.get(i - 1).setId(order1);
+                    }
+                }
+                adapter.notifyItemMoved(fromPosition, toPosition);
+                return true;
+            }
+
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+                App.getDataBase().homeDao().updateWord(list);
             }
 
             @Override
@@ -83,6 +115,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                     Toast.makeText(HomeActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
                 }
             }
+
+
         }).attachToRecyclerView(recyclerView);
 
         homeBack = findViewById(R.id.personal_back);

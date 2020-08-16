@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.settings;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -53,16 +55,34 @@ public class SettingsActivity extends AppCompatActivity {
         clearPassword_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
-                PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
-                Toast.makeText(SettingsActivity.this, "Данные о пароле удалены", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
+                dialog.setTitle("Вы уверены ?").setMessage("Очистить пароль")
+                        .setNegativeButton("Нет", (dialog1, which) ->
+                                dialog1.cancel())
+                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
+                                PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
+                                Toast.makeText(SettingsActivity.this, "Данные о пароле удалены", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
             }
         });
         clearMinutes_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimingSizePreference.getInstance(SettingsActivity.this).clearSettings();
-                Toast.makeText(SettingsActivity.this, "Данные о минутах очищены", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
+                dialog.setTitle("Вы уверены ?").setMessage("Очистить поле минут")
+                        .setNegativeButton("Нет", (dialog1, which) ->
+                                dialog1.cancel())
+                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                TimingSizePreference.getInstance(SettingsActivity.this).clearSettings();
+                                Toast.makeText(SettingsActivity.this, "Данные о минутах очищены", Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
             }
         });
     }

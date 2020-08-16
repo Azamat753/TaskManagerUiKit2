@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -31,5 +32,8 @@ public interface CalendarDao {
 
     @Update
     void update(CalendarTaskModel calendarTaskModel);
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void updateWord(List<CalendarTaskModel> calendarTaskModel);
 
 }

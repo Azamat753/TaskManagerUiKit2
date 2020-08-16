@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -32,4 +33,6 @@ public interface WorkDao {
     @Update
     void update(WorkModel workModel);
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void updateWord(List<WorkModel> workModel);
 }
