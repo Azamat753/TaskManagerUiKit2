@@ -42,7 +42,7 @@
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:hint="Задача"
+            android:hint="@string/tasks"
             android:textColorHint="#FFF"
             android:textColor="#FFF"
             android:inputType="textCapSentences" />

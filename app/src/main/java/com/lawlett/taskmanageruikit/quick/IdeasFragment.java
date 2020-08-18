@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class QuickFragment extends Fragment implements IQuickOnClickListener {
+public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     QuickAdapter adapter;
     private List<QuickModel> list;
     FloatingActionButton addQuickBtn;
@@ -38,7 +38,7 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
     int pos;
     RecyclerView recyclerViewQuick;
 
-    public QuickFragment() {
+    public IdeasFragment() {
         // Required empty public constructor
 
     }

@@ -55,7 +55,7 @@ public class QuickActivity extends AppCompatActivity {
 
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         initView();
         getIncomingIntent();
@@ -147,7 +147,6 @@ public class QuickActivity extends AppCompatActivity {
         floatingActionButtonImagePicker = findViewById(R.id.fab3);
         image_title = findViewById(R.id.image_title);
         e_title = findViewById(R.id.edit_title2);
-//        e_title.setTextColor(R.color.myWhite);
         e_description = findViewById(R.id.edit_description);
         back_view = findViewById(R.id.back_view);
         done_view = findViewById(R.id.done_view);

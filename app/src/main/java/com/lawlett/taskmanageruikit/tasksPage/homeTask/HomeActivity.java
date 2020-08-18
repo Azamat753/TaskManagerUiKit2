@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         setContentView(R.layout.activity_home);
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         changeView();
 
@@ -112,7 +112,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                     App.getDataBase().homeDao().update(list.get(pos));
                     App.getDataBase().homeDao().delete(list.get(pos));
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(HomeActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -134,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
 
     private void recordRoom() {
         if (editText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show();
         } else {
             homeModel = new HomeModel(editText.getText().toString().trim(), false);
             App.getDataBase().homeDao().insert(homeModel);
@@ -144,7 +144,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText("Дом");
+        toolbar.setText(R.string.home);
         ImageView imageView = findViewById(R.id.personal_circle_image);
         ImageView imageView2 = findViewById(R.id.blue_circle_image);
         imageView.setVisibility(View.GONE);

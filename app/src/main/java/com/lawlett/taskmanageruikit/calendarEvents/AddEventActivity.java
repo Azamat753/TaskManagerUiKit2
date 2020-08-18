@@ -69,8 +69,6 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(0, 0, 0, selectedHour, selectedMinute);
-//                    endHour = String.valueOf(selectedHour);
-//                    endMinute = String.valueOf(selectedMinute);
                     endTimeNumber.setText(android.text.format.DateFormat.format("HH:mm", calendar));
                     endingHour = String.valueOf(android.text.format.DateFormat.format("HH:mm", calendar));
                 }

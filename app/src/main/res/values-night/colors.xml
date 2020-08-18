@@ -14,7 +14,7 @@
     <color name="meetColor">#FF9800</color>
     <color name="allTaskColor">#4CAF50</color>
     <color name="transparent">#00AF4C4C</color>
-    <color name="black">#0365C4</color>
+    <color name="statusBarC">#0365C4</color>
     <color name="icon_color">#0365C4</color>
     <color name="calendar_background">#0365C4</color>
     <color name="calendar_text">#FFF</color>

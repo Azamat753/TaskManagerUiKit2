@@ -35,7 +35,7 @@ public class DoneTasksActivity extends AppCompatActivity implements IDoneOnClick
         setContentView(R.layout.activity_done_tasks);
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
 
         changeView();

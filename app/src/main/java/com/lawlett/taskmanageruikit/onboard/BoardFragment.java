@@ -52,29 +52,29 @@ public class BoardFragment extends Fragment {
         int pos = getArguments().getInt("pos");
         switch (pos) {
             case 0:
-                title_tv.setText("События по календарю");
-                desc_tv.setText("Быстрое добавление ваших событий & быстрое переключения  между датами & просмотр недель");
+                title_tv.setText(R.string.event_calendar);
+                desc_tv.setText(R.string.fast_add_your_event);
                 calendar_anim.setVisibility(View.VISIBLE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.GONE);
                 break;
             case 1:
-                title_tv.setText("Выполнение задач");
-                desc_tv.setText("Cписок задач поможет вам наполнить ваш день и добиться цели");
+                title_tv.setText(R.string.done_tasks);
+                desc_tv.setText(R.string.list_tasks_help_you);
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.VISIBLE);
                 notes_anim.setVisibility(View.GONE);
                 break;
             case 2:
-                title_tv.setText("Запись идей");
-                desc_tv.setText("Самый эффективный способ перенести идеи, мысли и задачи, не теряя внимания");
+                title_tv.setText(R.string.record_idea_simple);
+                desc_tv.setText(R.string.most_effect_idea);
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                title_tv.setText("Отслеживание тайминга");
-                desc_tv.setText("Один из лучших способов повысить свой КПД");
+                title_tv.setText(R.string.check_timing);
+                desc_tv.setText(R.string.plus_you_kpd);
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.GONE);
@@ -85,6 +85,7 @@ public class BoardFragment extends Fragment {
         }
 
         start_tv.setOnClickListener(v -> {
+
             Preference.getInstance(getContext()).saveShown();
             startActivity(new Intent(getContext(), MainActivity.class));
             Objects.requireNonNull(getActivity()).finish();

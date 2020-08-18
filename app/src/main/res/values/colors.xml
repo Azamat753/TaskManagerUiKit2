@@ -14,11 +14,12 @@
     <color name="meetColor">#FF9800</color>
     <color name="allTaskColor">#4CAF50</color>
     <color name="transparent">#00AF4C4C</color>
-    <color name="black">#141E30</color>
+    <color name="statusBarC">#141E30</color>
     <color name="icon_color">#FFF</color>
     <color name="calendar_background">#141E30</color>
     <color name="calendar_text">#FFF</color>
     <color name="plus_background">#141E30</color>
     <color name="navigation_background">#141E30</color>
     <color name="settings_text_color">#FFF</color>
+    <color name="timing_color">#211D44</color>
 </resources>

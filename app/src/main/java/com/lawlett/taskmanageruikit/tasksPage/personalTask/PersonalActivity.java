@@ -36,7 +36,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         list = new ArrayList<>();
         adapter = new PersonalAdapter(this);
@@ -112,7 +112,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                     App.getDataBase().personalDao().update(list.get(pos));
                     App.getDataBase().personalDao().delete(list.get(pos));
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(PersonalActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -135,7 +135,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
     public void recordDataRoom() {
         if (editText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show();
         } else {
             personal = editText.getText().toString().trim();
             personalModel = new PersonalModel(personal, false);

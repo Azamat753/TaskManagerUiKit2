@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".todo.TodoFragment">
+    tools:context=".todo.TasksFragment">
 
     <View
         android:id="@+id/view_0"
@@ -41,7 +41,7 @@
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Персональные"
+            android:text="@string/personal"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/personal_amount"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Работа"
+            android:text="@string/work"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/work_amount"
             app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +142,7 @@
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Встречи"
+            android:text="@string/meets"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/meet_task_amount"
             app:layout_constraintEnd_toEndOf="parent"
@@ -187,7 +187,7 @@
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Дом"
+            android:text="@string/home"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/home_task_amount"
             app:layout_constraintEnd_toEndOf="parent"
@@ -242,7 +242,7 @@
             style="@style/TextTitleQuick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Приватные"
+            android:text="@string/privates"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/private_task_amount"
             app:layout_constraintEnd_toEndOf="parent"

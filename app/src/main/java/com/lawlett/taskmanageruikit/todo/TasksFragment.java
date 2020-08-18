@@ -25,7 +25,7 @@ import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 
 
-public class TodoFragment extends Fragment {
+public class TasksFragment extends Fragment {
     ImageView personalImage, workImage, meetImage, homeImage, privateImage, doneImage;
     TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount;
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;

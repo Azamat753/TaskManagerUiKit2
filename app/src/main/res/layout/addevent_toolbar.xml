@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="35dp"
-                android:text="Добавить Событие"
+                android:text="@string/add_event"
                 android:textColor="@android:color/white"
                 android:textSize="23dp"
                 android:textStyle="bold" />

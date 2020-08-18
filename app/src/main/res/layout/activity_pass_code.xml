@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/image_icon"
         android:layout_centerHorizontal="true"
-        android:text="Создание пароля"
+        android:text="@string/create_password"
         android:textColor="@color/myWhite"
         android:textSize="30sp"
         android:textStyle="bold"

@@ -37,7 +37,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet);
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         changeView();
 
@@ -114,7 +114,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
                     App.getDataBase().meetDao().update(list.get(position));
                     App.getDataBase().meetDao().delete(list.get(position));
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(MeetActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MeetActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
                 }
             }
         }).attachToRecyclerView(recyclerView);
@@ -134,7 +134,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
     public void recordRoom() {
         if (editText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show();
         } else {
             meetModel = new MeetModel(editText.getText().toString().trim(), false);
             App.getDataBase().meetDao().insert(meetModel);
@@ -144,7 +144,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText("Встречи");
+        toolbar.setText(R.string.meets);
         ImageView imageView = findViewById(R.id.personal_circle_image);
         ImageView imageView2 = findViewById(R.id.orange_circle_image);
         imageView.setVisibility(View.GONE);

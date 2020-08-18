@@ -22,12 +22,12 @@ import androidx.lifecycle.Observer;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
-import com.lawlett.taskmanageruikit.quick.QuickFragment;
+import com.lawlett.taskmanageruikit.quick.IdeasFragment;
 import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.settings.SettingsActivity;
 import com.lawlett.taskmanageruikit.timing.fragment.TimingFragment;
-import com.lawlett.taskmanageruikit.todo.TodoFragment;
+import com.lawlett.taskmanageruikit.todo.TasksFragment;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         initBottomNavigation();
         changeFragment(new DashboardFragment());
@@ -85,23 +85,23 @@ public class MainActivity extends AppCompatActivity {
     public void initBottomNavigation() {
         Calendar c = Calendar.getInstance();
         final int year = c.get(Calendar.YEAR);
-        String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
-                "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+        String[] monthName = {getString(R.string.january), getString(R.string.february), getString(R.string.march), getString(R.string.april), getString(R.string.may), getString(R.string.june), getString(R.string.july),
+                getString(R.string.august), getString(R.string.september), getString(R.string.october), getString(R.string.november), getString(R.string.december)};
 
         final String month = monthName[c.get(Calendar.MONTH)];
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
-                ("Прогресс", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_progress);
+                (getApplication().getString(R.string.progress), ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_progress);
         BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
-                ("Задачи", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_check);
+                (getApplication().getString(R.string.tasks), ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_check);
         BottomNavigationItem bottomNavigationItem4 = new BottomNavigationItem
-                ("Тайминг", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_timer);
+                (getApplication().getString(R.string.timing), ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_timer);
         BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
-                ("События", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_date_white);
+                (getApplication().getString(R.string.events), ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_date_white);
         BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
-                ("Идеи", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_idea);
+                (getApplication().getString(R.string.ideas), ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_idea);
 
         bottomNavigationView.addTab(bottomNavigationItem);
         bottomNavigationView.addTab(bottomNavigationItem1);
@@ -115,18 +115,18 @@ public class MainActivity extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         changeFragment(new DashboardFragment());
-                        toolbar_title.setText("Прогресс");
+                        toolbar_title.setText(R.string.progress);
                         more_btn.setVisibility(View.GONE);
                         break;
                     case 1:
-                        changeFragment(new TodoFragment());
-                        toolbar_title.setText("Задачи");
+                        changeFragment(new TasksFragment());
+                        toolbar_title.setText(R.string.tasks);
                         more_btn.setVisibility(View.GONE);
 
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
-                        toolbar_title.setText("Тайминг");
+                        toolbar_title.setText(R.string.timing);
                         more_btn.setVisibility(View.GONE);
                         break;
                     case 3:
@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
                         toolbar_title.setText(month + " " + year);
                         break;
                     case 4:
-                        changeFragment(new QuickFragment());
-                        toolbar_title.setText("Идеи");
+                        changeFragment(new IdeasFragment());
+                        toolbar_title.setText(R.string.ideas);
                         more_btn.setVisibility(View.GONE);
                         more_btn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -149,19 +149,6 @@ public class MainActivity extends AppCompatActivity {
                                     public boolean onMenuItemClick(MenuItem item) {
                                         switch (item.getItemId()) {
                                             case R.id.delete_all_popup:
-                                                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-                                                dialog.setTitle("Вы уверены ?").setMessage("Очистить список")
-                                                        .setNegativeButton("Нет", (dialog1, which) ->
-
-                                                                dialog1.cancel())
-
-                                                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialog, int which) {
-                                                                App.getDataBase().taskDao().deleteAll(list);
-                                                                adapter.notifyDataSetChanged();
-                                                            }
-                                                        }).show();
 
                                                 break;
                                         }
@@ -180,7 +167,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PasswordPassDonePreference.getInstance(this).clearSettings();
+        PasswordPassDonePreference.getInstance(MainActivity.this).clearSettings();
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle(R.string.are_you_sure).setMessage(R.string.complete_work)
+                .setNegativeButton(R.string.no, (dialog1, which) ->
+
+                        dialog1.cancel())
+
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                    }
+                }).show();
+    }
 }

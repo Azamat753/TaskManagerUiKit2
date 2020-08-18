@@ -1,7 +1,6 @@
 package com.lawlett.taskmanageruikit.settings;
 
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPreference;
+import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -35,12 +35,10 @@ public class SettingsActivity extends AppCompatActivity {
         back = findViewById(R.id.back_view);
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-        SharedPreferences sharedPreferences =getSharedPreferences("light",0);
-        Boolean booleanValue=sharedPreferences.getBoolean("night_mode",false);
+        boolean booleanValue=ThemePreference.getInstance(this).isTheme();
         if (booleanValue){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             mySwich.setChecked(true);
         }
 
@@ -50,31 +48,30 @@ public class SettingsActivity extends AppCompatActivity {
                 if (isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     mySwich.setChecked(true);
-                    SharedPreferences.Editor editor= sharedPreferences.edit();
-                    editor.putBoolean("night_mode",true);
-                    editor.commit();
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     mySwich.setChecked(false);
-                    SharedPreferences.Editor editor= sharedPreferences.edit();
-                    editor.putBoolean("night_mode",false);
-                    editor.commit();           }
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
+                }
             }
         });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
         clearPassword_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setTitle("Вы уверены ?").setMessage("Очистить пароль")
-                        .setNegativeButton("Нет", (dialog1, which) ->
+                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
+                        .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
-                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
@@ -88,14 +85,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setTitle("Вы уверены ?").setMessage("Очистить поле минут")
-                        .setNegativeButton("Нет", (dialog1, which) ->
+                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_minute)
+                        .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
-                        .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 TimingSizePreference.getInstance(SettingsActivity.this).clearSettings();
-                                Toast.makeText(SettingsActivity.this, "Данные о минутах очищены", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingsActivity.this, R.string.data_about_minutes_clear, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
             }

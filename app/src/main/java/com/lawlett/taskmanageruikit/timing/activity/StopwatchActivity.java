@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.timing.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -7,8 +8,9 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -16,12 +18,13 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
@@ -49,15 +52,18 @@ public class StopwatchActivity extends AppCompatActivity {
     String stopwatchTime;
 
     private NotificationManagerCompat notificationManager;
+    @SuppressLint("ResourceAsColor")
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stopwatch);
 
-
-
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(R.color.timing_color);
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.timing_color));
 
         notificationManager = NotificationManagerCompat.from(this);
 
@@ -121,6 +127,7 @@ public class StopwatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 showElapsedTime();
                 dataRoom();
+                notificationManager.cancel(1);
             }
         });
     }
@@ -128,22 +135,20 @@ public class StopwatchActivity extends AppCompatActivity {
     private void showElapsedTime() {
         elapsedMillis = SystemClock.elapsedRealtime() - timerHere.getBase();
         stopwatchTime = String.valueOf(elapsedMillis / 60000);
-        Toast.makeText(this, "Elapsed milliseconds: " + elapsedMillis / 1000,
-                Toast.LENGTH_SHORT).show();
+
     }
 
     public void dataRoom() {
         Calendar c = Calendar.getInstance();
         final int year = c.get(Calendar.YEAR);
-        String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
-                "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+        String[] monthName = {getString(R.string.january), getString(R.string.february), getString(R.string.march), getString(R.string.april), getString(R.string.may), getString(R.string.june), getString(R.string.july),
+                getString(R.string.august), getString(R.string.september), getString(R.string.october), getString(R.string.november), getString(R.string.december)};
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
         int stopwatchTimePref = Integer.parseInt(stopwatchTime);
         int previousTimePref = TimingSizePreference.getInstance(this).getTimingSize();
         TimingSizePreference.getInstance(this).saveTimingSize(stopwatchTimePref + previousTimePref);
         timingModel = new TimingModel(null, null, null, myTask, Integer.valueOf(stopwatchTime), currentDate + " " + month + " " + year);
-        Log.e("stopwatchMinutes", "dataRoom: " + stopwatchTime);
         App.getDataBase().timingDao().insert(timingModel);
         finish();
     }
@@ -163,17 +168,12 @@ public class StopwatchActivity extends AppCompatActivity {
 
         expandedView.setOnClickPendingIntent(R.id.notification_const, clickPendingIntent);
 
-        Intent intent= new Intent(this, StopwatchActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent= PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
-
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.app_logo_foreground)
                 .setCustomContentView(collapsedView)
                 .setCustomBigContentView(expandedView)
-                .setContentTitle("Секундомер")
-                .setContentText("Идёт отсчёт")
-//                .addAction(R.drawable.ic_timer,"Done",pendingIntent)
+                .setContentTitle(getString(R.string.stopwatch))
+                .setContentText(getString(R.string.go_count))
                 .build();
 
         notification.flags=Notification.FLAG_ONGOING_EVENT;

@@ -37,7 +37,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         setContentView(R.layout.activity_private);
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         changeView();
 
@@ -112,7 +112,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
                     App.getDataBase().privateDao().update(list.get(pos));
                     App.getDataBase().privateDao().delete(list.get(pos));
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(PrivateActivity.this, "Удалено", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PrivateActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
                 }
             }
         }).attachToRecyclerView(recyclerView);
@@ -132,7 +132,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
 
     public void recordRoom() {
         if (editText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.empty, Toast.LENGTH_SHORT).show();
         } else {
             privateModel = new PrivateModel(editText.getText().toString().trim(), false);
             App.getDataBase().privateDao().insert(privateModel);
@@ -142,7 +142,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText("Приватные");
+        toolbar.setText(R.string.privates);
         ImageView imageView = findViewById(R.id.personal_circle_image);
         ImageView imageView2 = findViewById(R.id.red_circle_image);
         imageView.setVisibility(View.GONE);

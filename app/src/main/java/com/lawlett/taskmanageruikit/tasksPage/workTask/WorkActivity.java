@@ -36,7 +36,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         changeView();
 

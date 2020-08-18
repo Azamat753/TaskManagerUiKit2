@@ -21,6 +21,7 @@ import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 
@@ -172,28 +173,39 @@ public class DashboardFragment extends Fragment {
         homePercent.setText(homePercentAmount + "%");
         privatePercent.setText(privatePercentAmount + "%");
 
-        allTaskProgress.setProgress(doneAmount);
-        allTaskProgress.setMax(allTaskAmount);
-        allTaskProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        boolean booleanValue = ThemePreference.getInstance(getContext()).isTheme();
+        if (!booleanValue) {
+            allTaskProgress.setProgress(doneAmount);
+            allTaskProgress.setMax(allTaskAmount);
+            allTaskProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
-        personalProgress.setProgress(personalDoneAmount);
-        personalProgress.setMax(personalAmount);
-        personalProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+            personalProgress.setProgress(personalDoneAmount);
+            personalProgress.setMax(personalAmount);
+            personalProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
-        workProgress.setProgress(workDoneAmount);
-        workProgress.setMax(workAmount);
-        workProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+            workProgress.setProgress(workDoneAmount);
+            workProgress.setMax(workAmount);
+            workProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
-        meetProgress.setProgress(meetDoneAmount);
-        meetProgress.setMax(meetAmount);
-        meetProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+            meetProgress.setProgress(meetDoneAmount);
+            meetProgress.setMax(meetAmount);
+            meetProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
-        homeProgress.setProgress(homeDoneAmount);
-        homeProgress.setMax(homeAmount);
-        homeProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+            homeProgress.setProgress(homeDoneAmount);
+            homeProgress.setMax(homeAmount);
+            homeProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
-        privateProgress.setProgress(privateDoneAmount);
-        privateProgress.setMax(privateAmount);
-        privateProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+            privateProgress.setProgress(privateDoneAmount);
+            privateProgress.setMax(privateAmount);
+            privateProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        }else {
+            allTaskProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
+            personalProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
+            workProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
+            meetProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
+            homeProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
+            privateProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
+
+        }
     }
 }

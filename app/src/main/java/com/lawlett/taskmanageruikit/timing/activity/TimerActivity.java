@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.timing.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
@@ -8,8 +9,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -19,10 +23,12 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
@@ -51,23 +57,32 @@ public class TimerActivity extends AppCompatActivity {
     private Integer timeLeftInMilliseconds = 0;//600.000  10min ||1000//1 second
     CountDownTimer countDownTimer;
     private NotificationManagerCompat notificationManager;
+    private Vibrator v;
+    public int hours, mins, duration;
+    private static final String TAG =   "page2";
+String hms;
 
-
+    @SuppressLint({"ResourceAsColor", "Range"})
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
+            getWindow().setNavigationBarColor(R.color.timing_color);
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.timing_color));
 
         notificationManager = NotificationManagerCompat.from(this);
+
 
         phoneImage = findViewById(R.id.image_timerPhone);
         atg = AnimationUtils.loadAnimation(this, R.anim.atg);
         btgone = AnimationUtils.loadAnimation(this, R.anim.btgone);
         btgtwo = AnimationUtils.loadAnimation(this, R.anim.btgtwo);
-        backButton = findViewById(R.id.back_button);
+        backButton = findViewById(R.id.close_button);
         timerTaskEdit = findViewById(R.id.timer_task_edit);
         editText = findViewById(R.id.editText);
         timerTaskApply = findViewById(R.id.timer_task_apply);
@@ -100,6 +115,7 @@ public class TimerActivity extends AppCompatActivity {
                 if (countDownTimer != null)
                     countDownTimer.cancel();
                 finish();
+                notificationManager.cancel(1);
             }
         });
 
@@ -135,9 +151,11 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
         countdownButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 startTimer();
+            showNotification();
             }
         });
 
@@ -154,6 +172,7 @@ public class TimerActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(TimerActivity.this, "Таймер ещё не окончен", Toast.LENGTH_SHORT).show();
                 }
+                notificationManager.cancel(1);
             }
         });
     }
@@ -216,24 +235,47 @@ public class TimerActivity extends AppCompatActivity {
         Log.e("myTask1", "dataRoom: " + myTask + "timeleft:" + timerTime);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void showNotification() {
         RemoteViews collapsedView = new RemoteViews(getPackageName(),
                 R.layout.notification_custom_timer);
         RemoteViews expandedView = new RemoteViews(getPackageName(),
                 R.layout.notification_expanded_timer);
-        expandedView.setTextViewText(R.id.timer_expanded, editText.getText().toString());
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.app_logo_foreground)
-                .setCustomContentView(collapsedView)
-                .setCustomBigContentView(expandedView)
-                .setContentTitle("Таймер")
-                .setContentText("Идёт отсчёт")
-                .build();
+        countDownTimer = new CountDownTimer(timeLeftInMilliseconds, 1000) {
 
-        notification.flags = Notification.FLAG_ONGOING_EVENT;
-        notificationManager.notify(1, notification);
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int minutes = (int) millisUntilFinished / 60000;
+                int seconds = (int) millisUntilFinished % 60000 / 1000;
+
+                timeLeftText = "" + minutes;
+                timeLeftText += ":";
+                if (seconds < 10) timeLeftText += "0";
+                timeLeftText += seconds;
+
+           expandedView.setTextViewText(R.id.timer_expanded,timeLeftText);
+
+                Notification notification = new NotificationCompat.Builder(TimerActivity.this, CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.app_logo_foreground)
+                        .setCustomContentView(collapsedView)
+                        .setCustomBigContentView(expandedView)
+                        .setContentTitle("Таймер")
+                        .setContentText("Идёт отсчёт")
+                        .build();
+
+
+                notificationManager.notify(1, notification);
+
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        }.start();
+
+
+
 
     }
-
 }
