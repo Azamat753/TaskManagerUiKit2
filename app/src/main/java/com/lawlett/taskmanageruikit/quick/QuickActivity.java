@@ -37,14 +37,13 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 public class QuickActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST = 500;
 
-    String userId;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonColorPicker, floatingActionButtonCameraPicker, floatingActionButtonImagePicker;
     QuickModel quickModel;
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
     String pickImage, textTitle, textDescription, captureImage, gallImage;
-    int choosedColor = R.color.white;
+    int choosedColor ;
     boolean isGallery = false;
 
     @SuppressLint("ResourceAsColor")
@@ -58,7 +57,6 @@ public class QuickActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
-//        userId = FirebaseAuth.getInstance().getUid();
         initView();
         getIncomingIntent();
 
@@ -74,51 +72,11 @@ public class QuickActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recordDataRoom();
-//            uploadTask();
-//uploadImage();
+
             }
         });
 
-//        getInfo();
     }
-
-//    public void uploadTask() {
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("description", e_description.getText().toString());
-//        map.put("title", e_title.getText().toString());
-//        userId = FirebaseAuth.getInstance().getUid();
-//        FirebaseFirestore.getInstance()
-//                .collection("tasks")
-//
-//                .add(map)
-//                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentReference> task) {
-//                        if (task.isSuccessful()) {
-//                            Toast.makeText(QuickActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(QuickActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                });
-//    }
-
-//
-//    private void getInfo() {
-//        FirebaseFirestore.getInstance()
-//                .collection("tasks")
-//                .document(userId)
-//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-//                        if (documentSnapshot != null) {
-//                            String title = documentSnapshot.getString("title");
-//                            e_title.setText(title);
-//                        }
-//                    }
-//                });
-//    }
-
     private void getCurrentPhoto() {
         if (isGallery) {
             pickImage = gallImage;
@@ -181,6 +139,7 @@ public class QuickActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     public void initView() {
         materialDesignFAM = findViewById(R.id.menu_floating);
         floatingActionButtonColorPicker = findViewById(R.id.fab);
@@ -188,7 +147,7 @@ public class QuickActivity extends AppCompatActivity {
         floatingActionButtonImagePicker = findViewById(R.id.fab3);
         image_title = findViewById(R.id.image_title);
         e_title = findViewById(R.id.edit_title2);
-        e_title.setTextColor(Color.parseColor("#FFFFFF"));
+//        e_title.setTextColor(R.color.myWhite);
         e_description = findViewById(R.id.edit_description);
         back_view = findViewById(R.id.back_view);
         done_view = findViewById(R.id.done_view);

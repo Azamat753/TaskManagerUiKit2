@@ -10,12 +10,14 @@
         android:id="@+id/settings_tool_bar"
         layout="@layout/settings_toolbar" />
 
-    <ImageView
+    <TextView
         android:id="@+id/logo"
         android:layout_width="170dp"
-        android:layout_height="170dp"
+        android:layout_height="100dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/settings_logo"
+        android:text="Planner"
+        android:textSize="50sp"
+        android:textColor="@color/myWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_tool_bar" />
@@ -26,7 +28,7 @@
         android:layout_height="45dp"
         android:layout_margin="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/royal"
+        android:background="@color/royalStart"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/logo">
@@ -39,7 +41,7 @@
             android:drawableEnd="@drawable/ic_trash_forever_24"
             android:drawablePadding="15dp"
             android:text="@string/clearSetting"
-            android:textColor="@color/white"
+            android:textColor="@color/settings_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -50,7 +52,7 @@
         android:layout_height="45dp"
         android:layout_margin="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/royal"
+        android:background="@color/royalStart"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/first_layout">
@@ -63,7 +65,7 @@
             android:drawableEnd="@drawable/ic_trash_forever_24"
             android:drawablePadding="15dp"
             android:text="@string/clear_minutes"
-            android:textColor="@color/white"
+            android:textColor="@color/settings_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -75,7 +77,7 @@
         android:layout_height="45dp"
         android:layout_margin="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/royal"
+        android:background="@color/royalStart"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/second_layout">
@@ -85,8 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_height="wrap_content"
-            android:text="День/Ночь"
-            android:textColor="@color/white" />
+            android:text="Светлая тема"
+            android:switchPadding="50dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/settings_text_color"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 
 

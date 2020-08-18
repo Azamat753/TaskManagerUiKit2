@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.quick;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
 
     }
 
-    @SuppressLint("FragmentLiveDataObserve")
+    @SuppressLint({"FragmentLiveDataObserve", "ResourceAsColor"})
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +59,8 @@ public class QuickFragment extends Fragment implements IQuickOnClickListener {
 
         });
         addQuickBtn = root.findViewById(R.id.add_quick_btn);
+        addQuickBtn.setColorFilter(Color.WHITE);
+        addQuickBtn.setBackgroundColor(R.color.plus_background);
         addQuickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

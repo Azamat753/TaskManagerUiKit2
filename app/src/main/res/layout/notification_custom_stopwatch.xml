@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Секундомер"
         style="@style/TextAppearance.Compat.Notification.Title"
-        android:textColor="@color/white"/>
+        android:textColor="@color/myWhite"/>
 
     <TextView
         android:id="@+id/custom_textView2"
@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:text="Идёт отсчёт"
         style="@style/TextAppearance.Compat.Notification.Info"
-        android:textColor="@color/white"/>
+        android:textColor="@color/myWhite"/>
 
 </LinearLayout>

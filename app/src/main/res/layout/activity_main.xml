@@ -31,9 +31,8 @@
         android:layout_alignParentBottom="true"
         app:bnv_active_text_size="10sp"
         app:bnv_inactive_text_size="10sp"
-        app:itemIconTint="@color/white"
-        app:itemRippleColor="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/myWhite"
+        app:itemRippleColor="@color/myWhite"
+        app:itemTextColor="@color/myWhite"
         app:menu="@menu/bottom_nav_menu" />
-
 </RelativeLayout>

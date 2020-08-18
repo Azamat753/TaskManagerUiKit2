@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.calendarEvents;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,6 +68,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
         return inflater.inflate(R.layout.fragment_calendar_events, container, false);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -118,6 +120,8 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
         recyclerViewToday.setAdapter(adapter);
 
         addEventBtn = view.findViewById(R.id.add_task_btn);
+        addEventBtn.setColorFilter(Color.WHITE);
+        addEventBtn.setBackgroundColor(R.color.plus_background);
         addEventBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), AddEventActivity.class)));
 
 

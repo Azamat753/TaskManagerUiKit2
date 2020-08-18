@@ -66,7 +66,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             data_created.setText(quickModel.getCreateData());
 
             if (quickModel.getColor() == 0) {
-                quickModel.setColor(R.color.white);
+                quickModel.setColor(R.color.myWhite);
             } else {
                 title.setTextColor(quickModel.getColor());
             }

@@ -29,7 +29,7 @@
         android:hint="Выгулить собаку"
         android:inputType="textCapSentences"
         android:maxLength="35"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/myWhite"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />

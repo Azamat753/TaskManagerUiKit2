@@ -16,8 +16,8 @@
         <ImageView
             android:id="@+id/image_timerPhone"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="350dp"
+            android:layout_marginBottom="50dp"
             android:src="@drawable/icget"
             app:layout_constraintBottom_toTopOf="@id/timer_task_edit"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="70dp"
             android:text="Что вы будете делать?"
             android:textColor="@android:color/white"
             android:textSize="30sp"
@@ -53,25 +53,25 @@
             android:id="@+id/timer_task_edit"
             android:layout_width="320dp"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="340dp"
             android:background="@drawable/edittext_background"
             android:inputType="textCapSentences"
             android:maxLength="21"
             android:textAlignment="center"
             android:textColor="#FFF"
-            android:textColorHint="#FFF"
+            android:textColorHint="@android:color/darker_gray"
             android:textSize="26sp"
             app:layout_constraintBottom_toTopOf="@id/timer_task_apply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_timerPhone" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+            <Button
             android:id="@+id/timer_task_apply"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:layout_marginBottom="200dp"
+            android:layout_marginBottom="230dp"
             android:background="@drawable/rectangle_bg"
             android:text="Принять"
             android:textColor="#FFF"

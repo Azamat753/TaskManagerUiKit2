@@ -11,13 +11,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imageconst"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/image_phone"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="350dp"
+            android:layout_marginBottom="50dp"
             android:src="@drawable/icget"
             app:layout_constraintBottom_toTopOf="@id/stopwatch_task_edit"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,16 +34,17 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:text="Секундомер"
-            android:textColor="@color/white"
+            android:textColor="#FFF"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/text_q"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="70dp"
             android:text="Что вы будете делать?"
             android:textColor="@android:color/white"
             android:textSize="30sp"
@@ -52,7 +57,7 @@
             android:id="@+id/stopwatch_task_edit"
             android:layout_width="320dp"
             android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="340dp"
             android:background="@drawable/edittext_background"
             android:inputType="textCapSentences"
             android:maxLength="21"
@@ -63,14 +68,14 @@
             app:layout_constraintBottom_toTopOf="@id/stopwatch_task_apply"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_phone" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/stopwatch_task_apply"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:layout_marginBottom="200dp"
+            android:layout_marginBottom="230dp"
             android:background="@drawable/rectangle_bg"
             android:text="Принять"
             android:textColor="#FFF"

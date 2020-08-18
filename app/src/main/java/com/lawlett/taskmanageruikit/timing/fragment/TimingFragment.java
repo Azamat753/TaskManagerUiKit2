@@ -65,6 +65,7 @@ public class TimingFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
+
         floatingActionStopwatch = view.findViewById(R.id.fab_stopwatch);
         floatingActionTimer = view.findViewById(R.id.fab_timer);
 

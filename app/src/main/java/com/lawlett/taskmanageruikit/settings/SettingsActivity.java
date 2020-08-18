@@ -1,6 +1,7 @@
 package com.lawlett.taskmanageruikit.settings;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -36,14 +37,28 @@ public class SettingsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.black));
 
+        SharedPreferences sharedPreferences =getSharedPreferences("light",0);
+        Boolean booleanValue=sharedPreferences.getBoolean("night_mode",false);
+        if (booleanValue){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            mySwich.setChecked(true);
+        }
+
         mySwich.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    mySwich.setChecked(true);
+                    SharedPreferences.Editor editor= sharedPreferences.edit();
+                    editor.putBoolean("night_mode",true);
+                    editor.commit();
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
+                    mySwich.setChecked(false);
+                    SharedPreferences.Editor editor= sharedPreferences.edit();
+                    editor.putBoolean("night_mode",false);
+                    editor.commit();           }
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +101,4 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

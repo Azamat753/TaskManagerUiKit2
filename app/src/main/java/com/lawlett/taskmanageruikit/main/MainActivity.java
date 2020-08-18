@@ -93,15 +93,15 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
-                ("Прогресс", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_progress);
+                ("Прогресс", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_progress);
         BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
-                ("Задачи", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_check);
+                ("Задачи", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_check);
         BottomNavigationItem bottomNavigationItem4 = new BottomNavigationItem
-                ("Тайминг", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_timer);
+                ("Тайминг", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_timer);
         BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
-                ("События", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_date_white);
+                ("События", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_date_white);
         BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
-                ("Идеи", ContextCompat.getColor(this, R.color.transparent), R.drawable.ic_idea);
+                ("Идеи", ContextCompat.getColor(this, R.color.navigation_background), R.drawable.ic_idea);
 
         bottomNavigationView.addTab(bottomNavigationItem);
         bottomNavigationView.addTab(bottomNavigationItem1);
