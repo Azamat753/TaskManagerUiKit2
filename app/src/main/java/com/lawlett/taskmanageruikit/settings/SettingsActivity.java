@@ -1,6 +1,7 @@
 package com.lawlett.taskmanageruikit.settings;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,14 +16,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPreference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
+import java.util.Locale;
+
 public class SettingsActivity extends AppCompatActivity {
-    TextView clearPassword_tv, clearMinutes_tv;
+    TextView clearPassword_tv, clearMinutes_tv, language_tv;
     ImageView back;
+
     Switch mySwich;
 
     @Override
@@ -33,12 +38,14 @@ public class SettingsActivity extends AppCompatActivity {
         clearMinutes_tv = findViewById(R.id.clear_time);
         mySwich = findViewById(R.id.mySwitch);
         back = findViewById(R.id.back_view);
+        language_tv = findViewById(R.id.language);
+        loadLocale();
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-        boolean booleanValue=ThemePreference.getInstance(this).isTheme();
-        if (booleanValue){
+        boolean booleanValue = ThemePreference.getInstance(this).isTheme();
+        if (booleanValue) {
             mySwich.setChecked(true);
         }
 
@@ -76,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
                                 PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
-                                Toast.makeText(SettingsActivity.this, "Данные о пароле удалены", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
             }
@@ -97,5 +104,51 @@ public class SettingsActivity extends AppCompatActivity {
                         }).show();
             }
         });
+
+        language_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangeLanguageDialog();
+            }
+        });
+    }
+
+    private void showChangeLanguageDialog() {
+        final String[] listItems = {"English", "Русский", "Кырзгызча"};
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingsActivity.this);
+        mBuilder.setTitle(R.string.choose_language);
+        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (i == 0) {
+                    setLocale("en");
+                    recreate();
+                } else if (i == 1) {
+                    setLocale("ru");
+                    recreate();
+                } else if (i == 2) {
+                    setLocale("ky");
+                    recreate();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        LanguagePreference.getInstance(SettingsActivity.this).saveLanguage(lang);
+    }
+    public void loadLocale(){
+        String language= LanguagePreference.getInstance(this).getLanguage();
+        setLocale(language);
     }
 }

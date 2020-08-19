@@ -38,10 +38,7 @@
             android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
-        <activity
-            android:name=".tasksPage.doneTask.DoneTasksActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+
         <activity
             android:name=".utils.PassCodeActivity"
             android:screenOrientation="portrait"
@@ -71,7 +68,7 @@
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
         <activity
-            android:name=".idea.QuickActivity"
+            android:name=".idea.IdeaActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
         <activity

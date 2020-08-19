@@ -37,7 +37,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     CalendarTaskModel calendarTaskModel;
     ImageView backView, doneView, back;
     String currentDataString;
-    String hour, endHour, minuteCurrent, endMinute, titleT, getStart, getDataTime, getEndTime;
+    String titleT, getStart, getDataTime, getEndTime;
     View colorView;
     int choosedColor;
     String startHour, endingHour;
@@ -150,7 +150,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 App.getDataBase().dataDao().insert(calendarTaskModel);
                 finish();
             } else {
-                Toast.makeText(this, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.need_all_fields, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -186,7 +186,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
                     }
                 })
-                .addListenerButton("Попробовать", (v1, position, color) -> {
+                .addListenerButton(getString(R.string.try_color), (v1, position, color) -> {
                     colorView.setBackgroundColor(color);
                 }).show();
     }

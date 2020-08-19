@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Planner</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="your_api_key">my_api_key</string>
     <string name="очистить">Очистить список</string>
     <string name="clearSetting">Очистить данные о пароле</string>
@@ -64,4 +62,22 @@
     <string name="empty">Пусто</string>
     <string name="stopwatch">Секундомер</string>
     <string name="go_count">Идёт отсчёт</string>
+    <string name="need_all_fields">Необходимо заполнить все поля</string>
+    <string name="try_color">Попробовать</string>
+    <string name="done_t">Выполненные задачи</string>
+    <string name="colunn_empty">Колонка пуста</string>
+    <string name="write_idea">Записать идею</string>
+    <string name="color">Цвет</string>
+    <string name="camera">Камера</string>
+    <string name="image">Картинка</string>
+    <string name="timer">Таймер</string>
+    <string name="what_are_doing">Что вы будете делать?</string>
+    <string name="apply">Принять</string>
+    <string name="time">Время</string>
+    <string name="toStart">Начать</string>
+    <string name="complete">Завершить</string>
+    <string name="minutes_amount">Количество минут</string>
+    <string name="data_of_password_delete">Данные о пароле удалены</string>
+    <string name="choose_language">Выберите Язык…</string>
+    <string name="change_language">Сменить язык</string>
 </resources>

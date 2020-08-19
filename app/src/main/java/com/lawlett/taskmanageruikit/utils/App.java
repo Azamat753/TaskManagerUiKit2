@@ -20,7 +20,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         dataBase = Room.databaseBuilder(this, AppDataBase.class, "database")
-                .allowMainThreadQueries().build();
+             .fallbackToDestructiveMigration().allowMainThreadQueries().build();
+
         createNotificationChannel();
 
 
@@ -28,6 +29,7 @@ public class App extends Application {
     public static AppDataBase getDataBase() {
         return dataBase;
     }
+
 
 
     @Override

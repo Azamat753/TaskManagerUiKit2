@@ -69,7 +69,7 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/fab_timer"
             app:fabSize="mini"
-            app:fab_label="Таймер"
+            app:fab_label="@string/timer"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="VectorDrawableCompat" />
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/fab_stopwatch"
             app:fabSize="mini"
-            app:fab_label="Секундомер"
+            app:fab_label="@string/stopwatch"
             tools:ignore="VectorDrawableCompat" />
     </com.github.clans.fab.FloatingActionMenu>
 

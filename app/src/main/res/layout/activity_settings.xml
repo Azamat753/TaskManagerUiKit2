@@ -12,12 +12,12 @@
 
     <TextView
         android:id="@+id/logo"
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
         android:text="@string/planner"
-        android:textSize="50sp"
         android:textColor="@color/myWhite"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/settings_tool_bar" />
@@ -73,6 +73,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/third_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="20dp"
@@ -85,16 +86,37 @@
         <Switch
             android:id="@+id/mySwitch"
             android:layout_width="wrap_content"
-            android:layout_marginStart="40dp"
             android:layout_height="wrap_content"
-            android:text="@string/light_theme"
+            android:layout_marginStart="40dp"
             android:switchPadding="50dp"
+            android:text="@string/light_theme"
+            android:textColor="@color/settings_text_color"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/settings_text_color"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/royalStart"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/third_layout">
+
+        <TextView
+            android:id="@+id/language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/settings_text_color"
+            android:textSize="18sp"
+            android:text="@string/change_language"
+            android:drawablePadding="15dp"
+            android:layout_marginStart="40dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

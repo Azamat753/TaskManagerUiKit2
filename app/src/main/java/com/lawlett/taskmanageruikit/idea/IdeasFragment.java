@@ -47,7 +47,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_quick, container, false);
+        View root = inflater.inflate(R.layout.fragment_ideas, container, false);
 
         list = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         addQuickBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), QuickActivity.class));
+                startActivity(new Intent(getContext(), IdeaActivity.class));
             }
         });
         return root;
@@ -73,7 +73,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     @Override
     public void onItemClick(final int position) {
         this.position = position;
-        Intent intent = new Intent(getActivity(), QuickActivity.class);
+        Intent intent = new Intent(getActivity(), IdeaActivity.class);
         intent.putExtra("task", list.get(position));
         getActivity().startActivityForResult(intent, 42);
         adapter.notifyDataSetChanged();

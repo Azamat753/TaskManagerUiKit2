@@ -1,6 +1,7 @@
 package com.lawlett.taskmanageruikit.splash;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +12,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.onboard.BoardActivity;
+import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.Preference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
+
+import java.util.Locale;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -39,9 +43,10 @@ public class SplashActivity extends AppCompatActivity {
         }, 1000);
 
         checkedTheme();
+        loadLocale();
     }
 
-    public void checkedTheme() {
+    private void checkedTheme() {
         boolean booleanValue = ThemePreference.getInstance(this).isTheme();
         if (booleanValue) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -50,5 +55,19 @@ public class SplashActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             ThemePreference.getInstance(SplashActivity.this).saveThemeFalse();
         }
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        LanguagePreference.getInstance(SplashActivity.this).saveLanguage(lang);
+    }
+    public void loadLocale(){
+        String language= LanguagePreference.getInstance(this).getLanguage();
+        setLocale(language);
     }
 }

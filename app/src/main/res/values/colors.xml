@@ -19,7 +19,7 @@
     <color name="calendar_background">#122039</color>
     <color name="calendar_text">#FFF</color>
     <color name="plus_background">#122039</color>
-    <color name="navigation_background">#122039</color>
+    <color name="navigation_background">#122039 </color>
     <color name="settings_text_color">#FFF</color>
-    <color name="timing_color">#122039</color>
+    <color name="timing_color">#211D44</color>
 </resources>

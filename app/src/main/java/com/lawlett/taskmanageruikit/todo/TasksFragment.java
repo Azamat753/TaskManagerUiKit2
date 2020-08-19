@@ -14,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.tasksPage.doneTask.DoneTasksActivity;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.HomeActivity;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.MeetActivity;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.PersonalActivity;
@@ -100,10 +99,7 @@ public class TasksFragment extends Fragment {
                 startActivity(new Intent(getContext(), PrivateActivity.class));
             }
         });
-        doneImage.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), DoneTasksActivity.class));
 
-        });
     }
 
     public void notifyView() {
@@ -119,7 +115,6 @@ public class TasksFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        doneAmount = App.getDataBase().doneTaskDao().getAll().size();
         personalAmount = App.getDataBase().personalDao().getAll().size();
         workAmount = App.getDataBase().workDao().getAll().size();
         meetAmount = App.getDataBase().meetDao().getAll().size();

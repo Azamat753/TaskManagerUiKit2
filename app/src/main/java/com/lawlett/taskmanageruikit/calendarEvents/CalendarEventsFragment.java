@@ -172,7 +172,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
                 pos = viewHolder.getAdapterPosition();
                 App.getDataBase().dataDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
-                Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerViewToday);
 
