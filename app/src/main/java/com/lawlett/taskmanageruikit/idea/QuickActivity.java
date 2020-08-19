@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.quick;
+package com.lawlett.taskmanageruikit.idea;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
+import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
 
 import java.io.ByteArrayOutputStream;
@@ -72,7 +72,6 @@ public class QuickActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recordDataRoom();
-
             }
         });
 

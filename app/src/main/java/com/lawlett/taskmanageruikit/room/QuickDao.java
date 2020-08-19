@@ -8,7 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
+import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 
 import java.util.List;
 

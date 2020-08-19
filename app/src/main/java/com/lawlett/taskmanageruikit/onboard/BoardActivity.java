@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.onboard;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,10 @@ public class BoardActivity extends AppCompatActivity {
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager, true);
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

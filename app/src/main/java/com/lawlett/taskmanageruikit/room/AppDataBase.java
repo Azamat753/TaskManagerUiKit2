@@ -4,7 +4,7 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
+import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;

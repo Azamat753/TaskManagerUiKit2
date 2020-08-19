@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.quick.recycler;
+package com.lawlett.taskmanageruikit.idea.recycler;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
+import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.quick;
+package com.lawlett.taskmanageruikit.idea;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
-import com.lawlett.taskmanageruikit.quick.data.model.QuickModel;
-import com.lawlett.taskmanageruikit.quick.recycler.QuickAdapter;
+import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
+import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
 

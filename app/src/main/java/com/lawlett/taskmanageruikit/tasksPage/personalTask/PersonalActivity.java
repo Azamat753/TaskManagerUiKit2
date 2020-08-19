@@ -38,6 +38,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
+
         list = new ArrayList<>();
         adapter = new PersonalAdapter(this);
 
@@ -61,11 +62,13 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
 
@@ -167,4 +170,5 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         updateData = currentData - 1;
         PersonDoneSizePreference.getInstance(this).savePersonalSize(updateData);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.quick.data.model;
+package com.lawlett.taskmanageruikit.idea.data.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

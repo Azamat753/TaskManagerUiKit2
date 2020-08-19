@@ -64,22 +64,17 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'
     //ColorPicker
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
-    //dynamycLinks
-    implementation 'com.google.firebase:firebase-dynamic-links:19.1.0'
-    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+    //analytics
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
     //multidex
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'commons-io:commons-io:2.6'
     //firebase
-    implementation 'com.google.firebase:firebase-core:17.4.4'
-//    implementation 'com.google.firebase:firebase-firestore:21.5.0'
-//    implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'com.google.firebase:firebase-analytics:17.4.4'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+    implementation 'com.google.firebase:firebase-core:17.5.0'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
     //editText
     implementation "ss.anoop:awesome-textinput-layout:1.0.3"
     //passCode
     implementation 'com.hanks:passcodeview:0.1.2'
-    //Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
-}
+    }
