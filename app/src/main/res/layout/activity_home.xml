@@ -15,24 +15,24 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_home"
-        android:overScrollMode="never"
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/awesomeTextInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        tools:listitem="@layout/home_item" />
 
     <ss.anoop.awesometextinputlayout.AwesomeTextInputLayout
         android:id="@+id/awesomeTextInputLayout2"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:padding="16dp"
         android:layout_marginBottom="20dp"
+        android:padding="16dp"
         app:borderColor="#00BCD4"
         app:borderWidth="2dp"
         app:cornerRadius="8dp"
@@ -42,24 +42,24 @@
         <EditText
             android:id="@+id/editText_home"
             android:layout_width="230dp"
-            android:inputType="textCapSentences"
-            android:textColorHint="#FFF"
-            android:textColor="#FFF"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:hint="@string/tasks" />
+            android:hint="@string/task"
+            android:inputType="textCapSentences"
+            android:textColor="@color/myWhite"
+            android:textColorHint="@color/myWhite" />
     </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
 
     <ImageView
         android:id="@+id/add_task_home"
-        android:textColorHint="#FFF"
-        android:textColor="#FFF"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
-        app:srcCompat="@drawable/ic_send"
         android:onClick="addHomeTask"
+        android:textColor="#FFF"
+        android:textColorHint="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_send" />
 </androidx.constraintlayout.widget.ConstraintLayout>

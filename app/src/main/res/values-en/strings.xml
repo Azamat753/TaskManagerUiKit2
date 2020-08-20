@@ -71,7 +71,7 @@
     <string name="color">Color</string>
     <string name="camera">Camera</string>
     <string name="image">Picture</string>
-    <string name="timer">Таймер</string>
+    <string name="timer">Timer</string>
     <string name="what_are_doing">What are you going to do?</string>
     <string name="apply">Apply</string>
     <string name="time">Time</string>
@@ -81,4 +81,19 @@
     <string name="data_of_password_delete">Password data deleted</string>
     <string name="choose_language">Choose language…</string>
     <string name="change_language">Change language</string>
+    <string name="task">Task</string>
+    <string name="zero_minutes_pass">0 minutes have passed</string>
+    <string name="ready">Ready ?</string>
+    <string name="timer_dont_end">The timer is not over yet</string>
+    <string name="timer_end">The timer has finished it\'s work</string>
+    <string name="minut">minute</string>
+    <string name="choose_color">Choose a color</string>
+    <string name="select_time">Choose time</string>
+    <string name="re_enter">Re-enter</string>
+    <string name="of_symbols">Enter a 4 character password</string>
+    <string name="do_not_match">Does not match</string>
+    <string name="correct_password">Correct password</string>
+    <string name="Wrong">Wrong</string>
+    <string name="plan_own_day">Plan your day</string>
+
 </resources>

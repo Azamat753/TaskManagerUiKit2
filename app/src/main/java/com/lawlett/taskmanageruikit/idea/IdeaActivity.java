@@ -153,6 +153,7 @@ public class IdeaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final ColorPicker colorPicker = new ColorPicker(IdeaActivity.this);
+                colorPicker.setTitle(getString(R.string.choose_color));
                 ArrayList<String> colors = new ArrayList<>();
                 colors.add("#82B926");
                 colors.add("#a276eb");

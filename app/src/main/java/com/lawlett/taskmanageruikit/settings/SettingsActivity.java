@@ -1,12 +1,14 @@
 package com.lawlett.taskmanageruikit.settings;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPreference;
@@ -25,8 +28,9 @@ import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextView clearPassword_tv, clearMinutes_tv, language_tv;
+    TextView clearPassword_tv, clearMinutes_tv;
     ImageView back;
+    LinearLayout language_tv;
 
     Switch mySwich;
 
@@ -38,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
         clearMinutes_tv = findViewById(R.id.clear_time);
         mySwich = findViewById(R.id.mySwitch);
         back = findViewById(R.id.back_view);
-        language_tv = findViewById(R.id.language);
+        language_tv = findViewById(R.id.four_layout);
         loadLocale();
 
         if (Build.VERSION.SDK_INT >= 21)
@@ -150,5 +154,10 @@ public class SettingsActivity extends AppCompatActivity {
     public void loadLocale(){
         String language= LanguagePreference.getInstance(this).getLanguage();
         setLocale(language);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(SettingsActivity.this, MainActivity.class));
     }
 }

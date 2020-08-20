@@ -1,6 +1,8 @@
 package com.lawlett.taskmanageruikit.onboard;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +11,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
+import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.Preference;
 
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -23,7 +28,7 @@ import java.util.Objects;
  */
 public class BoardFragment extends Fragment {
     LottieAnimationView calendar_anim, notes_anim, todo_anim, time_anim;
-    TextView title_tv, desc_tv, start_tv;
+    TextView title_tv, desc_tv, start_tv, change_lang;
 
     public BoardFragment() {
         // Required empty public constructor
@@ -43,11 +48,13 @@ public class BoardFragment extends Fragment {
         title_tv = view.findViewById(R.id.title_tv);
         desc_tv = view.findViewById(R.id.desc_tv);
         start_tv = view.findViewById(R.id.start_tv);
+        change_lang = view.findViewById(R.id.change_lang);
 
         calendar_anim = view.findViewById(R.id.calendar_animation);
         todo_anim = view.findViewById(R.id.todo_animation);
         notes_anim = view.findViewById(R.id.notes_animation);
         time_anim = view.findViewById(R.id.time_animation);
+        loadLocale();
 
         int pos = getArguments().getInt("pos");
         switch (pos) {
@@ -57,6 +64,7 @@ public class BoardFragment extends Fragment {
                 calendar_anim.setVisibility(View.VISIBLE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.GONE);
+                change_lang.setVisibility(View.VISIBLE);
                 break;
             case 1:
                 title_tv.setText(R.string.done_tasks);
@@ -64,6 +72,7 @@ public class BoardFragment extends Fragment {
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.VISIBLE);
                 notes_anim.setVisibility(View.GONE);
+                change_lang.setVisibility(View.GONE);
                 break;
             case 2:
                 title_tv.setText(R.string.record_idea_simple);
@@ -71,6 +80,7 @@ public class BoardFragment extends Fragment {
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.VISIBLE);
+                change_lang.setVisibility(View.GONE);
                 break;
             case 3:
                 title_tv.setText(R.string.check_timing);
@@ -80,6 +90,7 @@ public class BoardFragment extends Fragment {
                 notes_anim.setVisibility(View.GONE);
                 time_anim.setVisibility(View.VISIBLE);
                 start_tv.setVisibility(View.VISIBLE);
+                change_lang.setVisibility(View.GONE);
                 break;
 
         }
@@ -90,6 +101,50 @@ public class BoardFragment extends Fragment {
             startActivity(new Intent(getContext(), MainActivity.class));
             Objects.requireNonNull(getActivity()).finish();
         });
+        change_lang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangeLanguageDialog();
+            }
+        });
 
+    }
+    private void showChangeLanguageDialog() {
+        final String[] listItems = {"English", "Русский", "Кырзгызча"};
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        mBuilder.setTitle(R.string.choose_language);
+        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (i == 0) {
+                    setLocale("en");
+                    Objects.requireNonNull(getActivity()).recreate();
+                } else if (i == 1) {
+                    setLocale("ru");
+                    Objects.requireNonNull(getActivity()).recreate();
+                } else if (i == 2) {
+                    setLocale("ky");
+                    Objects.requireNonNull(getActivity()).recreate();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config,getResources().getDisplayMetrics());
+
+        LanguagePreference.getInstance(getContext()).saveLanguage(lang);
+    }
+    public void loadLocale(){
+        String language= LanguagePreference.getInstance(getContext()).getLanguage();
+        setLocale(language);
     }
 }

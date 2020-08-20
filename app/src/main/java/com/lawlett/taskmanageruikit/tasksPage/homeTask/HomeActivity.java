@@ -145,11 +145,6 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(R.string.home);
-        ImageView imageView = findViewById(R.id.personal_circle_image);
-        ImageView imageView2 = findViewById(R.id.blue_circle_image);
-        imageView.setVisibility(View.GONE);
-        imageView2.setVisibility(View.VISIBLE);
-
     }
 
     @Override
@@ -169,7 +164,6 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
     }
-
     private void decrementDone() {
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;

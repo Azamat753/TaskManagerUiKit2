@@ -99,7 +99,7 @@ public class TimingFragment extends Fragment {
 
                 App.getDataBase().timingDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
-                Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
     }

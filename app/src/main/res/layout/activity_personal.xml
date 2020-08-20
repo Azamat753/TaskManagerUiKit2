@@ -43,10 +43,10 @@
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:hint="Задача"
+            android:hint="@string/task"
             android:textStyle="bold"
-            android:textColorHint="#FFF"
-            android:textColor="#FFF"
+            android:textColor="@color/myWhite"
+            android:textColorHint="@color/myWhite"
             android:inputType="textCapSentences" />
     </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
 

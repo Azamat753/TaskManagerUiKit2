@@ -80,4 +80,18 @@
     <string name="data_of_password_delete">Данные о пароле удалены</string>
     <string name="choose_language">Выберите Язык…</string>
     <string name="change_language">Сменить язык</string>
+    <string name="task">Задача</string>
+    <string name="zero_minutes_pass">0 минут прошло</string>
+    <string name="ready">Готовы ?</string>
+    <string name="timer_dont_end">Таймер ещё не окончен</string>
+    <string name="timer_end">Таймер закончил свою работу</string>
+    <string name="minut">минут</string>
+    <string name="choose_color">Выберите цвет</string>
+    <string name="select_time">Выберите время</string>
+    <string name="re_enter">Введите заново</string>
+    <string name="of_symbols">Введите пароль из 4 символов</string>
+    <string name="do_not_match">Не совпадает</string>
+    <string name="correct_password">Верный пароль</string>
+    <string name="Wrong">Не правильно</string>
+    <string name="plan_own_day">Распланируй свой день</string>
 </resources>

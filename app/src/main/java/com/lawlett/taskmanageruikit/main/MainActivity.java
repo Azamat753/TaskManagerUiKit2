@@ -26,8 +26,8 @@ import com.lawlett.taskmanageruikit.idea.IdeasFragment;
 import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.settings.SettingsActivity;
+import com.lawlett.taskmanageruikit.tasks.TasksFragment;
 import com.lawlett.taskmanageruikit.timing.fragment.TimingFragment;
-import com.lawlett.taskmanageruikit.todo.TasksFragment;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
         dialog.setTitle(R.string.are_you_sure).setMessage(R.string.complete_work)
                 .setNegativeButton(R.string.no, (dialog1, which) ->
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        System.exit(0);
+                        finish();
                     }
                 }).show();
     }

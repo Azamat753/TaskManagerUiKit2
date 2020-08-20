@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.timing.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -52,16 +53,17 @@ public class TimingAdapter extends RecyclerView.Adapter<TimingAdapter.TimingView
             taskDate = itemView.findViewById(R.id.task_day);
         }
 
+        @SuppressLint("SetTextI18n")
         public void onBind(TimingModel timingModel, Context context) {
             Typeface mLight = Typeface.createFromAsset(context.getAssets(), "MLight.ttf");
 
             if (timingModel.getTimerTitle() == null) {
                 taskTitle.setText(timingModel.getStopwatchTitle());
-                taskMinute.setText(timingModel.getStopwatchMinutes() + " " + "минут");
+                taskMinute.setText(timingModel.getStopwatchMinutes() + " " + context.getString(R.string.minut));
                 taskDate.setText(timingModel.getStopwatchDay());
             } else {
                 taskTitle.setText(timingModel.getTimerTitle());
-                taskMinute.setText(timingModel.getTimerMinutes() + " " + "минут");
+                taskMinute.setText(timingModel.getTimerMinutes() + " " +  context.getString(R.string.minut));
                 taskDate.setText(timingModel.getTimerDay());
             }
             taskTitle.setTypeface(mLight);

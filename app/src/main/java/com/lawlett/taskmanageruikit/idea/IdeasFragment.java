@@ -134,7 +134,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                 pos = viewHolder.getAdapterPosition();
                 App.getDataBase().taskDao().delete(list.get(pos));
                 adapter.notifyDataSetChanged();
-                Toast.makeText(getContext(), "Удалено", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerViewQuick);
     }

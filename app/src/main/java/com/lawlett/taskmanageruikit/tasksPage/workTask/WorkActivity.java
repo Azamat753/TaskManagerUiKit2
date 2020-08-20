@@ -142,11 +142,8 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText("Работа");
-        ImageView imageView = findViewById(R.id.personal_circle_image);
-        ImageView imageView2 = findViewById(R.id.purple_circle_image);
-        imageView.setVisibility(View.GONE);
-        imageView2.setVisibility(View.VISIBLE);
+        toolbar.setText(R.string.work);
+
     }
 
     @Override

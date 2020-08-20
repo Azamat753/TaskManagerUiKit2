@@ -43,10 +43,10 @@
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:hint="@string/tasks"
+            android:hint="@string/task"
             android:inputType="textCapSentences"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColor="@color/myWhite"
+            android:textColorHint="@color/myWhite" />
     </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
 
     <ImageView

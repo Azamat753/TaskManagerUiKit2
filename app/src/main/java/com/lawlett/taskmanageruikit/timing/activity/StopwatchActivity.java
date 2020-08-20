@@ -2,8 +2,6 @@ package com.lawlett.taskmanageruikit.timing.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +27,6 @@ import androidx.core.content.ContextCompat;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.NotificationReceiver;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
 import java.text.SimpleDateFormat;
@@ -135,7 +132,6 @@ public class StopwatchActivity extends AppCompatActivity {
     private void showElapsedTime() {
         elapsedMillis = SystemClock.elapsedRealtime() - timerHere.getBase();
         stopwatchTime = String.valueOf(elapsedMillis / 60000);
-
     }
 
     public void dataRoom() {
@@ -153,27 +149,22 @@ public class StopwatchActivity extends AppCompatActivity {
         finish();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void showCustomNotification() {
-        RemoteViews collapsedView = new RemoteViews(getPackageName(),
-                R.layout.notification_custom_stopwatch);
+
         RemoteViews expandedView = new RemoteViews(getPackageName(),
                 R.layout.notification_expanded_stopwatch);
 
 
-        Intent clickIntent = new Intent(this, NotificationReceiver.class);
-        PendingIntent clickPendingIntent = PendingIntent.getBroadcast(this,
-                0, clickIntent, 0);
-
         expandedView.setChronometer(R.id.timerHere_expanded, SystemClock.elapsedRealtime(), null, true);
 
-        expandedView.setOnClickPendingIntent(R.id.notification_const, clickPendingIntent);
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.app_logo_foreground)
-                .setCustomContentView(collapsedView)
                 .setCustomBigContentView(expandedView)
                 .setContentTitle(getString(R.string.stopwatch))
                 .setContentText(getString(R.string.go_count))
+                .setColor(getColor(R.color.myWhite))
                 .build();
 
         notification.flags=Notification.FLAG_ONGOING_EVENT;

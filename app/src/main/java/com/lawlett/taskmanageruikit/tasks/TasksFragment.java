@@ -1,4 +1,4 @@
-package com.lawlett.taskmanageruikit.todo;
+package com.lawlett.taskmanageruikit.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -109,7 +109,6 @@ public class TasksFragment extends Fragment {
         home_amount.setText(homeAmount + "");
         private_amount.setText(privateAmount + "");
         done_amount.setText(doneAmount + "");
-
     }
 
     @Override

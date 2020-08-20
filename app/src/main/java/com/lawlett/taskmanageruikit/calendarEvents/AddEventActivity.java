@@ -73,7 +73,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                     endingHour = String.valueOf(android.text.format.DateFormat.format("HH:mm", calendar));
                 }
             }, hour, minute, true);//Yes 24 hour time
-            mTimePicker.setTitle("Select Time");
+            mTimePicker.setTitle(getString(R.string.select_time));
             mTimePicker.show();
 
         });
@@ -157,6 +157,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
     public void chooseColor(View view) {
         final ColorPicker colorPicker = new ColorPicker(AddEventActivity.this);
+        colorPicker.setTitle(getString(R.string.choose_color));
         ArrayList<String> colors = new ArrayList<>();
         colors.add("#82B926");
         colors.add("#a276eb");

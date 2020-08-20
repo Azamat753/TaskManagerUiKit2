@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -46,7 +44,7 @@ public class TimerActivity extends AppCompatActivity {
     private TextView countdownText;
     private Button countdownButton, exitButton, timerTaskApply, applyDone;
     MediaPlayer mp;
-    ImageView icanchor, backButton, phoneImage;
+    ImageView icanchor, xButton, phoneImage;
     EditText timerTaskEdit;
     String timeLeftText;
     Animation roundingalone, atg, btgone, btgtwo;
@@ -57,10 +55,6 @@ public class TimerActivity extends AppCompatActivity {
     private Integer timeLeftInMilliseconds = 0;//600.000  10min ||1000//1 second
     CountDownTimer countDownTimer;
     private NotificationManagerCompat notificationManager;
-    private Vibrator v;
-    public int hours, mins, duration;
-    private static final String TAG =   "page2";
-String hms;
 
     @SuppressLint({"ResourceAsColor", "Range"})
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -68,6 +62,9 @@ String hms;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        mp = MediaPlayer.create(getApplicationContext(), notification);
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(R.color.timing_color);
@@ -82,7 +79,7 @@ String hms;
         atg = AnimationUtils.loadAnimation(this, R.anim.atg);
         btgone = AnimationUtils.loadAnimation(this, R.anim.btgone);
         btgtwo = AnimationUtils.loadAnimation(this, R.anim.btgtwo);
-        backButton = findViewById(R.id.close_button);
+        xButton = findViewById(R.id.close_button);
         timerTaskEdit = findViewById(R.id.timer_task_edit);
         editText = findViewById(R.id.editText);
         timerTaskApply = findViewById(R.id.timer_task_apply);
@@ -109,21 +106,21 @@ String hms;
         timerTaskEdit.setTypeface(mRegular);
 
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        xButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (countDownTimer != null)
-                    countDownTimer.cancel();
-                finish();
+                mp.reset();
                 notificationManager.cancel(1);
+                countDownTimer.cancel();
+                finish();
+                //Крестик
             }
         });
-
         timerTaskApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (timerTaskEdit.getText().toString().isEmpty()) {
-                    Toast.makeText(TimerActivity.this, "Пусто", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TimerActivity.this, R.string.empty, Toast.LENGTH_SHORT).show();
 
                 } else {
                     myTask = timerTaskEdit.getText().toString();
@@ -137,16 +134,15 @@ String hms;
             @Override
             public void onClick(View v) {
                 if (editText.getText().toString().equals("") || Integer.parseInt(editText.getText().toString()) < 1) {
-                    Toast.makeText(TimerActivity.this, "0 минут прошло", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TimerActivity.this, R.string.zero_minutes_pass, Toast.LENGTH_SHORT).show();
                 } else {
                     timeLeftInMilliseconds = Integer.parseInt(editText.getText().toString()) * 60000;
                     timeLeftText = timeLeftInMilliseconds.toString();
                     applyDone.setVisibility(View.GONE);
                     editText.setVisibility(View.GONE);
-                    countdownText.setText("Готовы ?");
+                    countdownText.setText(R.string.ready);
                     countdownButton.setVisibility(View.VISIBLE);
                     countdownText.setVisibility(View.VISIBLE);
-                    Log.e("myTime", "onClick: " + timeLeftInMilliseconds);
                 }
             }
         });
@@ -155,7 +151,7 @@ String hms;
             @Override
             public void onClick(View v) {
                 startTimer();
-            showNotification();
+                showNotification();
             }
         });
 
@@ -170,7 +166,7 @@ String hms;
                     countDownTimer.cancel();
                     finish();
                 } else {
-                    Toast.makeText(TimerActivity.this, "Таймер ещё не окончен", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TimerActivity.this, R.string.timer_dont_end, Toast.LENGTH_SHORT).show();
                 }
                 notificationManager.cancel(1);
             }
@@ -201,12 +197,10 @@ String hms;
 
             @Override
             public void onFinish() {
-                Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                mp = MediaPlayer.create(getApplicationContext(), notification);
                 if (mp != null) {
                     mp.start();
                 } else {
-                    Toast.makeText(TimerActivity.this, "Таймер закончил свою работу", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TimerActivity.this, R.string.timer_end, Toast.LENGTH_SHORT).show();
                 }
                 icanchor.clearAnimation();
                 countdownButton.setVisibility(View.VISIBLE);
@@ -221,8 +215,9 @@ String hms;
     public void dataRoom() {
         Calendar c = Calendar.getInstance();
         final int year = c.get(Calendar.YEAR);
-        String[] monthName = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
-                "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+        String[] monthName = {getString(R.string.january), getString(R.string.february), getString(R.string.march), getString(R.string.april), getString(R.string.may), getString(R.string.june), getString(R.string.july),
+                getString(R.string.august), getString(R.string.september), getString(R.string.october), getString(R.string.november), getString(R.string.december)};
+
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
         int previousTime = TimingSizePreference.getInstance(this).getTimingSize();
@@ -232,13 +227,11 @@ String hms;
         timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);
         App.getDataBase().timingDao().insert(timingModel);
         finish();
-        Log.e("myTask1", "dataRoom: " + myTask + "timeleft:" + timerTime);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void showNotification() {
-        RemoteViews collapsedView = new RemoteViews(getPackageName(),
-                R.layout.notification_custom_timer);
+
         RemoteViews expandedView = new RemoteViews(getPackageName(),
                 R.layout.notification_expanded_timer);
 
@@ -254,28 +247,24 @@ String hms;
                 if (seconds < 10) timeLeftText += "0";
                 timeLeftText += seconds;
 
-           expandedView.setTextViewText(R.id.timer_expanded,timeLeftText);
+                expandedView.setTextViewText(R.id.timer_expanded, timeLeftText);
 
                 Notification notification = new NotificationCompat.Builder(TimerActivity.this, CHANNEL_ID)
                         .setSmallIcon(R.mipmap.app_logo_foreground)
-                        .setCustomContentView(collapsedView)
                         .setCustomBigContentView(expandedView)
-                        .setContentTitle("Таймер")
-                        .setContentText("Идёт отсчёт")
+                        .setContentTitle(getString(R.string.timer))
+                        .setColor(getColor(R.color.myWhite))
+                        .setContentText(getString(R.string.go_count))
+                        .setOnlyAlertOnce(true)
                         .build();
 
 
                 notificationManager.notify(1, notification);
-
             }
 
             @Override
             public void onFinish() {
             }
         }.start();
-
-
-
-
     }
 }

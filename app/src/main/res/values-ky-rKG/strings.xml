@@ -81,4 +81,19 @@
     <string name="data_of_password_delete">Сырсөз дайындары жок кылынды</string>
     <string name="choose_language">Тилди тандаңыз…</string>
     <string name="change_language">Тилди өзгөртүү</string>
+    <string name="task">Милдет</string>
+    <string name="zero_minutes_pass">0 мүнөт өттү</string>
+    <string name="ready">Даярсызбы ?</string>
+    <string name="timer_dont_end">Таймер али бүтө элек</string>
+    <string name="timer_end">Таймер өз ишин аяктады</string>
+    <string name="minut">мүнөт</string>
+    <string name="choose_color">Түс тандаңыз</string>
+    <string name="select_time">Убакытты тандаңыз</string>
+    <string name="re_enter">Кайрадан жазыңыз</string>
+    <string name="of_symbols">4 белгиден турган сырсөз киргизиңиз</string>
+    <string name="do_not_match">Сырсөз туура эмес</string>
+    <string name="correct_password">Сырсөз туура</string>
+    <string name="Wrong">Туура эмес</string>
+    <string name="plan_own_day">Күнүңүздү пландаштырыңыз</string>
+
 </resources>

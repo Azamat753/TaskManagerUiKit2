@@ -11,9 +11,9 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:background="@color/royalStart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/royalStart"
             android:orientation="horizontal">
 
             <ImageView
@@ -23,56 +23,12 @@
                 android:layout_marginTop="15dp"
                 app:srcCompat="@drawable/ic_left_arrow_black" />
 
-            <ImageView
-                android:id="@+id/personal_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="22dp"
-                android:src="@drawable/circle_background" />
-
-            <ImageView
-                android:id="@+id/purple_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="22dp"
-                android:src="@drawable/purple_circle"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/orange_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="22dp"
-                android:src="@drawable/meet_background"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/blue_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="22dp"
-                android:src="@drawable/home_background"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/red_circle_image"
-                android:layout_width="11dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="22dp"
-                android:src="@drawable/private_background"
-                android:visibility="gone" />
-
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="70dp"
                 android:fontFamily="@font/m_light"
                 android:text="@string/personal"
                 android:textColor="@android:color/white"
