@@ -33,7 +33,6 @@
             android:name=".timing.activity.StopwatchActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-        <receiver android:name=".utils.NotificationReceiver"/>
         <activity
             android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait"
@@ -74,6 +73,8 @@
         <activity
             android:name=".splash.SplashActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:noHistory="true"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

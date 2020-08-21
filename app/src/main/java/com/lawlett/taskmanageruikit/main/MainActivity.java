@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.main;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import com.lawlett.taskmanageruikit.settings.SettingsActivity;
 import com.lawlett.taskmanageruikit.tasks.TasksFragment;
 import com.lawlett.taskmanageruikit.timing.fragment.TimingFragment;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
@@ -37,6 +39,7 @@ import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItem
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     TextView toolbar_title;
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_main);
 
         if (Build.VERSION.SDK_INT >= 21)
@@ -72,7 +76,14 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-        settings_view.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
+        settings_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                finish();
+            }
+        });
+
     }
 
     public void changeFragment(Fragment fragment) {
@@ -122,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                         changeFragment(new TasksFragment());
                         toolbar_title.setText(R.string.tasks);
                         more_btn.setVisibility(View.GONE);
-
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
@@ -172,18 +182,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
         dialog.setTitle(R.string.are_you_sure).setMessage(R.string.complete_work)
                 .setNegativeButton(R.string.no, (dialog1, which) ->
-
                         dialog1.cancel())
-
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+                        finishAffinity();
                     }
                 }).show();
     }
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        LanguagePreference.getInstance(MainActivity.this).saveLanguage(lang);
+    }
+
+    private void loadLocale() {
+        String language = LanguagePreference.getInstance(this).getLanguage();
+        setLocale(language);
+    }
+
 }

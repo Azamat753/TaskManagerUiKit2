@@ -51,7 +51,7 @@
     <string name="plus_you_kpd">Один из лучших способов повысить свой КПД</string>
     <string name="settings">Настройки</string>
     <string name="create_password">Создание пароля</string>
-    <string name="light_theme">Светлая тема</string>
+    <string name="change_theme">Сменить тему</string>
     <string name="planner">Planner</string>
     <string name="add_event">Добавить событие</string>
     <string name="walk_dog">Выгулить собаку</string>
@@ -94,4 +94,9 @@
     <string name="correct_password">Верный пароль</string>
     <string name="Wrong">Не правильно</string>
     <string name="plan_own_day">Распланируй свой день</string>
+    <string name="choose_theme">\"Выберите тему… \"</string>
+    <string name="light_theme">Светлая тема</string>
+    <string name="dark_theme">Тёмная тема</string>
+    <string name="to_delete">Удалить</string>
+    <string name="color_dont_choosed">Цвет не выбран</string>
 </resources>

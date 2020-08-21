@@ -6,11 +6,8 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,43 +25,29 @@ import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
-    TextView clearPassword_tv, clearMinutes_tv;
     ImageView back;
-    LinearLayout language_tv;
-
-    Switch mySwich;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadLocale();
         setContentView(R.layout.activity_settings);
-        clearPassword_tv = findViewById(R.id.clear_password);
-        clearMinutes_tv = findViewById(R.id.clear_time);
-        mySwich = findViewById(R.id.mySwitch);
+
+        clear_password_layout = findViewById(R.id.first_layout);
+        clearMinutes_layout = findViewById(R.id.second_layout);
+        theme_layout = findViewById(R.id.third_layout);
         back = findViewById(R.id.back_view);
         language_tv = findViewById(R.id.four_layout);
-        loadLocale();
+
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-        boolean booleanValue = ThemePreference.getInstance(this).isTheme();
-        if (booleanValue) {
-            mySwich.setChecked(true);
-        }
-
-        mySwich.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        theme_layout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    mySwich.setChecked(true);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    mySwich.setChecked(false);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
-                }
+            public void onClick(View v) {
+                showChangeThemeDialog();
             }
         });
 
@@ -75,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        clearPassword_tv.setOnClickListener(new View.OnClickListener() {
+        clear_password_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
@@ -92,7 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
                         }).show();
             }
         });
-        clearMinutes_tv.setOnClickListener(new View.OnClickListener() {
+        clearMinutes_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
@@ -117,8 +100,32 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    public void showChangeThemeDialog() {
+        final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
+        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+        builder.setTitle(R.string.choose_theme);
+        builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (i == 0) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
+
+                } else if (i == 1) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
+
+                }
+
+                dialog.dismiss();
+            }
+        });
+        AlertDialog mDialog = builder.create();
+        mDialog.show();
+    }
+
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"English", "Русский", "Кырзгызча"};
+        final String[] listItems = {"English", "Русский", "Кыргызча"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingsActivity.this);
         mBuilder.setTitle(R.string.choose_language);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
@@ -148,16 +155,17 @@ public class SettingsActivity extends AppCompatActivity {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
         LanguagePreference.getInstance(SettingsActivity.this).saveLanguage(lang);
     }
-    public void loadLocale(){
-        String language= LanguagePreference.getInstance(this).getLanguage();
+
+    private void loadLocale() {
+        String language = LanguagePreference.getInstance(this).getLanguage();
         setLocale(language);
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(SettingsActivity.this, MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }

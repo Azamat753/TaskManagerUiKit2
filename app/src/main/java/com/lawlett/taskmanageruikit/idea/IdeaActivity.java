@@ -42,7 +42,7 @@ public class IdeaActivity extends AppCompatActivity {
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
     String pickImage, textTitle, textDescription, captureImage, gallImage;
-    int choosedColor ;
+    int choosedColor;
     boolean isGallery = false;
 
     @SuppressLint("ResourceAsColor")
@@ -50,8 +50,6 @@ public class IdeaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ideas);
-
-
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
@@ -75,6 +73,7 @@ public class IdeaActivity extends AppCompatActivity {
         });
 
     }
+
     private void getCurrentPhoto() {
         if (isGallery) {
             pickImage = gallImage;
@@ -98,25 +97,26 @@ public class IdeaActivity extends AppCompatActivity {
             getCurrentPhoto();
             String myTitle = e_title.getText().toString();
             String myDesk = e_description.getText().toString();
-            String myPickImage = pickImage;
+
             int myChoosedColor = choosedColor;
 
             if (quickModel != null) {
-                quickModel.setTitle(myTitle);
-                quickModel.setDescription(myDesk);
-                quickModel.setImage(myPickImage);
-                quickModel.setColor(myChoosedColor);
-                quickModel.setCreateData(currentDate + " " + month + " " + year);
+                if (pickImage != null) {
+                    quickModel.setImage(pickImage);
+                } else {
+                    String myPickImage = quickModel.getImage();
+                    quickModel.setTitle(myTitle);
+                    quickModel.setDescription(myDesk);
+                    quickModel.setImage(myPickImage);
+                    quickModel.setColor(myChoosedColor);
+                    quickModel.setCreateData(currentDate + " " + month + " " + year);
+                }
                 App.getDataBase().taskDao().update(quickModel);
-
-
             } else {
                 choosedColor = e_title.getCurrentTextColor();
-                quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, myPickImage, choosedColor, null);
+                quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
                 App.getDataBase().taskDao().insert(quickModel);
             }
-        } else {
-            Toast.makeText(this, R.string.colunn_empty, Toast.LENGTH_SHORT).show();
         }
         finish();
     }
@@ -174,8 +174,12 @@ public class IdeaActivity extends AppCompatActivity {
                         .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                             @Override
                             public void onChooseColor(int position, int color) {
-                                e_title.setTextColor(color);
-                                choosedColor = color;
+                                if (color == 0) {
+                                    Toast.makeText(IdeaActivity.this, R.string.color_dont_choosed, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    e_title.setTextColor(color);
+                                    choosedColor = color;
+                                }
                             }
 
                             @Override
@@ -183,15 +187,15 @@ public class IdeaActivity extends AppCompatActivity {
 
                             }
                         })
-                        .addListenerButton(String.valueOf(R.string.try_color), (v1, position, color) -> {
+                        .addListenerButton(getString(R.string.try_color), (v1, position, color) -> {
                             e_title.setTextColor(color);
                         }).show();
             }
         });
 
         floatingActionButtonCameraPicker.setOnClickListener(v -> {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
 
         });
         floatingActionButtonImagePicker.setOnClickListener(v -> {

@@ -2,6 +2,7 @@ package com.lawlett.taskmanageruikit.calendarEvents;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,11 +24,13 @@ import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.calendarEvents.recycler.CalendarEventAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.ICalendarEventOnClickListener;
+import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -77,7 +80,6 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
 
 
         colorView = view.findViewById(R.id.color_view);
-
 
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
@@ -176,7 +178,9 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
             }
         }).attachToRecyclerView(recyclerViewToday);
 
+        loadLocale();
     }
+
     @Override
     public void onItemClick(int position) {
         this.position = position;
@@ -184,5 +188,18 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
         intent.putExtra("calendar", list.get(position));
         adapter.notifyDataSetChanged();
         Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+
+    public void loadLocale() {
+        String language = LanguagePreference.getInstance(getContext()).getLanguage();
+        setLocale(language);
     }
 }

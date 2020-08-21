@@ -52,7 +52,7 @@
     <string name="plus_you_kpd">Натыйжалуулугун жогорулатуунун мыкты жолдорунун бири</string>
     <string name="settings">Орнотуулар</string>
     <string name="create_password">Сырсөз түзүү</string>
-    <string name="light_theme">Жарык тема</string>
+    <string name="change_theme">Теманы өзгөртүү</string>
     <string name="planner">Planner</string>
     <string name="add_event">Окуя кошуу</string>
     <string name="walk_dog">Ит менен басуу</string>
@@ -95,5 +95,9 @@
     <string name="correct_password">Сырсөз туура</string>
     <string name="Wrong">Туура эмес</string>
     <string name="plan_own_day">Күнүңүздү пландаштырыңыз</string>
-
+    <string name="choose_theme">\Теманы тандаңыз… \</string>
+    <string name="light_theme">Жарык тема</string>
+    <string name="dark_theme">Караңгы тема</string>
+    <string name="to_delete">Жок кылуу</string>
+    <string name="color_dont_choosed">Эч кандай түс тандалган жок</string>
 </resources>

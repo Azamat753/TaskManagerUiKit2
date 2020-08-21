@@ -13,7 +13,7 @@
     <string name="ideas">Ideas</string>
     <string name="all_tasks">Total records</string>
     <string name="complete_tasks">Completed tasks</string>
-    <string name="timing">Completed tasks</string>
+    <string name="timing">Timing </string>
     <string name="all_records">Total records</string>
     <string name="all_minutes">Just minutes</string>
     <string name="meets">Meets</string>
@@ -52,7 +52,7 @@
     <string name="plus_you_kpd">One of the best ways to improve your efficiency</string>
     <string name="settings">Settings</string>
     <string name="create_password">Password creation</string>
-    <string name="light_theme">Light theme</string>
+    <string name="change_theme">Choose theme</string>
     <string name="planner">Planner</string>
     <string name="add_event">Add event</string>
     <string name="walk_dog">Walk the dog</string>
@@ -95,5 +95,10 @@
     <string name="correct_password">Correct password</string>
     <string name="Wrong">Wrong</string>
     <string name="plan_own_day">Plan your day</string>
+    <string name="choose_theme">\"Please select a theme… \"</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="to_delete">Delete</string>
+    <string name="color_dont_choosed">No color selected</string>
 
 </resources>

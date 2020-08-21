@@ -23,6 +23,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkedTheme();
+        loadLocale();
         setContentView(R.layout.activity_splash);
 
         if (Build.VERSION.SDK_INT >= 21)
@@ -42,18 +44,15 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 1000);
 
-        checkedTheme();
-        loadLocale();
+
     }
 
     private void checkedTheme() {
         boolean booleanValue = ThemePreference.getInstance(this).isTheme();
         if (booleanValue) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            ThemePreference.getInstance(SplashActivity.this).saveThemeTrue();
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            ThemePreference.getInstance(SplashActivity.this).saveThemeFalse();
         }
     }
 
@@ -63,8 +62,6 @@ public class SplashActivity extends AppCompatActivity {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-        LanguagePreference.getInstance(SplashActivity.this).saveLanguage(lang);
     }
     public void loadLocale(){
         String language= LanguagePreference.getInstance(this).getLanguage();

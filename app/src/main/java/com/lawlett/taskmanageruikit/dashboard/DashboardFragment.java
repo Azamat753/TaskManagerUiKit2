@@ -36,9 +36,8 @@ public class DashboardFragment extends Fragment {
             complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent, timing_task_amount, timing_minute_amount;
     ProgressBar allTaskProgress, personalProgress, workProgress, meetProgress, homeProgress, privateProgress;
     int personalDoneAmount, workDoneAmount, meetDoneAmount, homeDoneAmount, privateDoneAmount, plansAmount, doneAmount,
-            personalAmount, workAmount, meetAmount, homeAmount, privateAmount, todoAmount, eventAmount, allTaskAmount,
-            allTaskDoneAndNotDone, personalDoneAndNotDone, workDoneAndNotDone,
-            homeDoneAndNotDone, meetDoneAndNotDone, privateDoneAndNotDone;
+            personalAmount, workAmount, meetAmount, homeAmount, privateAmount, todoAmount, eventAmount, allTaskAmount;
+
     int todoPercent, personalPercentAmount, workPercentAmount, meetPercentAmount, homePercentAmount,
             privatePercentAmount, timingTaskAmountInt, timingMinuteAmountInt;
     private List<TimingModel> list;
@@ -89,8 +88,9 @@ public class DashboardFragment extends Fragment {
         getAllTasks();
         getTasksDoneAmount();
         countUpPercent();
-
         setShow();
+
+
     }
 
     public void countUpPercent() {
@@ -155,7 +155,7 @@ public class DashboardFragment extends Fragment {
         allTaskAmount = todoAmount + eventAmount + plansAmount;//Всего записей
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     public void setShow() {
         timing_task_amount.setText(String.valueOf(timingTaskAmountInt));
         timing_minute_amount.setText(String.valueOf(timingMinuteAmountInt));
@@ -174,9 +174,9 @@ public class DashboardFragment extends Fragment {
         privatePercent.setText(privatePercentAmount + "%");
 
         boolean booleanValue = ThemePreference.getInstance(getContext()).isTheme();
+        allTaskProgress.setProgress(doneAmount);
         if (!booleanValue) {
-            allTaskProgress.setProgress(doneAmount);
-            allTaskProgress.setMax(allTaskAmount);
+            allTaskProgress.setMax(todoAmount);
             allTaskProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
             personalProgress.setProgress(personalDoneAmount);
@@ -199,6 +199,19 @@ public class DashboardFragment extends Fragment {
             privateProgress.setMax(privateAmount);
             privateProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
         }else {
+            personalProgress.setProgress(personalDoneAmount);
+            workProgress.setProgress(workDoneAmount);
+            meetProgress.setProgress(meetDoneAmount);
+            homeProgress.setProgress(homeDoneAmount);
+            privateProgress.setProgress(privateDoneAmount);
+
+            allTaskProgress.setMax(todoAmount);
+            personalProgress.setMax(personalAmount);
+            workProgress.setMax(workAmount);
+            meetProgress.setMax(meetAmount);
+            homeProgress.setMax(homeAmount);
+            privateProgress.setMax(privateAmount);
+
             allTaskProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
             personalProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
             workProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);

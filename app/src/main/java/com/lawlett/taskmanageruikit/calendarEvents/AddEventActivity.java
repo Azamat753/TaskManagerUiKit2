@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -22,11 +24,13 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DatePickerFragment;
+import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.TimePickerFragment;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
@@ -46,6 +50,11 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
+
+        loadLocale();
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         initViews();
         getIncomingIntent();
@@ -178,8 +187,13 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                     @Override
                     public void onChooseColor(int position, int color) {
-                        choosedColor = color;
-                        colorView.setBackgroundColor(color);
+                        if (color == 0) {
+                            colorView.setBackgroundColor(Color.parseColor("#03BADA"));
+                            Toast.makeText(AddEventActivity.this, R.string.color_dont_choosed, Toast.LENGTH_SHORT).show();
+                        } else {
+                            choosedColor = color;
+                            colorView.setBackgroundColor(color);
+                        }
                     }
 
                     @Override
@@ -211,6 +225,20 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             getDataTime = calendarTaskModel.getDataTime();
             startData.setText(getDataTime);
         }
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        LanguagePreference.getInstance(AddEventActivity.this).saveLanguage(lang);
+    }
+
+    public void loadLocale() {
+        String language = LanguagePreference.getInstance(this).getLanguage();
+        setLocale(language);
     }
 }
 
