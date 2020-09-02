@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.tasksPage.privateTask;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -102,18 +104,27 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                pos = viewHolder.getAdapterPosition();
-                privateModel = list.get(pos);
-                if (!privateModel.isDone) {
-                    App.getDataBase().privateDao().delete(list.get(pos));
-                } else {
-                    decrementDone();
-
-                    App.getDataBase().privateDao().update(list.get(pos));
-                    App.getDataBase().privateDao().delete(list.get(pos));
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(PrivateActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
-                }
+                AlertDialog.Builder dialog = new AlertDialog.Builder(PrivateActivity.this);
+                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
+                        .setNegativeButton(R.string.no, (dialog1, which) ->
+                                dialog1.cancel())
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                pos = viewHolder.getAdapterPosition();
+                                privateModel = list.get(pos);
+                                if (!privateModel.isDone) {
+                                    App.getDataBase().privateDao().delete(list.get(pos));
+                                } else {
+                                    decrementDone();
+                                    App.getDataBase().privateDao().update(list.get(pos));
+                                    App.getDataBase().privateDao().delete(list.get(pos));
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(PrivateActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).show();
+                adapter.notifyDataSetChanged();
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -139,12 +150,10 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
             editText.setText("");
         }
     }
-
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(R.string.privates);
     }
-
     @Override
     public void onItemCheckClick(int id) {
         privateModel = list.get(id);

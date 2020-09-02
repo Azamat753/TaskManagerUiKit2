@@ -22,4 +22,5 @@
     <color name="navigation_background">#122039 </color>
     <color name="settings_text_color">#FFF</color>
     <color name="timing_color">#211D44</color>
+    <color name="hint_color">#aaa</color>
 </resources>

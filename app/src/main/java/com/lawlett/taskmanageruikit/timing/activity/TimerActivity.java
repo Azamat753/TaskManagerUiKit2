@@ -111,6 +111,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mp.reset();
                 notificationManager.cancel(1);
+                if (countDownTimer!=null)
                 countDownTimer.cancel();
                 finish();
                 //Крестик
@@ -229,7 +230,7 @@ public class TimerActivity extends AppCompatActivity {
         finish();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+   @RequiresApi(api = Build.VERSION_CODES.N)
     public void showNotification() {
 
         RemoteViews expandedView = new RemoteViews(getPackageName(),
@@ -264,7 +265,10 @@ public class TimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                Toast.makeText(TimerActivity.this, "00:00", Toast.LENGTH_SHORT).show();
             }
         }.start();
     }
+
+
 }

@@ -44,7 +44,7 @@
             android:layout_marginStart="20dp"
             android:hint="@string/task"
             android:textColor="@color/myWhite"
-            android:textColorHint="@color/myWhite"
+            android:textColorHint="@color/hint_color"
             android:inputType="textCapSentences" />
     </ss.anoop.awesometextinputlayout.AwesomeTextInputLayout>
 

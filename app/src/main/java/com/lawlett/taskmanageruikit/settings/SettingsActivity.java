@@ -26,7 +26,7 @@ import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
     ImageView back;
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
         theme_layout = findViewById(R.id.third_layout);
         back = findViewById(R.id.back_view);
         language_tv = findViewById(R.id.four_layout);
-
+        share_layout = findViewById(R.id.five_layout);
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
@@ -55,6 +55,23 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        share_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Planner");
+                    String shareMessage = "\nPlanner\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.lawlett.taskmanageruikit";
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "Выберите приложение"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -144,7 +161,6 @@ public class SettingsActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
     }

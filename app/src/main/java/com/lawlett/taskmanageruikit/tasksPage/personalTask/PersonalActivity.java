@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.tasksPage.personalTask;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -104,22 +106,28 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                pos = viewHolder.getAdapterPosition();
-                personalModel = list.get(pos);
-
-                if (!personalModel.isDone) {
-                    App.getDataBase().personalDao().delete(list.get(pos));
-                } else {
-                    decrementDone();
-
-                    App.getDataBase().personalDao().update(list.get(pos));
-                    App.getDataBase().personalDao().delete(list.get(pos));
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(PersonalActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(PersonalActivity.this);
+                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
+                        .setNegativeButton(R.string.no, (dialog1, which) ->
+                                dialog1.cancel())
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                pos = viewHolder.getAdapterPosition();
+                                personalModel = list.get(pos);
+                                if (!personalModel.isDone) {
+                                    App.getDataBase().personalDao().delete(list.get(pos));
+                                } else {
+                                    decrementDone();
+                                    App.getDataBase().personalDao().update(list.get(pos));
+                                    App.getDataBase().personalDao().delete(list.get(pos));
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(PersonalActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).show();
+                adapter.notifyDataSetChanged();
                 }
-            }
-
-
         }).attachToRecyclerView(recyclerView);
 
 

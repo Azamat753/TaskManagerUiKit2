@@ -1,5 +1,6 @@
 package com.lawlett.taskmanageruikit.tasksPage.meetTask;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,12 +60,12 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         editText = findViewById(R.id.editText_meet);
 
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
 
 
@@ -104,18 +106,28 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                position = viewHolder.getAdapterPosition();
-                meetModel = list.get(position);
-                if (!meetModel.isDone) {
-                    App.getDataBase().meetDao().delete(list.get(position));
-                } else {
-                    decrementDone();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MeetActivity.this);
+                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
+                        .setNegativeButton(R.string.no, (dialog1, which) ->
+                                dialog1.cancel())
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                position = viewHolder.getAdapterPosition();
+                                meetModel = list.get(position);
+                                if (!meetModel.isDone) {
+                                    App.getDataBase().meetDao().delete(list.get(position));
+                                } else {
+                                    decrementDone();
 
-                    App.getDataBase().meetDao().update(list.get(position));
-                    App.getDataBase().meetDao().delete(list.get(position));
-                    adapter.notifyDataSetChanged();
-                    Toast.makeText(MeetActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
-                }
+                                    App.getDataBase().meetDao().update(list.get(position));
+                                    App.getDataBase().meetDao().delete(list.get(position));
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(MeetActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).show();
+                adapter.notifyDataSetChanged();
             }
         }).attachToRecyclerView(recyclerView);
 

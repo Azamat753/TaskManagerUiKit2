@@ -99,4 +99,5 @@
     <string name="dark_theme">Тёмная тема</string>
     <string name="to_delete">Удалить</string>
     <string name="color_dont_choosed">Цвет не выбран</string>
+    <string name="share_app">Поделиться</string>
 </resources>

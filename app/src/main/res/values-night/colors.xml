@@ -21,4 +21,5 @@
     <color name="plus_background">#0365C4</color>
     <color name="navigation_background">#0365C4</color>
     <color name="settings_text_color">#FFF</color>
+    <color name="hint_color">#aaa</color>
 </resources>

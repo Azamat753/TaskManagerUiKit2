@@ -49,7 +49,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_event);
+        setContentView(R.layout.activity_add_event);
 
         loadLocale();
 

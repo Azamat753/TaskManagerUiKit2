@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
-
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
@@ -35,7 +31,6 @@ import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -43,7 +38,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     TextView toolbar_title;
-    ImageView more_btn, settings_view;
+    ImageView  settings_view;
     private List<QuickModel> list;
 
     QuickAdapter adapter;
@@ -62,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         changeFragment(new DashboardFragment());
 
         toolbar_title = findViewById(R.id.toolbar_title);
-        more_btn = findViewById(R.id.more_btn);
         settings_view = findViewById(R.id.settings_view);
 
         list = new ArrayList<>();
@@ -127,47 +121,22 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         changeFragment(new DashboardFragment());
                         toolbar_title.setText(R.string.progress);
-                        more_btn.setVisibility(View.GONE);
                         break;
                     case 1:
                         changeFragment(new TasksFragment());
                         toolbar_title.setText(R.string.tasks);
-                        more_btn.setVisibility(View.GONE);
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
                         toolbar_title.setText(R.string.timing);
-                        more_btn.setVisibility(View.GONE);
                         break;
                     case 3:
                         changeFragment(new CalendarEventsFragment());
-                        more_btn.setVisibility(View.GONE);
                         toolbar_title.setText(month + " " + year);
                         break;
                     case 4:
                         changeFragment(new IdeasFragment());
                         toolbar_title.setText(R.string.ideas);
-                        more_btn.setVisibility(View.GONE);
-                        more_btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                PopupMenu popupMenu = new PopupMenu(MainActivity.this, more_btn);
-                                popupMenu.getMenuInflater().inflate(R.menu.popupmenu, popupMenu.getMenu());
-                                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                                    @Override
-                                    public boolean onMenuItemClick(MenuItem item) {
-                                        switch (item.getItemId()) {
-                                            case R.id.delete_all_popup:
-
-                                                break;
-                                        }
-                                        return false;
-                                    }
-                                });
-                                popupMenu.show();
-                            }
-                        });
                         break;
                 }
             }
