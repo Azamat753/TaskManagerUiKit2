@@ -10,7 +10,7 @@ android {
         applicationId "com.lawlett.taskmanageruikit"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 6
+        versionCode 9
         versionName "1.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
