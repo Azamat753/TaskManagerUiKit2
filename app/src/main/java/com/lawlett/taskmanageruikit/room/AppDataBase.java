@@ -18,12 +18,18 @@ import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract QuickDao taskDao();
-    public abstract CalendarDao dataDao();
-    public abstract PersonalDao personalDao();
-    public abstract WorkDao workDao();
-    public abstract MeetDao meetDao();
-    public abstract HomeDao homeDao();
-    public abstract PrivateDao privateDao();
-    public abstract TimingDao timingDao();
 
+    public abstract CalendarDao dataDao();
+
+    public abstract PersonalDao personalDao();
+
+    public abstract WorkDao workDao();
+
+    public abstract MeetDao meetDao();
+
+    public abstract HomeDao homeDao();
+
+    public abstract PrivateDao privateDao();
+
+    public abstract TimingDao timingDao();
 }
