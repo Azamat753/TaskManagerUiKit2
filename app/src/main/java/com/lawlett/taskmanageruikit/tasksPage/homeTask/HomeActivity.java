@@ -1,6 +1,10 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -96,6 +100,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                 return true;
             }
 
+
+
             @Override
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
@@ -127,7 +133,44 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                         }).show();
                 adapter.notifyDataSetChanged();
                 }
+
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                final int DIRECTION_RIGHT = 1;
+                final int DIRECTION_LEFT = 0;
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int)dX);
+
+                    switch (direction){
+
+                        case DIRECTION_RIGHT:
+
+                            View itemView = viewHolder.itemView;
+                            ColorDrawable background = new ColorDrawable();
+                            background.setColor(Color.RED);
+                            background.setBounds(itemView.getLeft(), itemView.getTop(),itemView.getRight(), itemView.getBottom());
+                            background.draw(c);
+                            break;
+
+                        case DIRECTION_LEFT:
+                            View itemView2 = viewHolder.itemView;
+                            ColorDrawable background2 = new ColorDrawable();
+                            background2.setColor(Color.RED);
+                            background2.setBounds(itemView2.getRight(), itemView2.getTop(),itemView2.getLeft(), itemView2.getBottom());
+                            background2.draw(c);
+
+                            break;
+                    }
+
+                }
+            }
         }).attachToRecyclerView(recyclerView);
+
+
 
         homeBack = findViewById(R.id.personal_back);
         homeBack.setOnClickListener(new View.OnClickListener() {
