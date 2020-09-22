@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     QuickAdapter adapter;
     //hello world
-    //
+    ////
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
