@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     EditText editText;
     int pos, previousData, currentData, updateData;
     ImageView homeBack;
+    LinearLayout linearLayoutHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             }
         });
 
-
+        linearLayoutHome = findViewById(R.id.linearHome);
         recyclerView = findViewById(R.id.recycler_home);
         recyclerView.setAdapter(adapter);
 
@@ -150,17 +152,17 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                         case DIRECTION_RIGHT:
 
                             View itemView = viewHolder.itemView;
-                            ColorDrawable background = new ColorDrawable();
-                            background.setColor(Color.RED);
-                            background.setBounds(itemView.getLeft(), itemView.getTop(),itemView.getRight(), itemView.getBottom());
+                            final ColorDrawable background = new ColorDrawable(Color.RED);
+                            background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
                             background.draw(c);
+
                             break;
 
                         case DIRECTION_LEFT:
+
                             View itemView2 = viewHolder.itemView;
-                            ColorDrawable background2 = new ColorDrawable();
-                            background2.setColor(Color.RED);
-                            background2.setBounds(itemView2.getRight(), itemView2.getTop(),itemView2.getLeft(), itemView2.getBottom());
+                            final ColorDrawable background2 = new ColorDrawable(Color.RED);
+                            background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
                             background2.draw(c);
 
                             break;
