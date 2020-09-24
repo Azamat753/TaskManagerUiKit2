@@ -1,12 +1,14 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -146,7 +148,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
                     int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
                     int absoluteDisplacement = Math.abs((int)dX);
-
+                    Vibrator vb = (Vibrator)   getSystemService(Context.VIBRATOR_SERVICE);
                     switch (direction){
 
                         case DIRECTION_RIGHT:
@@ -155,6 +157,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                             final ColorDrawable background = new ColorDrawable(Color.RED);
                             background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
                             background.draw(c);
+                            vb.vibrate(100);
 
                             break;
 
@@ -164,7 +167,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                             final ColorDrawable background2 = new ColorDrawable(Color.RED);
                             background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
                             background2.draw(c);
-
+                            vb.vibrate(100);
                             break;
                     }
 
