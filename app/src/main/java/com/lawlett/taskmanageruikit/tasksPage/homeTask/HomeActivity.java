@@ -1,11 +1,18 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     EditText editText;
     int pos, previousData, currentData, updateData;
     ImageView homeBack;
+    LinearLayout linearLayoutHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +63,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             }
         });
 
-
+        linearLayoutHome = findViewById(R.id.linearHome);
         recyclerView = findViewById(R.id.recycler_home);
         recyclerView.setAdapter(adapter);
 
@@ -96,6 +104,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                 return true;
             }
 
+
+
             @Override
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
@@ -127,7 +137,45 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                         }).show();
                 adapter.notifyDataSetChanged();
                 }
+
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                final int DIRECTION_RIGHT = 1;
+                final int DIRECTION_LEFT = 0;
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int)dX);
+                    Vibrator vb = (Vibrator)   getSystemService(Context.VIBRATOR_SERVICE);
+                    switch (direction){
+
+                        case DIRECTION_RIGHT:
+
+                            View itemView = viewHolder.itemView;
+                            final ColorDrawable background = new ColorDrawable(Color.RED);
+                            background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
+                            background.draw(c);
+                            vb.vibrate(100);
+
+                            break;
+
+                        case DIRECTION_LEFT:
+
+                            View itemView2 = viewHolder.itemView;
+                            final ColorDrawable background2 = new ColorDrawable(Color.RED);
+                            background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
+                            background2.draw(c);
+                            vb.vibrate(100);
+                            break;
+                    }
+
+                }
+            }
         }).attachToRecyclerView(recyclerView);
+
+
 
         homeBack = findViewById(R.id.personal_back);
         homeBack.setOnClickListener(new View.OnClickListener() {
