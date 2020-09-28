@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -14,6 +13,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.Task;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
@@ -27,12 +30,15 @@ import java.util.Locale;
 public class SettingsActivity extends AppCompatActivity {
     ImageView back;
     LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
+    ReviewManager manager;
+    ReviewInfo reviewInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
         setContentView(R.layout.activity_settings);
+        reviewInApp();
 
         clear_password_layout = findViewById(R.id.first_layout);
         clearMinutes_layout = findViewById(R.id.second_layout);
@@ -44,76 +50,64 @@ public class SettingsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-        theme_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showChangeThemeDialog();
+        theme_layout.setOnClickListener(v -> showChangeThemeDialog());
+
+        back.setOnClickListener(v -> onBackPressed());
+
+        share_layout.setOnClickListener(v -> {
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Planner");
+                String shareMessage = "\nPlanner\n\n";
+                shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.lawlett.taskmanageruikit";
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "Выберите приложение"));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
+        clear_password_layout.setOnClickListener(v -> {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
+            dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
+                    .setNegativeButton(R.string.no, (dialog1, which) ->
+                            dialog1.cancel())
+                    .setPositiveButton(R.string.yes, (dialog13, which) -> {
+                        PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
+                        PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
+                        Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
+                    }).show();
+        });
+        clearMinutes_layout.setOnClickListener(v -> {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
+            dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_minute)
+                    .setNegativeButton(R.string.no, (dialog1, which) ->
+                            dialog1.cancel())
+                    .setPositiveButton(R.string.yes, (dialog12, which) -> {
+                        TimingSizePreference.getInstance(SettingsActivity.this).clearSettings();
+                        Toast.makeText(SettingsActivity.this, R.string.data_about_minutes_clear, Toast.LENGTH_SHORT).show();
+                    }).show();
         });
 
-        share_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Planner");
-                    String shareMessage = "\nPlanner\n\n";
-                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.lawlett.taskmanageruikit";
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, "Выберите приложение"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        language_tv.setOnClickListener(v -> showChangeLanguageDialog());
+    }
 
-        clear_password_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
-                        .setNegativeButton(R.string.no, (dialog1, which) ->
-                                dialog1.cancel())
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
-                                PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
-                                Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
-                            }
-                        }).show();
-            }
-        });
-        clearMinutes_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_minute)
-                        .setNegativeButton(R.string.no, (dialog1, which) ->
-                                dialog1.cancel())
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                TimingSizePreference.getInstance(SettingsActivity.this).clearSettings();
-                                Toast.makeText(SettingsActivity.this, R.string.data_about_minutes_clear, Toast.LENGTH_SHORT).show();
-                            }
-                        }).show();
-            }
-        });
+    public void reviewInApp() {
+        manager = ReviewManagerFactory.create(SettingsActivity.this);
+        Task<ReviewInfo> request = manager.requestReviewFlow();
 
-        language_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showChangeLanguageDialog();
+        request.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                reviewInfo = task.getResult();
+                Task<Void> flow = manager.launchReviewFlow(SettingsActivity.this, reviewInfo);
+                flow.addOnSuccessListener(result -> {
+
+                });
+            } else {
+                Toast.makeText(SettingsActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
