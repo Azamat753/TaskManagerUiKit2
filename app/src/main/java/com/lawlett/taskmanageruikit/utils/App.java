@@ -24,7 +24,6 @@ public class App extends Application {
 
         createNotificationChannel();
 
-
     }
     public static AppDataBase getDataBase() {
         return dataBase;

@@ -1,6 +1,10 @@
 package com.lawlett.taskmanageruikit.tasksPage.workTask;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -125,6 +129,41 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
                             }
                         }).show();
                 adapter.notifyDataSetChanged();
+            }
+
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                final int DIRECTION_RIGHT = 1;
+                final int DIRECTION_LEFT = 0;
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int)dX);
+
+                    switch (direction){
+
+                        case DIRECTION_RIGHT:
+
+                            View itemView = viewHolder.itemView;
+                            final ColorDrawable background = new ColorDrawable(Color.RED);
+                            background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
+                            background.draw(c);
+
+                            break;
+
+                        case DIRECTION_LEFT:
+
+                            View itemView2 = viewHolder.itemView;
+                            final ColorDrawable background2 = new ColorDrawable(Color.RED);
+                            background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
+                            background2.draw(c);
+
+                            break;
+                    }
+
+                }
             }
         }).attachToRecyclerView(recyclerView);
 

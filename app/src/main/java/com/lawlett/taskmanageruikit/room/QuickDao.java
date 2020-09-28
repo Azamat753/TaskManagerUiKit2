@@ -35,5 +35,4 @@ public interface QuickDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateWord(List<QuickModel> quickModel);
-
 }
