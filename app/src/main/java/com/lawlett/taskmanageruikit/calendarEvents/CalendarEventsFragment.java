@@ -65,7 +65,8 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
         App.getDataBase().dataDao().getAllLive().observe(this, calendarTaskModels -> {
             if (calendarTaskModels != null) {
                 list.clear();
-                list.addAll(calendarTaskModels);
+//                list.addAll(calendarTaskModels);
+                list.addAll(App.getDataBase().dataDao().getSortedCalendarTaskModel());
                 adapter.notifyDataSetChanged();
             }
         });

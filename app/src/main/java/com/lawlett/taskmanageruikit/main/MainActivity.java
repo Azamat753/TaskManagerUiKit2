@@ -1,5 +1,8 @@
 package com.lawlett.taskmanageruikit.main;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -24,6 +27,7 @@ import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.idea.IdeasFragment;
 import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
+import com.lawlett.taskmanageruikit.service.MessageService;
 import com.lawlett.taskmanageruikit.settings.SettingsActivity;
 import com.lawlett.taskmanageruikit.tasks.TasksFragment;
 import com.lawlett.taskmanageruikit.timing.fragment.TimingFragment;
@@ -48,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     //hello world
     ////
 
+    AlarmManager mAlarm;
+    long time;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         initBottomNavigation();
+
         changeFragment(new DashboardFragment());
 
         toolbar_title = findViewById(R.id.toolbar_title);
@@ -83,6 +91,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setNotification();
+    }
+
+    private void setNotification() {
+        Intent i = new Intent(getBaseContext(), MessageService.class);
+        i.putExtra("displayText", "sample text");
+        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), 0, i,PendingIntent.FLAG_CANCEL_CURRENT);
+        mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 10);
+        time = calendar.getTimeInMillis();
+
+        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time + 1440000 ,AlarmManager.INTERVAL_DAY,pi);
     }
 
     public void changeFragment(Fragment fragment) {

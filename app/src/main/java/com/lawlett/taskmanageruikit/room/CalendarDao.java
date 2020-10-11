@@ -21,6 +21,9 @@ public interface CalendarDao {
     @Query("SELECT*FROM calendarTaskModel")
     LiveData<List<CalendarTaskModel>> getAllLive();
 
+    @Query("SELECT*FROM calendartaskmodel ORDER BY dataTime ASC,startTime ASC")
+    List<CalendarTaskModel>getSortedCalendarTaskModel();
+
     @Insert
     void insert(CalendarTaskModel calendarTaskModel);
 
