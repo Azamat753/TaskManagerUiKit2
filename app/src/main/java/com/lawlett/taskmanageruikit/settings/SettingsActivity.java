@@ -260,7 +260,7 @@ public class SettingsActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     } else
-                        Toast.makeText(this, "FailureCamera", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
             }
