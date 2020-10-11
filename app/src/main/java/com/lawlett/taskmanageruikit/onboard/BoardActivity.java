@@ -34,7 +34,6 @@ public class BoardActivity extends AppCompatActivity {
         public ViewPagerAdapter(@NonNull FragmentManager fm) {
             super(fm);
         }
-
         @NonNull
         @Override
         public Fragment getItem(int position) {
@@ -44,7 +43,6 @@ public class BoardActivity extends AppCompatActivity {
             fragment.setArguments(bundle);
             return fragment;
         }
-
         @Override
         public int getCount() {
             return 4;

@@ -65,8 +65,6 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'
     //ColorPicker
     implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
-    //analytics
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
     //multidex
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'commons-io:commons-io:2.6'
