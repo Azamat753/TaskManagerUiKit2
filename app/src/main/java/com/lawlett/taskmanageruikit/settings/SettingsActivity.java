@@ -1,15 +1,27 @@
 package com.lawlett.taskmanageruikit.settings;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -22,11 +34,17 @@ import com.lawlett.taskmanageruikit.utils.PasswordPreference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
     ImageView back;
     LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
+    ImageView magick;
+    ListView listView;
+    public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +58,9 @@ public class SettingsActivity extends AppCompatActivity {
         back = findViewById(R.id.back_view);
         language_tv = findViewById(R.id.four_layout);
         share_layout = findViewById(R.id.five_layout);
+        magick = findViewById(R.id.btn_magick);
+        listView = findViewById(R.id.listView);
+
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
@@ -48,6 +69,13 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showChangeThemeDialog();
+            }
+        });
+
+        magick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startVoiceRecognitionActivity();
             }
         });
 
@@ -115,7 +143,12 @@ public class SettingsActivity extends AppCompatActivity {
                 showChangeLanguageDialog();
             }
         });
+
     }
+
+
+
+
 
     public void showChangeThemeDialog() {
         final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
@@ -173,6 +206,65 @@ public class SettingsActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         LanguagePreference.getInstance(SettingsActivity.this).saveLanguage(lang);
     }
+
+
+    private void startVoiceRecognitionActivity() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                "Speech recognition demo");
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
+
+    @SuppressLint("NewApi")
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        CameraManager cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
+
+        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
+
+            ArrayList matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            listView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, matches));
+
+            if (matches.contains("Экспекто патронум")) {
+                Random random = new Random();
+                String animals [] = {"Лиса", "Лань","Бык", " Собака", "Кошка", "Крыса", "Журавль", "Бегемот", "Жираф", "Лев", "Зебра"};
+                int a = random.nextInt(animals.length);
+                Toast.makeText(this, "Ваш патронус - " + animals[a], Toast.LENGTH_SHORT).show();
+            }
+
+            if (matches.contains("люмос")){
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+                        try {
+                            cameraManager.setTorchMode("0", true);
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        Toast.makeText(this, "FailureCamera", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
+            }
+
+            if (matches.contains("Nox")) {
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+                        try {
+                            cameraManager.setTorchMode("0", false);
+                        } catch (CameraAccessException e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        Toast.makeText(this, "FailureCamera", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
+            }
+        }}
 
     private void loadLocale() {
         String language = LanguagePreference.getInstance(this).getLanguage();

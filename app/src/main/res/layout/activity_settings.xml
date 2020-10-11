@@ -140,5 +140,25 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/btn_magick"
+        app:srcCompat="@drawable/ic_baseline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:drawablePadding="15dp"
+        android:text="Magick"
+        android:textColor="@color/settings_text_color"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+<ListView
+    android:id="@+id/listView"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
