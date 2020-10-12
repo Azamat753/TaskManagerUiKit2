@@ -1,13 +1,10 @@
 package com.lawlett.taskmanageruikit.settings;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
@@ -15,7 +12,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,7 +30,6 @@ import com.lawlett.taskmanageruikit.utils.PasswordPreference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
@@ -60,7 +55,6 @@ public class SettingsActivity extends AppCompatActivity {
         share_layout = findViewById(R.id.five_layout);
         magick = findViewById(R.id.btn_magick);
         listView = findViewById(R.id.listView);
-
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
