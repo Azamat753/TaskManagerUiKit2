@@ -101,4 +101,9 @@
     <string name="to_delete">Жок кылуу</string>
     <string name="color_dont_choosed">Эч кандай түс тандалган жок</string>
     <string name="share_app">Бөлүшүү</string>
+    <string name="add_title">Введите текст</string>
+    <string name="add_icon">Выберите картинку</string>
+    <string name="attention">Внимание!</string>
+    <string name="task_dialog_message">Вы уверены, что хотите удалить?</string>
+    <string name="Cancel">Отмена</string>
 </resources>

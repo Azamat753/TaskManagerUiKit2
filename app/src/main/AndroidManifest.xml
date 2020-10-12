@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <application
         android:name=".utils.App"
@@ -22,21 +22,21 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-
+        <activity android:name=".tasksPage.addTask.DoneActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
         <activity
             android:name=".timing.activity.TimerActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
-
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
         <activity
             android:name=".timing.activity.StopwatchActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
         <activity
             android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
-
         <activity
             android:name=".utils.PassCodeActivity"
             android:screenOrientation="portrait"
@@ -71,9 +71,9 @@
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
         <activity
             android:name=".splash.SplashActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -90,6 +90,5 @@
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
     </application>
-
 
 </manifest>
