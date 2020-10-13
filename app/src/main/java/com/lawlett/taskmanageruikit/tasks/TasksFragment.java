@@ -114,9 +114,16 @@ public class TasksFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CustomTaskDialog customTaskDialog = new CustomTaskDialog(getContext());
+                customTaskDialog.setDialogResult(new CustomTaskDialog.CustomDialogListener() {
+                    @Override
+                    public void addInformation(String title, Integer image, int visible, int gone) {
+                        done_title.setText(title);
+                        doneImage.setImageResource(image);
+                        doneConst.setVisibility(visible);
+                        addConst.setVisibility(gone);
+                    }
+                });
                 customTaskDialog.show();
-                addConst.setVisibility(View.GONE);
-                doneConst.setVisibility(View.VISIBLE);
             }
         });
 

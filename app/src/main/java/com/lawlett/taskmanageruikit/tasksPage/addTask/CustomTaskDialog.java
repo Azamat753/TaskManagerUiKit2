@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,18 +19,23 @@ import com.lawlett.taskmanageruikit.tasksPage.addTask.adapter.ImageAdapter;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 public class CustomTaskDialog extends Dialog implements View.OnClickListener {
+    final Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
     Button btnOk, btnCancel;
     EditText dialogEt;
     GridView dialogGridView;
     ImageAdapter imageAdapter;
     Integer dialogImg;
+    CustomDialogListener customDialogListener;
 
     public CustomTaskDialog(@NonNull Context context) {
         super(context);
         TaskDialogPreference.init(context);
-        imageAdapter = new ImageAdapter(context, new Integer[]{R.drawable.ic_1,R.drawable.ic_2,
-                R.drawable.ic_3,R.drawable.ic_4,R.drawable.ic_5,R.drawable.ic_6,R.drawable.ic_7,R.drawable.ic_8,
-                R.drawable.ic_9,R.drawable.ic_10,R.drawable.ic_11,R.drawable.ic_12,});
+        imageAdapter = new ImageAdapter(context, new Integer[]{R.drawable.ic_01,R.drawable.ic_14,
+                R.drawable.ic_02, R.drawable.ic_03,R.drawable.ic_04, R.drawable.ic_05,
+                R.drawable.ic_06,R.drawable.ic_07, R.drawable.ic_08, R.drawable.ic_09,
+                R.drawable.ic_10,R.drawable.ic_11,R.drawable.ic_12, R.drawable.ic_13,
+                R.drawable.ic_15,R.drawable.ic_16,R.drawable.ic_17, R.drawable.ic_18,
+                R.drawable.ic_19,R.drawable.ic_20,R.drawable.ic_21});
     }
 
     @Override
@@ -41,11 +48,12 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
 
     private void gridViewInit() {
         dialogGridView.setAdapter(imageAdapter);
-        dialogGridView.setNumColumns(3);
+//        dialogGridView.setNumColumns(3);
         dialogGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dialogImg = (Integer) adapterView.getItemAtPosition(i);
+                view.startAnimation(animation);
             }
         });
     }
@@ -73,6 +81,7 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
                     Toast.makeText(getContext(),R.string.add_icon, Toast.LENGTH_LONG).show();
                 }
                 else {
+                    customDialogListener.addInformation(title, dialogImg, View.VISIBLE, View.GONE);
                     TaskDialogPreference.saveImage(dialogImg);
                     TaskDialogPreference.saveTitle(title);
 
@@ -83,6 +92,14 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
         }
+    }
+
+    public void setDialogResult(CustomDialogListener listener){
+        customDialogListener = listener;
+    }
+
+    public interface CustomDialogListener{
+        void addInformation(String title, Integer image, int visible, int gone);
     }
 
 }
