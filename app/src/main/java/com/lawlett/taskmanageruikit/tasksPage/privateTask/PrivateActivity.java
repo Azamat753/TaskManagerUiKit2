@@ -1,8 +1,13 @@
 package com.lawlett.taskmanageruikit.tasksPage.privateTask;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -23,6 +29,7 @@ import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener {
     RecyclerView recyclerView;
@@ -31,20 +38,22 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
     EditText editText;
     PrivateModel privateModel;
     int pos, previousData, currentData, updateData;
-    ImageView privateBack;
+    ImageView privateBack,imageAdd, imageMic;
+    private static final int REQUEST_CODE_SPEECH_INPUT = 22;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_private);
 
+        init();
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         changeView();
 
-        list = new ArrayList<>();
-        adapter = new PrivateAdapter(this);
 
         App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
             if (privateModels != null) {
@@ -54,10 +63,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
             }
         });
 
-        recyclerView = findViewById(R.id.recycler_private);
-        recyclerView.setAdapter(adapter);
 
-        editText = findViewById(R.id.editText_private);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
@@ -128,13 +134,45 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
             }
         }).attachToRecyclerView(recyclerView);
 
-        privateBack = findViewById(R.id.personal_back);
-        privateBack.setOnClickListener(new View.OnClickListener() {
+        privateBack.setOnClickListener(v -> onBackPressed());
+
+        editListener();
+    }
+
+    private void editListener() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence != null) {
+                    imageMic.setVisibility(View.GONE);
+                    imageAdd.setVisibility(View.VISIBLE);
+                }
+                if (editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.setVisibility(View.GONE);
+                    imageMic.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
+
+    }
+
+    private void init() {
+        privateBack = findViewById(R.id.personal_back);
+        recyclerView = findViewById(R.id.recycler_private);
+        recyclerView.setAdapter(adapter);
+        list = new ArrayList<>();
+        adapter = new PrivateAdapter(this);
+        editText = findViewById(R.id.editText_private);
+        imageAdd = findViewById(R.id.add_task_private);
+        imageMic = findViewById(R.id.mic_task_private);
+
     }
 
     public void addPrivateTask(View view) {
@@ -176,5 +214,29 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         currentData = PrivateDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         PrivateDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    public void micPrivateTask(View view) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi speak something");
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            assert result != null;
+            editText.setText(editText.getText() + " " + result.get(0));
+        }
     }
 }

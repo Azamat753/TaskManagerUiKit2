@@ -1,14 +1,20 @@
 package com.lawlett.taskmanageruikit.tasksPage.personalTask;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -23,6 +29,7 @@ import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener {
     EditText editText;
@@ -30,19 +37,20 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     PersonalModel personalModel;
     List<PersonalModel> list;
     String personal;
-    ImageView personalBack;
+    ImageView personalBack, imageAdd, imageMic;
+    RecyclerView recyclerView;
     int pos, previousPersonalDone, currentData, updateData;
+    private static final int REQUEST_CODE_SPEECH_INPUT = 22;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
+        init();
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-
-        list = new ArrayList<>();
-        adapter = new PersonalAdapter(this);
 
         App.getDataBase().personalDao().getAllLive().observe(this, personalModels -> {
             if (personalModels != null) {
@@ -51,12 +59,6 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 adapter.updateList(list);
             }
         });
-
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_personal);
-        recyclerView.setAdapter(adapter);
-
-        editText = findViewById(R.id.editText_personal);
 
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -127,17 +129,49 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                             }
                         }).show();
                 adapter.notifyDataSetChanged();
-                }
+            }
         }).attachToRecyclerView(recyclerView);
 
 
-        personalBack = findViewById(R.id.personal_back);
-        personalBack.setOnClickListener(new View.OnClickListener() {
+        personalBack.setOnClickListener(v -> onBackPressed());
+
+        editListener();
+    }
+
+    private void editListener() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence != null) {
+                    imageMic.setVisibility(View.GONE);
+                    imageAdd.setVisibility(View.VISIBLE);
+                }
+                if (editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.setVisibility(View.GONE);
+                    imageMic.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
+
+    }
+
+    private void init() {
+        list = new ArrayList<>();
+        adapter = new PersonalAdapter(this);
+
+        recyclerView = findViewById(R.id.recycler_personal);
+        recyclerView.setAdapter(adapter);
+        editText = findViewById(R.id.editText_personal);
+        imageAdd = findViewById(R.id.add_task_personal);
+        imageMic = findViewById(R.id.mic_task_personal);
+        personalBack = findViewById(R.id.personal_back);
     }
 
     public void addPersonalTask(View view) {
@@ -179,4 +213,27 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         PersonDoneSizePreference.getInstance(this).savePersonalSize(updateData);
     }
 
+    public void micPersonalTask(View view) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi speak something");
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            assert result != null;
+            editText.setText(editText.getText() + " " + result.get(0));
+        }
+    }
 }

@@ -1,8 +1,13 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -24,6 +30,7 @@ import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener {
     RecyclerView recyclerView;
@@ -32,20 +39,22 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     HomeModel homeModel;
     EditText editText;
     int pos, previousData, currentData, updateData;
-    ImageView homeBack;
+    ImageView homeBack, imageMic, imageAdd;
+    private static final int REQUEST_CODE_SPEECH_INPUT = 22;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        if (Build.VERSION.SDK_INT >= 21)
+        init();
+        if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
+        }
 
         changeView();
 
-        list = new ArrayList<>();
-        adapter = new HomeAdapter(this);
 
         App.getDataBase().homeDao().getAllLive().observe(this, homeModels -> {
             if (homeModels != null) {
@@ -56,17 +65,12 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         });
 
 
-        recyclerView = findViewById(R.id.recycler_home);
-        recyclerView.setAdapter(adapter);
-
-        editText = findViewById(R.id.editText_home);
-
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
 
             @Override
@@ -126,14 +130,46 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                             }
                         }).show();
                 adapter.notifyDataSetChanged();
-                }
+            }
         }).attachToRecyclerView(recyclerView);
 
+        homeBack.setOnClickListener(v -> onBackPressed());
+        editListener();
+    }
+
+    private void init() {
         homeBack = findViewById(R.id.personal_back);
-        homeBack.setOnClickListener(new View.OnClickListener() {
+        editText = findViewById(R.id.editText_home);
+        imageMic = findViewById(R.id.mic_task_home);
+        imageAdd = findViewById(R.id.add_task_home);
+        recyclerView = findViewById(R.id.recycler_home);
+        recyclerView.setAdapter(adapter);
+        list = new ArrayList<>();
+        adapter = new HomeAdapter(this);
+
+
+    }
+
+    private void editListener() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence != null) {
+                    imageMic.setVisibility(View.GONE);
+                    imageAdd.setVisibility(View.VISIBLE);
+                }
+                if (editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.setVisibility(View.GONE);
+                    imageMic.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
     }
@@ -174,9 +210,34 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
     }
+
     private void decrementDone() {
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    public void micHomeTask(View view) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi speak something");
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            assert result != null;
+            editText.setText(editText.getText() + " " + result.get(0));
+        }
     }
 }
