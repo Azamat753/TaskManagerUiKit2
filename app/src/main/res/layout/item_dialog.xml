@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         style="@style/TextTitleQuick"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:textStyle="bold"
         android:text="@string/add_icon"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dialog_et"/>
     <LinearLayout
         android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/dialog_gv_container"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,9 +40,16 @@
         android:layout_height="wrap_content">
         <GridView
             android:id="@+id/dialog_gridView"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:layout_width="200dp"
+            android:horizontalSpacing="2dp"
+            android:layout_gravity="center"
+            android:columnWidth="50dp"
+            android:numColumns="4"
+            android:stretchMode="spacingWidth"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <LinearLayout
