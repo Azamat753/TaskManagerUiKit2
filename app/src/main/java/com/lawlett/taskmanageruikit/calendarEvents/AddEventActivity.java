@@ -1,8 +1,11 @@
 package com.lawlett.taskmanageruikit.calendarEvents;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -22,6 +25,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.data.model.CalendarTaskModel;
+import com.lawlett.taskmanageruikit.service.MessageService;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DatePickerFragment;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
@@ -30,6 +34,7 @@ import com.lawlett.taskmanageruikit.utils.TimePickerFragment;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
@@ -44,6 +49,9 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     String titleT, getStart, getDataTime, getEndTime;
     View colorView;
     int choosedColor;
+    AlarmManager mAlarm;
+    long time;
+    Calendar baseCalendar = Calendar.getInstance();
     String startHour, endingHour;
 
     @Override
@@ -109,8 +117,28 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        baseCalendar.set(Calendar.YEAR,year);
+        baseCalendar.set(Calendar.MONTH,month);
+        baseCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         currentDataString = DateFormat.getDateInstance().format(c.getTime());
         startData.setText(currentDataString);
+    }
+
+    private void setNotification() {
+        Intent i = new Intent(getBaseContext(), MessageService.class);
+        i.putExtra("displayText", "sample text");
+        List<CalendarTaskModel> listA= App.getDataBase().dataDao().getAll();
+        int idOfP = listA.size();
+        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), idOfP, i,PendingIntent.FLAG_CANCEL_CURRENT);
+        mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.add(Calendar.SECOND, 10);
+//        time = calendar.getTimeInMillis();
+
+        mAlarm.set(AlarmManager.RTC_WAKEUP,time,pi);
+//        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time,AlarmManager.INTERVAL_DAY,pi);
     }
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
@@ -118,6 +146,10 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(0, 0, 0, hourOfDay, minute);
+        baseCalendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        baseCalendar.set(Calendar.MINUTE,minute);
+
+        time = baseCalendar.getTimeInMillis();
 
         startTimeNumber.setText(android.text.format.DateFormat.format("HH:mm", calendar));
         startHour = String.valueOf(android.text.format.DateFormat.format("HH:mm", calendar));
