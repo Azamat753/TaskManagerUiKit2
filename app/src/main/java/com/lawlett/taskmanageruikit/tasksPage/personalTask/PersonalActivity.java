@@ -142,7 +142,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                         }).show();
                 adapter.notifyDataSetChanged();
             }
-                }
+
 
             @SuppressLint("ResourceAsColor")
             @Override

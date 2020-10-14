@@ -1,16 +1,10 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
 import android.annotation.SuppressLint;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,7 +50,6 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        init();
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
         }
@@ -156,7 +149,6 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         recyclerView.setAdapter(adapter);
         list = new ArrayList<>();
         adapter = new HomeAdapter(this);
-
 
     }
 
