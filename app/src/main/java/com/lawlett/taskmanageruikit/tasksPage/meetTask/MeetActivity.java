@@ -2,11 +2,15 @@ package com.lawlett.taskmanageruikit.tasksPage.meetTask;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -28,6 +33,7 @@ import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener {
     RecyclerView recyclerView;
@@ -36,14 +42,17 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
     EditText editText;
     MeetModel meetModel;
     int position, currentData, updateData, previousData;
-    ImageView meetBack;
+    ImageView meetBack, imageMic, imageAdd;
+    private static final int REQUEST_CODE_SPEECH_INPUT = 22;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meet);
-        if (Build.VERSION.SDK_INT >= 21)
+        init();
+        if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
+        }
 
         changeView();
 
@@ -170,13 +179,44 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
             }
         }).attachToRecyclerView(recyclerView);
 
-        meetBack = findViewById(R.id.personal_back);
-        meetBack.setOnClickListener(new View.OnClickListener() {
+        meetBack.setOnClickListener(v -> onBackPressed());
+
+        editListener();
+    }
+
+    private void editListener() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence != null) {
+                    imageMic.setVisibility(View.GONE);
+                    imageAdd.setVisibility(View.VISIBLE);
+                }
+                if (editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.setVisibility(View.GONE);
+                    imageMic.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
             }
         });
+
+    }
+
+    private void init() {
+        list = new ArrayList<>();
+        adapter = new MeetAdapter(this);
+        recyclerView = findViewById(R.id.recycler_meet);
+        recyclerView.setAdapter(adapter);
+        editText = findViewById(R.id.editText_meet);
+        meetBack = findViewById(R.id.personal_back);
+        imageAdd = findViewById(R.id.add_task_meet);
+        imageMic = findViewById(R.id.mic_task_meet);
     }
 
     public void addMeetTask(View view) {
@@ -220,5 +260,29 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         currentData = MeetDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         MeetDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    public void micMeetTask(View view) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi speak something");
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            assert result != null;
+            editText.setText(editText.getText() + " " + result.get(0));
+        }
     }
 }

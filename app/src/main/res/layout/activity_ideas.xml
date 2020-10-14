@@ -101,7 +101,8 @@
             android:src="@drawable/ic_color_lens_black_24dp"
             app:fabSize="mini"
             app:fab_label="@string/color"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="VectorDrawableCompat" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab2"
