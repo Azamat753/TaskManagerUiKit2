@@ -230,14 +230,14 @@ public class SettingsActivity extends AppCompatActivity {
             ArrayList matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             listView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, matches));
 
-            if (matches.contains("Экспекто патронум")) {
+            if (matches.contains("Экспекто патронум") || matches.contains("экспекто патронум") || matches.contains("Expecto Patronum") || matches.contains("expecto patronum") ) {
                 Random random = new Random();
                 String animals [] = {"Лиса", "Лань","Бык", " Собака", "Кошка", "Крыса", "Журавль", "Бегемот", "Жираф", "Лев", "Зебра"};
                 int a = random.nextInt(animals.length);
                 Toast.makeText(this, "Ваш патронус - " + animals[a], Toast.LENGTH_SHORT).show();
             }
 
-            if (matches.contains("люмос")){
+            if (matches.contains("люмос") || matches.contains("Lumos") || matches.contains("Люмос") || matches.contains("lumos")){
                 if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
                     if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
                         try {
@@ -251,7 +251,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
             }
 
-            if (matches.contains("Nox")) {
+            if (matches.contains("Nox") || matches.contains("Нокс") || matches.contains("нокс") || matches.contains("nox")) {
                 if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
                     if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
                         try {
