@@ -99,6 +99,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             @Override
             public void onClick(View v) {
                 recordDataRoom();
+                setNotification();
             }
         });
 
@@ -131,7 +132,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         int idOfP = listA.size();
         PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), idOfP, i,PendingIntent.FLAG_CANCEL_CURRENT);
         mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-//
+
 //        Calendar calendar = Calendar.getInstance();
 //        calendar.setTimeInMillis(System.currentTimeMillis());
 //        calendar.add(Calendar.SECOND, 10);

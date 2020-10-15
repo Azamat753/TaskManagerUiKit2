@@ -107,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 10);
+        calendar.add(Calendar.HOUR, 24);
         time = calendar.getTimeInMillis();
 
-        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time + 1440000 ,AlarmManager.INTERVAL_DAY,pi);
+        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time ,AlarmManager.INTERVAL_DAY,pi);
     }
 
     public void changeFragment(Fragment fragment) {
