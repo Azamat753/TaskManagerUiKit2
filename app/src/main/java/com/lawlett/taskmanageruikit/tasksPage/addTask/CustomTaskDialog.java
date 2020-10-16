@@ -3,13 +3,18 @@ package com.lawlett.taskmanageruikit.tasksPage.addTask;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,12 +53,21 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
 
     private void gridViewInit() {
         dialogGridView.setAdapter(imageAdapter);
-//        dialogGridView.setNumColumns(3);
         dialogGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dialogImg = (Integer) adapterView.getItemAtPosition(i);
                 view.startAnimation(animation);
+
+                LayoutInflater inflater = getLayoutInflater();
+                View v = inflater.inflate(R.layout.item_custom_toast,
+                        (ViewGroup)findViewById(R.id.toast_linear));
+                ImageView toastImage = (ImageView)v.findViewById(R.id.toast_image);
+                toastImage.setImageResource(dialogImg);
+                Toast toast = new Toast(getContext());
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(v);
+                toast.show();
             }
         });
     }

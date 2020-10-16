@@ -105,4 +105,5 @@
     <string name="attention">Внимание!</string>
     <string name="task_dialog_message">Вы уверены, что хотите удалить?</string>
     <string name="Cancel">Отмена</string>
+    <string name="choosed">Вы выбрали: </string>
 </resources>

@@ -63,7 +63,7 @@
         
         <Button
             android:id="@+id/dialog_btn_cancel"
-            android:textColor="@color/taskEvents"
+            android:textColor="@color/myWhite"
             android:layout_margin="10dp"
             android:text="@string/Cancel"
             android:background="@drawable/bg_button_normal"
