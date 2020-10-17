@@ -107,4 +107,7 @@
     <string name="task_dialog_message">Are you sure you want to delete it? </string>
     <string name="Cancel">Cancel</string>
     <string name="choosed">You choosed: </string>
+    <string name="change_image_title">Change the picture and category title</string>
+    <string name="remove_category">remove</string>
+    <string name="what_to_do">What would you like to do?</string>
 </resources>
