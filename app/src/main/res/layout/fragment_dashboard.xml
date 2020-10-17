@@ -576,6 +576,42 @@
                 app:layout_constraintStart_toEndOf="@id/meetTask_progress"
                 app:layout_constraintTop_toTopOf="@+id/private_progress" />
 
+            <TextView
+                android:id="@+id/add_pr_title"
+                style="@style/textDashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:text="Свое"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/work_progress"/>
+
+            <ProgressBar
+                android:id="@+id/add_progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintEnd_toStartOf="@id/add_percent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_pr_title" />
+
+            <TextView
+                android:id="@+id/add_percent"
+                style="@style/dashboardTextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="0%"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/add_progress"
+                app:layout_constraintStart_toEndOf="@id/add_progress"
+                app:layout_constraintTop_toTopOf="@+id/add_progress" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
