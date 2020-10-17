@@ -22,6 +22,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.Task;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
@@ -37,6 +41,8 @@ import java.util.Random;
 public class SettingsActivity extends AppCompatActivity {
     ImageView back;
     LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
+    ReviewManager manager;
+    ReviewInfo reviewInfo;
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -46,6 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         loadLocale();
         setContentView(R.layout.activity_settings);
+        reviewInApp();
 
         clear_password_layout = findViewById(R.id.first_layout);
         clearMinutes_layout = findViewById(R.id.second_layout);
@@ -137,12 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
                 showChangeLanguageDialog();
             }
         });
-
     }
-
-
-
-
 
     public void showChangeThemeDialog() {
         final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};

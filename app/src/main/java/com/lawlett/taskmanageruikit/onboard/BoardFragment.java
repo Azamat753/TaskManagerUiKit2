@@ -33,8 +33,6 @@ public class BoardFragment extends Fragment {
     public BoardFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,7 +90,6 @@ public class BoardFragment extends Fragment {
                 start_tv.setVisibility(View.VISIBLE);
                 change_lang.setVisibility(View.GONE);
                 break;
-
         }
 
         start_tv.setOnClickListener(v -> {
@@ -107,8 +104,8 @@ public class BoardFragment extends Fragment {
                 showChangeLanguageDialog();
             }
         });
-
     }
+
     private void showChangeLanguageDialog() {
         final String[] listItems = {"English", "Русский", "Кырзгызча"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());

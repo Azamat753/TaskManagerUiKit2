@@ -13,17 +13,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
-
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -235,26 +232,5 @@ public class IdeaActivity extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "IMG_" + Calendar.getInstance().getTime(), null);
         return Uri.parse(path);
     }
-
-//    public void uploadImage() {
-//        Random random = new Random();
-//        Integer counter = random.nextInt(20000);
-//
-//        StorageReference reference = FirebaseStorage.getInstance()
-//                .getReference().child("save/image.jpg" + counter);
-//        UploadTask task = reference.putFile(Uri.parse(pickImage));
-//
-//        task.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(QuickActivity.this, "All Right!", Toast.LENGTH_SHORT).show();
-//
-//                } else {
-//                    Toast.makeText(QuickActivity.this, "Danger!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//    }
 }
 

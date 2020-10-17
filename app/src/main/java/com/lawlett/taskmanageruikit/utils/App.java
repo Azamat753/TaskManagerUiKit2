@@ -29,8 +29,6 @@ public class App extends Application {
         return dataBase;
     }
 
-
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

@@ -3,7 +3,7 @@
     <string name="app_name">Planner</string>
 
     <string name="your_api_key">my_api_key</string>
-    <string name="очистить">Тизмесин тазалоо</string>
+    <string name="clear">Тизмесин тазалоо</string>
     <string name="clearSetting">Сырсөз дайындарын тазалоо</string>
     <string name="progress">Прогресс</string>
     <string name="clear_minutes">Бир нече мүнөт ичинде талааны тазалоо</string>

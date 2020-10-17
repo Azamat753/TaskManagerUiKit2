@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_add_idea"
+        android:shortcutId="idea"
+        android:shortcutLongLabel="@string/ideas"
+        android:shortcutShortLabel="@string/ideas"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="action.intent.action.View"
+            android:targetClass="com.lawlett.taskmanageruikit.idea.IdeaActivity"
+            android:targetPackage="com.lawlett.taskmanageruikit" />
+        <categories android:name="android.shortcuts.conversations" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_settings"
+        android:shortcutId="settings"
+        android:shortcutLongLabel="@string/settings"
+        android:shortcutShortLabel="@string/settings"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="action.intent.action.View"
+            android:targetClass="com.lawlett.taskmanageruikit.settings.SettingsActivity"
+            android:targetPackage="com.lawlett.taskmanageruikit" />
+        <categories android:name="android.shortcuts.conversations" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_timer"
+        android:shortcutId="timer"
+        android:shortcutLongLabel="@string/timer"
+        android:shortcutShortLabel="@string/timer"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="action.intent.action.View"
+            android:targetClass="com.lawlett.taskmanageruikit.timing.activity.TimerActivity"
+            android:targetPackage="com.lawlett.taskmanageruikit" />
+        <categories android:name="android.shortcuts.conversations" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_stopwatch"
+        android:shortcutId="stopwatch"
+        android:shortcutLongLabel="@string/stopwatch"
+        android:shortcutShortLabel="@string/stopwatch"
+        tools:targetApi="n_mr1">
+        <intent
+            android:action="action.intent.action.View"
+            android:targetClass="com.lawlett.taskmanageruikit.timing.activity.StopwatchActivity"
+            android:targetPackage="com.lawlett.taskmanageruikit" />
+        <categories android:name="android.shortcuts.conversations" />
+    </shortcut>
+
+
+</shortcuts>

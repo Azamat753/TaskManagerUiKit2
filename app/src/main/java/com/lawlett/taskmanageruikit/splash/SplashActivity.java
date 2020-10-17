@@ -30,19 +30,19 @@ public class SplashActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                boolean isShown = Preference.getInstance(getApplication()).isShown();
-                if (isShown) {
-                    startActivity(new Intent(getApplication(), MainActivity.class));
-                } else {
-                    startActivity(new Intent(getApplication(), BoardActivity.class));
-                }
-                finish();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    boolean isShown = Preference.getInstance(getApplication()).isShown();
+                    if (isShown) {
+                        startActivity(new Intent(getApplication(), MainActivity.class));
+                    } else {
+                        startActivity(new Intent(getApplication(), BoardActivity.class));
+                    }
+                    finish();
 
-            }
-        }, 1000);
+                }
+            }, 1000);
 
 
     }
