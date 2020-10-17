@@ -19,7 +19,7 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.adapter.DoneAdapter;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.DoneDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 import java.util.ArrayList;
@@ -45,7 +45,6 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
         changeView();
         list = new ArrayList<>();
         adapter = new DoneAdapter(this);
-
         App.getDataBase().doneDao().getAllLive().observe(this, doneModels -> {
             if (doneModels != null) {
                 list.clear();
@@ -166,15 +165,14 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
     }
 
     private void incrementDone() {
-        previousData = DoneDoneSizePreference.getInstance(this).getDataSize();
-        DoneDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+        previousData = AddDoneSizePreference.getInstance(this).getDataSize();
+        AddDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+
     }
 
     private void decrementDone() {
-        currentData = DoneDoneSizePreference.getInstance(this).getDataSize();
+        currentData = AddDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
-        DoneDoneSizePreference.getInstance(this).saveDataSize(updateData);
+        AddDoneSizePreference.getInstance(this).saveDataSize(updateData);
     }
-
-
 }

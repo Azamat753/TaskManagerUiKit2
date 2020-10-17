@@ -3,18 +3,18 @@ package com.lawlett.taskmanageruikit.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class DoneDoneSizePreference {
+public class AddDoneSizePreference {
 
-    public static volatile DoneDoneSizePreference instance;
+    public static volatile AddDoneSizePreference instance;
     private SharedPreferences preferences;
 
-    public DoneDoneSizePreference(Context context) {
+    public AddDoneSizePreference(Context context) {
         instance = this;
         preferences = context.getSharedPreferences("doneSize", Context.MODE_PRIVATE);
     }
 
-    public static DoneDoneSizePreference getInstance(Context context) {
-        if (instance == null) new DoneDoneSizePreference(context);
+    public static AddDoneSizePreference getInstance(Context context) {
+        if (instance == null) new AddDoneSizePreference(context);
         return instance;
     }
 
