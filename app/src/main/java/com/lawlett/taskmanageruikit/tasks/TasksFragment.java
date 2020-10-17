@@ -18,15 +18,20 @@ import androidx.fragment.app.Fragment;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.CustomTaskDialog;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.DoneActivity;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.HomeActivity;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.MeetActivity;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.PersonalActivity;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.PrivateActivity;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.WorkActivity;
+import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TasksFragment extends Fragment {
@@ -34,11 +39,20 @@ public class TasksFragment extends Fragment {
     TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount, done_title;
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;
     ConstraintLayout personConst, workConst, meetConst, homeConst, privateConst, addConst, doneConst;
+    List<DoneModel> list;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TaskDialogPreference.init(getContext());
+
+        list = new ArrayList<>();
+        App.getDataBase().doneDao().getAllLive().observe(this, doneModels -> {
+            if (list != null) {
+                list.clear();
+                list.addAll(doneModels);
+            }
+        });
     }
 
     @Override
@@ -113,17 +127,7 @@ public class TasksFragment extends Fragment {
         addConst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomTaskDialog customTaskDialog = new CustomTaskDialog(getContext());
-                customTaskDialog.setDialogResult(new CustomTaskDialog.CustomDialogListener() {
-                    @Override
-                    public void addInformation(String title, Integer image, int visible, int gone) {
-                        done_title.setText(title);
-                        doneImage.setImageResource(image);
-                        doneConst.setVisibility(visible);
-                        addConst.setVisibility(gone);
-                    }
-                });
-                customTaskDialog.show();
+                showCustomTaskDialog();
             }
         });
 
@@ -136,21 +140,25 @@ public class TasksFragment extends Fragment {
         doneConst.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                final String[] listItems = {getString(R.string.change_image_title), getString(R.string.remove_category)};
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(R.string.attention)
-                        .setMessage(R.string.task_dialog_message)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                TaskDialogPreference.remove();
-                                doneConst.setVisibility(View.GONE);
-                                addConst.setVisibility(View.VISIBLE);
-                            }
-                        });
-                builder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                builder.setTitle(R.string.what_to_do);
+                builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if(which == 0){
+                            showCustomTaskDialog();
+                        }
+                        if(which == 1) {
+                            App.getDataBase().doneDao().deleteAll(list);
 
+                            AddDoneSizePreference.getInstance(getContext()).clearSettings();
+                            TaskDialogPreference.remove();
+                            doneConst.setVisibility(View.GONE);
+                            addConst.setVisibility(View.VISIBLE);
+                            done_amount.setText("0");
+                        }
+                        dialog.dismiss();
                     }
                 });
                 AlertDialog alertDialog = builder.create();
@@ -164,6 +172,20 @@ public class TasksFragment extends Fragment {
                 startActivity(new Intent(getContext(), DoneActivity.class));
             }
         });
+    }
+
+    public void showCustomTaskDialog(){
+        CustomTaskDialog customTaskDialog = new CustomTaskDialog(getContext());
+        customTaskDialog.setDialogResult(new CustomTaskDialog.CustomDialogListener() {
+            @Override
+            public void addInformation(String title, Integer image, int visible, int gone) {
+                done_title.setText(title);
+                doneImage.setImageResource(image);
+                doneConst.setVisibility(visible);
+                addConst.setVisibility(gone);
+            }
+        });
+        customTaskDialog.show();
     }
 
     public void notifyView() {
