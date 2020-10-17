@@ -2,7 +2,7 @@
     <string name="app_name">Planner</string>
 
     <string name="your_api_key">my_api_key</string>
-    <string name="очистить">Очистить список</string>
+    <string name="clear_list">Очистить список</string>
     <string name="clearSetting">Очистить данные о пароле</string>
     <string name="progress">Прогресс</string>
     <string name="clear_minutes">Очистить поле всего минут</string>
@@ -100,4 +100,10 @@
     <string name="to_delete">Удалить</string>
     <string name="color_dont_choosed">Цвет не выбран</string>
     <string name="share_app">Поделиться</string>
+    <string name="add_title">Введите текст</string>
+    <string name="add_icon">Выберите картинку: </string>
+    <string name="attention">Внимание!</string>
+    <string name="task_dialog_message">Вы уверены, что хотите удалить?</string>
+    <string name="Cancel">Отмена</string>
+    <string name="choosed">Вы выбрали: </string>
 </resources>

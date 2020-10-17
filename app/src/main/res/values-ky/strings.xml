@@ -3,7 +3,7 @@
     <string name="app_name">Planner</string>
 
     <string name="your_api_key">my_api_key</string>
-    <string name="clear">Тизмесин тазалоо</string>
+    <string name="clear_list">Тизмесин тазалоо</string>
     <string name="clearSetting">Сырсөз дайындарын тазалоо</string>
     <string name="progress">Прогресс</string>
     <string name="clear_minutes">Бир нече мүнөт ичинде талааны тазалоо</string>
@@ -106,4 +106,6 @@
     <string name="attention">Внимание!</string>
     <string name="task_dialog_message">Вы уверены, что хотите удалить?</string>
     <string name="Cancel">Отмена</string>
+    <string name="choosed">Сиздин тандоонуз: </string>
+
 </resources>

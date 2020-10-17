@@ -24,8 +24,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
-import com.google.android.play.core.review.ReviewManagerFactory;
-import com.google.android.play.core.tasks.Task;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
@@ -52,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         loadLocale();
         setContentView(R.layout.activity_settings);
-        reviewInApp();
 
         clear_password_layout = findViewById(R.id.first_layout);
         clearMinutes_layout = findViewById(R.id.second_layout);

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/delete_all_popup"
-        android:title="@string/очистить" />
+        android:title="@string/clear_list" />
 
 <!--    <item-->
 <!--        android:id="@+id/sort_popup"-->

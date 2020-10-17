@@ -160,8 +160,10 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
                             View itemView = viewHolder.itemView;
                             final ColorDrawable background = new ColorDrawable(Color.RED);
+
                             background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
                             background.draw(c);
+
 
                             break;
 
