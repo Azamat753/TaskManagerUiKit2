@@ -57,9 +57,7 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dialogImg = (Integer) adapterView.getItemAtPosition(i);
                 view.startAnimation(animation);
-                InputMethodManager inputMethodManager =
-                        (InputMethodManager)getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                hideKeyboard();
 
                 Toast toast = new Toast(getContext());
                 ImageView imageToast = new ImageView(getContext());
@@ -68,6 +66,15 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
                 toast.show();
             }
         });
+    }
+
+    private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if(view != null){
+        InputMethodManager inputMethodManager =
+                (InputMethodManager)getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     private void initView() {
