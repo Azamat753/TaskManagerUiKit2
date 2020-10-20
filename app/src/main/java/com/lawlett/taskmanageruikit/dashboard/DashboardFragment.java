@@ -16,11 +16,13 @@ import androidx.fragment.app.Fragment;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
+import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
@@ -33,13 +35,17 @@ import java.util.List;
  */
 public class DashboardFragment extends Fragment {
     TextView plans_amount, todo_amount, event_amount, allTask_amount,
-            complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent, timing_task_amount, timing_minute_amount;
-    ProgressBar allTaskProgress, personalProgress, workProgress, meetProgress, homeProgress, privateProgress;
+            complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent, timing_task_amount, timing_minute_amount,
+    addPercent, addTitle;
+    ProgressBar allTaskProgress, personalProgress, workProgress, meetProgress, homeProgress, privateProgress,
+    addProgress;
     int personalDoneAmount, workDoneAmount, meetDoneAmount, homeDoneAmount, privateDoneAmount, plansAmount, doneAmount,
-            personalAmount, workAmount, meetAmount, homeAmount, privateAmount, todoAmount, eventAmount, allTaskAmount;
+            personalAmount, workAmount, meetAmount, homeAmount, privateAmount, todoAmount, eventAmount, allTaskAmount,
+    addDoneAmount, addAmount;
 
     int todoPercent, personalPercentAmount, workPercentAmount, meetPercentAmount, homePercentAmount,
-            privatePercentAmount, timingTaskAmountInt, timingMinuteAmountInt;
+            privatePercentAmount, timingTaskAmountInt, timingMinuteAmountInt,
+    addPercentAmount;
     private List<TimingModel> list;
 
     public DashboardFragment() {
@@ -83,13 +89,17 @@ public class DashboardFragment extends Fragment {
         meetProgress = view.findViewById(R.id.meetTask_progress);
         homeProgress = view.findViewById(R.id.homeTask_progress);
         privateProgress = view.findViewById(R.id.private_progress);
+        addPercent = view.findViewById(R.id.add_percent);
+        addProgress = view.findViewById(R.id.add_progress);
+        addTitle = view.findViewById(R.id.add_pr_title);
+
 
         getDataFromBD();
         getAllTasks();
         getTasksDoneAmount();
         countUpPercent();
         setShow();
-
+        checkNewCategory();
 
     }
 
@@ -126,6 +136,11 @@ public class DashboardFragment extends Fragment {
         } catch (ArithmeticException e) {
             e.printStackTrace();
         }
+        try {
+            addPercentAmount = addDoneAmount * 100 / addAmount;
+        } catch (ArithmeticException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getTasksDoneAmount() {
@@ -133,8 +148,9 @@ public class DashboardFragment extends Fragment {
         workDoneAmount = WorkDoneSizePreference.getInstance(getContext()).getDataSize(); //Работа выполненные
         meetDoneAmount = MeetDoneSizePreference.getInstance(getContext()).getDataSize(); //Встречи выполненные
         homeDoneAmount = HomeDoneSizePreference.getInstance(getContext()).getDataSize(); //Дом выполненные
+        addDoneAmount = AddDoneSizePreference.getInstance(getContext()).getDataSize();
         privateDoneAmount = PrivateDoneSizePreference.getInstance(getContext()).getDataSize(); //Приватные выполненные
-        doneAmount = personalDoneAmount + workDoneAmount + meetDoneAmount + homeDoneAmount + privateDoneAmount;//Выполненные задачи
+        doneAmount = personalDoneAmount + workDoneAmount + meetDoneAmount + homeDoneAmount + privateDoneAmount + addDoneAmount;//Выполненные задачи
     }
 
     public void getDataFromBD() {
@@ -145,13 +161,14 @@ public class DashboardFragment extends Fragment {
         workAmount = App.getDataBase().workDao().getAll().size();//Работа задачи кол-во
         meetAmount = App.getDataBase().meetDao().getAll().size();//Встречи задачи кол-во
         homeAmount = App.getDataBase().homeDao().getAll().size();//Дом задачи кол-во
+        addAmount = App.getDataBase().doneDao().getAll().size();
         privateAmount = App.getDataBase().privateDao().getAll().size();//Приватные задачи кол-во
         eventAmount = App.getDataBase().dataDao().getAll().size();//События задачи кол-во
     }
 
 
     public void getAllTasks() {
-        todoAmount = personalAmount + workAmount + meetAmount + homeAmount + privateAmount; //Все задачи
+        todoAmount = personalAmount + workAmount + meetAmount + homeAmount + privateAmount + addAmount; //Все задачи
         allTaskAmount = todoAmount + eventAmount + plansAmount;//Всего записей
     }
 
@@ -171,6 +188,7 @@ public class DashboardFragment extends Fragment {
         workPercent.setText(workPercentAmount + "%");
         meetPercent.setText(meetPercentAmount + "%");
         homePercent.setText(homePercentAmount + "%");
+        addPercent.setText(addPercentAmount + "%");
         privatePercent.setText(privatePercentAmount + "%");
 
         boolean booleanValue = ThemePreference.getInstance(getContext()).isTheme();
@@ -195,6 +213,10 @@ public class DashboardFragment extends Fragment {
             homeProgress.setMax(homeAmount);
             homeProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
+            addProgress.setProgress(addDoneAmount);
+            addProgress.setMax(addAmount);
+            addProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+
             privateProgress.setProgress(privateDoneAmount);
             privateProgress.setMax(privateAmount);
             privateProgress.getProgressDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
@@ -203,6 +225,7 @@ public class DashboardFragment extends Fragment {
             workProgress.setProgress(workDoneAmount);
             meetProgress.setProgress(meetDoneAmount);
             homeProgress.setProgress(homeDoneAmount);
+            addProgress.setProgress(addDoneAmount);
             privateProgress.setProgress(privateDoneAmount);
 
             allTaskProgress.setMax(todoAmount);
@@ -210,6 +233,7 @@ public class DashboardFragment extends Fragment {
             workProgress.setMax(workAmount);
             meetProgress.setMax(meetAmount);
             homeProgress.setMax(homeAmount);
+            addProgress.setMax(addAmount);
             privateProgress.setMax(privateAmount);
 
             allTaskProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
@@ -217,8 +241,23 @@ public class DashboardFragment extends Fragment {
             workProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
             meetProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
             homeProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
+            addProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
             privateProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
 
+        }
+    }
+
+    public void checkNewCategory(){
+        TaskDialogPreference.init(getContext());
+        if(!TaskDialogPreference.getTitle().isEmpty()){
+            addTitle.setVisibility(View.VISIBLE);
+            addProgress.setVisibility(View.VISIBLE);
+            addPercent.setVisibility(View.VISIBLE);
+            addTitle.setText(TaskDialogPreference.getTitle());
+        }else {
+            addTitle.setVisibility(View.GONE);
+            addProgress.setVisibility(View.GONE);
+            addPercent.setVisibility(View.GONE);
         }
     }
 }
