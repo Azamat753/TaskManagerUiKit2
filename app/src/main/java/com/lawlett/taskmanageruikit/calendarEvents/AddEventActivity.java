@@ -98,6 +98,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         doneView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setNotification();
                 recordDataRoom();
                 setNotification();
             }
@@ -130,7 +131,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         i.putExtra("displayText", "sample text");
         List<CalendarTaskModel> listA= App.getDataBase().dataDao().getAll();
         int idOfP = listA.size();
-        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), idOfP, i,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getActivity(this.getApplicationContext(), idOfP, i,PendingIntent.FLAG_CANCEL_CURRENT);
         mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
 //        Calendar calendar = Calendar.getInstance();
