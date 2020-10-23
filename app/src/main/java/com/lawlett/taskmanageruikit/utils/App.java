@@ -11,10 +11,15 @@ import androidx.room.Room;
 
 import com.lawlett.taskmanageruikit.room.AppDataBase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class App extends Application {
     public static App instance;
     private static AppDataBase dataBase;
     public static final String CHANNEL_ID = "exampleChannel";
+    public static final String CHANNEL_ID_HOURS = "exampleChannelHours";
+    public static final String CHANNEL_ID_DAY = "exampleChannelDay";
 
     @Override
     public void onCreate() {
@@ -44,8 +49,26 @@ public class App extends Application {
                     CHANNEL_ID, "Example Channel",
                     NotificationManager.IMPORTANCE_HIGH
             );
+            NotificationChannel channel2 = new NotificationChannel(
+                    CHANNEL_ID_HOURS, "Example Channel2",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
             NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
+            List<NotificationChannel> notificationChannels = new ArrayList<>();
+            notificationChannels.add(channel);
+            notificationChannels.add(channel2);
+            manager.createNotificationChannels(notificationChannels);
+//            manager.createNotificationChannel(channel);
+
         }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationChannel channel = new NotificationChannel(
+//                    CHANNEL_ID_HOURS, "Example Channel",
+//                    NotificationManager.IMPORTANCE_HIGH
+//            );
+//            NotificationManager manager2 = getSystemService(NotificationManager.class);
+//            manager2.createNotificationChannel(channel);
+//
+//        }
     }
 }

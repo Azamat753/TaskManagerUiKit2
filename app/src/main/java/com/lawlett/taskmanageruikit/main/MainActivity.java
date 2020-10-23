@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private List<QuickModel> list;
 
     QuickAdapter adapter;
-    //hello world
-    ////
 
     AlarmManager mAlarm;
     long time;
@@ -107,10 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.SECOND, 10);
+        calendar.add(Calendar.HOUR, 24);
         time = calendar.getTimeInMillis();
 
-        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time + 1440000 ,AlarmManager.INTERVAL_DAY,pi);
+        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time ,AlarmManager.INTERVAL_DAY,pi);
     }
 
     public void changeFragment(Fragment fragment) {
