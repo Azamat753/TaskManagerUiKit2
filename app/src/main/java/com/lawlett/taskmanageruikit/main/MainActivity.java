@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     private void setNotification() {
         Intent i = new Intent(getBaseContext(), MessageService.class);
         i.putExtra("displayText", "sample text");
-        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), 0, i,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
         mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
         Calendar calendar = Calendar.getInstance();
