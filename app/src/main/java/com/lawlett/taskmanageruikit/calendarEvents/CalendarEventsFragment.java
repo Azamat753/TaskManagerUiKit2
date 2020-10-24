@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
                 list.clear();
 //                list.addAll(calendarTaskModels);
                 list.addAll(App.getDataBase().dataDao().getSortedCalendarTaskModel());
+                App.getDataBase().dataDao().updateWord(list);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -182,6 +184,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 pos = viewHolder.getAdapterPosition();
+                                Log.d("position", String.valueOf(pos));
                                 App.getDataBase().dataDao().delete(list.get(pos));
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
