@@ -9,9 +9,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
+import android.webkit.PermissionRequest;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +34,7 @@ import com.lawlett.taskmanageruikit.utils.DatePickerFragment;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.TimePickerFragment;
 
+import java.security.acl.Permission;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,6 +79,8 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
             DialogFragment timePicker = new TimePickerFragment();
             timePicker.show(getSupportFragmentManager(), "timePicker");
         });
+
+        RequestPermission();
 
         endTime.setOnClickListener(v -> {
             Calendar mcurrentTime = Calendar.getInstance();
@@ -126,12 +132,24 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         startData.setText(currentDataString);
     }
 
+    private void RequestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + this.getPackageName()));
+                startActivityForResult(intent, 1);
+            } else {
+                //Permission Granted-System will work
+            }
+        }
+    }
+
     private void setNotification() {
         Intent i = new Intent(getBaseContext(), MessageService.class);
         i.putExtra("displayText", "sample text");
         List<CalendarTaskModel> listA= App.getDataBase().dataDao().getAll();
         int idOfP = listA.size();
-        PendingIntent pi = PendingIntent.getActivity(this.getApplicationContext(), idOfP, i,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), idOfP, i,PendingIntent.FLAG_CANCEL_CURRENT);
         mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
 //        Calendar calendar = Calendar.getInstance();

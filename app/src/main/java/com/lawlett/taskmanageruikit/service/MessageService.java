@@ -45,19 +45,44 @@ public class MessageService extends BroadcastReceiver {
 //                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 //        notificationManager.notify(2, notification);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-        Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID_HOURS)
+            if (notificationManager.getNotificationChannel(CHANNEL_ID_HOURS) == null) {
+                notificationManager.createNotificationChannel(
+                        new NotificationChannel(
+                                CHANNEL_ID_HOURS,
+                                "Whatever",
+                                NotificationManager.IMPORTANCE_HIGH
+                        )
+                );
+            }
+
+            Notification notification = new NotificationCompat.Builder(context, CHANNEL_ID_HOURS)
+                    .setSmallIcon(R.mipmap.app_logo_foreground)
+                    .setContentTitle("Hello")
+                    .setOnlyAlertOnce(true)
+                    .build();
+
+            notificationManager.notify(2, notification);
+        }else {
+//            Intent intent1 = new Intent(context, MainActivity.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context,2 , intent1,PendingIntent.FLAG_ONE_SHOT);
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.app_logo_foreground)
-//                .setCustomBigContentView(expandedView)
-                .setContentTitle("Hello")
-//                .setColor(getColor(R.color.myWhite))
-//                .setContentText(getString(R.string.go_count))
-                .setOnlyAlertOnce(true)
-                .build();
+                .setContentTitle("Planner")
+                .setContentText("пора ставить новые цели!")
+                .setAutoCancel(true)
+                .setSound(soundUri);
+//                .setContentIntent(pendingIntent);
 
+        Notification notification = builder.build();
 
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(2, notification);
         }
     }
+}
 
