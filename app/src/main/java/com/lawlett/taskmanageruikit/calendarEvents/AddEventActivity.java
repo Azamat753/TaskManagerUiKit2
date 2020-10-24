@@ -104,6 +104,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         doneView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                titleT = title.getText().toString();
                 setNotification();
                 recordDataRoom();
             }
@@ -146,18 +147,14 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     private void setNotification() {
         Intent i = new Intent(getBaseContext(), MessageService.class);
         i.putExtra("displayText", "sample text");
+        i.putExtra(MessageService.TITLE, "Planner");
+        i.putExtra(MessageService.TEXT, titleT);
         List<CalendarTaskModel> listA= App.getDataBase().dataDao().getAll();
         int idOfP = listA.size();
         PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), idOfP, i,PendingIntent.FLAG_CANCEL_CURRENT);
         mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.add(Calendar.SECOND, 10);
-//        time = calendar.getTimeInMillis();
 
         mAlarm.set(AlarmManager.RTC_WAKEUP,time,pi);
-//        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time,AlarmManager.INTERVAL_DAY,pi);
     }
 
     @SuppressLint({"LogNotTimber", "SetTextI18n"})
