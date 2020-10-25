@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +41,8 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     int position;
     int pos;
     RecyclerView recyclerViewQuick;
+    GridLayoutManager gridLayoutManager;
+    ImageView btnChange;
 
     public IdeasFragment() {
         // Required empty public constructor
@@ -88,7 +92,10 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         recyclerViewQuick = view.findViewById(R.id.quick_recycler);
         adapter = new QuickAdapter(list, this, getContext());
         recyclerViewQuick.setAdapter(adapter);
-        recyclerViewQuick.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        recyclerViewQuick.setLayoutManager(gridLayoutManager);
+        btnChange = Objects.requireNonNull(getActivity()).findViewById(R.id.tool_btn_grid);
+        btnGridChange();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -151,6 +158,21 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
 
             }
         }).attachToRecyclerView(recyclerViewQuick);
+    }
+    public void btnGridChange(){
+        btnChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!btnChange.isActivated()){
+                    btnChange.setActivated(true);
+                    gridLayoutManager.setSpanCount(2);
+
+                }else{
+                    btnChange.setActivated(false);
+                    gridLayoutManager.setSpanCount(1);
+                }
+            }
+        });
     }
 
 }

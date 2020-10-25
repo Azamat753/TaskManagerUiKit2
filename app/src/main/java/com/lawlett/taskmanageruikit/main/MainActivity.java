@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.RequiresApi;
@@ -39,6 +40,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     TextView toolbar_title;
     ImageView  settings_view;
+    ImageView btnGrid;
     private List<QuickModel> list;
 
     QuickAdapter adapter;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar_title = findViewById(R.id.toolbar_title);
         settings_view = findViewById(R.id.settings_view);
+        btnGrid = findViewById(R.id.tool_btn_grid);
 
         list = new ArrayList<>();
         adapter = new QuickAdapter(list, null, this);
@@ -137,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     case 4:
                         changeFragment(new IdeasFragment());
                         toolbar_title.setText(R.string.ideas);
+                        btnGrid.setVisibility(View.VISIBLE);
                         break;
                 }
             }
