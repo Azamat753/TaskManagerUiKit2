@@ -27,6 +27,7 @@ import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
+import com.lawlett.taskmanageruikit.utils.IdeaViewPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +57,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_ideas, container, false);
+
 
         list = new ArrayList<>();
 
@@ -87,7 +89,6 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         adapter.notifyDataSetChanged();
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -97,6 +98,8 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerViewQuick.setLayoutManager(gridLayoutManager);
         btnChange = Objects.requireNonNull(getActivity()).findViewById(R.id.tool_btn_grid);
+
+
         btnGridChange();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -197,16 +200,19 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         }).attachToRecyclerView(recyclerViewQuick);
     }
     public void btnGridChange(){
+
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!btnChange.isActivated()){
                     btnChange.setActivated(true);
+                    IdeaViewPreference.getInstance(getContext()).saveView(true);
                     gridLayoutManager.setSpanCount(2);
-
                 }else{
                     btnChange.setActivated(false);
+                    IdeaViewPreference.getInstance(getContext()).saveView(false);
                     gridLayoutManager.setSpanCount(1);
+
                 }
             }
         });
