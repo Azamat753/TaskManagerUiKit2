@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
     private void setNotification() {
         Intent i = new Intent(getBaseContext(), MessageService.class);
         i.putExtra("displayText", "sample text");
+        i.putExtra(MessageService.TITLE, "Planner");
+        i.putExtra(MessageService.TEXT, "пора ставить новые цели!");
         PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
         mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
