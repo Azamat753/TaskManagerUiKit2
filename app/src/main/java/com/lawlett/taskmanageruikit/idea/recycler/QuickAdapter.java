@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         TextView title, desc, data_created;
         ImageView imageDesc;
         IQuickOnClickListener listeneer;
+        FrameLayout leftView;
 
         public QuickViewHolder(@NonNull View itemView, IQuickOnClickListener listeneer) {
             super(itemView);
@@ -55,6 +57,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             desc = itemView.findViewById(R.id.desc_quick);
             data_created = itemView.findViewById(R.id.data_quick);
             imageDesc = itemView.findViewById(R.id.image_desc);
+            leftView = itemView.findViewById(R.id.quItem_left_view);
             itemView.setOnClickListener(this);
             this.listeneer = listeneer;
         }
@@ -62,13 +65,13 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         public void onBind(QuickModel quickModel) {
             title.setText(quickModel.getTitle());
             desc.setText(quickModel.getDescription());
-
             data_created.setText(quickModel.getCreateData());
 
             if (quickModel.getColor() == 0) {
                 quickModel.setColor(R.color.myWhite);
             } else {
                 title.setTextColor(quickModel.getColor());
+                leftView.setBackgroundColor(quickModel.getColor());
             }
             Glide.with(context).load(quickModel.getImage()).into(imageDesc);
         }
