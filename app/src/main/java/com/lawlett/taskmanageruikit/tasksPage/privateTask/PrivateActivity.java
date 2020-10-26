@@ -9,6 +9,8 @@ import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,6 +41,8 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
     PrivateModel privateModel;
     int pos, previousData, currentData, updateData;
     ImageView privateBack,imageAdd, imageMic;
+    boolean knopka = false;
+    Animation animationAlpha;
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
 
 
@@ -147,13 +151,17 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence != null) {
+                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.GONE);
                     imageAdd.setVisibility(View.VISIBLE);
+                    knopka = true;
                 }
-                if (editText.getText().toString().trim().isEmpty()) {
+                if (editText.getText().toString().isEmpty() && knopka) {
+                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.GONE);
                     imageMic.setVisibility(View.VISIBLE);
+                    knopka = false;
                 }
             }
             @Override
@@ -166,6 +174,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
     private void init() {
         privateBack = findViewById(R.id.personal_back);
         recyclerView = findViewById(R.id.recycler_private);
+        animationAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
         recyclerView.setAdapter(adapter);
         list = new ArrayList<>();
         adapter = new PrivateAdapter(this);

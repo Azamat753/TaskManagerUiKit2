@@ -9,6 +9,8 @@ import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -41,6 +43,8 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     RecyclerView recyclerView;
     int pos, previousPersonalDone, currentData, updateData;
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
+    boolean knopka = false;
+    Animation animationAlpha;
 
 
     @Override
@@ -146,13 +150,17 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence != null) {
+                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.GONE);
                     imageAdd.setVisibility(View.VISIBLE);
+                    knopka = true;
                 }
-                if (editText.getText().toString().trim().isEmpty()) {
+                if (editText.getText().toString().isEmpty() && knopka) {
+                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.GONE);
                     imageMic.setVisibility(View.VISIBLE);
+                    knopka = false;
                 }
             }
             @Override
@@ -165,7 +173,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     private void init() {
         list = new ArrayList<>();
         adapter = new PersonalAdapter(this);
-
+        animationAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
         recyclerView = findViewById(R.id.recycler_personal);
         recyclerView.setAdapter(adapter);
         editText = findViewById(R.id.editText_personal);

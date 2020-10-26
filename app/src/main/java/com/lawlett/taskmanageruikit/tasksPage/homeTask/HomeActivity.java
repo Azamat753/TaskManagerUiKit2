@@ -9,6 +9,8 @@ import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +43,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     int pos, previousData, currentData, updateData;
     ImageView homeBack, imageMic, imageAdd;
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
+    boolean knopka = false;
+    Animation animationAlpha;
 
 
     @Override
@@ -112,21 +116,18 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                 dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                        .setPositiveButton(R.string.yes, (dialog12, which) -> {
 
-                                pos = viewHolder.getAdapterPosition();
-                                homeModel = list.get(pos);
-                                if (!homeModel.isDone) {
-                                    App.getDataBase().homeDao().delete(list.get(pos));
-                                } else {
-                                    decrementDone();
-                                    App.getDataBase().homeDao().update(list.get(pos));
-                                    App.getDataBase().homeDao().delete(list.get(pos));
-                                    adapter.notifyDataSetChanged();
-                                    Toast.makeText(HomeActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
-                                }
+                            pos = viewHolder.getAdapterPosition();
+                            homeModel = list.get(pos);
+                            if (!homeModel.isDone) {
+                                App.getDataBase().homeDao().delete(list.get(pos));
+                            } else {
+                                decrementDone();
+                                App.getDataBase().homeDao().update(list.get(pos));
+                                App.getDataBase().homeDao().delete(list.get(pos));
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(HomeActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
                 adapter.notifyDataSetChanged();
@@ -143,6 +144,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         imageMic = findViewById(R.id.mic_task_home);
         imageAdd = findViewById(R.id.add_task_home);
         recyclerView = findViewById(R.id.recycler_home);
+        animationAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
         recyclerView.setAdapter(adapter);
         list = new ArrayList<>();
         adapter = new HomeAdapter(this);
@@ -158,13 +160,17 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence != null) {
+                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.GONE);
                     imageAdd.setVisibility(View.VISIBLE);
+                    knopka = true;
                 }
-                if (editText.getText().toString().trim().isEmpty()) {
+                if (editText.getText().toString().isEmpty() && knopka) {
+                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.GONE);
                     imageMic.setVisibility(View.VISIBLE);
+                    knopka = false;
                 }
             }
 
