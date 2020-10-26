@@ -1,6 +1,7 @@
 package com.lawlett.taskmanageruikit.idea.recycler;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,12 +27,14 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
     List<QuickModel> list;
     Context context;
     IQuickOnClickListener listener;
+    public MutableLiveData<Boolean> isChange = new MutableLiveData<>();
 
     public QuickAdapter(List<QuickModel> list, IQuickOnClickListener listener, Context context) {
         this.context = context;
         this.list = list;
         this.listener = listener;
     }
+
 
     @NonNull
     @Override
@@ -58,6 +62,8 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         ConstraintLayout firstConst, secondConst;
         Boolean isGrid;
 
+
+
         public QuickViewHolder(@NonNull View itemView, IQuickOnClickListener listeneer) {
             super(itemView);
             title = itemView.findViewById(R.id.title_quick);
@@ -74,13 +80,14 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             secondConst = itemView.findViewById(R.id.constr2);
 //            leftView = itemView.findViewById(R.id.quItem_left_view);
             itemView.setOnClickListener(this);
+
             this.listeneer = listeneer;
 
-
+            isChange.observeForever(aBoolean -> checkView());
+            checkView();
         }
 
         public void onBind(QuickModel quickModel) {
-            checkView();
             title.setText(quickModel.getTitle());
             desc.setText(quickModel.getDescription());
             data_created.setText(quickModel.getCreateData());
@@ -97,6 +104,8 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
             }
             Glide.with(context).load(quickModel.getImage()).into(imageDesc);
             Glide.with(context).load(quickModel.getImage()).into(imageDesc2);
+
+
         }
 
         @Override
@@ -105,6 +114,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
         }
         public void checkView(){
             isGrid= IdeaViewPreference.getInstance(context).getView();
+
             if (isGrid){
                 secondConst.setVisibility(View.VISIBLE);
                 firstConst.setVisibility(View.INVISIBLE);
@@ -114,6 +124,8 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
                 firstConst.setVisibility(View.VISIBLE);
                 Toast.makeText(context, "linear", Toast.LENGTH_SHORT).show();
             }
+            Log.e("ololo", "checkView: " + isGrid);
+
         }
     }
 }

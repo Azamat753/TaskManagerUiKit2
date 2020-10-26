@@ -201,21 +201,19 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     }
     public void btnGridChange(){
 
-        btnChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!btnChange.isActivated()){
-                    btnChange.setActivated(true);
-                    IdeaViewPreference.getInstance(getContext()).saveView(true);
-                    gridLayoutManager.setSpanCount(2);
-                }else{
-                    btnChange.setActivated(false);
-                    IdeaViewPreference.getInstance(getContext()).saveView(false);
-                    gridLayoutManager.setSpanCount(1);
+        btnChange.setOnClickListener(v -> {
+            if(!btnChange.isActivated()){
+                btnChange.setActivated(true);
+                IdeaViewPreference.getInstance(getContext()).saveView(true);
+                gridLayoutManager.setSpanCount(2);
+            }else{
+                btnChange.setActivated(false);
+                IdeaViewPreference.getInstance(getContext()).saveView(false);
+                gridLayoutManager.setSpanCount(1);
+                adapter.notifyDataSetChanged();
 
-                }
             }
+            adapter.isChange.setValue(false);
         });
     }
-
 }
