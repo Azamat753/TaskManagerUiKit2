@@ -46,6 +46,8 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
     int pos, previousData, currentData, updateData;
     RecyclerView recyclerView;
     ImageView workBack, imageAdd, imageMic;
+    boolean knopka = false;
+    Animation animationAlpha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,15 +192,21 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence != null) {
+                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.GONE);
                     imageAdd.setVisibility(View.VISIBLE);
+                    knopka = true;
                 }
-                if (editText.getText().toString().trim().isEmpty()) {
+                if (editText.getText().toString().isEmpty() && knopka) {
+                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.GONE);
                     imageMic.setVisibility(View.VISIBLE);
+                    knopka = false;
                 }
+
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -215,6 +223,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         imageAdd = findViewById(R.id.add_task_work);
         imageMic = findViewById(R.id.mic_task_work);
         workBack = findViewById(R.id.personal_back);
+        animationAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
     }
 
     public void addWorkTask(View view) {

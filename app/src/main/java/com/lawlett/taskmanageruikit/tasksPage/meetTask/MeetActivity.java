@@ -12,6 +12,8 @@ import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +46,9 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
     int position, currentData, updateData, previousData;
     ImageView meetBack, imageMic, imageAdd;
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
+
+    boolean knopka = false;
+    Animation animationAlpha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,13 +199,17 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence != null) {
+                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
+                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.GONE);
                     imageAdd.setVisibility(View.VISIBLE);
+                    knopka = true;
                 }
-                if (editText.getText().toString().trim().isEmpty()) {
+                if (editText.getText().toString().isEmpty() && knopka) {
+                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.GONE);
                     imageMic.setVisibility(View.VISIBLE);
+                    knopka = false;
                 }
             }
             @Override
@@ -213,6 +222,8 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
     private void init() {
         list = new ArrayList<>();
         adapter = new MeetAdapter(this);
+        animationAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
+
         recyclerView = findViewById(R.id.recycler_meet);
         recyclerView.setAdapter(adapter);
         editText = findViewById(R.id.editText_meet);
