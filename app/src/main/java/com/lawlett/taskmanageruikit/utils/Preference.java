@@ -12,7 +12,6 @@ public class Preference {
         instance = this;
         preferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
     }
-
     public static Preference getInstance(Context context) {
         if (instance == null) new Preference(context);
         return instance;
