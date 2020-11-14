@@ -104,13 +104,12 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         btnGridChange();
 
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
             }
-
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
@@ -174,11 +173,11 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                 final int DIRECTION_RIGHT = 1;
                 final int DIRECTION_LEFT = 0;
 
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
-                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int) dX);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int)dX);
 
-                    switch (direction) {
+                    switch (direction){
 
                         case DIRECTION_RIGHT:
 
@@ -201,8 +200,6 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
 
                 }
             }
-
-
         }).attachToRecyclerView(recyclerViewQuick);
     }
 
