@@ -41,7 +41,8 @@ public class IdeaActivity extends AppCompatActivity {
     QuickModel quickModel;
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
-    String pickImage, textTitle, textDescription, captureImage, gallImage;
+    String pickImage, textTitle, textDescription, captureImage, gallImage,
+    defColor;
     int choosedColor;
     boolean isGallery = false;
 
@@ -50,6 +51,7 @@ public class IdeaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ideas);
+      defColor = String.valueOf(getResources().getColor(R.color.myWhite));
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
@@ -113,7 +115,11 @@ public class IdeaActivity extends AppCompatActivity {
                 }
                 App.getDataBase().taskDao().update(quickModel);
             } else {
+                if(choosedColor == 0){
+                    choosedColor = getResources().getColor(R.color.titleColor);
+                }else {
                 choosedColor = e_title.getCurrentTextColor();
+                }
                 quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
                 App.getDataBase().taskDao().insert(quickModel);
             }
@@ -174,7 +180,7 @@ public class IdeaActivity extends AppCompatActivity {
                         .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
                             @Override
                             public void onChooseColor(int position, int color) {
-                                if (color == 0) {
+                                if (color == -1) {
                                     Toast.makeText(IdeaActivity.this, R.string.color_dont_choosed, Toast.LENGTH_SHORT).show();
                                 } else {
                                     e_title.setTextColor(color);
