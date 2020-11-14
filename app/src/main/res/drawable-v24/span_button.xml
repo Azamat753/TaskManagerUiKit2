@@ -3,6 +3,6 @@
     <item android:state_activated="true"
         android:drawable="@drawable/ic_1span"/>
     <item android:state_activated="false"
-        android:drawable="@drawable/ic_2span"/>
+        android:drawable="@drawable/ic_0span"/>
 
 </selector>

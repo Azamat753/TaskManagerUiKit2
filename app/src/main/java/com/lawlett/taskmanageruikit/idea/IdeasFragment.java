@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
@@ -25,6 +27,7 @@ import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
+import com.lawlett.taskmanageruikit.utils.IdeaViewPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +44,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     int position;
     int pos;
     RecyclerView recyclerViewQuick;
-    GridLayoutManager gridLayoutManager;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
     ImageView btnChange;
 
     public IdeasFragment() {
@@ -67,12 +70,9 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         addQuickBtn = root.findViewById(R.id.add_quick_btn);
         addQuickBtn.setColorFilter(Color.WHITE);
         addQuickBtn.setBackgroundColor(R.color.plus_background);
-        addQuickBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), IdeaActivity.class));
-            }
-        });
+        addQuickBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), IdeaActivity.class)));
+
+
         return root;
     }
 
@@ -92,17 +92,25 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         recyclerViewQuick = view.findViewById(R.id.quick_recycler);
         adapter = new QuickAdapter(list, this, getContext());
         recyclerViewQuick.setAdapter(adapter);
-        gridLayoutManager = new GridLayoutManager(getContext(), 1);
-        recyclerViewQuick.setLayoutManager(gridLayoutManager);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        recyclerViewQuick.setLayoutManager(staggeredGridLayoutManager);
+
+        if (IdeaViewPreference.getInstance(getContext()).getView()) {
+            staggeredGridLayoutManager.setSpanCount(2);
+        } else staggeredGridLayoutManager.setSpanCount(1);
+
+
         btnChange = Objects.requireNonNull(getActivity()).findViewById(R.id.tool_btn_grid);
         btnGridChange();
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
@@ -152,27 +160,70 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                                 pos = viewHolder.getAdapterPosition();
                                 App.getDataBase().taskDao().delete(list.get(pos));
                                 adapter.notifyDataSetChanged();
-                                Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();                            }
+                                Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
+                            }
                         }).show();
                 adapter.notifyDataSetChanged();
 
             }
-        }).attachToRecyclerView(recyclerViewQuick);
-    }
-    public void btnGridChange(){
-        btnChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!btnChange.isActivated()){
-                    btnChange.setActivated(true);
-                    gridLayoutManager.setSpanCount(2);
 
-                }else{
-                    btnChange.setActivated(false);
-                    gridLayoutManager.setSpanCount(1);
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                final int DIRECTION_RIGHT = 1;
+                final int DIRECTION_LEFT = 0;
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int) dX);
+
+                    switch (direction) {
+
+                        case DIRECTION_RIGHT:
+
+                            View itemView = viewHolder.itemView;
+                            final ColorDrawable background = new ColorDrawable(Color.RED);
+                            background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
+                            background.draw(c);
+
+                            break;
+
+                        case DIRECTION_LEFT:
+
+                            View itemView2 = viewHolder.itemView;
+                            final ColorDrawable background2 = new ColorDrawable(Color.RED);
+                            background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
+                            background2.draw(c);
+
+                            break;
+                    }
+
                 }
             }
+
+
+        }).attachToRecyclerView(recyclerViewQuick);
+    }
+
+    public void btnGridChange() {
+
+        btnChange.setOnClickListener(v -> {
+            if (!btnChange.isActivated()) {
+                btnChange.setActivated(true);
+                staggeredGridLayoutManager.setSpanCount(2);
+                IdeaViewPreference.getInstance(getContext()).saveView(true);
+                adapter.notifyDataSetChanged();
+
+            } else {
+                btnChange.setActivated(false);
+                staggeredGridLayoutManager.setSpanCount(1);
+                IdeaViewPreference.getInstance(getContext()).saveView(false);
+                adapter.notifyDataSetChanged();
+            }
+            adapter.isChange.setValue(false);
         });
     }
+
 
 }
