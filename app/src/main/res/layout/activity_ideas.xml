@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/quick_toolbar_view"
-        layout="@layout/quick_toolbar"
+        layout="@layout/create_idea_toolbar"
         app:layout_constraintBottom_toTopOf="@id/edit_title2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

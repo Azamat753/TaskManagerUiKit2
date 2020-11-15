@@ -31,7 +31,7 @@ public class QuickAdapter extends RecyclerView.Adapter<QuickAdapter.QuickViewHol
     @NonNull
     @Override
     public QuickViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new QuickViewHolder(LayoutInflater.from(context).inflate(R.layout.quick_item, parent, false), listener);
+        return new QuickViewHolder(LayoutInflater.from(context).inflate(R.layout.idea_item, parent, false), listener);
     }
 
     @Override

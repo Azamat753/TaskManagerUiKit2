@@ -13,7 +13,7 @@
         android:overScrollMode="never"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="-16dp"
-        tools:listitem="@layout/quick_item" />
+        tools:listitem="@layout/idea_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_quick_btn"
