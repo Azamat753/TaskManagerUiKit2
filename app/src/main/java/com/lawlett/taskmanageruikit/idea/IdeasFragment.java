@@ -107,8 +107,17 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+                if(IdeaViewPreference.getInstance(getContext()).getView()){
+                    final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN |
+                    ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;
+                    final int swipeFlags = 0;
+                    return makeMovementFlags(dragFlags, swipeFlags);
+                }else {
+                    final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN |
+                            ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;
+                    final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+                    return makeMovementFlags(dragFlags, swipeFlags);
+                }
             }
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
