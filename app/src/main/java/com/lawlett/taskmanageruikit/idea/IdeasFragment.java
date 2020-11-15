@@ -10,15 +10,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lawlett.taskmanageruikit.R;
@@ -26,10 +27,12 @@ import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
+import com.lawlett.taskmanageruikit.utils.IdeaViewPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +44,8 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     int position;
     int pos;
     RecyclerView recyclerViewQuick;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
+    ImageView btnChange;
 
     public IdeasFragment() {
         // Required empty public constructor
@@ -90,7 +95,17 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         recyclerViewQuick = view.findViewById(R.id.quick_recycler);
         adapter = new QuickAdapter(list, this, getContext());
         recyclerViewQuick.setAdapter(adapter);
-        recyclerViewQuick.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        recyclerViewQuick.setLayoutManager(staggeredGridLayoutManager);
+
+        if (IdeaViewPreference.getInstance(getContext()).getView()) {
+            staggeredGridLayoutManager.setSpanCount(2);
+        } else staggeredGridLayoutManager.setSpanCount(1);
+
+
+        btnChange = Objects.requireNonNull(getActivity()).findViewById(R.id.tool_btn_grid);
+        btnGridChange();
+
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -152,42 +167,27 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                 adapter.notifyDataSetChanged();
 
             }
-
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                final int DIRECTION_RIGHT = 1;
-                final int DIRECTION_LEFT = 0;
-
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
-                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int)dX);
-
-                    switch (direction){
-
-                        case DIRECTION_RIGHT:
-
-                            View itemView = viewHolder.itemView;
-                            final ColorDrawable background = new ColorDrawable(Color.RED);
-                            background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
-                            background.draw(c);
-
-                            break;
-
-                        case DIRECTION_LEFT:
-
-                            View itemView2 = viewHolder.itemView;
-                            final ColorDrawable background2 = new ColorDrawable(Color.RED);
-                            background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
-                            background2.draw(c);
-
-                            break;
-                    }
-
-                }
-            }
         }).attachToRecyclerView(recyclerViewQuick);
     }
+
+    public void btnGridChange() {
+
+        btnChange.setOnClickListener(v -> {
+            if (!btnChange.isActivated()) {
+                btnChange.setActivated(true);
+                staggeredGridLayoutManager.setSpanCount(2);
+                IdeaViewPreference.getInstance(getContext()).saveView(true);
+                adapter.notifyDataSetChanged();
+
+            } else {
+                btnChange.setActivated(false);
+                staggeredGridLayoutManager.setSpanCount(1);
+                IdeaViewPreference.getInstance(getContext()).saveView(false);
+                adapter.notifyDataSetChanged();
+            }
+            adapter.isChange.setValue(false);
+        });
+    }
+
 
 }
