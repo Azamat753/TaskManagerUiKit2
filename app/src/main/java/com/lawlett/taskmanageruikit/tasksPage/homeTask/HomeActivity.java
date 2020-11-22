@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             if (homeModels != null) {
                 list.clear();
                 list.addAll(homeModels);
+                Collections.reverse(list);
                 adapter.updateList(list);
             }
         });

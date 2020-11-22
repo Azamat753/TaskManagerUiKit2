@@ -49,6 +49,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
             if (workModels != null) {
                 list.clear();
                 list.addAll(workModels);
+                Collections.reverse(list);
                 adapter.updateList(list);
             }
         });

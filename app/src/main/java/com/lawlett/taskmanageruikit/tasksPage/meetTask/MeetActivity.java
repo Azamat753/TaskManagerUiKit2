@@ -50,6 +50,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
             if (meetModels != null) {
                 list.clear();
                 list.addAll(meetModels);
+                Collections.reverse(list);
                 adapter.updateList(list);
             }
         });

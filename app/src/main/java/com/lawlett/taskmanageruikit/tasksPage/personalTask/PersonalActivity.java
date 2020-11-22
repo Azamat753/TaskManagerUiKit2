@@ -48,6 +48,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             if (personalModels != null) {
                 list.clear();
                 list.addAll(personalModels);
+                Collections.reverse(list);
                 adapter.updateList(list);
             }
         });
