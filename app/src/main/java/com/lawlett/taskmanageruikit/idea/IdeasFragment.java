@@ -107,17 +107,8 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                if(IdeaViewPreference.getInstance(getContext()).getView()){
-                    final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN |
-                    ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;
-                    final int swipeFlags = 0;
-                    return makeMovementFlags(dragFlags, swipeFlags);
-                }else {
-                    final int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN |
-                            ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;
-                    final int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
-                    return makeMovementFlags(dragFlags, swipeFlags);
-                }
+                return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
             }
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -154,14 +145,14 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                 App.getDataBase().taskDao().updateWord(list);
             }
 
+
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                 dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
                         .setNegativeButton(R.string.no, (dialog1, which) ->
-
                                 dialog1.cancel())
-
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -169,10 +160,9 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                                 App.getDataBase().taskDao().delete(list.get(pos));
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
+
                             }
                         }).show();
-                adapter.notifyDataSetChanged();
-
             }
 
             @SuppressLint("ResourceAsColor")

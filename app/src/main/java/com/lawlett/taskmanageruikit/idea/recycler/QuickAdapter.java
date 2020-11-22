@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +20,6 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.IQuickOnClickListener;
 import com.lawlett.taskmanageruikit.utils.IdeaViewPreference;
-import com.lawlett.taskmanageruikit.utils.ThemePreference;
 
 import java.util.List;
 
