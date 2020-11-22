@@ -50,7 +50,7 @@ public class IdeaActivity extends AppCompatActivity {
     EditText e_title, e_description;
     ImageView back_view, done_view, image_title;
     String pickImage, textTitle, textDescription, captureImage, gallImage,
-    defColor;
+            defColor;
     int choosedColor;
     boolean isGallery = false;
 
@@ -59,7 +59,7 @@ public class IdeaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ideas);
-      defColor = String.valueOf(getResources().getColor(R.color.myWhite));
+        defColor = String.valueOf(getResources().getColor(R.color.myWhite));
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
@@ -78,9 +78,9 @@ public class IdeaActivity extends AppCompatActivity {
         done_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(e_title.getText().toString().trim().isEmpty()){
+                if (e_title.getText().toString().trim().isEmpty()) {
                     Toast.makeText(IdeaActivity.this, R.string.add_title, Toast.LENGTH_LONG).show();
-                }else {
+                } else {
                     recordDataRoom();
                 }
             }
@@ -127,10 +127,10 @@ public class IdeaActivity extends AppCompatActivity {
                 }
                 App.getDataBase().taskDao().update(quickModel);
             } else {
-                if(choosedColor == 0){
+                if (choosedColor == 0) {
                     choosedColor = getResources().getColor(R.color.titleColor);
-                }else {
-                choosedColor = e_title.getCurrentTextColor();
+                } else {
+                    choosedColor = e_title.getCurrentTextColor();
                 }
                 quickModel = new QuickModel(textTitle, textDescription, currentDate + " " + month + " " + year, pickImage, choosedColor, null);
                 App.getDataBase().taskDao().insert(quickModel);
@@ -166,6 +166,7 @@ public class IdeaActivity extends AppCompatActivity {
         e_description = findViewById(R.id.edit_description);
         back_view = findViewById(R.id.back_view);
         done_view = findViewById(R.id.done_view);
+
 
         floatingActionButtonColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,14 +213,16 @@ public class IdeaActivity extends AppCompatActivity {
         });
 
         floatingActionButtonCameraPicker.setOnClickListener(v -> {
-            if(checkAndRequestPermissions(IdeaActivity.this)){
-            openCamera();
+            if (checkAndRequestPermissions(IdeaActivity.this)) {
+                materialDesignFAM.close(true);
+                openCamera();
             }
         });
         floatingActionButtonImagePicker.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             startActivityForResult(intent, GALLERY_REQUEST);
+            materialDesignFAM.close(true);
         });
 
     }
@@ -259,17 +262,17 @@ public class IdeaActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    public static boolean checkAndRequestPermissions(Activity context){
+    public static boolean checkAndRequestPermissions(Activity context) {
         int storagePermissions = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int cameraPermissions = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
-        List<String>listPermissions = new ArrayList<>();
-        if(cameraPermissions != PackageManager.PERMISSION_GRANTED){
+        List<String> listPermissions = new ArrayList<>();
+        if (cameraPermissions != PackageManager.PERMISSION_GRANTED) {
             listPermissions.add(Manifest.permission.CAMERA);
         }
-        if(storagePermissions != PackageManager.PERMISSION_GRANTED){
+        if (storagePermissions != PackageManager.PERMISSION_GRANTED) {
             listPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
-        if(!listPermissions.isEmpty()){
+        if (!listPermissions.isEmpty()) {
             ActivityCompat.requestPermissions(context, listPermissions.toArray(new String[listPermissions.size()]),
                     CAMERA_REQUEST);
             return false;
