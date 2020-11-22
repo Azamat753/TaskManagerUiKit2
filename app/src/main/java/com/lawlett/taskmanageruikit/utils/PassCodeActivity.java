@@ -65,11 +65,15 @@ public class PassCodeActivity extends AppCompatActivity {
     }
 
     public void saveBtn(View view) {
+        if(editPassword.getText().length()<4){
+            Toast.makeText(PassCodeActivity.this, R.string.of_symbols, Toast.LENGTH_LONG).show();
+        }else{
         PasswordPreference.getInstance(this).savePassword(editPassword.getText().toString().trim());
         passcodeView.setVisibility(View.VISIBLE);
         editPassword.setVisibility(View.GONE);
         button.setVisibility(View.GONE);
         PasswordDonePreference.getInstance(this).saveShown();
         finish();
+        }
     }
 }
