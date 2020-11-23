@@ -68,12 +68,9 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         addQuickBtn = root.findViewById(R.id.add_quick_btn);
         addQuickBtn.setColorFilter(Color.WHITE);
         addQuickBtn.setBackgroundColor(R.color.plus_background);
-        addQuickBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), IdeaActivity.class));
-            }
-        });
+        addQuickBtn.setOnClickListener(v -> startActivity(new Intent(getContext(), IdeaActivity.class)));
+
+
         return root;
     }
 
@@ -105,8 +102,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         btnGridChange();
 
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
@@ -148,12 +144,15 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                 super.clearView(recyclerView, viewHolder);
                 App.getDataBase().taskDao().updateWord(list);
             }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                 dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
                         .setNegativeButton(R.string.no, (dialog1, which) ->
+
                                 dialog1.cancel())
+
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -163,6 +162,41 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                                 Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
+            }
+
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                final int DIRECTION_RIGHT = 1;
+                final int DIRECTION_LEFT = 0;
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int)dX);
+
+                    switch (direction){
+
+                        case DIRECTION_RIGHT:
+
+                            View itemView = viewHolder.itemView;
+                            final ColorDrawable background = new ColorDrawable(Color.RED);
+                            background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
+                            background.draw(c);
+
+                            break;
+
+                        case DIRECTION_LEFT:
+
+                            View itemView2 = viewHolder.itemView;
+                            final ColorDrawable background2 = new ColorDrawable(Color.RED);
+                            background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
+                            background2.draw(c);
+
+                            break;
+                    }
+
+                }
             }
         }).attachToRecyclerView(recyclerViewQuick);
     }

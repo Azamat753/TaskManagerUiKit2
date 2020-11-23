@@ -1,8 +1,11 @@
 package com.lawlett.taskmanageruikit.idea;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -15,23 +18,29 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.utils.App;
+
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class IdeaActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST = 500;
+    public static final int GALLERY_REQUEST = 01;
 
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButtonColorPicker, floatingActionButtonCameraPicker, floatingActionButtonImagePicker;
@@ -67,7 +76,11 @@ public class IdeaActivity extends AppCompatActivity {
         done_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recordDataRoom();
+                if (e_title.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(IdeaActivity.this, R.string.add_title, Toast.LENGTH_LONG).show();
+                } else {
+                    recordDataRoom();
+                }
             }
         });
 
@@ -152,6 +165,7 @@ public class IdeaActivity extends AppCompatActivity {
         back_view = findViewById(R.id.back_view);
         done_view = findViewById(R.id.done_view);
 
+
         floatingActionButtonColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,16 +211,23 @@ public class IdeaActivity extends AppCompatActivity {
         });
 
         floatingActionButtonCameraPicker.setOnClickListener(v -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, CAMERA_REQUEST);
-
+            if (checkAndRequestPermissions(IdeaActivity.this)) {
+                materialDesignFAM.close(true);
+                openCamera();
+            }
         });
         floatingActionButtonImagePicker.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
-            startActivityForResult(intent, 01);
+            startActivityForResult(intent, GALLERY_REQUEST);
+            materialDesignFAM.close(true);
         });
 
+    }
+
+    private void openCamera() {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
 
@@ -214,7 +235,7 @@ public class IdeaActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null && resultCode == RESULT_OK) {
-            if (requestCode == 01) {
+            if (requestCode == GALLERY_REQUEST) {
                 final Uri imageUri = data.getData();
                 gallImage = imageUri.toString();
                 isGallery = true;
@@ -237,6 +258,24 @@ public class IdeaActivity extends AppCompatActivity {
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "IMG_" + Calendar.getInstance().getTime(), null);
         return Uri.parse(path);
+    }
+
+    public static boolean checkAndRequestPermissions(Activity context) {
+        int storagePermissions = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int cameraPermissions = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA);
+        List<String> listPermissions = new ArrayList<>();
+        if (cameraPermissions != PackageManager.PERMISSION_GRANTED) {
+            listPermissions.add(Manifest.permission.CAMERA);
+        }
+        if (storagePermissions != PackageManager.PERMISSION_GRANTED) {
+            listPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (!listPermissions.isEmpty()) {
+            ActivityCompat.requestPermissions(context, listPermissions.toArray(new String[listPermissions.size()]),
+                    CAMERA_REQUEST);
+            return false;
+        }
+        return true;
     }
 }
 

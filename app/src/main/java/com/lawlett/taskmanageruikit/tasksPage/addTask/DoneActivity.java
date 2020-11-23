@@ -49,6 +49,7 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
             if (doneModels != null) {
                 list.clear();
                 list.addAll(doneModels);
+                Collections.reverse(list);
                 adapter.updateList(list);
             }
         });

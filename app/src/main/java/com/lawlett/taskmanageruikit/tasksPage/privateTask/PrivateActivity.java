@@ -66,6 +66,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
             if (privateModels != null) {
                 list.clear();
                 list.addAll(privateModels);
+                Collections.reverse(list);
                 adapter.updateList(list);
             }
         });

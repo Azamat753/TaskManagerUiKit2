@@ -155,18 +155,22 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         changeFragment(new DashboardFragment());
                         toolbar_title.setText(R.string.progress);
+                        btnGrid.setVisibility(View.GONE);
                         break;
                     case 1:
                         changeFragment(new TasksFragment());
                         toolbar_title.setText(R.string.tasks);
+                        btnGrid.setVisibility(View.GONE);
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
                         toolbar_title.setText(R.string.timing);
+                        btnGrid.setVisibility(View.GONE);
                         break;
                     case 3:
                         changeFragment(new CalendarEventsFragment());
                         toolbar_title.setText(month + " " + year);
+                        btnGrid.setVisibility(View.GONE);
                         break;
                     case 4:
                         changeFragment(new IdeasFragment());
