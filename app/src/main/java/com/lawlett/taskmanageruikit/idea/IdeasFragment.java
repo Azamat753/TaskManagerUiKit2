@@ -3,9 +3,7 @@ package com.lawlett.taskmanageruikit.idea;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,14 +105,17 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
         btnGridChange();
 
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP|ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
                         ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
             }
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
 
@@ -147,25 +148,21 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
                 super.clearView(recyclerView, viewHolder);
                 App.getDataBase().taskDao().updateWord(list);
             }
-
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
                 dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
                         .setNegativeButton(R.string.no, (dialog1, which) ->
-
                                 dialog1.cancel())
-
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 pos = viewHolder.getAdapterPosition();
                                 App.getDataBase().taskDao().delete(list.get(pos));
                                 adapter.notifyDataSetChanged();
-                                Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();                            }
+                                Toast.makeText(getContext(), R.string.delete, Toast.LENGTH_SHORT).show();
+                            }
                         }).show();
-                adapter.notifyDataSetChanged();
-
             }
         }).attachToRecyclerView(recyclerViewQuick);
     }

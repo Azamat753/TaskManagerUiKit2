@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Entity
 public class MeetModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
+
     private long id;
     public String meetTask;
     public Boolean isDone;

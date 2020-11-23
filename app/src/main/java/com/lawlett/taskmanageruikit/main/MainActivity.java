@@ -9,9 +9,9 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
@@ -36,6 +37,7 @@ import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

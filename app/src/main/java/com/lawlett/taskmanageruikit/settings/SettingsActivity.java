@@ -153,11 +153,9 @@ public class SettingsActivity extends AppCompatActivity {
                 if (i == 0) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
-
                 } else if (i == 1) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
-
                 }
 
                 dialog.dismiss();
