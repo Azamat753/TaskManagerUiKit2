@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     FloatingActionButton addQuickBtn;
     int position;
     int pos;
+    TextView firstText;
     RecyclerView recyclerViewQuick;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     ImageView btnChange;
@@ -57,14 +59,21 @@ public class IdeasFragment extends Fragment implements IQuickOnClickListener {
     public View onCreateView(@NonNull final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_ideas, container, false);
+        firstText = root.findViewById(R.id.quick_tv);
 
         list = new ArrayList<>();
 
         App.getDataBase().taskDao().getAllLive().observe(this, quickModels -> {
-            if (quickModels != null)
+
+            if(quickModels != null){
                 list.clear();
-            list.addAll(quickModels);
-            adapter.notifyDataSetChanged();
+                list.addAll(quickModels);
+                firstText.setVisibility(View.GONE);
+                adapter.notifyDataSetChanged();
+            }
+            if(quickModels.isEmpty()){
+                firstText.setVisibility(View.VISIBLE);
+            }
 
         });
         addQuickBtn = root.findViewById(R.id.add_quick_btn);

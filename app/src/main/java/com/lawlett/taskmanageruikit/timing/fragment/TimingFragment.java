@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ public class TimingFragment extends Fragment {
     TimingAdapter adapter;
     private List<TimingModel> list;
     FloatingActionButton floatingActionTimer, floatingActionStopwatch;
+    TextView tvTiming;
     int pos;
 
     @Override
@@ -45,12 +48,18 @@ public class TimingFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_timing, container, false);
         list = new ArrayList<>();
+        tvTiming = root.findViewById(R.id.timing_tv);
 
         App.getDataBase().timingDao().getAllLive().observe(this, timingModels -> {
-            if (timingModels != null)
+            if (timingModels != null){
                 list.clear();
             list.addAll(timingModels);
+            tvTiming.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
+            }
+            if(timingModels.isEmpty()){
+                tvTiming.setVisibility(View.VISIBLE);
+            }
 
         });
         return root;
