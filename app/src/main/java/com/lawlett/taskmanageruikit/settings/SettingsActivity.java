@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
@@ -25,8 +27,11 @@ import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
-    ImageView back;
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
+    ConstraintLayout container;
+    ImageView back, imageSettings, imageTheme;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout,share_layout;
+    ConstraintLayout theme_layout;
+    SwitchCompat theme_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +43,33 @@ public class SettingsActivity extends AppCompatActivity {
         clearMinutes_layout = findViewById(R.id.second_layout);
         theme_layout = findViewById(R.id.third_layout);
         back = findViewById(R.id.back_view);
+        imageTheme = findViewById(R.id.image_day_night);
         language_tv = findViewById(R.id.four_layout);
         share_layout = findViewById(R.id.five_layout);
+        theme_switch = findViewById(R.id.settings_switch);
+        container = findViewById(R.id.container_settings);
+        imageSettings = findViewById(R.id.image_settings);
+
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
+        if(ThemePreference.getInstance(SettingsActivity.this).isTheme()){
+            imageTheme.setImageResource(R.drawable.ic_day);
+        }else {
+            imageTheme.setImageResource(R.drawable.ic_nights);
+        }
+
         theme_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChangeThemeDialog();
+                if(!ThemePreference.getInstance(SettingsActivity.this).isTheme()){
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }else {
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
             }
         });
 
@@ -117,29 +139,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    public void showChangeThemeDialog() {
-        final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-        builder.setTitle(R.string.choose_theme);
-        builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                if (i == 0) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
 
-                } else if (i == 1) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
-
-                }
-
-                dialog.dismiss();
-            }
-        });
-        AlertDialog mDialog = builder.create();
-        mDialog.show();
-    }
 
     private void showChangeLanguageDialog() {
         final String[] listItems = {"English", "Русский", "Кыргызча"};
