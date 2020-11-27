@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".idea.IdeasFragment">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quick_recycler"
         android:layout_width="match_parent"
@@ -28,6 +29,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:targetApi="lollipop" />
+
+    <TextView
+        android:id="@+id/quick_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="30dp"
+        android:textColor="@color/myWhite"
+        android:text="@string/help_idea_add"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
 

@@ -7,18 +7,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
+import com.lawlett.taskmanageruikit.settings.SettingsActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.Preference;
+import com.lawlett.taskmanageruikit.utils.ThemePreference;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -27,6 +32,8 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class BoardFragment extends Fragment {
+    ConstraintLayout container;
+    ImageView imageDay, imageNight, imageDaySelect, imageNightSelect;
     LottieAnimationView calendar_anim, notes_anim, todo_anim, time_anim;
     TextView title_tv, desc_tv, start_tv, change_lang;
 
@@ -52,7 +59,20 @@ public class BoardFragment extends Fragment {
         todo_anim = view.findViewById(R.id.todo_animation);
         notes_anim = view.findViewById(R.id.notes_animation);
         time_anim = view.findViewById(R.id.time_animation);
+        container = view.findViewById(R.id.container_theme);
+        imageDay = view.findViewById(R.id.image_day);
+        imageNight = view.findViewById(R.id.image_night);
+        imageDaySelect = view.findViewById(R.id.image_day_select);
+        imageNightSelect = view.findViewById(R.id.image_night_select);
         loadLocale();
+
+        if(ThemePreference.getInstance(getContext()).isTheme()){
+            imageDaySelect.setVisibility(View.VISIBLE);
+            imageNightSelect.setVisibility(View.GONE);
+        }else{
+            imageDaySelect.setVisibility(View.GONE);
+            imageNightSelect.setVisibility(View.VISIBLE);
+        }
 
         int pos = getArguments().getInt("pos");
         switch (pos) {
@@ -63,6 +83,7 @@ public class BoardFragment extends Fragment {
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.GONE);
                 change_lang.setVisibility(View.VISIBLE);
+                container.setVisibility(View.GONE);
                 break;
             case 1:
                 title_tv.setText(R.string.done_tasks);
@@ -71,6 +92,7 @@ public class BoardFragment extends Fragment {
                 todo_anim.setVisibility(View.VISIBLE);
                 notes_anim.setVisibility(View.GONE);
                 change_lang.setVisibility(View.GONE);
+                container.setVisibility(View.GONE);
                 break;
             case 2:
                 title_tv.setText(R.string.record_idea_simple);
@@ -79,8 +101,20 @@ public class BoardFragment extends Fragment {
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.VISIBLE);
                 change_lang.setVisibility(View.GONE);
+                container.setVisibility(View.GONE);
                 break;
             case 3:
+                title_tv.setVisibility(View.GONE);
+                desc_tv.setVisibility(View.GONE);
+                container.setVisibility(View.VISIBLE);
+                calendar_anim.setVisibility(View.GONE);
+                todo_anim.setVisibility(View.GONE);
+                notes_anim.setVisibility(View.GONE);
+                time_anim.setVisibility(View.GONE);
+                start_tv.setVisibility(View.GONE);
+                change_lang.setVisibility(View.GONE);
+                break;
+            case 4:
                 title_tv.setText(R.string.check_timing);
                 desc_tv.setText(R.string.plus_you_kpd);
                 calendar_anim.setVisibility(View.GONE);
@@ -89,11 +123,27 @@ public class BoardFragment extends Fragment {
                 time_anim.setVisibility(View.VISIBLE);
                 start_tv.setVisibility(View.VISIBLE);
                 change_lang.setVisibility(View.GONE);
+                container.setVisibility(View.GONE);
                 break;
         }
 
-        start_tv.setOnClickListener(v -> {
+        imageDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThemePreference.getInstance(getContext()).saveThemeTrue();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+        });
 
+        imageNight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThemePreference.getInstance(getContext()).saveThemeFalse();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        });
+
+        start_tv.setOnClickListener(v -> {
             Preference.getInstance(getContext()).saveShown();
             startActivity(new Intent(getContext(), MainActivity.class));
             Objects.requireNonNull(getActivity()).finish();

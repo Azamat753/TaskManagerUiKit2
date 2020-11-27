@@ -64,7 +64,7 @@
         android:fontFamily="@font/m_light"
         android:gravity="center"
         android:text="Calendar Events"
-        android:textColor="@android:color/white"
+        android:textColor="@color/myWhite"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -75,17 +75,18 @@
         android:layout_marginTop="420dp"
         android:fontFamily="@font/m_light"
         android:text="Quickly add your events &amp; easy to switch beetween month &amp; week view"
-        android:textColor="@android:color/white"
+        android:textColor="@color/myWhite"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/start_tv"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/m_light"
         android:text="@string/toStart"
         android:textColor="@android:color/holo_blue_light"
@@ -95,16 +96,99 @@
 
     <TextView
         android:id="@+id/change_lang"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/m_light"
         android:text="@string/change_language"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_theme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <View
+            android:id="@+id/board_view"
+            android:layout_width="20dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_day"
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/light_theme"
+            app:layout_constraintEnd_toStartOf="@+id/board_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_day_select"
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/image_select"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/board_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_night"
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/dark_theme"
+            app:layout_constraintStart_toEndOf="@+id/board_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_night_select"
+            android:layout_width="150dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/image_select"
+            app:layout_constraintStart_toEndOf="@+id/board_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/board_image_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/image_day"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/m_light"
+            android:text="@string/changing_theme"
+            android:textColor="@color/myWhite"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/board_image_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/board_image_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/m_light"
+            android:text="@string/board_theme_desc"
+            android:textColor="@color/myWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

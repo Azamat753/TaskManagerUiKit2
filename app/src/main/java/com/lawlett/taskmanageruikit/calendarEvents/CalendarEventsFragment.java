@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
     FloatingActionButton addEventBtn;
     List<CalendarTaskModel> list;
     CalendarEventAdapter adapter;
+    TextView calendarText;
     View colorView;
     int position, pos;
 
@@ -61,6 +63,8 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_calendar_events, container, false);
+        calendarText = root.findViewById(R.id.calendar_tv);
 
         list = new ArrayList<>();
 
@@ -70,10 +74,14 @@ public class CalendarEventsFragment extends Fragment implements ICalendarEventOn
 //                list.addAll(calendarTaskModels);
                 list.addAll(App.getDataBase().dataDao().getSortedCalendarTaskModel());
                 adapter.notifyDataSetChanged();
+                calendarText.setVisibility(View.GONE);
+            }
+            if(calendarTaskModels.isEmpty()){
+                calendarText.setVisibility(View.VISIBLE);
             }
         });
 
-        return inflater.inflate(R.layout.fragment_calendar_events, container, false);
+        return root;
     }
 
     @SuppressLint("ResourceAsColor")

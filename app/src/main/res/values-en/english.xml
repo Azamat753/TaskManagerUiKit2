@@ -110,4 +110,9 @@
     <string name="change_image_title">Change the picture and category title</string>
     <string name="remove_category">remove</string>
     <string name="what_to_do">What would you like to do?</string>
+    <string name="help_idea_add">Для добавления новой идеи нажмите на +</string>
+    <string name="help_calendar_add">Для добавления нового события нажмите на +</string>
+    <string name="help_timing_add">для добавления новой задачи нажмите на +</string>
+    <string name="changing_theme">Смена темы</string>
+    <string name="board_theme_desc">Вы можете выбрать тему здесь, нажатием на один из вариантов, или перейти в настройки и поменять ее там</string>
 </resources>

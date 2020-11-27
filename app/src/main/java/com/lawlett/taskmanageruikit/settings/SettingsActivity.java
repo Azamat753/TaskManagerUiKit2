@@ -21,6 +21,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
@@ -44,6 +46,11 @@ public class SettingsActivity extends AppCompatActivity {
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
+    ConstraintLayout container;
+    ImageView back, imageSettings, imageTheme;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout,share_layout;
+    ConstraintLayout theme_layout;
+    SwitchCompat theme_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +62,35 @@ public class SettingsActivity extends AppCompatActivity {
         clearMinutes_layout = findViewById(R.id.second_layout);
         theme_layout = findViewById(R.id.third_layout);
         back = findViewById(R.id.back_view);
+        imageTheme = findViewById(R.id.image_day_night);
         language_tv = findViewById(R.id.four_layout);
         share_layout = findViewById(R.id.five_layout);
+        theme_switch = findViewById(R.id.settings_switch);
+        container = findViewById(R.id.container_settings);
+        imageSettings = findViewById(R.id.image_settings);
+
         magick = findViewById(R.id.btn_magick);
         listView = findViewById(R.id.listView);
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
+        if(ThemePreference.getInstance(SettingsActivity.this).isTheme()){
+            imageTheme.setImageResource(R.drawable.ic_day);
+        }else {
+            imageTheme.setImageResource(R.drawable.ic_nights);
+        }
+
         theme_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChangeThemeDialog();
+                if(!ThemePreference.getInstance(SettingsActivity.this).isTheme()){
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }else {
+                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
             }
         });
 
