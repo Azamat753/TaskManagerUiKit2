@@ -55,17 +55,7 @@ public class App extends Application {
             notificationChannels.add(channel);
             notificationChannels.add(channel2);
             manager.createNotificationChannels(notificationChannels);
-//            manager.createNotificationChannel(channel);
 
         }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel channel = new NotificationChannel(
-//                    CHANNEL_ID_HOURS, "Example Channel",
-//                    NotificationManager.IMPORTANCE_HIGH
-//            );
-//            NotificationManager manager2 = getSystemService(NotificationManager.class);
-//            manager2.createNotificationChannel(channel);
-//
-//        }
     }
 }

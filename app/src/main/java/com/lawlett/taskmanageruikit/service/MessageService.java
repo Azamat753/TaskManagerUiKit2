@@ -16,13 +16,8 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
-import com.lawlett.taskmanageruikit.timing.activity.TimerActivity;
-
-import java.util.Objects;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
-import static com.lawlett.taskmanageruikit.utils.App.CHANNEL_ID;
-import static com.lawlett.taskmanageruikit.utils.App.CHANNEL_ID_DAY;
 import static com.lawlett.taskmanageruikit.utils.App.CHANNEL_ID_HOURS;
 
 public class MessageService extends BroadcastReceiver {
@@ -33,8 +28,8 @@ public class MessageService extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String title = intent.getStringExtra(TITLE);
-        String text = intent.getStringExtra(TEXT);
+                String title = intent.getStringExtra(TITLE);
+                String text = intent.getStringExtra(TEXT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
@@ -75,10 +70,10 @@ public class MessageService extends BroadcastReceiver {
 
         Notification notification = builder.build();
 
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(2, notification);
-        }
+            NotificationManager notificationManager =
+                        (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(2, notification);
+            }
     }
 }
 

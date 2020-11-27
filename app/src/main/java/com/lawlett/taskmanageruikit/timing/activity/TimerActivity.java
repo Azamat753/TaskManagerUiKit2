@@ -66,44 +66,15 @@ public class TimerActivity extends AppCompatActivity {
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         mp = MediaPlayer.create(getApplicationContext(), notification);
 
+        notificationManager = NotificationManagerCompat.from(this);
+
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(R.color.timing_color);
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.timing_color));
+        initViews();
 
-        notificationManager = NotificationManagerCompat.from(this);
-
-
-        phoneImage = findViewById(R.id.image_timerPhone);
-        atg = AnimationUtils.loadAnimation(this, R.anim.atg);
-        btgone = AnimationUtils.loadAnimation(this, R.anim.btgone);
-        btgtwo = AnimationUtils.loadAnimation(this, R.anim.btgtwo);
-        xButton = findViewById(R.id.close_button);
-        timerTaskEdit = findViewById(R.id.timer_task_edit);
-        editText = findViewById(R.id.editText);
-        timerTaskApply = findViewById(R.id.timer_task_apply);
-        applyDone = findViewById(R.id.apply_button);
-        icanchor = findViewById(R.id.icanchor);
-        countdownText = findViewById(R.id.countdown_text);
-        countdownButton = findViewById(R.id.countdown_button);
-        exitButton = findViewById(R.id.exit_button);
-        roundingalone = AnimationUtils.loadAnimation(this, R.anim.roundingalone);
-        imageConst = findViewById(R.id.image_const);
-        timerConst = findViewById(R.id.timerConst);
-
-        phoneImage.startAnimation(atg);
-        countdownButton.startAnimation(btgone);
-        timerTaskApply.startAnimation(btgtwo);
-        timerTaskEdit.startAnimation(btgone);
-
-        Typeface medium = Typeface.createFromAsset(getAssets(), "MMedium.ttf");
-        Typeface mLight = Typeface.createFromAsset(getAssets(), "MLight.ttf");
-        Typeface mRegular = Typeface.createFromAsset(getAssets(), "MRegular.ttf");
-
-        countdownButton.setTypeface(medium);
-        timerTaskApply.setTypeface(mLight);//try
-        timerTaskEdit.setTypeface(mRegular);
 
 
         xButton.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +109,7 @@ public class TimerActivity extends AppCompatActivity {
                     Toast.makeText(TimerActivity.this, R.string.zero_minutes_pass, Toast.LENGTH_SHORT).show();
                 } else {
                     timeLeftInMilliseconds = Integer.parseInt(editText.getText().toString()) * 60000;
-                    timeLeftText = timeLeftInMilliseconds.toString();
+                        timeLeftText = timeLeftInMilliseconds.toString();
                     applyDone.setVisibility(View.GONE);
                     editText.setVisibility(View.GONE);
                     countdownText.setText(R.string.ready);
@@ -173,6 +144,8 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void startTimer() {
         icanchor.startAnimation(roundingalone);
@@ -210,8 +183,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed(){}
 
     public void dataRoom() {
         Calendar c = Calendar.getInstance();
@@ -222,8 +194,7 @@ public class TimerActivity extends AppCompatActivity {
         final String month = monthName[c.get(Calendar.MONTH)];
         String currentDate = new SimpleDateFormat("dd ", Locale.getDefault()).format(new Date());
         int previousTime = TimingSizePreference.getInstance(this).getTimingSize();
-        int a = Integer.parseInt(editText.getText().toString());
-        int timerTime = a;
+        int timerTime = Integer.parseInt(editText.getText().toString());
         TimingSizePreference.getInstance(this).saveTimingSize(timerTime + previousTime);
         timingModel = new TimingModel(myTask, timerTime, currentDate + " " + month + " " + year, null, null, null);
         App.getDataBase().timingDao().insert(timingModel);
@@ -259,7 +230,6 @@ public class TimerActivity extends AppCompatActivity {
                         .setOnlyAlertOnce(true)
                         .build();
 
-
                 notificationManager.notify(1, notification);
             }
 
@@ -269,6 +239,38 @@ public class TimerActivity extends AppCompatActivity {
             }
         }.start();
     }
+    private void initViews() {
 
+        phoneImage = findViewById(R.id.image_timerPhone);
+        atg = AnimationUtils.loadAnimation(this, R.anim.atg);
+        btgone = AnimationUtils.loadAnimation(this, R.anim.btgone);
+        btgtwo = AnimationUtils.loadAnimation(this, R.anim.btgtwo);
+        roundingalone = AnimationUtils.loadAnimation(this, R.anim.roundingalone);
+        xButton = findViewById(R.id.close_button);
+        timerTaskEdit = findViewById(R.id.timer_task_edit);
+        editText = findViewById(R.id.editText);
+        timerTaskApply = findViewById(R.id.timer_task_apply);
+        applyDone = findViewById(R.id.apply_button);
+        icanchor = findViewById(R.id.icanchor);
+        countdownText = findViewById(R.id.countdown_text);
+        countdownButton = findViewById(R.id.countdown_button);
+        exitButton = findViewById(R.id.exit_button);
+        imageConst = findViewById(R.id.image_const);
+        timerConst = findViewById(R.id.timerConst);
+
+        phoneImage.startAnimation(atg);
+        countdownButton.startAnimation(btgone);
+        timerTaskApply.startAnimation(btgtwo);
+        timerTaskEdit.startAnimation(btgone);
+
+        Typeface medium = Typeface.createFromAsset(getAssets(), "MMedium.ttf");
+        Typeface mLight = Typeface.createFromAsset(getAssets(), "MLight.ttf");
+        Typeface mRegular = Typeface.createFromAsset(getAssets(), "MRegular.ttf");
+
+        countdownButton.setTypeface(medium);
+        timerTaskApply.setTypeface(mLight);
+        timerTaskEdit.setTypeface(mRegular);
+
+    }
 
 }
