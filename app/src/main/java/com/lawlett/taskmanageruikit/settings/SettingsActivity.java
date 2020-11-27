@@ -39,8 +39,7 @@ import java.util.Locale;
 import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
-    ImageView back;
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout;
     ReviewManager manager;
     ReviewInfo reviewInfo;
     ImageView magick;
@@ -48,7 +47,6 @@ public class SettingsActivity extends AppCompatActivity {
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     ConstraintLayout container;
     ImageView back, imageSettings, imageTheme;
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout,share_layout;
     ConstraintLayout theme_layout;
     SwitchCompat theme_switch;
 
