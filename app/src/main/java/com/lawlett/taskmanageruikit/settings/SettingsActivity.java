@@ -48,7 +48,6 @@ public class SettingsActivity extends AppCompatActivity {
     ConstraintLayout container;
     ImageView back, imageSettings, imageTheme;
     ConstraintLayout theme_layout;
-    SwitchCompat theme_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,6 @@ public class SettingsActivity extends AppCompatActivity {
         imageTheme = findViewById(R.id.image_day_night);
         language_tv = findViewById(R.id.four_layout);
         share_layout = findViewById(R.id.five_layout);
-        theme_switch = findViewById(R.id.settings_switch);
         container = findViewById(R.id.container_settings);
         imageSettings = findViewById(R.id.image_settings);
 
