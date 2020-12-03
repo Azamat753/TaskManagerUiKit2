@@ -107,8 +107,10 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(HomeActivity.this);
                 dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
-                        .setNegativeButton(R.string.no, (dialog1, which) ->
-                                dialog1.cancel())
+                        .setNegativeButton(R.string.no, (dialog1, which) -> {
+                            adapter.notifyDataSetChanged();
+                            dialog1.cancel();
+                        })
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -126,7 +128,6 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                                 }
                             }
                         }).show();
-                adapter.notifyDataSetChanged();
                 }
         }).attachToRecyclerView(recyclerView);
 

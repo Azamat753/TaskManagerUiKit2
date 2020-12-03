@@ -93,7 +93,7 @@ public class BoardFragment extends Fragment {
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.VISIBLE);
                 notes_anim.setVisibility(View.GONE);
-                change_lang.setVisibility(View.GONE);
+                change_lang.setVisibility(View.INVISIBLE);
                 container.setVisibility(View.GONE);
                 break;
             case 2:
@@ -102,7 +102,7 @@ public class BoardFragment extends Fragment {
                 calendar_anim.setVisibility(View.GONE);
                 todo_anim.setVisibility(View.GONE);
                 notes_anim.setVisibility(View.VISIBLE);
-                change_lang.setVisibility(View.GONE);
+                change_lang.setVisibility(View.INVISIBLE);
                 container.setVisibility(View.GONE);
                 break;
             case 3:
@@ -114,7 +114,7 @@ public class BoardFragment extends Fragment {
                 notes_anim.setVisibility(View.GONE);
                 time_anim.setVisibility(View.GONE);
                 start_tv.setVisibility(View.GONE);
-                change_lang.setVisibility(View.GONE);
+                change_lang.setVisibility(View.INVISIBLE);
                 break;
             case 4:
                 title_tv.setText(R.string.check_timing);
@@ -124,7 +124,7 @@ public class BoardFragment extends Fragment {
                 notes_anim.setVisibility(View.GONE);
                 time_anim.setVisibility(View.VISIBLE);
                 start_tv.setVisibility(View.VISIBLE);
-                change_lang.setVisibility(View.GONE);
+                change_lang.setVisibility(View.INVISIBLE);
                 container.setVisibility(View.GONE);
                 break;
 
