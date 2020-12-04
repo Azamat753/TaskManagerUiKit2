@@ -104,6 +104,7 @@ public class StopwatchActivity extends AppCompatActivity {
         });
 
         btnstart.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
