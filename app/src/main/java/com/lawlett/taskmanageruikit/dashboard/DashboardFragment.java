@@ -7,14 +7,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
+import com.lawlett.taskmanageruikit.idea.IdeasFragment;
+import com.lawlett.taskmanageruikit.tasks.TasksFragment;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -26,14 +33,20 @@ import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
+import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DashboardFragment extends Fragment {
+    LinearLayout firstCon, secondCon, thirdCon;
+    ImageView btnChange;
+    TextView toolbar_title;
     TextView plans_amount, todo_amount, event_amount, allTask_amount,
             complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent, timing_task_amount, timing_minute_amount,
     addPercent, addTitle;
@@ -92,6 +105,51 @@ public class DashboardFragment extends Fragment {
         addPercent = view.findViewById(R.id.add_percent);
         addProgress = view.findViewById(R.id.add_progress);
         addTitle = view.findViewById(R.id.add_pr_title);
+
+        btnChange =Objects.requireNonNull(getActivity()).findViewById(R.id.tool_btn_grid);
+        toolbar_title = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
+
+        BottomNavigationView bottomNavigationView = Objects.requireNonNull(getActivity()).findViewById(R.id.bottomNavigation);
+
+        Calendar c = Calendar.getInstance();
+        final int year = c.get(Calendar.YEAR);
+        String[] monthName = {getString(R.string.january), getString(R.string.february), getString(R.string.march), getString(R.string.april), getString(R.string.may), getString(R.string.june), getString(R.string.july),
+                getString(R.string.august), getString(R.string.september), getString(R.string.october), getString(R.string.november), getString(R.string.december)};
+
+        final String month = monthName[c.get(Calendar.MONTH)];
+
+        firstCon = view.findViewById(R.id.first_con);
+        secondCon = view.findViewById(R.id.second_con);
+        thirdCon = view.findViewById(R.id.third_con);
+
+        firstCon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new CalendarEventsFragment());
+                btnChange.setVisibility(View.GONE);
+                toolbar_title.setText(month + " " + year);
+                bottomNavigationView.selectTab(3);
+            }
+        });
+
+        secondCon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new TasksFragment());
+                btnChange.setVisibility(View.GONE);
+                toolbar_title.setText(R.string.tasks);
+                bottomNavigationView.selectTab(1);
+            }
+        });
+        thirdCon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new IdeasFragment());
+                btnChange.setVisibility(View.VISIBLE);
+                toolbar_title.setText(R.string.ideas);
+                bottomNavigationView.selectTab(4);
+            }
+        });
 
 
         getDataFromBD();
@@ -245,6 +303,12 @@ public class DashboardFragment extends Fragment {
             privateProgress.getProgressDrawable().setColorFilter(Color.parseColor("#0365C4"), PorterDuff.Mode.SRC_IN);
 
         }
+    }
+    public void changeFragment(Fragment fragment) {
+        FragmentManager manager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 
     public void checkNewCategory(){

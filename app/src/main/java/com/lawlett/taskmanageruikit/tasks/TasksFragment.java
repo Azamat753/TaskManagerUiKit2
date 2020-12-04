@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,8 @@ public class TasksFragment extends Fragment {
     ImageView personalImage, workImage, meetImage, homeImage, privateImage, doneImage;
     TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount, done_title;
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;
-    ConstraintLayout personConst, workConst, meetConst, homeConst, privateConst, addConst, doneConst;
+    ConstraintLayout personConst, workConst, meetConst, homeConst, privateConst;
+    LinearLayout addConst, doneConst;
     List<DoneModel> list;
 
     @Override

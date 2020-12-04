@@ -26,6 +26,7 @@ public class ImageAdapter extends ArrayAdapter<Integer> {
         return initView(position);
     }
 
+
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         return initView(position);

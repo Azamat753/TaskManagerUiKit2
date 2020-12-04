@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.addTab(bottomNavigationItem2);
         bottomNavigationView.addTab(bottomNavigationItem3);
 
+
         bottomNavigationView.setOnBottomNavigationItemClickListener(new OnBottomNavigationItemClickListener() {
             @Override
             public void onNavigationItemClick(int index) {

@@ -54,9 +54,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
-        }
 
         changeView();
 
@@ -123,23 +122,27 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(HomeActivity.this);
                 dialog.setTitle(R.string.are_you_sure).setMessage(R.string.to_delete)
-                        .setNegativeButton(R.string.no, (dialog1, which) ->
-                                dialog1.cancel())
-                        .setPositiveButton(R.string.yes, (dialog12, which) -> {
+                        .setNegativeButton(R.string.no, (dialog1, which) -> {
+                            adapter.notifyDataSetChanged();
+                            dialog1.cancel();
+                        })
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                            pos = viewHolder.getAdapterPosition();
-                            homeModel = list.get(pos);
-                            if (!homeModel.isDone) {
-                                App.getDataBase().homeDao().delete(list.get(pos));
-                            } else {
-                                decrementDone();
-                                App.getDataBase().homeDao().update(list.get(pos));
-                                App.getDataBase().homeDao().delete(list.get(pos));
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(HomeActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
+                                pos = viewHolder.getAdapterPosition();
+                                homeModel = list.get(pos);
+                                if (!homeModel.isDone) {
+                                    App.getDataBase().homeDao().delete(list.get(pos));
+                                } else {
+                                    decrementDone();
+                                    App.getDataBase().homeDao().update(list.get(pos));
+                                    App.getDataBase().homeDao().delete(list.get(pos));
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(HomeActivity.this, R.string.delete, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }).show();
-                adapter.notifyDataSetChanged();
                 }
         }).attachToRecyclerView(recyclerView);
 

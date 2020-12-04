@@ -59,11 +59,6 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
                 view.startAnimation(animation);
                 hideKeyboard();
 
-                Toast toast = new Toast(getContext());
-                ImageView imageToast = new ImageView(getContext());
-                imageToast.setImageResource(dialogImg);
-                toast.setView(imageToast);
-                toast.show();
             }
         });
     }
