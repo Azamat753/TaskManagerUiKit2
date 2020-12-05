@@ -158,11 +158,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 final int DIRECTION_RIGHT = 1;
                 final int DIRECTION_LEFT = 0;
 
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
-                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int)dX);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int) dX);
 
-                    switch (direction){
+                    switch (direction) {
 
                         case DIRECTION_RIGHT:
 
@@ -184,7 +184,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                     }
 
                 }
-
+            }
         }).attachToRecyclerView(recyclerView);
 
 
@@ -203,13 +203,13 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
                     imageAdd.startAnimation(animationAlpha);
-                    imageMic.setVisibility(View.GONE);
+                    imageMic.setVisibility(View.INVISIBLE);
                     imageAdd.setVisibility(View.VISIBLE);
                     knopka = true;
                 }
                 if (editText.getText().toString().isEmpty() && knopka) {
                     imageMic.startAnimation(animationAlpha);
-                    imageAdd.setVisibility(View.GONE);
+                    imageAdd.setVisibility(View.INVISIBLE);
                     imageMic.setVisibility(View.VISIBLE);
                     knopka = false;
                 }
@@ -218,7 +218,6 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             public void afterTextChanged(Editable editable) {
             }
         });
-
     }
 
     private void init() {

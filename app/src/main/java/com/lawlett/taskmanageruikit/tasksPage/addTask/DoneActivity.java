@@ -1,8 +1,13 @@
 package com.lawlett.taskmanageruikit.tasksPage.addTask;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -18,13 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.adapter.DoneAdapter;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
-import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMCheckedListener {
     DoneAdapter adapter;
@@ -32,7 +39,10 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
     DoneModel doneModel;
     EditText editText;
     int pos, previousData, currentData, updateData;
-    ImageView doneBack;
+    ImageView doneBack, addTask,imageMic;
+    private static final int REQUEST_CODE_SPEECH_INPUT = 22;
+    boolean knopka = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +68,9 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_done);
+        addTask = findViewById(R.id.add_task_done);
+        imageMic=findViewById(R.id.mic_task_done);
+        editListener();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -65,6 +78,7 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
                         ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
@@ -153,6 +167,7 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
         toolbar.setText(TaskDialogPreference.getTitle());
 
     }
+
     @Override
     public void onItemCheckClick(int id) {
         doneModel = list.get(id);
@@ -176,5 +191,57 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
         currentData = AddDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         AddDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    private void editListener() {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
+//                    imageAdd.startAnimation(animationAlpha);
+                    imageMic.setVisibility(View.INVISIBLE);
+                    addTask.setVisibility(View.VISIBLE);
+                    knopka = true;
+                }
+                if (editText.getText().toString().isEmpty() && knopka) {
+//                    imageMic.startAnimation(animationAlpha);
+                    addTask.setVisibility(View.INVISIBLE);
+                    imageMic.setVisibility(View.VISIBLE);
+                    knopka = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+    }
+
+    public void micDoneTask(View view) {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hi speak something");
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
+        } catch (Exception e) {
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            assert result != null;
+            editText.setText(editText.getText() + " " + result.get(0));
+        }
     }
 }

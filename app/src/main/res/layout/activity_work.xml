@@ -14,10 +14,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:overScrollMode="never"
         android:id="@+id/recycler_work"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/awesomeTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,49 +26,51 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/awesomeTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:padding="16dp"
         android:hint="@string/task"
-        app:hintTextColor="#00BCD4"
+        android:padding="16dp"
         android:textColorHint="@color/hint_color"
         app:boxStrokeColor="#00BCD4"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:hintTextColor="#00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/add_task_work"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_work"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:inputType="textCapSentences"
             android:textColor="@color/myWhite"
-            android:inputType="textCapSentences" />
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/add_task_work"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:onClick="addWorkTask"
         android:layout_marginEnd="20dp"
-        app:srcCompat="@drawable/ic_send"
-        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayout"
+        android:onClick="addWorkTask"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/awesomeTextInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayout"
+        app:srcCompat="@drawable/ic_send" />
+
     <ImageView
-        android:id="@+id/mic_task_work"
+        android:id="@+id/mic_task_done"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
-        app:srcCompat="@drawable/ic_mic"
         android:onClick="micWorkTask"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/awesomeTextInputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayout"
+        app:srcCompat="@drawable/ic_mic" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

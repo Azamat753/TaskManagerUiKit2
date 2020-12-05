@@ -1,6 +1,5 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -10,7 +9,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -71,18 +68,20 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             }
         });
 
-        linearLayoutHome = findViewById(R.id.linearHome);
+
         recyclerView = findViewById(R.id.recycler_home);
         recyclerView.setAdapter(adapter);
 
         editText = findViewById(R.id.editText_home);
-
+        imageMic = findViewById(R.id.mic_task_home);
+        imageAdd=findViewById(R.id.add_task_home);
+        editListener();
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
 
             @Override
@@ -143,45 +142,14 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                                 }
                             }
                         }).show();
-                }
+            }
         }).attachToRecyclerView(recyclerView);
 
         homeBack = findViewById(R.id.personal_back);
-        editText = findViewById(R.id.editText_home);
-        imageMic = findViewById(R.id.mic_task_home);
-        imageAdd = findViewById(R.id.add_task_home);
-        recyclerView = findViewById(R.id.recycler_home);
-        animationAlpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
-        recyclerView.setAdapter(adapter);
-        list = new ArrayList<>();
-        adapter = new HomeAdapter(this);
-
-    }
-
-    private void editListener() {
-        editText.addTextChangedListener(new TextWatcher() {
+        homeBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
-                    imageAdd.startAnimation(animationAlpha);
-                    imageMic.setVisibility(View.GONE);
-                    imageAdd.setVisibility(View.VISIBLE);
-                    knopka = true;
-                }
-                if (editText.getText().toString().isEmpty() && knopka) {
-                    imageMic.startAnimation(animationAlpha);
-                    imageAdd.setVisibility(View.GONE);
-                    imageMic.setVisibility(View.VISIBLE);
-                    knopka = false;
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }
@@ -222,10 +190,40 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
     }
+
     private void decrementDone() {
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    private void editListener() {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
+//                    imageAdd.startAnimation(animationAlpha);
+                    imageMic.setVisibility(View.INVISIBLE);
+                    imageAdd.setVisibility(View.VISIBLE);
+                    knopka = true;
+                }
+                if (editText.getText().toString().isEmpty() && knopka) {
+//                    imageMic.startAnimation(animationAlpha);
+                    imageAdd.setVisibility(View.INVISIBLE);
+                    imageMic.setVisibility(View.VISIBLE);
+                    knopka = false;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
     }
 
     public void micHomeTask(View view) {
@@ -238,17 +236,6 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
         } catch (Exception e) {
             Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_SPEECH_INPUT && resultCode == RESULT_OK && data != null) {
-            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            assert result != null;
-            editText.setText(editText.getText() + " " + result.get(0));
         }
     }
 }

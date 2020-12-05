@@ -16,59 +16,60 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_private"
         android:layout_width="match_parent"
-        android:overScrollMode="never"
         android:layout_height="0dp"
-        tools:listitem="@layout/private_item"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/awesomeTextInputLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/private_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/private_toolbar"
+        tools:listitem="@layout/private_item" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/awesomeTextInputLayout4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:padding="16dp"
         android:hint="@string/task"
-        app:hintTextColor="#00BCD4"
+        android:padding="16dp"
         android:textColorHint="@color/hint_color"
         app:boxStrokeColor="#00BCD4"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:hintTextColor="#00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/add_task_private"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_private"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:textColor="@color/myWhite"
             android:inputType="textCapSentences"
-            />
+            android:textColor="@color/myWhite"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/add_task_private"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:onClick="addPrivateTask"
         android:layout_marginEnd="20dp"
-        app:srcCompat="@drawable/ic_send"
-        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayout4"
+        android:visibility="invisible"
+        android:onClick="addPrivateTask"
         app:layout_constraintBottom_toBottomOf="@+id/awesomeTextInputLayout4"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayout4"
+        app:srcCompat="@drawable/ic_send" />
+
     <ImageView
         android:id="@+id/mic_task_private"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="30dp"
         android:onClick="micPrivateTask"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/awesomeTextInputLayout4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayout4"
         app:srcCompat="@drawable/ic_mic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

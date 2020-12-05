@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".tasksPage.addTask.DoneActivity">
+
     <include
         android:id="@+id/done_toolbar"
         layout="@layout/personal_tool_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_done"
         android:layout_width="match_parent"
@@ -26,38 +28,49 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/awesomeTextInputLayoutdone"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:padding="16dp"
         android:hint="@string/task"
-        app:hintTextColor="#00BCD4"
+        android:padding="16dp"
         android:textColorHint="@color/hint_color"
         app:boxStrokeColor="#00BCD4"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:hintTextColor="#00BCD4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/add_task_done"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText_done"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:textColor="@color/myWhite"
             android:inputType="textCapSentences"
-            />
+            android:textColor="@color/myWhite"
+            android:textStyle="bold" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/add_task_done"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:onClick="addDoneTask"
+        android:visibility="invisible"
         android:layout_marginEnd="20dp"
-        app:srcCompat="@drawable/ic_send"
-        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayoutdone"
+        android:onClick="addDoneTask"
         app:layout_constraintBottom_toBottomOf="@+id/awesomeTextInputLayoutdone"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayoutdone"
+        app:srcCompat="@drawable/ic_send" />
+
+    <ImageView
+        android:id="@+id/mic_task_done"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:onClick="micDoneTask"
+        app:layout_constraintBottom_toBottomOf="@+id/awesomeTextInputLayoutdone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/awesomeTextInputLayoutdone"
+        app:srcCompat="@drawable/ic_mic" />
 </androidx.constraintlayout.widget.ConstraintLayout>
