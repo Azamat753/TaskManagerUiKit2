@@ -18,15 +18,17 @@ import android.widget.Toast;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.adapter.DoneAdapter;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMCheckedListener {
+public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMCheckedListener, ActionForDialog {
     DoneAdapter adapter;
     List<DoneModel> list;
     DoneModel doneModel;
@@ -132,6 +134,14 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
                 onBackPressed();
             }
         });
+
+        findViewById(R.id.settings_for_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogHelper dialogHelper = new DialogHelper();
+                dialogHelper.myDialog(DoneActivity.this, DoneActivity.this);
+            }
+        });
     }
 
     public void addDoneTask(View view) {
@@ -176,5 +186,11 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
         currentData = AddDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         AddDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    @Override
+    public void pressOk() {
+        App.getDataBase().doneDao().deleteAll(list);
+        AddDoneSizePreference.getInstance(DoneActivity.this).clearSettings();
     }
 }

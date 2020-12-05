@@ -18,14 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener {
+public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener, ActionForDialog {
     RecyclerView recyclerView;
     MeetAdapter adapter;
     private List<MeetModel> list;
@@ -140,6 +142,14 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
                 onBackPressed();
             }
         });
+
+        findViewById(R.id.settings_for_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogHelper dialogHelper = new DialogHelper();
+                dialogHelper.myDialog(MeetActivity.this, MeetActivity.this);
+            }
+        });
     }
 
     public void addMeetTask(View view) {
@@ -183,5 +193,11 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         currentData = MeetDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         MeetDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    @Override
+    public void pressOk() {
+        App.getDataBase().meetDao().deleteAll(list);
+        MeetDoneSizePreference.getInstance(MeetActivity.this).clearSettings();
     }
 }

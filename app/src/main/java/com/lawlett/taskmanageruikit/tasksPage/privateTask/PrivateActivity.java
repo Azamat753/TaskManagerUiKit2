@@ -18,13 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener {
+public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener, ActionForDialog {
     RecyclerView recyclerView;
     PrivateAdapter adapter;
     ArrayList<PrivateModel> list;
@@ -137,6 +139,14 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
                 onBackPressed();
             }
         });
+
+        findViewById(R.id.settings_for_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogHelper dialogHelper = new DialogHelper();
+                dialogHelper.myDialog(PrivateActivity.this, PrivateActivity.this);
+            }
+        });
     }
 
     public void addPrivateTask(View view) {
@@ -178,5 +188,11 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         currentData = PrivateDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         PrivateDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    @Override
+    public void pressOk() {
+        App.getDataBase().privateDao().deleteAll(list);
+        PrivateDoneSizePreference.getInstance(PrivateActivity.this).clearSettings();
     }
 }

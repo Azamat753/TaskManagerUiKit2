@@ -18,21 +18,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener {
+public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener, ActionForDialog {
     RecyclerView recyclerView;
     HomeAdapter adapter;
     List<HomeModel> list;
     HomeModel homeModel;
     EditText editText;
     int pos, previousData, currentData, updateData;
-    ImageView homeBack;
+    ImageView homeBack, homeSettings;
+    DialogHelper dialogHelper = new DialogHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             }
 
             @Override
@@ -128,7 +131,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                                 }
                             }
                         }).show();
-                }
+            }
         }).attachToRecyclerView(recyclerView);
 
         homeBack = findViewById(R.id.personal_back);
@@ -136,6 +139,14 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        homeSettings = findViewById(R.id.settings_for_task);
+        homeSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogHelper.myDialog(HomeActivity.this, HomeActivity.this);
             }
         });
     }
@@ -176,9 +187,16 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
     }
+
     private void decrementDone() {
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    @Override
+    public void pressOk() {
+        App.getDataBase().homeDao().deleteAll(list);
+        HomeDoneSizePreference.getInstance(HomeActivity.this).clearSettings();
     }
 }

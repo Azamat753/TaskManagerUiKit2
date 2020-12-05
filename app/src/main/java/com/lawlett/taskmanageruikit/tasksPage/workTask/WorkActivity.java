@@ -18,14 +18,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener {
+public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener, ActionForDialog {
     WorkAdapter adapter;
     EditText editText;
     WorkModel workModel;
@@ -137,6 +139,14 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
                 onBackPressed();
             }
         });
+
+        findViewById(R.id.settings_for_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogHelper dialogHelper = new DialogHelper();
+                dialogHelper.myDialog(WorkActivity.this, WorkActivity.this);
+            }
+        });
     }
 
     public void addWorkTask(View view) {
@@ -181,6 +191,12 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         currentData = WorkDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         WorkDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    @Override
+    public void pressOk() {
+        App.getDataBase().workDao().deleteAll(list);
+        WorkDoneSizePreference.getInstance(WorkActivity.this).clearSettings();
     }
 }
 
