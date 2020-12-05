@@ -115,5 +115,5 @@
     <string name="help_timing_add">For adding a new task, click on +</string>
     <string name="changing_theme">Change theme</string>
     <string name="board_theme_desc"> You can pick your theme here by clicking on one of the options or go to Settings</string>
-    <string name="are_you_sure_that">Вы действительно хотите удалить все записи?</string>
+    <string name="are_you_sure_that">Are you sure you want to delete all the notes?</string>
 </resources>
