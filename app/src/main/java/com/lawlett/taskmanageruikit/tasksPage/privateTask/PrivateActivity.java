@@ -48,8 +48,6 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
     Animation animationAlpha;
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +55,11 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
 
         init();
         if (Build.VERSION.SDK_INT >= 21)
+
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         changeView();
+        
 
 
         App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
