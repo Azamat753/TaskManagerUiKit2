@@ -19,7 +19,7 @@
         android:layout_height="0dp"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/awesomeTextInputLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/awesomeTextInputLayoutdone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

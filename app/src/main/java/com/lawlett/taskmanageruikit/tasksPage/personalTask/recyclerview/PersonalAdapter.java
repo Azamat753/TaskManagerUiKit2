@@ -12,7 +12,6 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PersonalAdapter extends RecyclerView.Adapter<PersonalAdapter.PersonalViewHolder> {

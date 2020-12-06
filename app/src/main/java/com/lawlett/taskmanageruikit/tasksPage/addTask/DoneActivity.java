@@ -34,8 +34,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import com.lawlett.taskmanageruikit.utils.App;
-import java.util.Locale;
 
 public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMCheckedListener, ActionForDialog {
     DoneAdapter adapter;

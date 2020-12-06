@@ -204,13 +204,13 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
-                    imageAdd.startAnimation(animationAlpha);
+//                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.INVISIBLE);
                     imageAdd.setVisibility(View.VISIBLE);
                     knopka = true;
                 }
                 if (editText.getText().toString().isEmpty() && knopka) {
-                    imageMic.startAnimation(animationAlpha);
+//                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.INVISIBLE);
                     imageMic.setVisibility(View.VISIBLE);
                     knopka = false;
