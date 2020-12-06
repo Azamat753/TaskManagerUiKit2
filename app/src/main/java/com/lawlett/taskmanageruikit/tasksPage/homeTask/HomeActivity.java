@@ -24,7 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener {
+public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener, ActionForDialog {
     RecyclerView recyclerView;
     HomeAdapter adapter;
     List<HomeModel> list;
@@ -45,6 +47,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     boolean knopka = false;
     Animation animationAlpha;
 
+    ImageView  homeSettings;
+    DialogHelper dialogHelper = new DialogHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +156,14 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                 onBackPressed();
             }
         });
+
+        homeSettings = findViewById(R.id.settings_for_task);
+        homeSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogHelper.myDialog(HomeActivity.this, HomeActivity.this);
+            }
+        });
     }
 
     public void addHomeTask(View view) {
@@ -195,6 +207,12 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
+    }
+
+    @Override
+    public void pressOk() {
+        App.getDataBase().homeDao().deleteAll(list);
+        HomeDoneSizePreference.getInstance(HomeActivity.this).clearSettings();
     }
 
     private void editListener() {

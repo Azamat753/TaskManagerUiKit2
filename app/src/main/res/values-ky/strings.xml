@@ -115,4 +115,5 @@
     <string name="help_timing_add">Жаңы тапшырма кошуу үчүн, + басыңыз</string>
     <string name="changing_theme">Теманы өзгөртүү</string>
     <string name="board_theme_desc">Теманы опциялардын бирине басышы менен таңдай аласыз же жөндөөгө кириңиз</string>
+    <string name="are_you_sure_that">Сиз баардык жазууларды өчүргүнүз келеби?</string>
 </resources>

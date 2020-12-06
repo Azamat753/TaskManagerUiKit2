@@ -28,7 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener {
+public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener, ActionForDialog {
     EditText editText;
     PersonalAdapter adapter;
     PersonalModel personalModel;
@@ -230,6 +232,20 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         imageAdd = findViewById(R.id.add_task_personal);
         imageMic = findViewById(R.id.mic_task_personal);
         personalBack = findViewById(R.id.personal_back);
+        personalBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        findViewById(R.id.settings_for_task).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogHelper dialogHelper = new DialogHelper();
+                dialogHelper.myDialog(PersonalActivity.this, PersonalActivity.this);
+            }
+        });
     }
 
     public void addPersonalTask(View view) {
@@ -271,6 +287,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         PersonDoneSizePreference.getInstance(this).savePersonalSize(updateData);
     }
 
+    @Override
+    public void pressOk() {
+        App.getDataBase().personalDao().deleteAll(list);
+        PersonDoneSizePreference.getInstance(PersonalActivity.this).clearSettings();
+    }
     public void micPersonalTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

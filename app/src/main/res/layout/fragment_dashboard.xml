@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="12dp"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
     tools:context=".dashboard.DashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -275,7 +276,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/progress_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:overScrollMode="never"
