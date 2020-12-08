@@ -273,4 +273,13 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mp != null)
+            mp.stop();
+        countDownTimer.cancel();
+        finish();
+
+    }
 }

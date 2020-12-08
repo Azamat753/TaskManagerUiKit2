@@ -19,14 +19,16 @@ public class App extends Application {
     private static AppDataBase dataBase;
     public static final String CHANNEL_ID = "exampleChannel";
     public static final String CHANNEL_ID_HOURS = "exampleChannelHours";
-    public static final String CHANNEL_ID_DAY = "exampleChannelDay";
+//    public static final String CHANNEL_ID_DAY = "exampleChannelDay";
 
     @Override
     public void onCreate() {
         super.onCreate();
         dataBase = Room.databaseBuilder(this, AppDataBase.class, "database")
              .fallbackToDestructiveMigration().allowMainThreadQueries().build();
-
+//
+//        Room.databaseBuilder(this,AppDataBase.class,"database")
+//                .addMigrations(MIGRATION_2_3).build();
         createNotificationChannel();
 
     }
@@ -58,4 +60,6 @@ public class App extends Application {
 
         }
     }
+
+
 }

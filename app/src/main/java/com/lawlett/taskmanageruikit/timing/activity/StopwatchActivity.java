@@ -168,7 +168,15 @@ public class StopwatchActivity extends AppCompatActivity {
                 .setColor(getColor(R.color.myWhite))
                 .build();
 
-        notification.flags=Notification.FLAG_ONGOING_EVENT;
+//        notification.flags=Notification.FLAG_ONGOING_EVENT;
         notificationManager.notify(1, notification);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        showElapsedTime();
+        notificationManager.cancel(1);
+
     }
 }

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +56,6 @@ public class TimingFragment extends Fragment {
         App.getDataBase().timingDao().getAllLive().observe(this, timingModels -> {
             if (timingModels != null){
                 list.clear();
-            list.addAll(timingModels);
             tvTiming.setVisibility(View.GONE);
 //            list.addAll(timingModels);
             list.addAll(App.getDataBase().timingDao().getSortedTimingModel());
