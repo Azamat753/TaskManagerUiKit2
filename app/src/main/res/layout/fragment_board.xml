@@ -144,7 +144,8 @@
             android:layout_marginTop="50dp"
             android:src="@drawable/light_theme"
             app:layout_constraintEnd_toStartOf="@+id/board_view"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/image_day_select"
@@ -154,7 +155,8 @@
             android:background="@drawable/image_select"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/board_view"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/image_night"

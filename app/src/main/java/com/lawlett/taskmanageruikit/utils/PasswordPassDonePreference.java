@@ -3,7 +3,7 @@ package com.lawlett.taskmanageruikit.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class PasswordPassDonePreference {
+public class PasswordPassDonePreference  {
 
     public static volatile PasswordPassDonePreference instance;
     private SharedPreferences preferences;

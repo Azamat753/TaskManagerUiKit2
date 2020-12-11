@@ -161,7 +161,7 @@ public class StopwatchActivity extends AppCompatActivity {
 
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.app_logo_foreground)
+                .setSmallIcon(R.mipmap.app_foreground)
                 .setCustomBigContentView(expandedView)
                 .setContentTitle(getString(R.string.stopwatch))
                 .setContentText(getString(R.string.go_count))

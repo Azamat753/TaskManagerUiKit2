@@ -222,7 +222,7 @@ public class TimerActivity extends AppCompatActivity {
                 expandedView.setTextViewText(R.id.timer_expanded, timeLeftText);
 
                 Notification notification = new NotificationCompat.Builder(TimerActivity.this, CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.app_logo_foreground)
+                        .setSmallIcon(R.mipmap.app_foreground)
                         .setCustomBigContentView(expandedView)
                         .setContentTitle(getString(R.string.timer))
                         .setColor(getColor(R.color.myWhite))
@@ -273,13 +273,5 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mp != null)
-            mp.stop();
-        countDownTimer.cancel();
-        finish();
 
-    }
 }

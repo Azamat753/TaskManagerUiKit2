@@ -54,14 +54,14 @@ public class TimingFragment extends Fragment {
         tvTiming = root.findViewById(R.id.timing_tv);
 
         App.getDataBase().timingDao().getAllLive().observe(this, timingModels -> {
-            if (timingModels != null){
+            if (timingModels != null) {
                 list.clear();
-            tvTiming.setVisibility(View.GONE);
+                tvTiming.setVisibility(View.GONE);
 //            list.addAll(timingModels);
-            list.addAll(App.getDataBase().timingDao().getSortedTimingModel());
-            adapter.notifyDataSetChanged();
+                list.addAll(App.getDataBase().timingDao().getSortedTimingModel());
+                adapter.notifyDataSetChanged();
             }
-            if(timingModels.isEmpty()){
+            if (timingModels.isEmpty()) {
                 tvTiming.setVisibility(View.VISIBLE);
             }
 
@@ -132,11 +132,11 @@ public class TimingFragment extends Fragment {
                 final int DIRECTION_RIGHT = 1;
                 final int DIRECTION_LEFT = 0;
 
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
-                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int)dX);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int) dX);
 
-                    switch (direction){
+                    switch (direction) {
 
                         case DIRECTION_RIGHT:
 

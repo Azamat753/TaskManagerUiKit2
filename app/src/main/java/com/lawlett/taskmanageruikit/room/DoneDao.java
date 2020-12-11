@@ -14,6 +14,8 @@ import java.util.List;
 
 @Dao
 public interface DoneDao {
+
+
     @Query("SELECT*FROM doneModel")
     List<DoneModel> getAll();
 

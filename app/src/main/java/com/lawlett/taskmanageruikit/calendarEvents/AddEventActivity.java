@@ -14,7 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.webkit.PermissionRequest;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +33,6 @@ import com.lawlett.taskmanageruikit.utils.DatePickerFragment;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.TimePickerFragment;
 
-import java.security.acl.Permission;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
