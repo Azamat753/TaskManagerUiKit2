@@ -100,4 +100,7 @@
     <string name="to_delete">Удалить</string>
     <string name="color_dont_choosed">Цвет не выбран</string>
     <string name="share_app">Поделиться</string>
+    <string name="achievement_app">достежения</string>
+    <string name="completed">выполненных</string>
+    <string name="done">Done</string>
 </resources>

@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.achievement.AchievementActivity;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
@@ -41,7 +42,7 @@ import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
     ImageView back;
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout, achievement_layout;
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -58,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
         back = findViewById(R.id.back_view);
         language_tv = findViewById(R.id.four_layout);
         share_layout = findViewById(R.id.five_layout);
+        achievement_layout = findViewById(R.id.achievement_layout);
         magick = findViewById(R.id.btn_magick);
         listView = findViewById(R.id.listView);
 
@@ -102,6 +104,8 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        achievement_layout.setOnClickListener(v -> startActivity(new Intent(this, AchievementActivity.class)));
 
         clear_password_layout.setOnClickListener(new View.OnClickListener() {
             @Override
