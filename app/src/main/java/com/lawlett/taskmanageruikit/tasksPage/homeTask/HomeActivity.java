@@ -22,6 +22,7 @@ import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -167,7 +168,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText(R.string.home);
+        toolbar.setText(TaskDialogPreference.getHomeTitle());
     }
 
     @Override

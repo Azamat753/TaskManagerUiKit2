@@ -21,6 +21,7 @@ import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
+import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 
 import java.util.ArrayList;
@@ -165,7 +166,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText(R.string.work);
+        toolbar.setText(TaskDialogPreference.getWorkTitle());
 
     }
 

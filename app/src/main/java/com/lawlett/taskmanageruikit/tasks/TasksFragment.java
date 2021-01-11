@@ -20,13 +20,16 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.CustomTaskDialog;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.DoneActivity;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.homeTask.CustomHomeDialog;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.HomeActivity;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.MeetActivity;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.PersonalActivity;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.PrivateActivity;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.WorkActivity;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
@@ -37,11 +40,13 @@ import java.util.List;
 
 public class TasksFragment extends Fragment {
     ImageView personalImage, workImage, meetImage, homeImage, privateImage, doneImage;
-    TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount, done_title;
+    TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount, done_title,
+            home_title, meet_title, personal_title, work_title;
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;
     ConstraintLayout personConst, workConst, meetConst, homeConst, privateConst;
     LinearLayout addConst, doneConst;
     List<DoneModel> list;
+    int buttonListen;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,10 +65,8 @@ public class TasksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_todo, container, false);
     }
-//
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,6 +93,13 @@ public class TasksFragment extends Fragment {
         done_amount = view.findViewById(R.id.done_amount);
 
         done_title = view.findViewById(R.id.done_task_title);
+        home_title = view.findViewById(R.id.home_task_title);
+        meet_title = view.findViewById(R.id.meet_task_title);
+        personal_title = view.findViewById(R.id.person_task_title);
+        work_title = view.findViewById(R.id.work_task_title);
+
+        setLongClickListeners();
+
 
         personConst.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +110,7 @@ public class TasksFragment extends Fragment {
         workConst.setOnClickListener(v -> startActivity(new Intent(getContext(), WorkActivity.class)));
         meetConst.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
         homeConst.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
+
 
         privateConst.setOnClickListener(v -> {
             if (!PasswordPassDonePreference.getInstance(getContext()).isPass()) {
@@ -115,9 +126,6 @@ public class TasksFragment extends Fragment {
 
             }
         });
-        workImage.setOnClickListener(v -> startActivity(new Intent(getContext(), WorkActivity.class)));
-        meetImage.setOnClickListener(v -> startActivity(new Intent(getContext(), MeetActivity.class)));
-        homeImage.setOnClickListener(v -> startActivity(new Intent(getContext(), HomeActivity.class)));
         privateImage.setOnClickListener(v -> {
             if (!PasswordPassDonePreference.getInstance(getContext()).isPass()) {
                 startActivity(new Intent(getContext(), PassCodeActivity.class));
@@ -133,12 +141,39 @@ public class TasksFragment extends Fragment {
             }
         });
 
-        if(!TaskDialogPreference.getTitle().isEmpty()){
-        done_title.setText(TaskDialogPreference.getTitle());
-        doneImage.setImageResource(TaskDialogPreference.getImage());
-        doneConst.setVisibility(View.VISIBLE);
-        addConst.setVisibility(View.GONE);
+        if (!TaskDialogPreference.getTitle().isEmpty()) {
+            done_title.setText(TaskDialogPreference.getTitle());
+            doneImage.setImageResource(TaskDialogPreference.getImage());
+            doneConst.setVisibility(View.VISIBLE);
+            addConst.setVisibility(View.GONE);
         }
+        if (!TaskDialogPreference.getHomeTitle().isEmpty()) {
+            home_title.setText(TaskDialogPreference.getHomeTitle());
+            homeImage.setImageResource(TaskDialogPreference.getHomeImage());
+        }
+        if (!TaskDialogPreference.getMeetTitle().isEmpty()) {
+            meet_title.setText(TaskDialogPreference.getMeetTitle());
+            meetImage.setImageResource(TaskDialogPreference.getMeetImage());
+        }
+        if (!TaskDialogPreference.getPersonTitle().isEmpty()) {
+            personal_title.setText(TaskDialogPreference.getPersonTitle());
+            personalImage.setImageResource(TaskDialogPreference.getPersonImage());
+        }
+        if (!TaskDialogPreference.getWorkTitle().isEmpty()) {
+            work_title.setText(TaskDialogPreference.getWorkTitle());
+            workImage.setImageResource(TaskDialogPreference.getWorkImage());
+        }
+
+        doneConst.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), DoneActivity.class));
+            }
+        });
+
+    }
+
+    private void setLongClickListeners() {
         doneConst.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -148,10 +183,10 @@ public class TasksFragment extends Fragment {
                 builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(which == 0){
+                        if (which == 0) {
                             showCustomTaskDialog();
                         }
-                        if(which == 1) {
+                        if (which == 1) {
                             App.getDataBase().doneDao().deleteAll(list);
 
                             AddDoneSizePreference.getInstance(getContext()).clearSettings();
@@ -168,15 +203,58 @@ public class TasksFragment extends Fragment {
                 return false;
             }
         });
-        doneConst.setOnClickListener(new View.OnClickListener() {
+        homeConst.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), DoneActivity.class));
+            public boolean onLongClick(View v) {
+                buttonListen = 4;
+                showAlertDialog();
+                return false;
+            }
+        });
+        workConst.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                buttonListen = 2;
+                showAlertDialog();
+                return false;
+            }
+        });
+        personConst.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                buttonListen = 1;
+                showAlertDialog();
+                return false;
+            }
+        });
+        meetConst.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                buttonListen = 3;
+                showAlertDialog();
+                return false;
             }
         });
     }
 
-    public void showCustomTaskDialog(){
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.attention)
+                .setMessage(R.string.change_image_title)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showCustomHomeDialog();
+                    }
+                }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
+    }
+
+    public void showCustomTaskDialog() {
         CustomTaskDialog customTaskDialog = new CustomTaskDialog(getContext());
         customTaskDialog.setDialogResult(new CustomTaskDialog.CustomDialogListener() {
             @Override
@@ -188,6 +266,42 @@ public class TasksFragment extends Fragment {
             }
         });
         customTaskDialog.show();
+    }
+
+    public void showCustomHomeDialog() {
+        CustomHomeDialog customHomeDialog = new CustomHomeDialog(getContext());
+        customHomeDialog.setDialogResult(new CustomHomeDialog.CustomDialogListener() {
+            @Override
+            public void addInformation(String title, Integer image) {
+                switch (buttonListen) {
+                    case 1:
+                        TaskDialogPreference.savePersonImage(image);
+                        TaskDialogPreference.savePersonTitle(title);
+                        personal_title.setText(title);
+                        personalImage.setImageResource(image);
+                        break;
+                    case 2:
+                        TaskDialogPreference.saveWorkImage(image);
+                        TaskDialogPreference.saveWorkTitle(title);
+                        work_title.setText(title);
+                        workImage.setImageResource(image);
+                        break;
+                    case 3:
+                        TaskDialogPreference.saveMeetImage(image);
+                        TaskDialogPreference.saveMeetTitle(title);
+                        meet_title.setText(title);
+                        meetImage.setImageResource(image);
+                        break;
+                    case 4:
+                        TaskDialogPreference.saveHomeImage(image);
+                        TaskDialogPreference.saveHomeTitle(title);
+                        home_title.setText(title);
+                        homeImage.setImageResource(image);
+                        break;
+                }
+            }
+        });
+        customHomeDialog.show();
     }
 
     public void notifyView() {

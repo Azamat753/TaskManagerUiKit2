@@ -49,7 +49,7 @@ public class DashboardFragment extends Fragment {
     TextView toolbar_title;
     TextView plans_amount, todo_amount, event_amount, allTask_amount,
             complete_task_amount, todo_percent, personalPercent, workPercent, meetPercent, homePercent, privatePercent, timing_task_amount, timing_minute_amount,
-    addPercent, addTitle;
+    addPercent, addTitle, homeTitle, personTitle, workTitle, meetTitle;
     ProgressBar allTaskProgress, personalProgress, workProgress, meetProgress, homeProgress, privateProgress,
     addProgress;
     int personalDoneAmount, workDoneAmount, meetDoneAmount, homeDoneAmount, privateDoneAmount, plansAmount, doneAmount,
@@ -105,6 +105,10 @@ public class DashboardFragment extends Fragment {
         addPercent = view.findViewById(R.id.add_percent);
         addProgress = view.findViewById(R.id.add_progress);
         addTitle = view.findViewById(R.id.add_pr_title);
+        homeTitle = view.findViewById(R.id.homeTask_pr_title);
+        personTitle = view.findViewById(R.id.personal_pr_title);
+        workTitle = view.findViewById(R.id.work_pr_title);
+        meetTitle = view.findViewById(R.id.meetTask_pr_title);
 
         btnChange =Objects.requireNonNull(getActivity()).findViewById(R.id.tool_btn_grid);
         toolbar_title = Objects.requireNonNull(getActivity()).findViewById(R.id.toolbar_title);
@@ -322,6 +326,18 @@ public class DashboardFragment extends Fragment {
             addTitle.setVisibility(View.GONE);
             addProgress.setVisibility(View.GONE);
             addPercent.setVisibility(View.GONE);
+        }
+        if(!TaskDialogPreference.getHomeTitle().isEmpty()){
+            homeTitle.setText(TaskDialogPreference.getHomeTitle());
+        }
+        if(!TaskDialogPreference.getPersonTitle().isEmpty()){
+            personTitle.setText(TaskDialogPreference.getPersonTitle());
+        }
+        if(!TaskDialogPreference.getWorkTitle().isEmpty()){
+            workTitle.setText(TaskDialogPreference.getWorkTitle());
+        }
+        if(!TaskDialogPreference.getMeetTitle().isEmpty()){
+            meetTitle.setText(TaskDialogPreference.getMeetTitle());
         }
     }
 }

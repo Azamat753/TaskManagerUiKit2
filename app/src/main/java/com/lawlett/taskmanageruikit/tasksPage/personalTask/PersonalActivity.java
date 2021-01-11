@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +44,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-
+        changeView();
         list = new ArrayList<>();
         adapter = new PersonalAdapter(this);
 
@@ -165,6 +167,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             App.getDataBase().personalDao().insert(personalModel);
             editText.setText("");
         }
+    }
+
+    public void changeView() {
+        TextView toolbar = findViewById(R.id.toolbar_title);
+        toolbar.setText(TaskDialogPreference.getPersonTitle());
     }
 
     @Override

@@ -161,7 +161,6 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
         toolbar.setText(TaskDialogPreference.getTitle());
-
     }
     @Override
     public void onItemCheckClick(int id) {
