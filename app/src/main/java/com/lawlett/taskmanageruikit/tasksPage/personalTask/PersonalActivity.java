@@ -90,8 +90,6 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-
-
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
 
@@ -116,15 +114,12 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 }
                 adapter.notifyItemMoved(fromPosition, toPosition);
                 return true;
-
             }
-
             @Override
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
                 App.getDataBase().personalDao().updateWord(list);
             }
-
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PersonalActivity.this);

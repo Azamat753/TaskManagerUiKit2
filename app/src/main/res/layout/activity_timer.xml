@@ -11,7 +11,7 @@
         android:id="@+id/image_const"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/image_timerPhone"
@@ -86,7 +86,7 @@
         android:id="@+id/timerConst"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/bgcircle"
