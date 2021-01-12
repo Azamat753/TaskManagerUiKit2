@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,12 +32,12 @@ public class CustomTaskDialog extends Dialog implements View.OnClickListener {
         super(context);
         TaskDialogPreference.init(context);
         imageAdapter = new ImageAdapter(context, new Integer[]{
-                R.drawable.ic_01,R.drawable.ic_14, R.drawable.ic_08, R.drawable.ic_11,
-                R.drawable.ic_17, R.drawable.ic_24,R.drawable.ic_05, R.drawable.ic_20,
+                R.drawable.ic_01,R.drawable.ic_work, R.drawable.ic_08, R.drawable.ic_11,
+                R.drawable.ic_17, R.drawable.ic_home,R.drawable.ic_05, R.drawable.ic_meet,
                 R.drawable.ic_19, R.drawable.ic_15,R.drawable.ic_12,R.drawable.ic_10,
                 R.drawable.ic_09,R.drawable.ic_18,  R.drawable.ic_23,R.drawable.ic_06,
                 R.drawable.ic_03, R.drawable.ic_07,R.drawable.ic_13, R.drawable.ic_22,
-                R.drawable.ic_21, R.drawable.ic_02, R.drawable.ic_04, R.drawable.ic_16,
+                R.drawable.ic_21, R.drawable.ic_person, R.drawable.ic_04, R.drawable.ic_16,
                 });
     }
 

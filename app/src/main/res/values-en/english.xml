@@ -116,4 +116,17 @@
     <string name="changing_theme">Change theme</string>
     <string name="board_theme_desc"> You can pick your theme here by clicking on one of the options or go to Settings</string>
     <string name="are_you_sure_that">Are you sure you want to delete all the notes?</string>
+    <string name="fox">Fox</string>
+    <string name="deer">Doe</string>
+    <string name="bull">Bull</string>
+    <string name="dog">\" Dog\"</string>
+    <string name="cat">Cat</string>
+    <string name="rat">Rat</string>
+    <string name="giraffe">Giraffe</string>
+    <string name="lion">Lion</string>
+    <string name="zebra">Zebra</string>
+    <string name="your_patronus">\"Your patronus - \"</string>
+    <string name="lumos">Lumos</string>
+    <string name="choose_app">Select application</string>
+    <string name="new_aim">It is time to set new goals!</string>
 </resources>

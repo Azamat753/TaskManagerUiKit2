@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.play.core.review.ReviewInfo;
@@ -71,19 +70,19 @@ public class SettingsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
-        if(ThemePreference.getInstance(SettingsActivity.this).isTheme()){
+        if (ThemePreference.getInstance(SettingsActivity.this).isTheme()) {
             imageTheme.setImageResource(R.drawable.ic_day);
-        }else {
+        } else {
             imageTheme.setImageResource(R.drawable.ic_nights);
         }
 
         theme_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!ThemePreference.getInstance(SettingsActivity.this).isTheme()){
+                if (!ThemePreference.getInstance(SettingsActivity.this).isTheme()) {
                     ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }else {
+                } else {
                     ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
@@ -114,7 +113,7 @@ public class SettingsActivity extends AppCompatActivity {
                     String shareMessage = "\nPlanner\n\n";
                     shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.lawlett.taskmanageruikit";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, "Выберите приложение"));
+                    startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_app)));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -186,7 +185,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"English", "Русский", "Кыргызча"};
+        final String[] listItems = {"English", "Русский", "Кыргызча", "Português"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingsActivity.this);
         mBuilder.setTitle(R.string.choose_language);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
@@ -200,6 +199,9 @@ public class SettingsActivity extends AppCompatActivity {
                     recreate();
                 } else if (i == 2) {
                     setLocale("ky");
+                    recreate();
+                } else if (i == 3) {
+                    setLocale("pt");
                     recreate();
                 }
                 dialog.dismiss();
@@ -243,14 +245,14 @@ public class SettingsActivity extends AppCompatActivity {
 
             if (matches.contains("Экспекто патронум")) {
                 Random random = new Random();
-                String animals [] = {"Лиса", "Лань","Бык", " Собака", "Кошка", "Крыса", "Журавль", "Бегемот", "Жираф", "Лев", "Зебра"};
+                String animals[] = {getString(R.string.fox), getString(R.string.deer), getString(R.string.bull), getString(R.string.dog), getString(R.string.cat), getString(R.string.rat), "Журавль", "Бегемот", getString(R.string.giraffe), getString(R.string.lion), getString(R.string.zebra)};
                 int a = random.nextInt(animals.length);
-                Toast.makeText(this, "Ваш патронус - " + animals[a], Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.your_patronus) + animals[a], Toast.LENGTH_SHORT).show();
             }
 
-            if (matches.contains("люмос")){
-                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
-                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+            if (matches.contains(getString(R.string.lumos))) {
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                         try {
                             cameraManager.setTorchMode("0", true);
                         } catch (CameraAccessException e) {
@@ -263,8 +265,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             if (matches.contains("Nox")) {
-                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
-                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                         try {
                             cameraManager.setTorchMode("0", false);
                         } catch (CameraAccessException e) {
@@ -275,7 +277,8 @@ public class SettingsActivity extends AppCompatActivity {
                 } else
                     Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
             }
-        }}
+        }
+    }
 
     private void loadLocale() {
         String language = LanguagePreference.getInstance(this).getLanguage();

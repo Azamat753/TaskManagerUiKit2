@@ -116,4 +116,17 @@
     <string name="changing_theme">Теманы өзгөртүү</string>
     <string name="board_theme_desc">Теманы опциялардын бирине басышы менен таңдай аласыз же жөндөөгө кириңиз</string>
     <string name="are_you_sure_that">Сиз баардык жазууларды өчүргүнүз келеби?</string>
+    <string name="fox">Түлкү</string>
+    <string name="deer">Ажыдар</string>
+    <string name="bull">Уй</string>
+    <string name="dog">\" Ит\"</string>
+    <string name="cat">Мышык</string>
+    <string name="rat">Чычкан</string>
+    <string name="giraffe">Жираф</string>
+    <string name="lion">Арстан</string>
+    <string name="zebra">Зебра</string>
+    <string name="your_patronus">\"Сиздин колдоочуңуз - \"</string>
+    <string name="lumos">люмос</string>
+    <string name="choose_app">Колдонмону тандаңыз</string>
+    <string name="new_aim">Жаңы максаттарды коюуга кез келди!</string>
 </resources>
