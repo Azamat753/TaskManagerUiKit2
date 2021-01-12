@@ -33,6 +33,7 @@ import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
+import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -266,7 +267,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText(R.string.meets);
+        toolbar.setText(TaskDialogPreference.getMeetTitle());
     }
 
     @Override
