@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppGreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/taskEventGreen</item>
+        <item name="colorPrimaryDark">@color/taskEventGreen</item>
+        <item name="colorAccent">@color/taskEventGreen</item>
+        <item name="appBarLayoutStyle">@style/MyAppTheme</item>
+        <item name="android:navigationBarColor">@color/taskEventGreen</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
+        <item name="backgroundColor">@color/taskEventGreen</item>
+        <item name="android:textColor">@color/taskEventGreen</item>
+        <item name="android:windowBackground">@color/taskEventGreen</item>
+        <!--        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>-->
+    </style>
+</resources>
