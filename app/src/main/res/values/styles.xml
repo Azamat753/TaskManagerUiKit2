@@ -54,10 +54,24 @@
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
+    <style name="TextTitleQuick2">
+        <item name="android:fontFamily">@font/m_light</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/myWhite</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="todoAmountTextColor">
         <item name="android:fontFamily">@font/m_light</item>
         <item name="android:textColor">@color/myWhite</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="todoAmountTextColor2">
+        <item name="android:fontFamily">@font/m_light</item>
+        <item name="android:textColor">@color/myWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">10dp</item>
     </style>
 
     <style name="textDashboard">

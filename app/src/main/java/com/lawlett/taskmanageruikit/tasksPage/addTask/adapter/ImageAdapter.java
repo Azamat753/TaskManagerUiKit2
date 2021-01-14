@@ -27,10 +27,10 @@ public class ImageAdapter extends ArrayAdapter<Integer> {
     }
 
 
-    @Override
-    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        return initView(position);
-    }
+//    @Override
+//    public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//        return initView(position);
+//    }
 
     private View initView(int position) {
         ImageView imageView = new ImageView(getContext());

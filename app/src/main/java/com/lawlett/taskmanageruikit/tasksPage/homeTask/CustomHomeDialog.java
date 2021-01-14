@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,17 +35,19 @@ public class CustomHomeDialog extends Dialog implements View.OnClickListener {
     ImageAdapter imageAdapter;
     Integer dialogImg;
     CustomDialogListener customDialogListener;
+    TextView title, amount;
+    ImageView imageView;
 
     public CustomHomeDialog(@NonNull Context context) {
         super(context);
         TaskDialogPreference.init(context);
         imageAdapter = new ImageAdapter(context, new Integer[]{
-                R.drawable.ic_01,R.drawable.ic_14, R.drawable.ic_08, R.drawable.ic_11,
-                R.drawable.ic_17, R.drawable.ic_24,R.drawable.ic_05, R.drawable.ic_20,
+                R.drawable.ic_01,R.drawable.ic_work, R.drawable.ic_08, R.drawable.ic_11,
+                R.drawable.ic_17, R.drawable.ic_home,R.drawable.ic_05, R.drawable.ic_meet,
                 R.drawable.ic_19, R.drawable.ic_15,R.drawable.ic_12,R.drawable.ic_10,
                 R.drawable.ic_09,R.drawable.ic_18,  R.drawable.ic_23,R.drawable.ic_06,
                 R.drawable.ic_03, R.drawable.ic_07,R.drawable.ic_13, R.drawable.ic_22,
-                R.drawable.ic_21, R.drawable.ic_02, R.drawable.ic_04, R.drawable.ic_16,
+                R.drawable.ic_21, R.drawable.ic_person, R.drawable.ic_04, R.drawable.ic_16,
                 });
     }
 
@@ -59,6 +65,7 @@ public class CustomHomeDialog extends Dialog implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dialogImg = (Integer) adapterView.getItemAtPosition(i);
+                imageView.setImageResource(dialogImg);
                 view.startAnimation(animation);
                 hideKeyboard();
 
@@ -80,6 +87,26 @@ public class CustomHomeDialog extends Dialog implements View.OnClickListener {
         btnCancel = findViewById(R.id.dialog_btn_cancel);
         dialogEt = findViewById(R.id.dialog_et);
         dialogGridView = findViewById(R.id.dialog_gridView);
+        title = findViewById(R.id.dialog_h_tv_title);
+        amount = findViewById(R.id.dialog_h_tv_amount);
+        imageView = findViewById(R.id.dialog_h_img);
+
+        dialogEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = dialogEt.getText().toString();
+                title.setText(text);
+            }
+        });
 
         btnCancel.setOnClickListener(this);
         alertOk();

@@ -166,7 +166,11 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
+        if(TaskDialogPreference.getWorkTitle().isEmpty()){
+            toolbar.setText(R.string.work);
+        }else{
         toolbar.setText(TaskDialogPreference.getWorkTitle());
+        }
 
     }
 

@@ -168,7 +168,12 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        toolbar.setText(TaskDialogPreference.getHomeTitle());
+        if(TaskDialogPreference.getHomeTitle().isEmpty()){
+            toolbar.setText(R.string.home);
+        }else{
+            toolbar.setText(TaskDialogPreference.getHomeTitle());
+        }
+
     }
 
     @Override

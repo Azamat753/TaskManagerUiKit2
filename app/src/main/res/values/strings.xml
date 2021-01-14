@@ -115,4 +115,7 @@
     <string name="changing_theme">Смена темы</string>
     <string name="board_theme_desc">Вы можете выбрать тему здесь, нажатием на один из вариантов, или перейти в Настройки</string>
     <string name="are_you_sure_that">Вы действительно хотите удалить все записи?</string>
+    <string name="helper_dialog_text">Вы можете поменять название и картинку категории на долгое нажатие:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

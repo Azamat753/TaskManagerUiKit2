@@ -116,4 +116,5 @@
     <string name="changing_theme">Теманы өзгөртүү</string>
     <string name="board_theme_desc">Теманы опциялардын бирине басышы менен таңдай аласыз же жөндөөгө кириңиз</string>
     <string name="are_you_sure_that">Сиз баардык жазууларды өчүргүнүз келеби?</string>
+    <string name="helper_dialog_text">Вы можете поменять название и картинку категории на долгое нажатие:</string>
 </resources>
