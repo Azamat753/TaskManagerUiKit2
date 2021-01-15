@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         initBottomNavigation();
         changeFragment(new DashboardFragment());
 
+        if (getIntent().getStringExtra("help")!=null){
+            changeFragment(new TasksFragment());
+        }
+
         toolbar_title = findViewById(R.id.toolbar_title);
         settings_view = findViewById(R.id.settings_view);
         btnGrid = findViewById(R.id.tool_btn_grid);

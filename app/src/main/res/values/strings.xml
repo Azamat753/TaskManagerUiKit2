@@ -124,13 +124,11 @@
     <string name="giraffe">Жираф</string>
     <string name="lion">Лев</string>
     <string name="zebra">Зебра</string>
-    <string name="your_patronus">\"Ваш патронус - \"</string>
+    <string name="your_patronus">Ваш патронус - </string>
     <string name="lumos">люмос</string>
     <string name="choose_app">Выберите приложение</string>
     <string name="new_aim">пора ставить новые цели!</string>
     <string name="helper_dialog_text">Вы можете поменять название и картинку категории на долгое нажатие:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="move_tasks">Вы можете поменять задачи местами</string>
     <string name="delete_task">Вы можете удалить ненужную задачу:</string>
 </resources>
