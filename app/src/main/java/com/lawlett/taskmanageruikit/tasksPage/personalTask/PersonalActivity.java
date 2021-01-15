@@ -262,7 +262,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
+        if(TaskDialogPreference.getPersonTitle().isEmpty()){
+            toolbar.setText(R.string.personal);
+        }else{
         toolbar.setText(TaskDialogPreference.getPersonTitle());
+        }
     }
 
     @Override

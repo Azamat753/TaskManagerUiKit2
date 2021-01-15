@@ -125,4 +125,12 @@ public class TaskDialogPreference {
     public static void removeWork() {
         sharedPreferences.edit().remove(TITLE_WORK).apply();
     }
+
+    public static boolean isShown() {
+        return sharedPreferences.getBoolean("isShown", false);
+    }
+
+    public static void saveShown() {
+        sharedPreferences.edit().putBoolean("isShown", true).apply();
+    }
 }

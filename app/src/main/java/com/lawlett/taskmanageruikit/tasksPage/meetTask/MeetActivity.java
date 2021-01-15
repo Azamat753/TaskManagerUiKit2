@@ -267,7 +267,11 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
+        if(TaskDialogPreference.getMeetTitle().isEmpty()){
+            toolbar.setText(R.string.meets);
+        }else{
         toolbar.setText(TaskDialogPreference.getMeetTitle());
+        }
     }
 
     @Override

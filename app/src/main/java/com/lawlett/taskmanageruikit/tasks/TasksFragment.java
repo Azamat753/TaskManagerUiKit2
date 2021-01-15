@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class TasksFragment extends Fragment {
     TextView personal_amount, work_amount, meet_amount, home_amount, private_amount, done_amount, done_title,
             home_title, meet_title, personal_title, work_title;
     Integer doneAmount, personalAmount, workAmount, meetAmount, homeAmount, privateAmount;
-    ConstraintLayout personConst, workConst, meetConst, homeConst, privateConst;
+    ConstraintLayout personConst, workConst, meetConst, homeConst, privateConst, gifContainer;
     LinearLayout addConst, doneConst;
     List<DoneModel> list;
     int buttonListen;
@@ -99,6 +100,7 @@ public class TasksFragment extends Fragment {
         work_title = view.findViewById(R.id.work_task_title);
 
         setLongClickListeners();
+
 
 
         personConst.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +164,25 @@ public class TasksFragment extends Fragment {
         if (!TaskDialogPreference.getWorkTitle().isEmpty()) {
             work_title.setText(TaskDialogPreference.getWorkTitle());
             workImage.setImageResource(TaskDialogPreference.getWorkImage());
+        }
+
+        if(!TaskDialogPreference.isShown()){
+//            CustomDialogHelper customDialogHelper = new CustomDialogHelper();
+//            customDialogHelper.show();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            View view1 = LayoutInflater.from(getContext()).inflate(R.layout.item_helper_dialog,
+                    (ConstraintLayout)view.findViewById(R.id.dialog_helper_container));
+            builder.setView(view1);
+            final AlertDialog alertDialog = builder.create();
+            view1.findViewById(R.id.dialog_helper_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TaskDialogPreference.saveShown();
+                    alertDialog.dismiss();
+                }
+            });
+            alertDialog.show();
         }
 
         doneConst.setOnClickListener(new View.OnClickListener() {

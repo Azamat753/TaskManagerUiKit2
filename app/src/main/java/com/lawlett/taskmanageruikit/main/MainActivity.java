@@ -24,6 +24,7 @@ import androidx.lifecycle.Observer;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.calendarEvents.CalendarEventsFragment;
 import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
+import com.lawlett.taskmanageruikit.help.HelpActivity;
 import com.lawlett.taskmanageruikit.idea.IdeasFragment;
 import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
@@ -46,7 +47,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     TextView toolbar_title;
     ImageView  settings_view;
-    ImageView btnGrid;
+    ImageView btnGrid, btnHelp;
     private List<QuickModel> list;
 
     QuickAdapter adapter;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar_title = findViewById(R.id.toolbar_title);
         settings_view = findViewById(R.id.settings_view);
         btnGrid = findViewById(R.id.tool_btn_grid);
+        btnHelp = findViewById(R.id.tool_btn_help);
 
         list = new ArrayList<>();
         adapter = new QuickAdapter(list, null, this);
@@ -86,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                finish();
+            }
+        });
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, HelpActivity.class));
                 finish();
             }
         });
@@ -157,26 +166,31 @@ public class MainActivity extends AppCompatActivity {
                         changeFragment(new DashboardFragment());
                         toolbar_title.setText(R.string.progress);
                         btnGrid.setVisibility(View.GONE);
+                        btnHelp.setVisibility(View.GONE);
                         break;
                     case 1:
                         changeFragment(new TasksFragment());
                         toolbar_title.setText(R.string.tasks);
                         btnGrid.setVisibility(View.GONE);
+                        btnHelp.setVisibility(View.VISIBLE);
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
                         toolbar_title.setText(R.string.timing);
                         btnGrid.setVisibility(View.GONE);
+                        btnHelp.setVisibility(View.GONE);
                         break;
                     case 3:
                         changeFragment(new CalendarEventsFragment());
                         toolbar_title.setText(month + " " + year);
                         btnGrid.setVisibility(View.GONE);
+                        btnHelp.setVisibility(View.GONE);
                         break;
                     case 4:
                         changeFragment(new IdeasFragment());
                         toolbar_title.setText(R.string.ideas);
                         btnGrid.setVisibility(View.VISIBLE);
+                        btnHelp.setVisibility(View.GONE);
                         break;
                 }
             }
