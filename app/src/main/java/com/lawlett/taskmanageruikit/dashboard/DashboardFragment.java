@@ -43,6 +43,7 @@ import java.util.Objects;
 /**
  * A simple {@link Fragment} subclass.
  */
+//Statistics
 public class DashboardFragment extends Fragment {
     LinearLayout firstCon, secondCon, thirdCon;
     ImageView btnChange;
