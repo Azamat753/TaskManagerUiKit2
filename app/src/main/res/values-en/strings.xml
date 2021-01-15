@@ -117,4 +117,6 @@
     <string name="board_theme_desc"> You can pick your theme here by clicking on one of the options or go to Settings</string>
     <string name="are_you_sure_that">Are you sure you want to delete all the notes?</string>
     <string name="helper_dialog_text">Вы можете поменять название и картинку категории на долгое нажатие:</string>
+    <string name="move_tasks">Вы можете поменять задачи местами</string>
+    <string name="delete_task">Вы можете удалить ненужную задачу:</string>
 </resources>
