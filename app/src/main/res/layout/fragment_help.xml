@@ -6,35 +6,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".main.HelpFragment">
 
+    <LinearLayout
+        android:layout_width="251dp"
+        android:layout_height="450dp"
+        android:background="@drawable/todo_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
    <pl.droidsonroids.gif.GifImageView
-       android:id="@+id/fragment_help_gif_change"
-       android:layout_width="150dp"
-       android:layout_height="300dp"
+       android:id="@+id/fragment_help_gif"
+       android:layout_width="250dp"
+       android:layout_height="450dp"
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        android:src="@drawable/change_gif"/>
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/fragment_help_gif_move"
-        android:layout_width="150dp"
-        android:layout_height="300dp"
-        android:visibility="invisible"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/move_gif"/>
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/fragment_help_gif_delete"
-        android:layout_width="150dp"
-        android:layout_height="300dp"
-        android:visibility="invisible"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/delete_gif"/>
     <TextView
         android:id="@+id/fragment_help_tv"
         android:layout_width="wrap_content"
@@ -42,7 +32,7 @@
         android:padding="16dp"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_help_gif_change"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_help_gif"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/myWhite"

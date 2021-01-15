@@ -21,7 +21,7 @@ import pl.droidsonroids.gif.GifImageView;
  * create an instance of this fragment.
  */
 public class HelpFragment extends Fragment {
-    GifImageView changeGif, moveGif, deleteGif;
+    GifImageView gifImageView;
     TextView helpTextView;
 
     public HelpFragment() {
@@ -52,29 +52,21 @@ public class HelpFragment extends Fragment {
         switch (pos){
             case 0:
                 helpTextView.setText(R.string.helper_dialog_text);
-                changeGif.setVisibility(View.VISIBLE);
-                moveGif.setVisibility(View.INVISIBLE);
-                deleteGif.setVisibility(View.INVISIBLE);
+                gifImageView.setImageResource(R.drawable.change_gif);
                 break;
             case 1:
                 helpTextView.setText(R.string.move_tasks);
-                changeGif.setVisibility(View.INVISIBLE);
-                moveGif.setVisibility(View.VISIBLE);
-                deleteGif.setVisibility(View.INVISIBLE);
+                gifImageView.setImageResource(R.drawable.move_gif);
                 break;
             case 2:
                 helpTextView.setText(R.string.delete_task);
-                changeGif.setVisibility(View.INVISIBLE);
-                moveGif.setVisibility(View.INVISIBLE);
-                deleteGif.setVisibility(View.VISIBLE);
+                gifImageView.setImageResource(R.drawable.delete_gif);
                 break;
         }
     }
 
     private void initViews(View view) {
-        changeGif = view.findViewById(R.id.fragment_help_gif_change);
-        moveGif = view.findViewById(R.id.fragment_help_gif_move);
-        deleteGif = view.findViewById(R.id.fragment_help_gif_delete);
+        gifImageView = view.findViewById(R.id.fragment_help_gif);
         helpTextView = view.findViewById(R.id.fragment_help_tv);
     }
 }
