@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="royalEnd">#243B55</color>
+    <color name="colorPrimary">#106B5A</color>
+    <color name="royalEnd">#106B5A</color>
     <color name="royalStart">#122039</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimaryDark">#106B5A</color>
+    <color name="colorAccent">#106B5A</color>
     <color name="bluePersonal">#03BADA</color>
     <color name="myWhite">#FFFFFF</color>
     <color name="diagramaEvents">#4CAF50</color>
@@ -19,8 +19,37 @@
     <color name="calendar_background">#122039</color>
     <color name="calendar_text">#FFF</color>
     <color name="plus_background">#122039</color>
-    <color name="navigation_background">#122039 </color>
+    <color name="navigation_background">#122039</color>
     <color name="settings_text_color">#FFF</color>
     <color name="timing_color">#211D44</color>
     <color name="hint_color">#aaa</color>
+
+
+    <!--colors for the next theme to pick-->
+    <color name="colorPrimaryRed">#A31919</color>
+    <color name="colorAccentRed">#A31919</color>
+    <color name="taskEventRed">#A31919</color>
+    <color name="calendarEventRed">#A31919</color>
+
+    <!--colors for the theme of red one -->
+    <color name="colorPrimaryPerpule">#870F8A</color>
+    <color name="colorAccentPerpule">#870F8A</color>
+    <color name="taskEventPerpule">#870F8A</color>
+    <color name="calendarEventPerpule">#870F8A</color>
+
+    <!--color to change for orange-->
+    <color name="colorPrimaryOrange">#E76F00</color>
+    <color name="colorAccentOrange">#E76F00</color>
+    <color name="taskEventOrange">#E76F00</color>
+    <color name="calendarEventOrange">#E76F00</color>
+
+    <!--color to change for light show-->
+    <color name="colorPrimaryDark1">#121010</color>
+    <color name="colorAccentDark">#121010</color>
+    <color name="taskEventDark">#121010</color>
+    <color name="calendarEventDark">#121010</color>
+
+
+
+
 </resources>

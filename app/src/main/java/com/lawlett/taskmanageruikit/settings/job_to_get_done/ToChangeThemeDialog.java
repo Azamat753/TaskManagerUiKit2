@@ -1,47 +1,72 @@
 package com.lawlett.taskmanageruikit.settings.job_to_get_done;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.settings.job_to_get_done.color_setting_adapter.ColorAdapter;
-import com.lawlett.taskmanageruikit.settings.job_to_get_done.view_model.ColorViewModel;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.interfaces.OnClickListenerTheme;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.interfaces.ThemePosCarrier;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.view_model.SettingViewModel;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.view_model.ThemeViewModel;
+import com.lawlett.taskmanageruikit.utils.ThemePreference;
 
 import java.util.ArrayList;
 
-public class ToChangeTheme extends DialogFragment {
+public class ToChangeThemeDialog extends DialogFragment implements OnClickListenerTheme {
+
+    private SettingViewModel mViewModel;
     private RecyclerView recyclerView;
-    private ArrayList<ColorViewModel> list;
-    private ColorAdapter colorAdapter;
+    private ArrayList<ThemeViewModel> list;
+    private ColorAdapter themeAdapter;
+    private ThemePosCarrier themePosCarrier;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @NonNull
+
+    @Nullable
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                .setView(R.layout.options_to_theme_view)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (dialog != null)
-                        dialog.dismiss();
-                    }
-                });
-        return builder.create();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.options_to_theme_view, container);
+        themePosCarrier = (ThemePosCarrier) getActivity();
+        setRecyclerView(view);
+        return view;
     }
-    
 
 
+//    public void setClickListener(ThemePosCarrier themePosCarrier){
+//        this.themePosCarrier = themePosCarrier;
+//    }
 
+    private void setRecyclerView(View view) {
+        list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            if (i == 0) list.add(new ThemeViewModel(R.drawable.ic_light_mode, false));
+            if (i == 1) list.add(new ThemeViewModel(R.drawable.ic_dark_mode, false));
+            if (i == 2) list.add(new ThemeViewModel(R.drawable.ic_purpule, false));
+            if (i == 3) list.add(new ThemeViewModel(R.drawable.ic_orange_mode, false));
+            if (i == 4) list.add(new ThemeViewModel(R.drawable.ic_red_mode, false));
+        }
 
+        /*recyclerview*/
+        recyclerView = view.findViewById(R.id.recycler_select_theme);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        themeAdapter = new ColorAdapter(list, requireContext());
+        recyclerView.setAdapter(themeAdapter);
+        themeAdapter.setClickListener(this);
+    }
+
+    @Override
+    public void onClickTheme(int position) {
+        themePosCarrier.applyTheme(position);
+        }
 }

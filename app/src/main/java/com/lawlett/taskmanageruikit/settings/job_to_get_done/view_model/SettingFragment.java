@@ -1,28 +1,35 @@
 package com.lawlett.taskmanageruikit.settings.job_to_get_done.view_model;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.ToChangeThemeDialog;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SettingFragment extends Fragment {
+    private ImageView back;
+    private LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout, achievement_layout;
+    private ImageView magick;
+    private ListView listView;
+    public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
 
@@ -30,15 +37,7 @@ public class SettingFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static SettingFragment newInstance(String param1, String param2) {
         SettingFragment fragment = new SettingFragment();
         Bundle args = new Bundle();
@@ -63,4 +62,54 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_setting, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
+        clickListeners();
+
+
+    }
+
+    private void initView(View view) {
+        clear_password_layout = view.findViewById(R.id.first_layout);
+        clearMinutes_layout = view.findViewById(R.id.second_layout);
+        theme_layout = view.findViewById(R.id.third_layout);
+        back = view.findViewById(R.id.back_view);
+        language_tv = view.findViewById(R.id.four_layout);
+        share_layout = view.findViewById(R.id.five_layout);
+        achievement_layout = view.findViewById(R.id.achievement_layout);
+        magick = view.findViewById(R.id.btn_magick);
+        listView = view.findViewById(R.id.listView);
+
+        if (Build.VERSION.SDK_INT >= 21)
+            getActivity().getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
+
+    }
+
+    private void clickListeners() {
+        theme_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showChangeThemeDialog();
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().finish();
+
+            }
+        });
+    }
+
+
+    public void showChangeThemeDialog() {
+//        final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
+        FragmentManager fr = getFragmentManager();
+        ToChangeThemeDialog dialog = new ToChangeThemeDialog();
+        dialog.show(fr, "");
+    }
+
 }

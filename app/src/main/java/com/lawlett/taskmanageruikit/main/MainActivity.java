@@ -1,7 +1,6 @@
 package com.lawlett.taskmanageruikit.main;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +23,9 @@ import com.lawlett.taskmanageruikit.dashboard.DashboardFragment;
 import com.lawlett.taskmanageruikit.idea.IdeasFragment;
 import com.lawlett.taskmanageruikit.idea.data.model.QuickModel;
 import com.lawlett.taskmanageruikit.idea.recycler.QuickAdapter;
-import com.lawlett.taskmanageruikit.settings.SettingsActivity;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.view_model.SettingFragment;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.interfaces.ThemePosCarrier;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.view_model.ThemeUtils;
 import com.lawlett.taskmanageruikit.tasks.TasksFragment;
 import com.lawlett.taskmanageruikit.timing.fragment.TimingFragment;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -39,21 +40,25 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ThemePosCarrier {
     TextView toolbar_title;
     ImageView settings_view;
     private List<QuickModel> list;
-
     QuickAdapter adapter;
+    private View toolBar;
+    /*key for App level SharedPref theme in app*/
+    private static final String Theme_Current = "AppliedTheme";
+
     //hello world
-    ////
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ThemeUtils.onActivityCreateSetTheme(this);
         loadLocale();
         setContentView(R.layout.activity_main);
+        toolBar = findViewById(R.id.toolbar_b);
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
@@ -78,12 +83,21 @@ public class MainActivity extends AppCompatActivity {
         settings_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                finish();
+
+
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.fragment_container, new SettingFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+                toolBar.setVisibility(View.GONE);
+//                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+//                finish();
             }
         });
 
     }
+
 
     public void changeFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
@@ -182,4 +196,26 @@ public class MainActivity extends AppCompatActivity {
         setLocale(language);
     }
 
+
+    @Override
+    public void applyTheme(int position) {
+        switch (position) {
+            case 0:
+                ThemeUtils.changeThemeTo(this,ThemeUtils.DARK_GREEN);
+                break;
+            case 1:
+                ThemeUtils.changeThemeTo(this,ThemeUtils.DARK);
+                break;
+            case 2:
+                ThemeUtils.changeThemeTo(this, ThemeUtils.PURPULE);
+                    break;
+            case 3:
+                ThemeUtils.changeThemeTo(this, ThemeUtils.ORANGE);
+                break;
+            case 4:
+                ThemeUtils.changeThemeTo(this, ThemeUtils.RED);
+                break;
+        }
+
+    }
 }

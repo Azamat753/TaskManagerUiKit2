@@ -1,13 +1,10 @@
 package com.lawlett.taskmanageruikit.settings;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
@@ -15,7 +12,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,22 +21,22 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentManager;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.achievement.AchievementActivity;
 import com.lawlett.taskmanageruikit.main.MainActivity;
+import com.lawlett.taskmanageruikit.settings.job_to_get_done.ToChangeThemeDialog;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPreference;
-import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity{
     ImageView back;
     LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout, achievement_layout;
     ImageView magick;
@@ -72,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 showChangeThemeDialog();
             }
-        });
+        });/*done*/
 
         magick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,31 +147,32 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void showChangeThemeDialog() {
         final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-        builder.setTitle(R.string.choose_theme);
-        builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                if (i == 0) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
+        FragmentManager fr = getSupportFragmentManager();
+        ToChangeThemeDialog dialog = new ToChangeThemeDialog();
+        dialog.show(fr, "");
 
-                } else if (i == 1) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
-
-                }
-
-                dialog.dismiss();
-            }
-        });
-        AlertDialog mDialog = builder.create();
-        mDialog.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+//        builder.setTitle(R.string.choose_theme);
+//        builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int i) {
+//                if (i == 0) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
+//
+//                } else if (i == 1) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
+//
+//                }
+//
+//                dialog.dismiss();
+//            }
+//        });
+//        AlertDialog mDialog = builder.create();
+//        mDialog.show();
     }
 
     private void showChangeLanguageDialog() {
@@ -234,16 +231,16 @@ public class SettingsActivity extends AppCompatActivity {
             ArrayList matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             listView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, matches));
 
-            if (matches.contains("Экспекто патронум") || matches.contains("экспекто патронум") || matches.contains("Expecto Patronum") || matches.contains("expecto patronum") ) {
+            if (matches.contains("Экспекто патронум") || matches.contains("экспекто патронум") || matches.contains("Expecto Patronum") || matches.contains("expecto patronum")) {
                 Random random = new Random();
-                String animals [] = {"Лиса", "Лань","Бык", " Собака", "Кошка", "Крыса", "Журавль", "Бегемот", "Жираф", "Лев", "Зебра"};
+                String animals[] = {"Лиса", "Лань", "Бык", " Собака", "Кошка", "Крыса", "Журавль", "Бегемот", "Жираф", "Лев", "Зебра"};
                 int a = random.nextInt(animals.length);
                 Toast.makeText(this, "Ваш патронус - " + animals[a], Toast.LENGTH_SHORT).show();
             }
 
-            if (matches.contains("люмос") || matches.contains("Lumos") || matches.contains("Люмос") || matches.contains("lumos")){
-                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
-                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+            if (matches.contains("люмос") || matches.contains("Lumos") || matches.contains("Люмос") || matches.contains("lumos")) {
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                         try {
                             cameraManager.setTorchMode("0", true);
                         } catch (CameraAccessException e) {
@@ -256,8 +253,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             if (matches.contains("Nox") || matches.contains("Нокс") || matches.contains("нокс") || matches.contains("nox")) {
-                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
-                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                         try {
                             cameraManager.setTorchMode("0", false);
                         } catch (CameraAccessException e) {
@@ -268,7 +265,8 @@ public class SettingsActivity extends AppCompatActivity {
                 } else
                     Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
             }
-        }}
+        }
+    }
 
     private void loadLocale() {
         String language = LanguagePreference.getInstance(this).getLanguage();
@@ -280,4 +278,6 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
+
+
 }

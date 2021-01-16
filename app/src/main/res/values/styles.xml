@@ -6,12 +6,110 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/royalEnd</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/taskEventDark
+        </item>
+        <item name="android:buttonStyle">@style/Button</item>
         <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
-<!--        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>-->
+        <item name="backgroundColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <!--        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>-->
     </style>
+
+    <style name="AppDark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/taskEventDark</item>
+        <item name="colorPrimaryDark">@color/taskEventDark</item>
+        <item name="colorAccent">@color/taskEventDark</item>
+        <item name="appBarLayoutStyle">@style/MyAppTheme</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/taskEventDark
+        </item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
+        <item name="backgroundColor">@color/taskEventDark</item>
+        <item name="android:textColor">@color/taskEventDark</item>
+        <item name="android:windowBackground">@color/taskEventDark</item>
+        <!--        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>-->
+    </style>
+
+    <style name="AppRedTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/taskEventRed</item>
+        <item name="colorPrimaryDark">@color/taskEventRed</item>
+        <item name="colorAccent">@color/taskEventRed</item>
+        <item name="appBarLayoutStyle">@style/MyAppTheme</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/taskEventRed
+        </item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
+        <item name="backgroundColor">@color/taskEventRed</item>
+        <item name="android:textColor">@color/taskEventRed</item>
+        <item name="android:windowBackground">@color/taskEventRed</item>
+        <!--        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>-->
+    </style>
+    <!--for the orange color for the theme-->
+    <style name="AppOrangeTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/taskEventOrange</item>
+        <item name="colorPrimaryDark">@color/taskEventOrange</item>
+        <item name="colorAccent">@color/taskEventOrange</item>
+        <item name="appBarLayoutStyle">@style/MyAppTheme</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/taskEventOrange
+        </item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
+        <item name="backgroundColor">@color/taskEventOrange</item>
+        <item name="android:textColor">@color/taskEventOrange</item>
+        <item name="android:windowBackground">@color/taskEventOrange</item>
+        <!--        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>-->
+    </style>
+
+
+    <style name="PurpuleTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryPerpule</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryPerpule</item>
+        <item name="colorAccent">@color/colorPrimaryPerpule</item>
+        <item name="appBarLayoutStyle">@style/MyAppTheme</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/colorPrimaryPerpule
+        </item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
+        <item name="backgroundColor">@color/colorPrimaryPerpule</item>
+        <item name="android:textColor">@color/colorPrimaryPerpule</item>
+        <item name="android:windowBackground">@color/colorPrimaryPerpule</item>
+    </style>
+
+
+
+    <style name="DefualtLightColor" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/taskEventOrange</item>
+        <item name="colorPrimaryDark">@color/taskEventOrange</item>
+        <item name="colorAccent">@color/taskEventOrange</item>
+        <item name="appBarLayoutStyle">@style/MyAppTheme</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/taskEventOrange
+        </item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
+        <item name="backgroundColor">@color/taskEventOrange</item>
+        <item name="android:textColor">@color/taskEventOrange</item>
+        <item name="android:windowBackground">@color/taskEventOrange</item>
+    </style>
+
+        <!--dark one-->
+    <style name="DarkThemeChange" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/taskEventDark</item>
+        <item name="colorPrimaryDark">@color/taskEventDark</item>
+        <item name="colorAccent">@color/taskEventDark</item>
+        <item name="appBarLayoutStyle">@style/MyAppTheme</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/taskEventDark
+        </item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@color/statusBarC</item>
+        <item name="backgroundColor">@color/taskEventDark</item>
+        <item name="android:textColor">@color/taskEventDark</item>
+        <item name="android:windowBackground">@color/taskEventDark</item>
+    </style>
+
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
@@ -21,8 +119,6 @@
         <!-- <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item> -->
         <item name="android:background">@color/colorPrimary</item>
     </style>
-
-
 
 
     <style name="ViewStyles">
@@ -62,7 +158,8 @@
     <style name="todoTextColor">
         <item name="android:fontFamily">@font/m_light</item>
         <item name="android:textColor">@color/myWhite</item>
-</style>
+    </style>
+
     <style name="dashboardTextColor">
         <item name="android:fontFamily">@font/m_light</item>
         <item name="android:textColor">@color/myWhite</item>
@@ -71,4 +168,16 @@
     <style name="backgroundApp">
         <item name="background">@drawable/royal</item>
     </style>
+
+
+    <style name="MyAppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:windowContentOverlay">@android:color/transparent</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Button" parent="Widget.AppCompat.Button">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+
 </resources>
