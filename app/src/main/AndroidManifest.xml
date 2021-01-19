@@ -4,12 +4,18 @@
     package="com.lawlett.taskmanageruikit"
     android:screenOrientation="portrait">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.flash" />
 
     <application
         android:name=".utils.App"
@@ -23,6 +29,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".achievement.AchievementActivity"></activity>
         <activity android:name=".help.HelpActivity"></activity>
         <activity
             android:name=".tasksPage.addTask.DoneActivity"
@@ -31,15 +38,17 @@
         <activity
             android:name=".timing.activity.TimerActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
+
         <activity
             android:name=".timing.activity.StopwatchActivity"
             android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+            tools:ignore="InnerclassSeparator,LockedOrientationActivity"/>
         <activity
             android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
+
         <activity
             android:name=".utils.PassCodeActivity"
             android:screenOrientation="portrait"
@@ -93,5 +102,6 @@
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator,LockedOrientationActivity" />
     </application>
+
 
 </manifest>

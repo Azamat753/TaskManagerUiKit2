@@ -130,7 +130,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/five_layout"
+        android:id="@+id/achievement_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="20dp"
@@ -139,6 +139,29 @@
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/four_layout">
+
+        <TextView
+            android:id="@+id/achievement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:drawablePadding="15dp"
+            android:text="@string/achievement_app"
+            android:textColor="@color/settings_text_color"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/five_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/royalStart"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/achievement_layout">
 
         <TextView
             android:id="@+id/share"
@@ -158,5 +181,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ImageView
+        android:id="@+id/btn_magick"
+        app:srcCompat="@drawable/ic_baseline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:drawablePadding="15dp"
+        android:text="Magick"
+        android:textColor="@color/settings_text_color"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+<ListView
+    android:id="@+id/listView"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

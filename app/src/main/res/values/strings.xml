@@ -120,4 +120,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="move_tasks">Вы можете поменять задачи местами</string>
     <string name="delete_task">Вы можете удалить ненужную задачу:</string>
+    <string name="achievement_app">достежения</string>
+    <string name="completed">выполненных</string>
+    <string name="done">Done</string>
 </resources>
