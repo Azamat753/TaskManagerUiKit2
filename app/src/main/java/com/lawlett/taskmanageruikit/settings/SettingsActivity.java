@@ -25,7 +25,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
-import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
@@ -36,6 +35,12 @@ import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
+
+import static com.lawlett.taskmanageruikit.R.color;
+import static com.lawlett.taskmanageruikit.R.drawable;
+import static com.lawlett.taskmanageruikit.R.id;
+import static com.lawlett.taskmanageruikit.R.layout;
+import static com.lawlett.taskmanageruikit.R.string;
 
 public class SettingsActivity extends AppCompatActivity {
     LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout;
@@ -48,32 +53,34 @@ public class SettingsActivity extends AppCompatActivity {
     ImageView back, imageSettings, imageTheme;
     ConstraintLayout theme_layout;
 
+   public static String PROGRESS="Прогресс",TASKS="Задачи",TIMING="Тайминг",CALENDAR="События",IDEA="Идеи";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadLocale();
-        setContentView(R.layout.activity_settings);
+        setContentView(layout.activity_settings);
+checkFrom();
+        clear_password_layout = findViewById(id.first_layout);
+        clearMinutes_layout = findViewById(id.second_layout);
+        theme_layout = findViewById(id.third_layout);
+        back = findViewById(id.back_view);
+        imageTheme = findViewById(id.image_day_night);
+        language_tv = findViewById(id.four_layout);
+        share_layout = findViewById(id.five_layout);
+        container = findViewById(id.container_settings);
+        imageSettings = findViewById(id.image_settings);
 
-        clear_password_layout = findViewById(R.id.first_layout);
-        clearMinutes_layout = findViewById(R.id.second_layout);
-        theme_layout = findViewById(R.id.third_layout);
-        back = findViewById(R.id.back_view);
-        imageTheme = findViewById(R.id.image_day_night);
-        language_tv = findViewById(R.id.four_layout);
-        share_layout = findViewById(R.id.five_layout);
-        container = findViewById(R.id.container_settings);
-        imageSettings = findViewById(R.id.image_settings);
-
-        magick = findViewById(R.id.btn_magick);
-        listView = findViewById(R.id.listView);
+        magick = findViewById(id.btn_magick);
+        listView = findViewById(id.listView);
 
         if (Build.VERSION.SDK_INT >= 21)
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
+            getWindow().setNavigationBarColor(getResources().getColor(color.statusBarC));
 
         if (ThemePreference.getInstance(SettingsActivity.this).isTheme()) {
-            imageTheme.setImageResource(R.drawable.ic_day);
+            imageTheme.setImageResource(drawable.ic_day);
         } else {
-            imageTheme.setImageResource(R.drawable.ic_nights);
+            imageTheme.setImageResource(drawable.ic_nights);
         }
 
         theme_layout.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +120,7 @@ public class SettingsActivity extends AppCompatActivity {
                     String shareMessage = "\nPlanner\n\n";
                     shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.lawlett.taskmanageruikit";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                    startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_app)));
+                    startActivity(Intent.createChooser(shareIntent, getString(string.choose_app)));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -124,15 +131,15 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
-                        .setNegativeButton(R.string.no, (dialog1, which) ->
+                dialog.setTitle(string.are_you_sure).setMessage(string.clear_password)
+                        .setNegativeButton(string.no, (dialog1, which) ->
                                 dialog1.cancel())
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
                                 PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
-                                Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingsActivity.this, string.data_of_password_delete, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
             }
@@ -141,14 +148,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_minute)
-                        .setNegativeButton(R.string.no, (dialog1, which) ->
+                dialog.setTitle(string.are_you_sure).setMessage(string.clear_minute)
+                        .setNegativeButton(string.no, (dialog1, which) ->
                                 dialog1.cancel())
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 TimingSizePreference.getInstance(SettingsActivity.this).clearSettings();
-                                Toast.makeText(SettingsActivity.this, R.string.data_about_minutes_clear, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SettingsActivity.this, string.data_about_minutes_clear, Toast.LENGTH_SHORT).show();
                             }
                         }).show();
             }
@@ -163,9 +170,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void showChangeThemeDialog() {
-        final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
+        final String[] listItems = {getString(string.light_theme), getString(string.dark_theme)};
         AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-        builder.setTitle(R.string.choose_theme);
+        builder.setTitle(string.choose_theme);
         builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
@@ -187,7 +194,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void showChangeLanguageDialog() {
         final String[] listItems = {"English", "Русский", "Кыргызча", "Português"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingsActivity.this);
-        mBuilder.setTitle(R.string.choose_language);
+        mBuilder.setTitle(string.choose_language);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
@@ -245,12 +252,12 @@ public class SettingsActivity extends AppCompatActivity {
 
             if (matches.contains("Экспекто патронум")) {
                 Random random = new Random();
-                String animals[] = {getString(R.string.fox), getString(R.string.deer), getString(R.string.bull), getString(R.string.dog), getString(R.string.cat), getString(R.string.rat), "Журавль", "Бегемот", getString(R.string.giraffe), getString(R.string.lion), getString(R.string.zebra)};
+                String animals[] = {getString(string.fox), getString(string.deer), getString(string.bull), getString(string.dog), getString(string.cat), getString(string.rat), "Журавль", "Бегемот", getString(string.giraffe), getString(string.lion), getString(string.zebra)};
                 int a = random.nextInt(animals.length);
-                Toast.makeText(this, getString(R.string.your_patronus) + animals[a], Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(string.your_patronus) + animals[a], Toast.LENGTH_SHORT).show();
             }
 
-            if (matches.contains(getString(R.string.lumos))) {
+            if (matches.contains(getString(string.lumos))) {
                 if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
                     if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                         try {
@@ -285,9 +292,34 @@ public class SettingsActivity extends AppCompatActivity {
         setLocale(language);
     }
 
+    public String checkFrom() {
+        if (getIntent().getStringExtra("main") != null) {
+            switch (getIntent().getStringExtra("main")) {
+                case "Прогресс":
+                    return PROGRESS;
+                case "Задачи":
+                    return TASKS;
+                case "Тайминг":
+                    return TIMING;
+                case "События":
+                    return CALENDAR;
+                case "Идеи":
+                    return IDEA;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + getIntent().getStringExtra("main"));
+            }
+        }
+        return "Прогресс";
+    }
+
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+        openMain(checkFrom());
+    }
+
+    public void openMain(String from) {
+        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+        intent.putExtra("setting", from);
+        startActivity(intent);
     }
 }

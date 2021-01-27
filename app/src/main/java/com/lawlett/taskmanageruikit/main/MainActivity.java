@@ -46,11 +46,12 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     TextView toolbar_title;
-    ImageView  settings_view;
+    ImageView settings_view;
     ImageView btnGrid, btnHelp;
     private List<QuickModel> list;
 
     QuickAdapter adapter;
+    public static String PROGRESS="Прогресс",TASKS="Задачи",TIMING="Тайминг",CALENDAR="События",IDEA="Идеи";
 
     AlarmManager mAlarm;
     long time;
@@ -66,13 +67,10 @@ public class MainActivity extends AppCompatActivity {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         initBottomNavigation();
-        changeFragment(new DashboardFragment());
+        checkInstance();
 
-        if (getIntent().getStringExtra("help")!=null){
-            changeFragment(new TasksFragment());
-        }
 
-        toolbar_title = findViewById(R.id.toolbar_title);
+            toolbar_title = findViewById(R.id.toolbar_title);
         settings_view = findViewById(R.id.settings_view);
         btnGrid = findViewById(R.id.tool_btn_grid);
         btnHelp = findViewById(R.id.tool_btn_help);
@@ -88,13 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-        settings_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                finish();
-            }
-        });
+
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +95,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkInstance() {
+        if (getIntent().getStringExtra("setting") == null) {
+            changeFragment(new DashboardFragment());
+        }
+        if (getIntent().getStringExtra("help") != null) {
+            changeFragment(new TasksFragment());
+        }
+        if (getIntent().getStringExtra("setting") != null) {
+            openNeedFragment();
+        }
     }
 
     @Override
@@ -116,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra("displayText", "sample text");
         i.putExtra(MessageService.TITLE, "Planner");
         i.putExtra(MessageService.TEXT, getString(R.string.new_aim));
-        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(this.getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
         mAlarm = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
         Calendar calendar = Calendar.getInstance();
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         calendar.add(Calendar.HOUR, 24);
         time = calendar.getTimeInMillis();
 
-        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,time ,AlarmManager.INTERVAL_DAY,pi);
+        mAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pi);
     }
 
     public void changeFragment(Fragment fragment) {
@@ -171,32 +175,48 @@ public class MainActivity extends AppCompatActivity {
                         toolbar_title.setText(R.string.progress);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.GONE);
+                        openSetting(getString(R.string.progress));
                         break;
                     case 1:
                         changeFragment(new TasksFragment());
                         toolbar_title.setText(R.string.tasks);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.VISIBLE);
+                        openSetting(getString(R.string.tasks));
+
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
                         toolbar_title.setText(R.string.timing);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.GONE);
+                        openSetting(getString(R.string.timing));
                         break;
                     case 3:
                         changeFragment(new CalendarEventsFragment());
                         toolbar_title.setText(month + " " + year);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.GONE);
+                        openSetting("События");
                         break;
                     case 4:
                         changeFragment(new IdeasFragment());
                         toolbar_title.setText(R.string.ideas);
                         btnGrid.setVisibility(View.VISIBLE);
                         btnHelp.setVisibility(View.GONE);
+                        openSetting(getString(R.string.ideas));
                         break;
                 }
+            }
+        });
+    }
+    public void openSetting(String from){
+        settings_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                intent.putExtra("main", from);
+                startActivity(intent);
             }
         });
     }
@@ -220,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).show();
     }
+
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
@@ -227,6 +248,46 @@ public class MainActivity extends AppCompatActivity {
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         LanguagePreference.getInstance(MainActivity.this).saveLanguage(lang);
+    }
+    public String checkSetting(){
+            if (getIntent().getStringExtra("setting") != null) {
+            switch (getIntent().getStringExtra("setting")) {
+                case "Прогресс":
+                    return PROGRESS;
+                case "Задачи":
+                    return SettingsActivity.TASKS;
+                case "Тайминг":
+                    return TIMING;
+                case "События":
+                    return SettingsActivity.CALENDAR;
+                case "Идеи":
+                    return IDEA;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + getIntent().getStringExtra("main"));
+            }
+        }
+        return "Прогресс";
+    }
+    public void openNeedFragment(){
+        switch (checkSetting()){
+            case "Прогресс":
+                changeFragment(new DashboardFragment());
+                break;
+            case "Задачи":
+                changeFragment(new TasksFragment());
+                break;
+            case "Тайминг":
+                changeFragment(new TimingFragment());
+                break;
+            case "События":
+                changeFragment(new CalendarEventsFragment());
+                break;
+            case "Идеи":
+                changeFragment(new IdeasFragment());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + checkSetting());
+        }
     }
 
     private void loadLocale() {
