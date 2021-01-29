@@ -4,33 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".utils.PassCodeActivity">
+    tools:context=".utils.PassCodeActivity"
+    android:padding="10dp"
+    >
 
     <ImageView
         android:id="@+id/image_icon"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
-        app:layout_constraintBottom_toTopOf="@id/text_create"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_lock" />
 
-    <TextView
-        android:id="@+id/text_create"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constr_editTexts"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        app:layout_constraintTop_toBottomOf="@id/image_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        tools:ignore="MissingConstraints">
+
+
+        <TextView
+            android:id="@+id/text_create_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_question"
+            android:textColor="@color/myWhite"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/edit_question_create"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:hint="@string/qst_example"
+            android:textColorHint="@color/hint_color"
+            android:background="@drawable/edittext_background"
+            android:textAlignment="center"
+            android:textColor="@color/myWhite"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_create_question"
+            />
+
+        <TextView
+            android:id="@+id/text_create_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_question_answer"
+            android:textColor="@color/myWhite"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_question_create"
+            />
+
+        <EditText
+            android:id="@+id/edit_answer"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_background"
+            android:textAlignment="center"
+            android:textColor="@color/myWhite"
+            android:textColorHint="@color/myWhite"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_create_answer"
+            />
+
+
+
+        <TextView
+            android:id="@+id/text_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/create_password"
+            android:textColor="@color/myWhite"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/edit_answer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+
+        <EditText
+            android:id="@+id/edit_password"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@drawable/edittext_background"
+            android:hint="****"
+            android:inputType="numberPassword"
+            android:maxLength="4"
+            android:textAlignment="center"
+            android:textColor="@color/myWhite"
+            android:textColorHint="@color/myWhite"
+            android:textSize="40sp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_create"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/image_icon"
-        android:layout_centerHorizontal="true"
-        android:text="@string/create_password"
-        android:textColor="@color/myWhite"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/edit_password"
+        android:background="@drawable/rectangle_bg"
+        android:onClick="saveBtn"
+        android:text="@string/save"
+        android:textSize="22sp"
+        android:textColor="#FFF"
+        android:layout_marginBottom="90dp"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_icon" />
+        />
 
     <com.hanks.passcodeview.PasscodeView
         android:id="@+id/passcode_view"
@@ -42,38 +149,5 @@
         app:correctStateColor="@android:color/holo_green_light"
         app:numberTextColor="@android:color/holo_blue_light"
         app:wrongStateColor="@android:color/holo_red_light" />
-
-    <EditText
-        android:id="@+id/edit_password"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:background="@drawable/edittext_background"
-        android:hint="****"
-        android:inputType="numberPassword"
-        android:maxLength="4"
-        android:textAlignment="center"
-        android:textColor="@color/myWhite"
-        android:textColorHint="@color/myWhite"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@id/ok_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_create" />
-
-    <Button
-        android:id="@+id/ok_btn"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_bg"
-        android:onClick="saveBtn"
-        android:text="@string/save"
-        android:textSize="22sp"
-        android:textColor="#FFF"
-        android:layout_marginBottom="150dp"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

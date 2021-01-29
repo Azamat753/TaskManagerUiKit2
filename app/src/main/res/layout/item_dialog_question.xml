@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/dialog_qst_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextTitleQuick"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="@string/answer_qst"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/dialog_qst_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextTitleQuick"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="0000000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_qst_tv"
+        />
+
+    <EditText
+        android:id="@+id/dialog_ed_qst_answer"
+        android:layout_marginTop="20sp"
+        android:hint="@string/add_title"
+        android:textColorHint="@color/hint_color"
+        android:gravity="center"
+        style="@style/TextTitleQuick"
+        android:inputType="textCapSentences"
+        android:maxLength="26"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/dialog_qst_tv"
+        app:layout_constraintEnd_toEndOf="@id/dialog_qst_tv"
+        app:layout_constraintTop_toBottomOf="@id/dialog_qst_title_tv"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_ed_qst_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/dialog_qst_btn_cancel"
+            android:textColor="@color/myWhite"
+            android:layout_margin="10dp"
+            android:text="@string/Cancel"
+            android:background="@drawable/bg_button_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/dialog_qst_btn_ok"
+            android:textColor="@color/myWhite"
+            android:layout_margin="10dp"
+            android:text="ok"
+            android:background="@drawable/bg_button_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

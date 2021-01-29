@@ -52,6 +52,9 @@
     <string name="plus_you_kpd">Uma das melhores maneiras de melhorar sua eficiência</string>
     <string name="settings">Configurações</string>
     <string name="create_password">Criação de senha</string>
+    <string name="create_question">Crie uma pergunta</string>
+    <string name="create_question_answer">Crie uma resposta</string>
+    <string name="qst_example">Qual é a sua cor favorita?</string>
     <string name="change_theme">Mudar de assunto</string>
     <string name="planner">Planner</string>
     <string name="add_event">Adicionar Evento</string>
@@ -103,6 +106,11 @@
     <string name="share_app">Compartilhar isso</string>
     <string name="add_title">Digite o texto</string>
     <string name="add_icon">Escolha uma figura: </string>
+    <string name="answer_qst">Responda à pergunta</string>
+    <string name="add_password">Defina uma senha</string>
+    <string name="qst_not_found">Digite sua pergunta</string>
+    <string name="invalid_entered">Dados inválidos inseridos</string>
+    <string name="answer_not_found">Digite sua resposta</string>
     <string name="attention">Atenção!</string>
     <string name="task_dialog_message">Tem certeza de que deseja excluir?</string>
     <string name="Cancel">Cancelamento</string>

@@ -51,6 +51,9 @@
     <string name="plus_you_kpd">Один из лучших способов повысить свой КПД</string>
     <string name="settings">Настройки</string>
     <string name="create_password">Создание пароля</string>
+    <string name="create_question">Создание вопроса</string>
+    <string name="create_question_answer">Создание ответа</string>
+    <string name="qst_example">Какой твой любимый цвет ?</string>
     <string name="change_theme">Сменить тему</string>
     <string name="planner">Planner</string>
     <string name="add_event">Добавить событие</string>
@@ -102,6 +105,11 @@
     <string name="share_app">Поделиться</string>
     <string name="add_title">Введите текст</string>
     <string name="add_icon">Выберите картинку: </string>
+    <string name="answer_qst">Ответьте на вопрос</string>
+    <string name="add_password">Установите пароль</string>
+    <string name="qst_not_found">Введите вопрос</string>
+    <string name="answer_not_found">Введите ответ</string>
+    <string name="invalid_entered">Не правильно введены данные</string>
     <string name="attention">Внимание!</string>
     <string name="task_dialog_message">Вы уверены, что хотите удалить?</string>
     <string name="Cancel">Отмена</string>

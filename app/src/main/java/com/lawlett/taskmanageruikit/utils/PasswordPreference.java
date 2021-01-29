@@ -22,6 +22,8 @@ public class PasswordPreference {
         return preferences.getString("keyword", "");
     }
 
+
+
     public void savePassword(String a) {
         preferences.edit().putString("keyword", a).apply();
     }
