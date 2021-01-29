@@ -3,6 +3,7 @@ package com.lawlett.taskmanageruikit.settings;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.camera2.CameraAccessException;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -23,11 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.google.android.play.core.review.ReviewInfo;
-import com.google.android.play.core.review.ReviewManager;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
+import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPreference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
@@ -37,10 +38,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
+
 public class SettingsActivity extends AppCompatActivity {
     LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout;
-    ReviewManager manager;
-    ReviewInfo reviewInfo;
+
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -123,18 +124,32 @@ public class SettingsActivity extends AppCompatActivity {
         clear_password_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sPref = getSharedPreferences("qst",0);
+                String qst = sPref.getString(PassCodeActivity.SAVED_QST,null);
+                String answer = sPref.getString(PassCodeActivity.SAVED_ANSWER,null);
+                EditText answerInput = new EditText(SettingsActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
+                dialog.setView(answerInput);
+                if(qst != null){
+                dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
-                                PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
-                                Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
+                                if(answerInput.getText().toString().equals(answer)) {
+                                    sPref.edit().clear().apply();
+                                    PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
+                                    PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
+                                    Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
+                                }else {
+                                    Toast.makeText(SettingsActivity.this, R.string.invalid_entered, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }).show();
+                }else {
+                    Toast.makeText(SettingsActivity.this, R.string.add_password, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         clearMinutes_layout.setOnClickListener(new View.OnClickListener() {

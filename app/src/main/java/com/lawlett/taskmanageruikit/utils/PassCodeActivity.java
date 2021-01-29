@@ -1,6 +1,7 @@
 package com.lawlett.taskmanageruikit.utils;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,11 +16,14 @@ import com.hanks.passcodeview.PasscodeView;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.PrivateActivity;
 
+
 public class PassCodeActivity extends AppCompatActivity {
     PasscodeView passcodeView;
-    String password;
-    EditText editPassword;
+    String password,qst,qstAnswer;
+    EditText editPassword,editQst,editQstAnswer;
     Button button;
+    public static final String SAVED_QST = "saved_qst";
+    public static final String SAVED_ANSWER = "saved_answer";
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
@@ -27,9 +31,12 @@ public class PassCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pass_code);
 
+
         editPassword = findViewById(R.id.edit_password);
         button = findViewById(R.id.ok_btn);
         passcodeView = findViewById(R.id.passcode_view);
+        editQst = findViewById(R.id.edit_question_create);
+        editQstAnswer = findViewById(R.id.edit_answer);
         password = PasswordPreference.getInstance(this).returnPassword();
 
         boolean isShown = PasswordDonePreference.getInstance(getApplication()).isShown();
@@ -65,9 +72,19 @@ public class PassCodeActivity extends AppCompatActivity {
     }
 
     public void saveBtn(View view) {
-        if(editPassword.getText().length()<4){
+        if (editQst.getText().toString().equals("")){
+            Toast.makeText(PassCodeActivity.this, R.string.qst_not_found, Toast.LENGTH_LONG).show();
+        }else if(editQstAnswer.getText().toString().equals("")){
+            Toast.makeText(PassCodeActivity.this, R.string.answer_not_found, Toast.LENGTH_SHORT).show();
+        }else if(editPassword.getText().length()<4){
             Toast.makeText(PassCodeActivity.this, R.string.of_symbols, Toast.LENGTH_LONG).show();
-        }else{
+        }
+        else{
+            SharedPreferences sPref = getSharedPreferences("qst",0);
+            SharedPreferences.Editor ed = sPref.edit();
+            ed.putString(SAVED_QST, editQst.getText().toString());
+            ed.putString(SAVED_ANSWER,editQstAnswer.getText().toString());
+            ed.apply();
         PasswordPreference.getInstance(this).savePassword(editPassword.getText().toString().trim());
         passcodeView.setVisibility(View.VISIBLE);
         editPassword.setVisibility(View.GONE);

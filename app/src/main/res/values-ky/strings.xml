@@ -52,6 +52,9 @@
     <string name="plus_you_kpd">Натыйжалуулугун жогорулатуунун мыкты жолдорунун бири</string>
     <string name="settings">Орнотуулар</string>
     <string name="create_password">Сырсөз түзүү</string>
+    <string name="create_question">Суроо түзүү</string>
+    <string name="create_question_answer">Жооп түзүү</string>
+    <string name="qst_example">Сенин жакшы көргөн түсүң кайсы ?</string>
     <string name="change_theme">Теманы өзгөртүү</string>
     <string name="planner">Planner</string>
     <string name="add_event">Окуя кошуу</string>
@@ -103,6 +106,11 @@
     <string name="share_app">Бөлүшүү</string>
     <string name="add_title">Текстти тандаңыз</string>
     <string name="add_icon">Сүрөттү тандаңыз</string>
+    <string name="answer_qst">Суроого жооп бериниз</string>
+    <string name="add_password">Сыр сөз коюлган жок</string>
+    <string name="qst_not_found">Суроону жазыңыз</string>
+    <string name="answer_not_found">Жообуңузду жазыңыз</string>
+    <string name="invalid_entered">Жараксыз маалыматтар киргизилди</string>
     <string name="attention">Көнүл буруу!</string>
     <string name="task_dialog_message">Ɵчүргөнгө макулсузбу?</string>
     <string name="Cancel">Жок кылуу</string>
