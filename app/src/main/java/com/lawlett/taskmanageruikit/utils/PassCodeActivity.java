@@ -71,6 +71,10 @@ public class PassCodeActivity extends AppCompatActivity {
                 });
     }
 
+    public String getPass() {
+        return password;
+    }
+
     public void saveBtn(View view) {
         if (editQst.getText().toString().equals("")){
             Toast.makeText(PassCodeActivity.this, R.string.qst_not_found, Toast.LENGTH_LONG).show();
