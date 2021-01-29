@@ -130,7 +130,9 @@ public class SettingsActivity extends AppCompatActivity {
                 EditText answerInput = new EditText(SettingsActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
                 dialog.setView(answerInput);
-                if(qst != null){
+                PassCodeActivity passCodeActivity = new PassCodeActivity();
+                String pass = passCodeActivity.getPass();
+                if(qst != null && pass != null){
                 dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
