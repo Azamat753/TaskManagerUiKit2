@@ -115,7 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Planner");
-                    String shareMessage = "\nPlanner\n\n";
+                    String shareMessage = "\nPlanner\n";
                     shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=com.lawlett.taskmanageruikit";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, getString(R.string.choose_app)));
