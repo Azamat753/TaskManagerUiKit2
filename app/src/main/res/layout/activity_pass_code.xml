@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".utils.PassCodeActivity"
-    android:padding="10dp"
     >
 
     <ImageView
         android:id="@+id/image_icon"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +146,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/royal"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:correctStateColor="@android:color/holo_green_light"
         app:numberTextColor="@android:color/holo_blue_light"
         app:wrongStateColor="@android:color/holo_red_light" />
