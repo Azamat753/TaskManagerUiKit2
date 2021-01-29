@@ -130,9 +130,9 @@ public class SettingsActivity extends AppCompatActivity {
                 EditText answerInput = new EditText(SettingsActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
                 dialog.setView(answerInput);
-                PassCodeActivity passCodeActivity = new PassCodeActivity();
-                String pass = passCodeActivity.getPass();
-                if(qst != null && pass != null){
+                String pass = PasswordPreference.getInstance(SettingsActivity.this).returnPassword();
+                if(pass != null){
+                    if(qst != null){
                 dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
@@ -149,6 +149,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }
                         }).show();
+                    }else {
+                        Toast.makeText(SettingsActivity.this, "add qst", Toast.LENGTH_SHORT).show();
+                    }
                 }else {
                     Toast.makeText(SettingsActivity.this, R.string.add_password, Toast.LENGTH_SHORT).show();
                 }
