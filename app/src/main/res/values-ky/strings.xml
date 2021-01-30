@@ -110,6 +110,8 @@
     <string name="add_password">Сыр сөз коюлган жок</string>
     <string name="qst_not_found">Суроону жазыңыз</string>
     <string name="answer_not_found">Жообуңузду жазыңыз</string>
+    <string name="create_secrect_word">Жашыруун сөз түзүңүз</string>
+    <string name="enter_secret_word">Жашыруун сөздү жазыңыз</string>
     <string name="invalid_entered">Жараксыз маалыматтар киргизилди</string>
     <string name="attention">Көнүл буруу!</string>
     <string name="task_dialog_message">Ɵчүргөнгө макулсузбу?</string>

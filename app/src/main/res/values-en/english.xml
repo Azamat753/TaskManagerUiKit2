@@ -110,6 +110,8 @@
     <string name="add_password">Set a password</string>
     <string name="qst_not_found">Set a question</string>
     <string name="answer_not_found">Set a answer</string>
+    <string name="create_secrect_word">Create a secret word</string>
+    <string name="enter_secret_word">Enter the secret word</string>
     <string name="invalid_entered">Invalid data entered</string>
     <string name="attention">Attention!</string>
     <string name="task_dialog_message">Are you sure you want to delete it? </string>

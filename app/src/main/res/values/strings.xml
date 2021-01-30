@@ -109,6 +109,8 @@
     <string name="add_password">Установите пароль</string>
     <string name="qst_not_found">Введите вопрос</string>
     <string name="answer_not_found">Введите ответ</string>
+    <string name="create_secrect_word">Создайте секретное слово</string>
+    <string name="enter_secret_word">Введите секретное слово</string>
     <string name="invalid_entered">Не правильно введены данные</string>
     <string name="attention">Внимание!</string>
     <string name="task_dialog_message">Вы уверены, что хотите удалить?</string>

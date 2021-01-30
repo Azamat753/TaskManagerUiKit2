@@ -35,7 +35,7 @@ public class PassCodeActivity extends AppCompatActivity {
         editPassword = findViewById(R.id.edit_password);
         button = findViewById(R.id.ok_btn);
         passcodeView = findViewById(R.id.passcode_view);
-        editQst = findViewById(R.id.edit_question_create);
+//        editQst = findViewById(R.id.edit_question_create);
         editQstAnswer = findViewById(R.id.edit_answer);
         password = PasswordPreference.getInstance(this).returnPassword();
 
@@ -73,9 +73,10 @@ public class PassCodeActivity extends AppCompatActivity {
 
 
     public void saveBtn(View view) {
-        if (editQst.getText().toString().equals("")){
-            Toast.makeText(PassCodeActivity.this, R.string.qst_not_found, Toast.LENGTH_LONG).show();
-        }else if(editQstAnswer.getText().toString().equals("")){
+//        if (editQst.getText().toString().equals("")){
+//            Toast.makeText(PassCodeActivity.this, R.string.qst_not_found, Toast.LENGTH_LONG).show();
+//        }
+        if(editQstAnswer.getText().toString().equals("")){
             Toast.makeText(PassCodeActivity.this, R.string.answer_not_found, Toast.LENGTH_SHORT).show();
         }else if(editPassword.getText().length()<4){
             Toast.makeText(PassCodeActivity.this, R.string.of_symbols, Toast.LENGTH_LONG).show();
@@ -83,7 +84,7 @@ public class PassCodeActivity extends AppCompatActivity {
         else{
             SharedPreferences sPref = getSharedPreferences("qst",0);
             SharedPreferences.Editor ed = sPref.edit();
-            ed.putString(SAVED_QST, editQst.getText().toString());
+//            ed.putString(SAVED_QST, editQst.getText().toString());
             ed.putString(SAVED_ANSWER,editQstAnswer.getText().toString());
             ed.apply();
         PasswordPreference.getInstance(this).savePassword(editPassword.getText().toString().trim());

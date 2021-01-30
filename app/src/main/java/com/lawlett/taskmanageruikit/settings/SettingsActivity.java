@@ -130,7 +130,7 @@ public class SettingsActivity extends AppCompatActivity {
                 EditText answerInput = new EditText(SettingsActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
                 String pass = PasswordPreference.getInstance(SettingsActivity.this).returnPassword();
-                if(pass != "" && qst==null){
+                if(pass != "" && answer==null){
                     dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
                             .setNegativeButton(R.string.no, (dialog1, which) ->
                                     dialog1.cancel())
@@ -143,9 +143,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }).show();
                 }
-                else if(qst!=null && pass != null){
+                else if(answer!=null && pass != null){
                     dialog.setView(answerInput);
-                    dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
+                    dialog.setTitle(R.string.enter_secret_word)
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
