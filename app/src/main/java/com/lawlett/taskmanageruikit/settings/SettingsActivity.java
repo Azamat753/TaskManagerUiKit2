@@ -144,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }).show();
                 }
-                else if(qst!=null){
+                else if(qst!=null && pass != null){
                 dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
