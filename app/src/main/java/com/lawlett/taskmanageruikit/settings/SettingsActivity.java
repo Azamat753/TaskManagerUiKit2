@@ -131,8 +131,20 @@ public class SettingsActivity extends AppCompatActivity {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
                 dialog.setView(answerInput);
                 String pass = PasswordPreference.getInstance(SettingsActivity.this).returnPassword();
-                if(pass != null){
-                    if(qst != null){
+                if(pass != null && qst == null){
+                    dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
+                            .setNegativeButton(R.string.no, (dialog1, which) ->
+                                    dialog1.cancel())
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
+                                    PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
+                                    Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
+                                }
+                            }).show();
+                }
+                else if(qst!=null){
                 dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
@@ -149,10 +161,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }
                         }).show();
-                    }else {
-                        Toast.makeText(SettingsActivity.this, "add qst", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
+
+                }
+                else {
                     Toast.makeText(SettingsActivity.this, R.string.add_password, Toast.LENGTH_SHORT).show();
                 }
             }
