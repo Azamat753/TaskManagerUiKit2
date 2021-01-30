@@ -125,8 +125,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sPref = getSharedPreferences("qst",0);
-                String qst = null;
-//                String qst = sPref.getString(PassCodeActivity.SAVED_QST,null);
+                String qst = sPref.getString(PassCodeActivity.SAVED_QST,null);
                 String answer = sPref.getString(PassCodeActivity.SAVED_ANSWER,null);
                 EditText answerInput = new EditText(SettingsActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
