@@ -135,9 +135,8 @@ public class SettingsActivity extends AppCompatActivity {
                 String answer = sPref.getString(PassCodeActivity.SAVED_ANSWER,null);
                 EditText answerInput = new EditText(SettingsActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
-                dialog.setView(answerInput);
                 String pass = PasswordPreference.getInstance(SettingsActivity.this).returnPassword();
-                if(pass != null && qst == null){
+                if(pass != "" && qst==null){
                     dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
                             .setNegativeButton(R.string.no, (dialog1, which) ->
                                     dialog1.cancel())
@@ -150,8 +149,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }).show();
                 }
-                else if(qst!=null){
-                dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
+                else if(qst!=null && pass != null){
+                    dialog.setView(answerInput);
+                    dialog.setTitle(R.string.answer_qst).setMessage(qst + " ?")
                         .setNegativeButton(R.string.no, (dialog1, which) ->
                                 dialog1.cancel())
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -167,9 +167,8 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }
                         }).show();
-
                 }
-                else {
+                else if(pass ==""){
                     Toast.makeText(SettingsActivity.this, R.string.add_password, Toast.LENGTH_SHORT).show();
                 }
             }
