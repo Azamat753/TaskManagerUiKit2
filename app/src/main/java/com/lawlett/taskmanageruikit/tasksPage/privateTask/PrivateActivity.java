@@ -31,14 +31,13 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
-public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener, ActionForDialog {
+public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener {
     RecyclerView recyclerView;
     PrivateAdapter adapter;
     ArrayList<PrivateModel> list;
@@ -57,12 +56,12 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
 
         init();
         if (Build.VERSION.SDK_INT >= 21)
-
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
 
         changeView();
 
-
+        list = new ArrayList<>();
+        adapter = new PrivateAdapter(this);
 
         App.getDataBase().privateDao().getAllLive().observe(this, privateModels -> {
             if (privateModels != null) {
@@ -145,6 +144,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
                                 }
                             }
                         }).show();
+                adapter.notifyDataSetChanged();
             }
 
             @SuppressLint("ResourceAsColor")
@@ -273,15 +273,51 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         App.getDataBase().privateDao().update(list.get(id));
     }
 
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                String level = "Молодец " + size / 5;
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Вы получили звание: " + l)
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void incrementAllDone(){
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
+    }
+
+    private void decrementAllDone(){
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+    }
+
     private void incrementDone() {
         previousData = PrivateDoneSizePreference.getInstance(this).getDataSize();
         PrivateDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+        incrementAllDone();
     }
 
     private void decrementDone() {
         currentData = PrivateDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         PrivateDoneSizePreference.getInstance(this).saveDataSize(updateData);
+        decrementAllDone();
     }
 
     @Override

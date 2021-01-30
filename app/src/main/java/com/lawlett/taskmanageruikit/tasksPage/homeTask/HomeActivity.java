@@ -35,7 +35,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener, ActionForDialog {
+public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener {
     RecyclerView recyclerView;
     HomeAdapter adapter;
     List<HomeModel> list;
@@ -73,7 +73,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             }
         });
 
-
+        linearLayoutHome = findViewById(R.id.linearHome);
         recyclerView = findViewById(R.id.recycler_home);
         recyclerView.setAdapter(adapter);
 
@@ -86,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+                        ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT);
             }
 
             @Override
@@ -115,6 +115,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                 adapter.notifyItemMoved(fromPosition, toPosition);
                 return true;
             }
+
+
 
             @Override
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -147,8 +149,47 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
                                 }
                             }
                         }).show();
+                adapter.notifyDataSetChanged();
+                }
+
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                final int DIRECTION_RIGHT = 1;
+                final int DIRECTION_LEFT = 0;
+
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int)dX);
+                    Vibrator vb = (Vibrator)   getSystemService(Context.VIBRATOR_SERVICE);
+                    switch (direction){
+
+                        case DIRECTION_RIGHT:
+
+                            View itemView = viewHolder.itemView;
+                            final ColorDrawable background = new ColorDrawable(Color.RED);
+                            background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
+                            background.draw(c);
+                            vb.vibrate(100);
+
+                            break;
+
+                        case DIRECTION_LEFT:
+
+                            View itemView2 = viewHolder.itemView;
+                            final ColorDrawable background2 = new ColorDrawable(Color.RED);
+                            background2.setBounds(itemView2.getRight(), itemView2.getBottom(), (int) (itemView2.getRight() + dX), itemView2.getTop());
+                            background2.draw(c);
+                            vb.vibrate(100);
+                            break;
+                    }
+
+                }
             }
         }).attachToRecyclerView(recyclerView);
+
+
 
         homeBack = findViewById(R.id.personal_back);
         homeBack.setOnClickListener(new View.OnClickListener() {
@@ -204,15 +245,51 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         App.getDataBase().homeDao().update(list.get(id));
     }
 
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                String level = "Молодец " + size / 5;
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Вы получили звание: " + l)
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void incrementAllDone(){
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
+    }
+
+    private void decrementAllDone(){
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+    }
+
     private void incrementDone() {
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+        incrementAllDone();
     }
 
     private void decrementDone() {
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
+        decrementAllDone();
     }
 
     @Override

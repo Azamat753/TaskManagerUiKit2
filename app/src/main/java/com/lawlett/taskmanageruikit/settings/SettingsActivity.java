@@ -1,11 +1,14 @@
 package com.lawlett.taskmanageruikit.settings;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
@@ -13,7 +16,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -28,6 +31,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.achievement.AchievementActivity;
 import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
@@ -36,14 +40,14 @@ import com.lawlett.taskmanageruikit.utils.PasswordPreference;
 import com.lawlett.taskmanageruikit.utils.ThemePreference;
 import com.lawlett.taskmanageruikit.utils.TimingSizePreference;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout;
-    ReviewManager manager;
-    ReviewInfo reviewInfo;
+    ImageView back;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, theme_layout, share_layout;
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -69,8 +73,10 @@ public class SettingsActivity extends AppCompatActivity {
         container = findViewById(R.id.container_settings);
         imageSettings = findViewById(R.id.image_settings);
 
+        achievement_layout = findViewById(R.id.achievement_layout);
         magick = findViewById(R.id.btn_magick);
         listView = findViewById(R.id.listView);
+
 
         if (Build.VERSION.SDK_INT >= 21)
             getWindow().setNavigationBarColor(getResources().getColor(R.color.statusBarC));
@@ -124,6 +130,8 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        achievement_layout.setOnClickListener(v -> startActivity(new Intent(this, AchievementActivity.class)));
 
         clear_password_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +192,12 @@ public class SettingsActivity extends AppCompatActivity {
                 showChangeLanguageDialog();
             }
         });
+
     }
+
+
+
+
 
     public void showChangeThemeDialog() {
         final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
@@ -196,9 +209,11 @@ public class SettingsActivity extends AppCompatActivity {
                 if (i == 0) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
+
                 } else if (i == 1) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
+
                 }
 
                 dialog.dismiss();
@@ -289,8 +304,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             if (matches.contains("Nox")) {
-                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
-                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
                         try {
                             cameraManager.setTorchMode("0", false);
                         } catch (CameraAccessException e) {
@@ -301,8 +316,7 @@ public class SettingsActivity extends AppCompatActivity {
                 } else
                     Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
+        }}
 
     private void loadLocale() {
         String language = LanguagePreference.getInstance(this).getLanguage();

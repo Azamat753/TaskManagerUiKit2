@@ -31,7 +31,6 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
@@ -40,7 +39,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener, ActionForDialog {
+public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener {
     EditText editText;
     PersonalAdapter adapter;
     PersonalModel personalModel;
@@ -92,6 +91,8 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
 
@@ -116,12 +117,15 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 }
                 adapter.notifyItemMoved(fromPosition, toPosition);
                 return true;
+
             }
+
             @Override
             public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
                 App.getDataBase().personalDao().updateWord(list);
             }
+
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(PersonalActivity.this);
@@ -147,8 +151,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                             }
                         }).show();
                 adapter.notifyDataSetChanged();
-            }
-
+                }
 
             @SuppressLint("ResourceAsColor")
             @Override
@@ -161,7 +164,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                     int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
                     int absoluteDisplacement = Math.abs((int) dX);
 
-                    switch (direction) {
+                    switch (direction){
 
                         case DIRECTION_RIGHT:
 
@@ -285,12 +288,48 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     private void incrementDone() {
         previousPersonalDone = PersonDoneSizePreference.getInstance(this).getPersonalSize();
         PersonDoneSizePreference.getInstance(this).savePersonalSize(previousPersonalDone + 1);
+        incrementAllDone();
+    }
+
+    private void incrementAllDone() {
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousPersonalDone + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
+    }
+
+    private void decrementAllDone() {
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+    }
+
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                String level = "Молодец " + size / 5;
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Вы получили звание: " + l)
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 
     private void decrementDone() {
         currentData = PersonDoneSizePreference.getInstance(this).getPersonalSize();
         updateData = currentData - 1;
         PersonDoneSizePreference.getInstance(this).savePersonalSize(updateData);
+        decrementAllDone();
     }
 
     @Override

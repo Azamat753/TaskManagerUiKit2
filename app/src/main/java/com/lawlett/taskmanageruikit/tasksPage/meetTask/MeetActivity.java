@@ -31,7 +31,6 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
@@ -40,7 +39,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener, ActionForDialog {
+public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener {
     RecyclerView recyclerView;
     MeetAdapter adapter;
     private List<MeetModel> list;
@@ -151,6 +150,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
                                 }
                             }
                         }).show();
+                adapter.notifyDataSetChanged();
             }
 
             @SuppressLint("ResourceAsColor")
@@ -170,10 +170,8 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
                             View itemView = viewHolder.itemView;
                             final ColorDrawable background = new ColorDrawable(Color.RED);
-
                             background.setBounds(0, itemView.getTop(), (int) (itemView.getLeft() + dX), itemView.getBottom());
                             background.draw(c);
-
 
                             break;
 
@@ -287,15 +285,51 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         App.getDataBase().meetDao().update(list.get(id));
     }
 
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                String level = "Молодец " + size / 5;
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Вы получили звание: " + l)
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void incrementAllDone(){
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
+    }
+
+    private void decrementAllDone(){
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+    }
+
     private void incrementDone() {
         previousData = MeetDoneSizePreference.getInstance(this).getDataSize();
         MeetDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+        incrementAllDone();
     }
 
     private void decrementDone() {
         currentData = MeetDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         MeetDoneSizePreference.getInstance(this).saveDataSize(updateData);
+        decrementAllDone();
     }
 
     @Override

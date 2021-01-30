@@ -31,8 +31,6 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
-import com.lawlett.taskmanageruikit.utils.DialogHelper;
-import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener, ActionForDialog {
+public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener {
     WorkAdapter adapter;
     EditText editText;
     WorkModel workModel;
@@ -148,6 +146,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
                                 }
                             }
                         }).show();
+                adapter.notifyDataSetChanged();
             }
 
             @SuppressLint("ResourceAsColor")
@@ -276,15 +275,51 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         App.getDataBase().workDao().update(list.get(id));
     }
 
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                String level = "Молодец " + size / 5;
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Вы получили звание: " + l)
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void incrementAllDone(){
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
+    }
+
+    private void decrementAllDone(){
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+    }
+
     private void incrementDone() {
         previousData = WorkDoneSizePreference.getInstance(this).getDataSize();
         WorkDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+        incrementAllDone();
     }
 
     private void decrementDone() {
         currentData = WorkDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         WorkDoneSizePreference.getInstance(this).saveDataSize(updateData);
+        decrementAllDone();
     }
 
     public void micWorkTask(View view) {
