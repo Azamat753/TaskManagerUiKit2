@@ -31,6 +31,8 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
@@ -160,11 +162,11 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
                 final int DIRECTION_RIGHT = 1;
                 final int DIRECTION_LEFT = 0;
 
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
-                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int)dX);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int) dX);
 
-                    switch (direction){
+                    switch (direction) {
 
                         case DIRECTION_RIGHT:
 
@@ -215,6 +217,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
                     knopka = false;
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -242,7 +245,7 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
             @Override
             public void onClick(View v) {
                 DialogHelper dialogHelper = new DialogHelper();
-                dialogHelper.myDialog(MeetActivity.this, MeetActivity.this);
+                dialogHelper.myDialog(MeetActivity.this, (ActionForDialog) MeetActivity.this);
             }
         });
         imageAdd = findViewById(R.id.add_task_meet);
@@ -265,10 +268,10 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        if(TaskDialogPreference.getMeetTitle().isEmpty()){
+        if (TaskDialogPreference.getMeetTitle().isEmpty()) {
             toolbar.setText(R.string.meets);
-        }else{
-        toolbar.setText(TaskDialogPreference.getMeetTitle());
+        } else {
+            toolbar.setText(TaskDialogPreference.getMeetTitle());
         }
     }
 
@@ -308,15 +311,18 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         builder.show();
     }
 
-    private void incrementAllDone(){
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+    private void incrementAllDone() {
+        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
-    private void decrementAllDone(){
+    private void decrementAllDone() {
         int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
         int updateSize = currentSize - 1;
-        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+        if (updateSize >= 0) {
+            DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+        }
     }
 
     private void incrementDone() {
@@ -332,11 +338,11 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         decrementAllDone();
     }
 
-    @Override
-    public void pressOk() {
-        App.getDataBase().meetDao().deleteAll(list);
-        MeetDoneSizePreference.getInstance(MeetActivity.this).clearSettings();
-    }
+//    @Override
+//    public void pressOk() {
+//        App.getDataBase().meetDao().deleteAll(list);
+//        MeetDoneSizePreference.getInstance(MeetActivity.this).clearSettings();
+//    }
 
     public void micMeetTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);

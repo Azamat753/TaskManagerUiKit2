@@ -14,7 +14,7 @@ public class DoneTasksPreferences {
     }
 
     public static DoneTasksPreferences getInstance(Context context) {
-        if (instance == null) new MeetDoneSizePreference(context);
+        if (instance == null) new DoneTasksPreferences(context);
         return instance;
     }
 

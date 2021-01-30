@@ -2,10 +2,10 @@ package com.lawlett.taskmanageruikit.tasksPage.workTask;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -31,6 +31,9 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
+import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 
 import java.util.ArrayList;
@@ -220,7 +223,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
             @Override
             public void onClick(View v) {
                 DialogHelper dialogHelper = new DialogHelper();
-                dialogHelper.myDialog(WorkActivity.this, WorkActivity.this);
+                dialogHelper.myDialog(WorkActivity.this, (ActionForDialog) WorkActivity.this);
             }
         });
 
@@ -299,15 +302,17 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
     }
 
     private void incrementAllDone(){
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
     private void decrementAllDone(){
         int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
         int updateSize = currentSize - 1;
-        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
-    }
+        if (updateSize >= 0) {
+            DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+        }    }
 
     private void incrementDone() {
         previousData = WorkDoneSizePreference.getInstance(this).getDataSize();
@@ -346,10 +351,10 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         }
     }
 
-    @Override
-    public void pressOk() {
-        App.getDataBase().workDao().deleteAll(list);
-        WorkDoneSizePreference.getInstance(WorkActivity.this).clearSettings();
-    }
+//    @Override
+//    public void pressOk() {
+//        App.getDataBase().workDao().deleteAll(list);
+//        WorkDoneSizePreference.getInstance(WorkActivity.this).clearSettings();
+//    }
 }
 

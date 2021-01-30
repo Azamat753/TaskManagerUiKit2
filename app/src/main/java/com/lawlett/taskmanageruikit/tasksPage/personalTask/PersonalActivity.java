@@ -31,6 +31,8 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
@@ -117,7 +119,6 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 }
                 adapter.notifyItemMoved(fromPosition, toPosition);
                 return true;
-
             }
 
             @Override
@@ -243,7 +244,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
             @Override
             public void onClick(View v) {
                 DialogHelper dialogHelper = new DialogHelper();
-                dialogHelper.myDialog(PersonalActivity.this, PersonalActivity.this);
+                dialogHelper.myDialog(PersonalActivity.this, (ActionForDialog) PersonalActivity.this);
             }
         });
     }
@@ -292,15 +293,17 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     }
 
     private void incrementAllDone() {
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousPersonalDone + 1);
+        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
     private void decrementAllDone() {
         int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
         int updateSize = currentSize - 1;
-        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
-    }
+        if (updateSize >= 0) {
+            DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+        }    }
 
     private void setLevel(int size) {
         if (size < 26) {
@@ -332,11 +335,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         decrementAllDone();
     }
 
-    @Override
-    public void pressOk() {
-        App.getDataBase().personalDao().deleteAll(list);
-        PersonDoneSizePreference.getInstance(PersonalActivity.this).clearSettings();
-    }
+//    @Override
+//    public void pressOk() {
+//        App.getDataBase().personalDao().deleteAll(list);
+//        PersonDoneSizePreference.getInstance(PersonalActivity.this).clearSettings();
+//    }
     public void micPersonalTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

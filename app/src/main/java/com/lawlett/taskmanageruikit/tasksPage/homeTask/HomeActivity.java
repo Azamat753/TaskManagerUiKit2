@@ -1,9 +1,15 @@
 package com.lawlett.taskmanageruikit.tasksPage.homeTask;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +33,7 @@ import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
@@ -203,7 +210,7 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         homeSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogHelper.myDialog(HomeActivity.this, HomeActivity.this);
+                dialogHelper.myDialog(HomeActivity.this, (ActionForDialog) HomeActivity.this);
             }
         });
     }
@@ -269,15 +276,17 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     }
 
     private void incrementAllDone(){
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
     private void decrementAllDone(){
         int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
         int updateSize = currentSize - 1;
-        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
-    }
+        if (updateSize >= 0) {
+            DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+        }    }
 
     private void incrementDone() {
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
@@ -292,11 +301,11 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         decrementAllDone();
     }
 
-    @Override
-    public void pressOk() {
-        App.getDataBase().homeDao().deleteAll(list);
-        HomeDoneSizePreference.getInstance(HomeActivity.this).clearSettings();
-    }
+//    @Override
+//    public void pressOk() {
+//        App.getDataBase().homeDao().deleteAll(list);
+//        HomeDoneSizePreference.getInstance(HomeActivity.this).clearSettings();
+//    }
 
     private void editListener() {
         editText.addTextChangedListener(new TextWatcher() {

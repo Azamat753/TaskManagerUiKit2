@@ -2,10 +2,10 @@ package com.lawlett.taskmanageruikit.tasksPage.privateTask;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -31,6 +31,8 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.PrivateModel;
 import com.lawlett.taskmanageruikit.tasksPage.privateTask.recycler.PrivateAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DialogHelper;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
 import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
 
 import java.util.ArrayList;
@@ -229,7 +231,7 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
             @Override
             public void onClick(View v) {
                 DialogHelper dialogHelper = new DialogHelper();
-                dialogHelper.myDialog(PrivateActivity.this, PrivateActivity.this);
+                dialogHelper.myDialog(PrivateActivity.this, (ActionForDialog) PrivateActivity.this);
             }
         });
         recyclerView = findViewById(R.id.recycler_private);
@@ -297,15 +299,17 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
     }
 
     private void incrementAllDone(){
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
     private void decrementAllDone(){
         int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
         int updateSize = currentSize - 1;
-        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
-    }
+        if (updateSize >= 0) {
+            DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+        }    }
 
     private void incrementDone() {
         previousData = PrivateDoneSizePreference.getInstance(this).getDataSize();
@@ -320,11 +324,11 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         decrementAllDone();
     }
 
-    @Override
-    public void pressOk() {
-        App.getDataBase().privateDao().deleteAll(list);
-        PrivateDoneSizePreference.getInstance(PrivateActivity.this).clearSettings();
-    }
+//    @Override
+//    public void pressOk() {
+//        App.getDataBase().privateDao().deleteAll(list);
+//        PrivateDoneSizePreference.getInstance(PrivateActivity.this).clearSettings();
+//    }
 
     public void micPrivateTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
