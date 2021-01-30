@@ -163,7 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
                         }).show();
 
                 }
-                else {
+                else if(pass == null) {
                     Toast.makeText(SettingsActivity.this, R.string.add_password, Toast.LENGTH_SHORT).show();
                 }
             }
