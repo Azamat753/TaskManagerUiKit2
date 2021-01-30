@@ -26,6 +26,7 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 
 import java.util.ArrayList;
@@ -218,13 +219,49 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         App.getDataBase().homeDao().update(list.get(id));
     }
 
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                String level = "Молодец " + size / 5;
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Вы получили звание: " + l)
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
+    private void incrementAllDone(){
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
+    }
+
+    private void decrementAllDone(){
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+    }
+
     private void incrementDone() {
         previousData = HomeDoneSizePreference.getInstance(this).getDataSize();
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+        incrementAllDone();
     }
     private void decrementDone() {
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;
         HomeDoneSizePreference.getInstance(this).saveDataSize(updateData);
+        decrementAllDone();
     }
 }

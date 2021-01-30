@@ -22,6 +22,7 @@ import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
 import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                             }
                         }).show();
                 adapter.notifyDataSetChanged();
-                }
+            }
 
             @SuppressLint("ResourceAsColor")
             @Override
@@ -140,11 +141,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 final int DIRECTION_RIGHT = 1;
                 final int DIRECTION_LEFT = 0;
 
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
-                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int)dX);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int) dX);
 
-                    switch (direction){
+                    switch (direction) {
 
                         case DIRECTION_RIGHT:
 
@@ -210,12 +211,48 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     private void incrementDone() {
         previousPersonalDone = PersonDoneSizePreference.getInstance(this).getPersonalSize();
         PersonDoneSizePreference.getInstance(this).savePersonalSize(previousPersonalDone + 1);
+        incrementAllDone();
+    }
+
+    private void incrementAllDone() {
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousPersonalDone + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
+    }
+
+    private void decrementAllDone() {
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+    }
+
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                String level = "Молодец " + size / 5;
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Вы получили звание: " + l)
+                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 
     private void decrementDone() {
         currentData = PersonDoneSizePreference.getInstance(this).getPersonalSize();
         updateData = currentData - 1;
         PersonDoneSizePreference.getInstance(this).savePersonalSize(updateData);
+        decrementAllDone();
     }
 
 }

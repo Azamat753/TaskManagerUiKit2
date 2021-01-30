@@ -26,14 +26,13 @@ import static com.lawlett.taskmanageruikit.achievement.models.AchievementModel.*
 public class AchievementActivity extends AppCompatActivity {
 
     private AchievementViewModel mViewModel;
-    private RecyclerView recyclerViewPersonal, recyclerViewWork, recyclerViewMeet, recyclerViewHome, recyclerViewDone;
-    private AchievementAdapter personalAdapter, workAdapter, meetAdapter, homeAdapter, doneAdapter;
+    private RecyclerView recyclerView;
+    private AchievementAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement);
-
         initViewModel();
         initRecyclerView();
         subscribeAchievementData();
@@ -50,7 +49,6 @@ public class AchievementActivity extends AppCompatActivity {
 
     private void insertedAchievementsCategory(int size, Category category) {
         List<AchievementModel> dataCategory = App.getDataBase().achievementDao().getAllByCategory(category);
-
         for (int i = 0; i < size / 5; i++) {
             if (i + 1 > dataCategory.size()) {
                 App.getDataBase().achievementDao().insert(new AchievementModel(Calendar.getInstance().getTime(), (i + 1) * 5, category));
@@ -65,28 +63,15 @@ public class AchievementActivity extends AppCompatActivity {
     }
 
     private void setAdapters() {
-        recyclerViewPersonal.setAdapter(personalAdapter);
-        recyclerViewWork.setAdapter(workAdapter);
-        recyclerViewMeet.setAdapter(meetAdapter);
-        recyclerViewHome.setAdapter(homeAdapter);
-        recyclerViewDone.setAdapter(doneAdapter);
+        recyclerView.setAdapter(adapter);
     }
 
     private void initAdapters() {
-        personalAdapter = new AchievementAdapter();
-        workAdapter = new AchievementAdapter();
-        meetAdapter = new AchievementAdapter();
-        homeAdapter = new AchievementAdapter();
-        doneAdapter = new AchievementAdapter();
+        adapter = new AchievementAdapter();
     }
 
     private void initRecyclerViews() {
-        recyclerViewPersonal = findViewById(R.id.recycler_view_personal);
-        recyclerViewWork = findViewById(R.id.recycler_view_work);
-        recyclerViewMeet = findViewById(R.id.recycler_view_meet);
-        recyclerViewHome = findViewById(R.id.recycler_view_home);
-        recyclerViewDone = findViewById(R.id.recycler_view_done);
-
+        recyclerView = findViewById(R.id.achievement_recycler);
     }
 
     private void initViewModel() {
@@ -96,28 +81,25 @@ public class AchievementActivity extends AppCompatActivity {
 
     private void subscribeAchievementData() {
         mViewModel.data.observe(this, achievementModels -> {
-            personalAdapter.clearAll();
-            workAdapter.clearAll();
-            meetAdapter.clearAll();
-            homeAdapter.clearAll();
-            doneAdapter.clearAll();
+            adapter.clearAll();
             for (AchievementModel achievementModel : achievementModels) {
-                switch (achievementModel.getCategory()) {
-                    case PERSONAL:
-                        personalAdapter.addItem(achievementModel);
-                        break;
-                    case WORK:
-                        workAdapter.addItem(achievementModel);
-                        break;
-                    case MEET:
-                        meetAdapter.addItem(achievementModel);
-                        break;
-                    case HOME:
-                        homeAdapter.addItem(achievementModel);
-                        break;
-                    case DONE:
-                        doneAdapter.addItem(achievementModel);
-                }
+                adapter.addItem(achievementModel);
+//                switch (achievementModel.getCategory()) {
+//                    case PERSONAL:
+//                        personalAdapter.addItem(achievementModel);
+//                        break;
+//                    case WORK:
+//                        workAdapter.addItem(achievementModel);
+//                        break;
+//                    case MEET:
+//                        meetAdapter.addItem(achievementModel);
+//                        break;
+//                    case HOME:
+//                        homeAdapter.addItem(achievementModel);
+//                        break;
+//                    case DONE:
+//                        doneAdapter.addItem(achievementModel);
+//                }
             }
         });
     }
