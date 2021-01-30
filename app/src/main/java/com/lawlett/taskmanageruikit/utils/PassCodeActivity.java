@@ -19,7 +19,7 @@ import com.lawlett.taskmanageruikit.tasksPage.privateTask.PrivateActivity;
 
 public class PassCodeActivity extends AppCompatActivity {
     PasscodeView passcodeView;
-    String password,qst,qstAnswer;
+    String password;
     EditText editPassword,editQst,editQstAnswer;
     Button button;
     public static final String SAVED_QST = "saved_qst";
@@ -71,9 +71,6 @@ public class PassCodeActivity extends AppCompatActivity {
                 });
     }
 
-    public String getPass() {
-        return password;
-    }
 
     public void saveBtn(View view) {
         if (editQst.getText().toString().equals("")){
