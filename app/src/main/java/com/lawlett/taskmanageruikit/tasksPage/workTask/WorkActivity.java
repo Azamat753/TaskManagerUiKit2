@@ -41,7 +41,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener {
+public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener,ActionForDialog{
     WorkAdapter adapter;
     EditText editText;
     WorkModel workModel;
@@ -351,10 +351,10 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         }
     }
 
-//    @Override
-//    public void pressOk() {
-//        App.getDataBase().workDao().deleteAll(list);
-//        WorkDoneSizePreference.getInstance(WorkActivity.this).clearSettings();
-//    }
+    @Override
+    public void pressOk() {
+        App.getDataBase().workDao().deleteAll(list);
+        WorkDoneSizePreference.getInstance(WorkActivity.this).clearSettings();
+    }
 }
 

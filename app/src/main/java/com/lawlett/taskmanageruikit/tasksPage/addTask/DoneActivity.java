@@ -45,7 +45,6 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
     boolean knopka = false;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

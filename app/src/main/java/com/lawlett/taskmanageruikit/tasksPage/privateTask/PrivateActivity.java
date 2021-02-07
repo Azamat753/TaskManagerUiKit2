@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
-public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener {
+public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener,ActionForDialog {
     RecyclerView recyclerView;
     PrivateAdapter adapter;
     ArrayList<PrivateModel> list;
@@ -324,11 +324,11 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
         decrementAllDone();
     }
 
-//    @Override
-//    public void pressOk() {
-//        App.getDataBase().privateDao().deleteAll(list);
-//        PrivateDoneSizePreference.getInstance(PrivateActivity.this).clearSettings();
-//    }
+    @Override
+    public void pressOk() {
+        App.getDataBase().privateDao().deleteAll(list);
+        PrivateDoneSizePreference.getInstance(PrivateActivity.this).clearSettings();
+    }
 
     public void micPrivateTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);

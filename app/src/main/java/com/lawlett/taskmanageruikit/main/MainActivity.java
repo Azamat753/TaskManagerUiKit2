@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("help") != null) {
             changeFragment(new TasksFragment());
         }
-        if (getIntent().getStringExtra("setting") != null) {
-            openNeedFragment();
-        }
+//        if (getIntent().getStringExtra("setting") != null) {
+//            openNeedFragment();
+//        }
     }
 
     @Override

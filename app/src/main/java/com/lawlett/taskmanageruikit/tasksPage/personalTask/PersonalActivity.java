@@ -41,7 +41,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener {
+public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener,ActionForDialog {
     EditText editText;
     PersonalAdapter adapter;
     PersonalModel personalModel;
@@ -53,7 +53,6 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
     boolean knopka = false;
     Animation animationAlpha;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -335,11 +334,11 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         decrementAllDone();
     }
 
-//    @Override
-//    public void pressOk() {
-//        App.getDataBase().personalDao().deleteAll(list);
-//        PersonDoneSizePreference.getInstance(PersonalActivity.this).clearSettings();
-//    }
+    @Override
+    public void pressOk() {
+        App.getDataBase().personalDao().deleteAll(list);
+        PersonDoneSizePreference.getInstance(PersonalActivity.this).clearSettings();
+    }
     public void micPersonalTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

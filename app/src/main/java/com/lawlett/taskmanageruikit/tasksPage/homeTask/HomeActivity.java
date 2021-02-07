@@ -42,7 +42,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener {
+public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHCheckedListener,ActionForDialog{
     RecyclerView recyclerView;
     HomeAdapter adapter;
     List<HomeModel> list;
@@ -301,11 +301,11 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         decrementAllDone();
     }
 
-//    @Override
-//    public void pressOk() {
-//        App.getDataBase().homeDao().deleteAll(list);
-//        HomeDoneSizePreference.getInstance(HomeActivity.this).clearSettings();
-//    }
+    @Override
+    public void pressOk() {
+        App.getDataBase().homeDao().deleteAll(list);
+        HomeDoneSizePreference.getInstance(HomeActivity.this).clearSettings();
+    }
 
     private void editListener() {
         editText.addTextChangedListener(new TextWatcher() {
@@ -348,4 +348,5 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
 }

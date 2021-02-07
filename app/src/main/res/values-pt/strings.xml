@@ -140,4 +140,6 @@
     <string name="helper_dialog_text">Você pode alterar o nome e a imagem da categoria com um toque longo:</string>
     <string name="move_tasks">Você pode trocar tarefas</string>
     <string name="delete_task">Você pode excluir uma tarefa desnecessária:</string>
+    <string name="achievement_app">progresso</string>
+    <string name="completed">completado</string>
 </resources>

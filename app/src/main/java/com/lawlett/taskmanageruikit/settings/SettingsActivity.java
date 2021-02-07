@@ -347,10 +347,10 @@ public class SettingsActivity extends AppCompatActivity {
         return "Прогресс";
     }
 
-    @Override
-    public void onBackPressed() {
-        openMain(checkFrom());
-    }
+//    @Override
+//    public void onBackPressed() {
+//        openMain(checkFrom());
+//    }
 
     public void openMain(String from) {
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);

@@ -41,7 +41,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener {
+public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener,ActionForDialog {
     RecyclerView recyclerView;
     MeetAdapter adapter;
     private List<MeetModel> list;
@@ -338,11 +338,11 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         decrementAllDone();
     }
 
-//    @Override
-//    public void pressOk() {
-//        App.getDataBase().meetDao().deleteAll(list);
-//        MeetDoneSizePreference.getInstance(MeetActivity.this).clearSettings();
-//    }
+    @Override
+    public void pressOk() {
+        App.getDataBase().meetDao().deleteAll(list);
+        MeetDoneSizePreference.getInstance(MeetActivity.this).clearSettings();
+    }
 
     public void micMeetTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
