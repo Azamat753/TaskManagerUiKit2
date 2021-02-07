@@ -1,17 +1,14 @@
 package com.lawlett.taskmanageruikit.achievement;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.achievement.adapter.AchievementAdapter;
 import com.lawlett.taskmanageruikit.achievement.models.AchievementModel;
-import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
@@ -22,7 +19,7 @@ import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.lawlett.taskmanageruikit.achievement.models.AchievementModel.*;
+import static com.lawlett.taskmanageruikit.achievement.models.AchievementModel.Category;
 
 public class AchievementActivity extends AppCompatActivity {
 
