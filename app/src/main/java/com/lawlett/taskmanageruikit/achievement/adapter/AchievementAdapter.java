@@ -21,6 +21,10 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
 
     private List<AchievementModel> data = new ArrayList<>();
 
+    public List<AchievementModel> getData() {
+        return data;
+    }
+
     public void setData(List<AchievementModel> data) {
         this.data = data;
     }

@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:text="@string/personal"
+            android:textColor="@color/myWhite"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:text="@string/work"
+            android:textColor="@color/myWhite"
             app:layout_constraintTop_toBottomOf="@id/recycler_view_personal" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -51,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:text="@string/meets"
+            android:textColor="@color/myWhite"
             app:layout_constraintTop_toBottomOf="@id/recycler_view_work" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -67,7 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
+            android:textColor="@color/myWhite"
             android:text="@string/home"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/recycler_view_meet" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -80,12 +85,30 @@
 
 
         <TextView
+            android:id="@+id/text_view_private"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:text="@string/privates"
+            android:textColor="@color/myWhite"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_home" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_private"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/text_view_private"
+            tools:listitem="@layout/item_achievement" />
+
+        <TextView
             android:id="@+id/text_view_done"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:text="@string/done"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_home" />
+            android:textColor="@color/myWhite"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_private" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_done"

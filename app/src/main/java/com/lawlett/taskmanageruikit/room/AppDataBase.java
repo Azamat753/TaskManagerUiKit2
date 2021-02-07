@@ -16,11 +16,10 @@ import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.timing.model.TimingModel;
 
 @TypeConverters(Converters.class)
-@Database(entities = {QuickModel.class, PersonalModel.class, WorkModel.class, MeetModel.class,
-        HomeModel.class, DoneModel.class, PrivateModel.class, CalendarTaskModel.class,
-        TimingModel.class}, version = 3, exportSchema = false)
-        HomeModel.class, PrivateModel.class, CalendarTaskModel.class,
-        TimingModel.class, AchievementModel.class}, version = 2, exportSchema = false)
+@Database(entities = {QuickModel.class,  PrivateModel.class, CalendarTaskModel.class,
+        TimingModel.class, AchievementModel.class, PersonalModel.class, WorkModel.class, MeetModel.class,
+        HomeModel.class, DoneModel.class
+       }, version = 2, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract QuickDao taskDao();

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.HomeModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.homeTask.recycler.HomeAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -55,6 +56,12 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
             if (homeModels != null) {
                 list.clear();
                 list.addAll(homeModels);
+                Collections.sort(list, new java.util.Comparator<HomeModel>() {
+                    @Override
+                    public int compare(HomeModel homeModel, HomeModel t1) {
+                        return Boolean.compare(t1.isDone, homeModel.isDone);
+                    }
+                });
                 Collections.reverse(list);
                 adapter.updateList(list);
             }

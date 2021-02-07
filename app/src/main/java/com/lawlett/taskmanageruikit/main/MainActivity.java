@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +31,7 @@ import com.lawlett.taskmanageruikit.timing.fragment.TimingFragment;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PasswordPassDonePreference;
+import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private List<QuickModel> list;
 
     QuickAdapter adapter;
+    public static String PROGRESS = "Прогресс", TASKS = "Задачи", TIMING = "Тайминг" , CALENDAR = "События", IDEA = "Идея";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -66,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
         settings_view = findViewById(R.id.settings_view);
         btnGrid = findViewById(R.id.tool_btn_grid);
         btnHelp = findViewById(R.id.tool_btn_help);
+
+        if(getIntent().getStringExtra("help")!=null){
+            openTasksFrag();
+        }
 
         list = new ArrayList<>();
         adapter = new QuickAdapter(list, null, this);
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TaskDialogPreference.saveShown();
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
                 finish();
             }
@@ -141,10 +147,7 @@ public class MainActivity extends AppCompatActivity {
                         btnHelp.setVisibility(View.GONE);
                         break;
                     case 1:
-                        changeFragment(new TasksFragment());
-                        toolbar_title.setText(R.string.tasks);
-                        btnGrid.setVisibility(View.GONE);
-                        btnHelp.setVisibility(View.VISIBLE);
+                        openTasksFrag();
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
@@ -167,6 +170,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void openTasksFrag() {
+        changeFragment(new TasksFragment());
+        toolbar_title.setText(R.string.tasks);
+        btnGrid.setVisibility(View.GONE);
+        btnHelp.setVisibility(View.VISIBLE);
     }
 
     @Override

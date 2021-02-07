@@ -45,8 +45,8 @@ import java.util.Random;
 public class SettingsActivity extends AppCompatActivity {
     ConstraintLayout container;
     ImageView back, imageSettings, imageTheme;
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout,share_layout;
-    ConstraintLayout theme_layout;
+    LinearLayout language_tv, share_layout, achievement_layout;
+    ConstraintLayout clear_password_layout, clearMinutes_layout, theme_layout;
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;

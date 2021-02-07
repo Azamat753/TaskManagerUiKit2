@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.adapter.DoneAdapter;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
+import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
@@ -51,6 +52,12 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
             if (doneModels != null) {
                 list.clear();
                 list.addAll(doneModels);
+                Collections.sort(list, new java.util.Comparator<DoneModel>() {
+                    @Override
+                    public int compare(DoneModel doneModel, DoneModel t1) {
+                        return Boolean.compare(t1.isDone, doneModel.isDone);
+                    }
+                });
                 Collections.reverse(list);
                 adapter.updateList(list);
             }

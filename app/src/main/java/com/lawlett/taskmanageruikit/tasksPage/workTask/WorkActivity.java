@@ -30,6 +30,7 @@ import com.lawlett.taskmanageruikit.utils.WorkDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener, ActionForDialog {
@@ -56,6 +57,12 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
             if (workModels != null) {
                 list.clear();
                 list.addAll(workModels);
+                Collections.sort(list, new java.util.Comparator<WorkModel>() {
+                    @Override
+                    public int compare(WorkModel workModel, WorkModel t1) {
+                        return Boolean.compare(t1.isDone, workModel.isDone);
+                    }
+                });
                 Collections.reverse(list);
                 adapter.updateList(list);
             }
