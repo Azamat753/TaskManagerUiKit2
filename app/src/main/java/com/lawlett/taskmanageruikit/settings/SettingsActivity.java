@@ -45,11 +45,8 @@ public class SettingsActivity extends AppCompatActivity {
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
-    ConstraintLayout container;
     ImageView back, imageSettings, imageTheme;
     ConstraintLayout theme_layout;
-
-    public static String PROGRESS = "Прогресс", TASKS = "Задачи", TIMING = "Тайминг", CALENDAR = "События", IDEA = "Идеи";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
         imageTheme = findViewById(R.id.image_day_night);
         language_tv = findViewById(R.id.four_layout);
         share_layout = findViewById(R.id.five_layout);
-        container = findViewById(R.id.container_settings);
         imageSettings = findViewById(R.id.image_settings);
         reviews=findViewById(R.id.six_layout);
 

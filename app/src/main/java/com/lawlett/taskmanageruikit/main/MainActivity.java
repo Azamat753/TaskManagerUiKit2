@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private List<QuickModel> list;
 
     QuickAdapter adapter;
-    public static String PROGRESS = "Прогресс", TASKS = "Задачи", TIMING = "Тайминг", CALENDAR = "События", IDEA = "Идеи";
 
     AlarmManager mAlarm;
     long time;
