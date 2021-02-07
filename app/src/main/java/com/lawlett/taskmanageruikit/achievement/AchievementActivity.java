@@ -81,25 +81,6 @@ public class AchievementActivity extends AppCompatActivity {
         mViewModel.data.observe(this, levelModels -> {
             adapter.clearAll();
             adapter.setData(levelModels);
-//            for (LevelModel levelModel : levelModels) {
-//                adapter.addItem(levelModel);
-////                switch (achievementModel.getCategory()) {
-////                    case PERSONAL:
-////                        personalAdapter.addItem(achievementModel);
-////                        break;
-////                    case WORK:
-////                        workAdapter.addItem(achievementModel);
-////                        break;
-////                    case MEET:
-////                        meetAdapter.addItem(achievementModel);
-////                        break;
-////                    case HOME:
-////                        homeAdapter.addItem(achievementModel);
-////                        break;
-////                    case DONE:
-////                        doneAdapter.addItem(achievementModel);
-////                }
-//            }
         });
     }
 
