@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.lawlett.taskmanageruikit.achievement.models.AchievementModel;
+import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
@@ -15,10 +16,10 @@ import java.util.List;
 
 public class AchievementViewModel extends ViewModel {
 
-    LiveData<List<AchievementModel>> data;
+    LiveData<List<LevelModel>> data;
 
     public AchievementViewModel() {
-        data = App.getDataBase().achievementDao().getAll();
+        data = App.getDataBase().levelDao().getAll();
     }
 
     public void insertedAchievement(){

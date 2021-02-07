@@ -2,25 +2,20 @@ package com.lawlett.taskmanageruikit.tasksPage.privateTask;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -37,7 +32,6 @@ import com.lawlett.taskmanageruikit.utils.PrivateDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Locale;
 
 public class PrivateActivity extends AppCompatActivity implements PrivateAdapter.IPCheckedListener,ActionForDialog {
     RecyclerView recyclerView;
@@ -278,10 +272,17 @@ public class PrivateActivity extends AppCompatActivity implements PrivateAdapter
     private void setLevel(int size) {
         if (size < 26) {
             if (size % 5 == 0) {
-                String level = "Молодец " + size / 5;
+                int lvl = size / 5;
+                String level = "Молодец " + lvl;
+                addToLocalDate(lvl,level);
                 showDialogLevel(level);
             }
         }
+    }
+
+    private void addToLocalDate(int id,String level){
+        LevelModel levelModel = new LevelModel(id,new Date(System.currentTimeMillis()),level);
+        App.getDataBase().levelDao().insert(levelModel);
     }
 
     private void showDialogLevel(String l) {

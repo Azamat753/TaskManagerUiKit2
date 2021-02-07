@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.achievement.models.AchievementModel;
+import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,10 +20,11 @@ import java.util.List;
 
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> {
 
-    private List<AchievementModel> data = new ArrayList<>();
+    private List<LevelModel> data = new ArrayList<>();
 
-    public void setData(List<AchievementModel> data) {
+    public void setData(List<LevelModel> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -41,7 +43,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         return data.size();
     }
 
-    public void addItem(AchievementModel item){
+    public void addItem(LevelModel item){
         this.data.add(item);
         notifyDataSetChanged();
     }
@@ -65,13 +67,13 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
             textViewAchievementDate = view.findViewById(R.id.text_view_date);
         }
 
-        public void onBind(AchievementModel model){
+        public void onBind(LevelModel model){
 
             String pattern = "MM/dd/yyyy HH:mm";
             @SuppressLint("SimpleDateFormat") String todayAsString = new SimpleDateFormat(pattern).format(model.getDate());
 
             textViewAchievementDate.setText(todayAsString);
-            textViewAchievementAmount.setText(String.valueOf(model.getAchievementAmount()));
+            textViewAchievementAmount.setText(model.getLevel());
         }
 
     }

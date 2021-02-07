@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.achievement.adapter.AchievementAdapter;
 import com.lawlett.taskmanageruikit.achievement.models.AchievementModel;
+import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.HomeDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
@@ -80,27 +81,28 @@ public class AchievementActivity extends AppCompatActivity {
     }
 
     private void subscribeAchievementData() {
-        mViewModel.data.observe(this, achievementModels -> {
+        mViewModel.data.observe(this, levelModels -> {
             adapter.clearAll();
-            for (AchievementModel achievementModel : achievementModels) {
-                adapter.addItem(achievementModel);
-//                switch (achievementModel.getCategory()) {
-//                    case PERSONAL:
-//                        personalAdapter.addItem(achievementModel);
-//                        break;
-//                    case WORK:
-//                        workAdapter.addItem(achievementModel);
-//                        break;
-//                    case MEET:
-//                        meetAdapter.addItem(achievementModel);
-//                        break;
-//                    case HOME:
-//                        homeAdapter.addItem(achievementModel);
-//                        break;
-//                    case DONE:
-//                        doneAdapter.addItem(achievementModel);
-//                }
-            }
+            adapter.setData(levelModels);
+//            for (LevelModel levelModel : levelModels) {
+//                adapter.addItem(levelModel);
+////                switch (achievementModel.getCategory()) {
+////                    case PERSONAL:
+////                        personalAdapter.addItem(achievementModel);
+////                        break;
+////                    case WORK:
+////                        workAdapter.addItem(achievementModel);
+////                        break;
+////                    case MEET:
+////                        meetAdapter.addItem(achievementModel);
+////                        break;
+////                    case HOME:
+////                        homeAdapter.addItem(achievementModel);
+////                        break;
+////                    case DONE:
+////                        doneAdapter.addItem(achievementModel);
+////                }
+//            }
         });
     }
 
