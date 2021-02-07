@@ -143,4 +143,7 @@
     <string name="delete_task">Вы можете удалить ненужную задачу:</string>
     <string name="achievement_app">достижения</string>
     <string name="completed">выполненных</string>
+    <string name="write_reviews">Написать отзыв</string>
+    <string name="review_on_app">Отзыв на приложение Planner</string>
+    <string name="hello">Здравствуйте </string>
 </resources>

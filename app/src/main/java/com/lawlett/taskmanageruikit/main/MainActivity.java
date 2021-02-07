@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private List<QuickModel> list;
 
     QuickAdapter adapter;
-    public static String PROGRESS="Прогресс",TASKS="Задачи",TIMING="Тайминг",CALENDAR="События",IDEA="Идеи";
+    public static String PROGRESS = "Прогресс", TASKS = "Задачи", TIMING = "Тайминг", CALENDAR = "События", IDEA = "Идеи";
 
     AlarmManager mAlarm;
     long time;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         checkInstance();
 
 
-            toolbar_title = findViewById(R.id.toolbar_title);
+        toolbar_title = findViewById(R.id.toolbar_title);
         settings_view = findViewById(R.id.settings_view);
         btnGrid = findViewById(R.id.tool_btn_grid);
         btnHelp = findViewById(R.id.tool_btn_help);
@@ -86,7 +86,12 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
+settings_view.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+    }
+});
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,9 +109,6 @@ public class MainActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("help") != null) {
             changeFragment(new TasksFragment());
         }
-//        if (getIntent().getStringExtra("setting") != null) {
-//            openNeedFragment();
-//        }
     }
 
     @Override
@@ -175,51 +177,37 @@ public class MainActivity extends AppCompatActivity {
                         toolbar_title.setText(R.string.progress);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.GONE);
-                        openSetting(getString(R.string.progress));
                         break;
                     case 1:
                         changeFragment(new TasksFragment());
                         toolbar_title.setText(R.string.tasks);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.VISIBLE);
-                        openSetting(getString(R.string.tasks));
-
                         break;
                     case 2:
                         changeFragment(new TimingFragment());
                         toolbar_title.setText(R.string.timing);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.GONE);
-                        openSetting(getString(R.string.timing));
                         break;
                     case 3:
                         changeFragment(new CalendarEventsFragment());
                         toolbar_title.setText(month + " " + year);
                         btnGrid.setVisibility(View.GONE);
                         btnHelp.setVisibility(View.GONE);
-                        openSetting("События");
                         break;
                     case 4:
                         changeFragment(new IdeasFragment());
                         toolbar_title.setText(R.string.ideas);
                         btnGrid.setVisibility(View.VISIBLE);
                         btnHelp.setVisibility(View.GONE);
-                        openSetting(getString(R.string.ideas));
                         break;
                 }
             }
         });
     }
-    public void openSetting(String from){
-        settings_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                intent.putExtra("main", from);
-                startActivity(intent);
-            }
-        });
-    }
+
+
 
     @Override
     protected void onDestroy() {
@@ -249,47 +237,6 @@ public class MainActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         LanguagePreference.getInstance(MainActivity.this).saveLanguage(lang);
     }
-    public String checkSetting(){
-            if (getIntent().getStringExtra("setting") != null) {
-            switch (getIntent().getStringExtra("setting")) {
-                case "Прогресс":
-                    return PROGRESS;
-                case "Задачи":
-                    return SettingsActivity.TASKS;
-                case "Тайминг":
-                    return TIMING;
-                case "События":
-                    return SettingsActivity.CALENDAR;
-                case "Идеи":
-                    return IDEA;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + getIntent().getStringExtra("main"));
-            }
-        }
-        return "Прогресс";
-    }
-    public void openNeedFragment(){
-        switch (checkSetting()){
-            case "Прогресс":
-                changeFragment(new DashboardFragment());
-                break;
-            case "Задачи":
-                changeFragment(new TasksFragment());
-                break;
-            case "Тайминг":
-                changeFragment(new TimingFragment());
-                break;
-            case "События":
-                changeFragment(new CalendarEventsFragment());
-                break;
-            case "Идеи":
-                changeFragment(new IdeasFragment());
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + checkSetting());
-        }
-    }
-
     private void loadLocale() {
         String language = LanguagePreference.getInstance(this).getLanguage();
         setLocale(language);

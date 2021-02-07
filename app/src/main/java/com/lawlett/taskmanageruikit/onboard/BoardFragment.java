@@ -156,7 +156,7 @@ public class BoardFragment extends Fragment {
     }
 
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"English", "Русский", "Кыргызча", "Português"};
+        final String[] listItems = {"English", "Русский", "Кыргызча", "Português","한국어"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
         mBuilder.setTitle(R.string.choose_language);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
@@ -173,6 +173,9 @@ public class BoardFragment extends Fragment {
                     Objects.requireNonNull(getActivity()).recreate();
                 }else if (i==3){
                     setLocale("pt");
+                    Objects.requireNonNull(getActivity()).recreate();
+                }else if (i==4){
+                    setLocale("ko");
                     Objects.requireNonNull(getActivity()).recreate();
                 }
                 dialog.dismiss();

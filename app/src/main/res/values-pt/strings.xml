@@ -144,4 +144,6 @@
     <string name="delete_task">Você pode excluir uma tarefa desnecessária:</string>
     <string name="achievement_app">progresso</string>
     <string name="completed">completado</string>
+    <string name="review_on_app">Отзыв на приложение Planner</string>
+    <string name="hello">\"Здраствуйте \"</string>
 </resources>

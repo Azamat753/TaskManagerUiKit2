@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -27,7 +28,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.achievement.AchievementActivity;
-import com.lawlett.taskmanageruikit.main.MainActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
@@ -41,7 +41,7 @@ import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout,achievement_layout;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout, achievement_layout,reviews;
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
     ImageView back, imageSettings, imageTheme;
     ConstraintLayout theme_layout;
 
-   public static String PROGRESS="Прогресс",TASKS="Задачи",TIMING="Тайминг",CALENDAR="События",IDEA="Идеи";
+    public static String PROGRESS = "Прогресс", TASKS = "Задачи", TIMING = "Тайминг", CALENDAR = "События", IDEA = "Идеи";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
         share_layout = findViewById(R.id.five_layout);
         container = findViewById(R.id.container_settings);
         imageSettings = findViewById(R.id.image_settings);
+        reviews=findViewById(R.id.six_layout);
 
         achievement_layout = findViewById(R.id.achievement_layout);
         magick = findViewById(R.id.btn_magick);
@@ -130,13 +131,13 @@ public class SettingsActivity extends AppCompatActivity {
         clear_password_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sPref = getSharedPreferences("qst",0);
-                String qst = sPref.getString(PassCodeActivity.SAVED_QST,null);
-                String answer = sPref.getString(PassCodeActivity.SAVED_ANSWER,null);
+                SharedPreferences sPref = getSharedPreferences("qst", 0);
+                String qst = sPref.getString(PassCodeActivity.SAVED_QST, null);
+                String answer = sPref.getString(PassCodeActivity.SAVED_ANSWER, null);
                 EditText answerInput = new EditText(SettingsActivity.this);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
                 String pass = PasswordPreference.getInstance(SettingsActivity.this).returnPassword();
-                if(pass != "" && answer==null){
+                if (pass != "" && answer == null) {
                     dialog.setTitle(R.string.are_you_sure).setMessage(R.string.clear_password)
                             .setNegativeButton(R.string.no, (dialog1, which) ->
                                     dialog1.cancel())
@@ -148,27 +149,25 @@ public class SettingsActivity extends AppCompatActivity {
                                     Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
                                 }
                             }).show();
-                }
-                else if(answer!=null && pass != null){
+                } else if (answer != null && pass != null) {
                     dialog.setView(answerInput);
                     dialog.setTitle(R.string.enter_secret_word)
-                        .setNegativeButton(R.string.no, (dialog1, which) ->
-                                dialog1.cancel())
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if(answerInput.getText().toString().equals(answer)) {
-                                    sPref.edit().clear().apply();
-                                    PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
-                                    PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
-                                    Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(SettingsActivity.this, R.string.invalid_entered, Toast.LENGTH_SHORT).show();
+                            .setNegativeButton(R.string.no, (dialog1, which) ->
+                                    dialog1.cancel())
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (answerInput.getText().toString().equals(answer)) {
+                                        sPref.edit().clear().apply();
+                                        PasswordPreference.getInstance(SettingsActivity.this).clearPassword();
+                                        PasswordDonePreference.getInstance(SettingsActivity.this).clearSettings();
+                                        Toast.makeText(SettingsActivity.this, R.string.data_of_password_delete, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(SettingsActivity.this, R.string.invalid_entered, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        }).show();
-                }
-                else if(pass ==""){
+                            }).show();
+                } else if (pass == "") {
                     Toast.makeText(SettingsActivity.this, R.string.add_password, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -197,38 +196,20 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-
-
-
-
-    public void showChangeThemeDialog() {
-        final String[] listItems = {getString(R.string.light_theme), getString(R.string.dark_theme)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-        builder.setTitle(R.string.choose_theme);
-        builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+        reviews.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int i) {
-                if (i == 0) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeTrue();
-
-                } else if (i == 1) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    ThemePreference.getInstance(SettingsActivity.this).saveThemeFalse();
-
-                }
-
-                dialog.dismiss();
+            public void onClick(View view) {
+                Intent mailIntent = new Intent(Intent.ACTION_VIEW);
+                Uri data = Uri.parse("mailto:?subject=" + getString(R.string.review_on_app)+ "&body=" + getString(R.string.hello) + "&to=" + "azamat.nazar99@gmail.com");
+                mailIntent.setData(data);
+                startActivity(Intent.createChooser(mailIntent, "Send mail..."));
             }
         });
-        AlertDialog mDialog = builder.create();
-        mDialog.show();
+
     }
 
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"English", "Русский", "Кыргызча", "Português"};
+        final String[] listItems = {"English", "Русский", "Кыргызча", "Português", "한국어"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingsActivity.this);
         mBuilder.setTitle(R.string.choose_language);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
@@ -245,6 +226,9 @@ public class SettingsActivity extends AppCompatActivity {
                     recreate();
                 } else if (i == 3) {
                     setLocale("pt");
+                    recreate();
+                } else if (i == 4) {
+                    setLocale("ko");
                     recreate();
                 }
                 dialog.dismiss();
@@ -308,8 +292,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             if (matches.contains("Nox")) {
-                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
-                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+                if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
                         try {
                             cameraManager.setTorchMode("0", false);
                         } catch (CameraAccessException e) {
@@ -320,41 +304,11 @@ public class SettingsActivity extends AppCompatActivity {
                 } else
                     Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show();
             }
-        }}
+        }
+    }
 
     private void loadLocale() {
         String language = LanguagePreference.getInstance(this).getLanguage();
         setLocale(language);
-    }
-
-    public String checkFrom() {
-        if (getIntent().getStringExtra("main") != null) {
-            switch (getIntent().getStringExtra("main")) {
-                case "Прогресс":
-                    return PROGRESS;
-                case "Задачи":
-                    return TASKS;
-                case "Тайминг":
-                    return TIMING;
-                case "События":
-                    return CALENDAR;
-                case "Идеи":
-                    return IDEA;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + getIntent().getStringExtra("main"));
-            }
-        }
-        return "Прогресс";
-    }
-
-//    @Override
-//    public void onBackPressed() {
-//        openMain(checkFrom());
-//    }
-
-    public void openMain(String from) {
-        Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-        intent.putExtra("setting", from);
-        startActivity(intent);
     }
 }

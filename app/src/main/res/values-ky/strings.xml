@@ -144,4 +144,6 @@
     <string name="delete_task">Кереги жок тапшырманы жок кылсаңыз болот:</string>
     <string name="achievement_app">достижения</string>
     <string name="completed">бүттү</string>
+    <string name="review_on_app">Отзыв на приложение Planner</string>
+    <string name="hello">\"Здраствуйте \"</string>
 </resources>
