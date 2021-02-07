@@ -39,6 +39,7 @@ public class BoardFragment extends Fragment {
     public BoardFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,10 +66,10 @@ public class BoardFragment extends Fragment {
         imageNightSelect = view.findViewById(R.id.image_night_select);
         loadLocale();
 
-        if(ThemePreference.getInstance(getContext()).isTheme()){
+        if (ThemePreference.getInstance(getContext()).isTheme()) {
             imageDaySelect.setVisibility(View.VISIBLE);
             imageNightSelect.setVisibility(View.GONE);
-        }else{
+        } else {
             imageDaySelect.setVisibility(View.GONE);
             imageNightSelect.setVisibility(View.VISIBLE);
         }
@@ -156,7 +157,7 @@ public class BoardFragment extends Fragment {
     }
 
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"English", "Русский", "Кыргызча", "Português","한국어"};
+        final String[] listItems = {"English", "Русский", "Кыргызча", "Português", "한국어", "Український"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
         mBuilder.setTitle(R.string.choose_language);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
@@ -171,11 +172,14 @@ public class BoardFragment extends Fragment {
                 } else if (i == 2) {
                     setLocale("ky");
                     Objects.requireNonNull(getActivity()).recreate();
-                }else if (i==3){
+                } else if (i == 3) {
                     setLocale("pt");
                     Objects.requireNonNull(getActivity()).recreate();
-                }else if (i==4){
+                } else if (i == 4) {
                     setLocale("ko");
+                    Objects.requireNonNull(getActivity()).recreate();
+                } else if (i == 5) {
+                    setLocale("uk");
                     Objects.requireNonNull(getActivity()).recreate();
                 }
                 dialog.dismiss();
@@ -191,12 +195,13 @@ public class BoardFragment extends Fragment {
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getResources().updateConfiguration(config,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
         LanguagePreference.getInstance(getContext()).saveLanguage(lang);
     }
-    public void loadLocale(){
-        String language= LanguagePreference.getInstance(getContext()).getLanguage();
+
+    public void loadLocale() {
+        String language = LanguagePreference.getInstance(getContext()).getLanguage();
         setLocale(language);
     }
 }

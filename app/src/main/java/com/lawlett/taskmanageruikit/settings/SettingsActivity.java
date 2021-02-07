@@ -206,7 +206,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void showChangeLanguageDialog() {
-        final String[] listItems = {"English", "Русский", "Кыргызча", "Português", "한국어"};
+        final String[] listItems = {"English", "Русский", "Кыргызча", "Português", "한국어","Український"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(SettingsActivity.this);
         mBuilder.setTitle(R.string.choose_language);
         mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
@@ -226,6 +226,9 @@ public class SettingsActivity extends AppCompatActivity {
                     startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
                 } else if (i == 4) {
                     setLocale("ko");
+                    startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
+                }else if (i == 5){
+                    setLocale("uk");
                     startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
                 }
                 dialog.dismiss();
