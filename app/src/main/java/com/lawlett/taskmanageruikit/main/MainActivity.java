@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         loadLocale();
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         if (Build.VERSION.SDK_INT >= 21)
@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         initBottomNavigation();
         checkInstance();
-
 
         toolbar_title = findViewById(R.id.toolbar_title);
         settings_view = findViewById(R.id.settings_view);
@@ -85,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-settings_view.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-    }
-});
+        settings_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            }
+        });
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +165,6 @@ settings_view.setOnClickListener(new View.OnClickListener() {
         bottomNavigationView.addTab(bottomNavigationItem2);
         bottomNavigationView.addTab(bottomNavigationItem3);
 
-
         bottomNavigationView.setOnBottomNavigationItemClickListener(new OnBottomNavigationItemClickListener() {
             @Override
             public void onNavigationItemClick(int index) {
@@ -207,7 +205,6 @@ settings_view.setOnClickListener(new View.OnClickListener() {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -236,6 +233,7 @@ settings_view.setOnClickListener(new View.OnClickListener() {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         LanguagePreference.getInstance(MainActivity.this).saveLanguage(lang);
     }
+
     private void loadLocale() {
         String language = LanguagePreference.getInstance(this).getLanguage();
         setLocale(language);

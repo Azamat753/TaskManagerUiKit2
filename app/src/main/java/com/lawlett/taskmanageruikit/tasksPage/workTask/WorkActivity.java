@@ -31,7 +31,6 @@ import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.WorkModel;
 import com.lawlett.taskmanageruikit.tasksPage.workTask.recycler.WorkAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
-import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
@@ -44,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener,ActionForDialog{
+public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWCheckedListener, ActionForDialog {
     WorkAdapter adapter;
     EditText editText;
     WorkModel workModel;
@@ -162,11 +161,11 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
                 final int DIRECTION_RIGHT = 1;
                 final int DIRECTION_LEFT = 0;
 
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
-                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int)dX);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
+                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int) dX);
 
-                    switch (direction){
+                    switch (direction) {
 
                         case DIRECTION_RIGHT:
 
@@ -260,10 +259,10 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        if(TaskDialogPreference.getWorkTitle().isEmpty()){
+        if (TaskDialogPreference.getWorkTitle().isEmpty()) {
             toolbar.setText(R.string.work);
-        }else{
-        toolbar.setText(TaskDialogPreference.getWorkTitle());
+        } else {
+            toolbar.setText(TaskDialogPreference.getWorkTitle());
         }
 
     }
@@ -285,15 +284,29 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         if (size < 26) {
             if (size % 5 == 0) {
                 int lvl = size / 5;
-                String level = "Молодец " + lvl;
-                addToLocalDate(lvl,level);
+                String level = getString(R.string.Attaboy) + lvl;
+                addToLocalDate(lvl, level);
+                showDialogLevel(level);
+            }
+        } else if (size > 26 && size < 51) {
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Persistent) + lev;
+                addToLocalDate(lev, level);
+                showDialogLevel(level);
+            }
+        }else if (size>51 &&size <76){
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Overwhelming) + lev;
+                addToLocalDate(lev, level);
                 showDialogLevel(level);
             }
         }
     }
 
-    private void addToLocalDate(int id,String level){
-        LevelModel levelModel = new LevelModel(id,new Date(System.currentTimeMillis()),level);
+    private void addToLocalDate(int id, String level) {
+        LevelModel levelModel = new LevelModel(id, new Date(System.currentTimeMillis()), level);
         App.getDataBase().levelDao().insert(levelModel);
     }
 
@@ -311,18 +324,19 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         builder.show();
     }
 
-    private void incrementAllDone(){
+    private void incrementAllDone() {
         int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
         DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
-    private void decrementAllDone(){
+    private void decrementAllDone() {
         int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
         int updateSize = currentSize - 1;
         if (updateSize >= 0) {
             DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
-        }    }
+        }
+    }
 
     private void incrementDone() {
         previousData = WorkDoneSizePreference.getInstance(this).getDataSize();

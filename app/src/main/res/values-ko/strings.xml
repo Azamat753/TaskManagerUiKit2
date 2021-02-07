@@ -142,6 +142,15 @@
     <string name="delete_task">불필요한 작업을 삭제할 수 있습니다.</string>
     <string name="achievement_app">진행</string>
     <string name="completed">완료</string>
-    <string name="review_on_app">Отзыв на приложение Planner</string>
-    <string name="hello">\"Здраствуйте \"</string>
+    <string name="review_on_app">응용 프로그램에 대한 피드백 Planner</string>
+    <string name="hello">안녕하세요 </string>
+    <string name="hippo">하마</string>
+    <string name="patronum">Expecto 후원자</string>
+    <string name="create_secret_word">비밀 단어 만들기</string>
+    <string name="enter_secret_word">비밀 단어를 입력</string>
+    <string name="write_reviews">리뷰를 작성</string>
+    <string name="Attaboy">잘 했어 </string>
+    <string name="Persistent">지속성 있는 </string>
+    <string name="Overwhelming">압도적 </string>
+    <string name="crane">두루미</string>
 </resources>

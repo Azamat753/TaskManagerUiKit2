@@ -110,7 +110,7 @@
     <string name="add_password">Установите пароль</string>
     <string name="qst_not_found">Введите вопрос</string>
     <string name="answer_not_found">Введите ответ</string>
-    <string name="create_secrect_word">Создайте секретное слово</string>
+    <string name="create_secret_word">Создайте секретное слово</string>
     <string name="enter_secret_word">Введите секретное слово</string>
     <string name="invalid_entered">Не правильно введены данные</string>
     <string name="attention">Внимание!</string>
@@ -146,4 +146,10 @@
     <string name="write_reviews">Написать отзыв</string>
     <string name="review_on_app">Отзыв на приложение Planner</string>
     <string name="hello">Здравствуйте </string>
+    <string name="Attaboy">Молодец </string>
+    <string name="Persistent">Настойчивый </string>
+    <string name="Overwhelming">Преодолеватель </string>
+    <string name="crane">Журавль</string>
+    <string name="hippo">Бегемот</string>
+    <string name="patronum">Экспекто патронум</string>
 </resources>

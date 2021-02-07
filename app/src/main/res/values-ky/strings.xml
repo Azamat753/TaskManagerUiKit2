@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Planner</string>
-
     <string name="your_api_key">my_api_key</string>
+
     <string name="clear_list">Тизмесин тазалоо</string>
     <string name="clearSetting">Сырсөз дайындарын тазалоо</string>
     <string name="progress">Прогресс</string>
@@ -110,7 +110,7 @@
     <string name="add_password">Сыр сөз коюлган жок</string>
     <string name="qst_not_found">Суроону жазыңыз</string>
     <string name="answer_not_found">Жообуңузду жазыңыз</string>
-    <string name="create_secrect_word">Жашыруун сөз түзүңүз</string>
+    <string name="create_secret_word">Жашыруун сөз түзүңүз</string>
     <string name="enter_secret_word">Жашыруун сөздү жазыңыз</string>
     <string name="invalid_entered">Жараксыз маалыматтар киргизилди</string>
     <string name="attention">Көнүл буруу!</string>
@@ -135,6 +135,9 @@
     <string name="giraffe">Жираф</string>
     <string name="lion">Арстан</string>
     <string name="zebra">Зебра</string>
+    <string name="hippo">Бегемот</string>
+    <string name="crane">Чымчык</string>
+    <string name="patronum">Экспекто патронум</string>
     <string name="your_patronus">Сиздин колдоочуңуз </string>
     <string name="lumos">люмос</string>
     <string name="choose_app">Колдонмону тандаңыз</string>
@@ -142,8 +145,12 @@
     <string name="helper_dialog_text">Узак басуу менен категориянын атын жана сүрөтүн өзгөртө аласыз:</string>
     <string name="move_tasks">Сиз тапшырмаларды алмаштыра аласыз</string>
     <string name="delete_task">Кереги жок тапшырманы жок кылсаңыз болот:</string>
-    <string name="achievement_app">достижения</string>
+    <string name="achievement_app">Жетишкендиктер</string>
     <string name="completed">бүттү</string>
-    <string name="review_on_app">Отзыв на приложение Planner</string>
-    <string name="hello">\"Здраствуйте \"</string>
+    <string name="review_on_app">Рlanner Өтүнмө боюнча кайтарым байланыш</string>
+    <string name="hello">Салам!  </string>
+    <string name="Attaboy">Азамат </string>
+    <string name="Persistent">Туруктуу </string>
+    <string name="Overwhelming">Жеңүүчү </string>
+    <string name="write_reviews">Пикир жазуу</string>
 </resources>

@@ -28,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.achievement.AchievementActivity;
+import com.lawlett.taskmanageruikit.splash.SplashActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
 import com.lawlett.taskmanageruikit.utils.PasswordDonePreference;
@@ -213,19 +214,19 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
                     setLocale("en");
-                    recreate();
+                    startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
                 } else if (i == 1) {
                     setLocale("ru");
-                    recreate();
+                    startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
                 } else if (i == 2) {
                     setLocale("ky");
-                    recreate();
+                    startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
                 } else if (i == 3) {
                     setLocale("pt");
-                    recreate();
+                    startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
                 } else if (i == 4) {
                     setLocale("ko");
-                    recreate();
+                    startActivity(new Intent(SettingsActivity.this, SplashActivity.class));
                 }
                 dialog.dismiss();
             }
@@ -266,9 +267,9 @@ public class SettingsActivity extends AppCompatActivity {
             ArrayList matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             listView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, matches));
 
-            if (matches.contains("Экспекто патронум")) {
+            if (matches.contains(getString(R.string.patronum))) {
                 Random random = new Random();
-                String animals[] = {getString(R.string.fox), getString(R.string.deer), getString(R.string.bull), getString(R.string.dog), getString(R.string.cat), getString(R.string.rat), "Журавль", "Бегемот", getString(R.string.giraffe), getString(R.string.lion), getString(R.string.zebra)};
+                String animals[] = {getString(R.string.fox), getString(R.string.deer), getString(R.string.bull), getString(R.string.dog), getString(R.string.cat), getString(R.string.rat), getString(R.string.crane), getString(R.string.hippo), getString(R.string.giraffe), getString(R.string.lion), getString(R.string.zebra)};
                 int a = random.nextInt(animals.length);
                 Toast.makeText(this, getString(R.string.your_patronus) + animals[a], Toast.LENGTH_SHORT).show();
             }

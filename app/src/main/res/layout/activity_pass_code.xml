@@ -61,7 +61,7 @@
             android:id="@+id/text_create_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_secrect_word"
+            android:text="@string/create_secret_word"
             android:gravity="center_horizontal"
             android:textColor="@color/myWhite"
             android:textSize="30sp"

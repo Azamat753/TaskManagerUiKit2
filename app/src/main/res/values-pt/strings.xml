@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Planner</string>
-
     <string name="your_api_key">my_api_key</string>
+
     <string name="clear_list">Limpar a lista</string>
     <string name="clearSetting">Limpar dados de senha</string>
     <string name="progress">Progresso</string>
@@ -111,7 +111,7 @@
     <string name="qst_not_found">Digite sua pergunta</string>
     <string name="invalid_entered">Dados inválidos inseridos</string>
     <string name="answer_not_found">Digite sua resposta</string>
-    <string name="create_secrect_word">Crie uma palavra secreta</string>
+    <string name="create_secret_word">Crie uma palavra secreta</string>
     <string name="enter_secret_word">Digite a palavra secreta</string>
     <string name="attention">Atenção!</string>
     <string name="task_dialog_message">Tem certeza de que deseja excluir?</string>
@@ -135,15 +135,22 @@
     <string name="giraffe">Girafa</string>
     <string name="lion">um leão</string>
     <string name="zebra">Zebra</string>
+    <string name="hippo">Нipopótamo</string>
+    <string name="crane">Guindaste</string>
     <string name="your_patronus">Seu patrono </string>
+    <string name="patronum">Expecto patronum</string>
     <string name="lumos">Lumos</string>
     <string name="choose_app">Selecione o aplicativo</string>
     <string name="new_aim">É hora de definir novas metas!</string>
     <string name="helper_dialog_text">Você pode alterar o nome e a imagem da categoria com um toque longo:</string>
     <string name="move_tasks">Você pode trocar tarefas</string>
     <string name="delete_task">Você pode excluir uma tarefa desnecessária:</string>
-    <string name="achievement_app">progresso</string>
+    <string name="achievement_app">Progresso</string>
     <string name="completed">completado</string>
-    <string name="review_on_app">Отзыв на приложение Planner</string>
-    <string name="hello">\"Здраствуйте \"</string>
+    <string name="review_on_app">Feedback sobre o aplicativo Planner</string>
+    <string name="hello">Olá! </string>
+    <string name="write_reviews">Escreva uma crítica</string>
+    <string name="Attaboy">Bem feito </string>
+    <string name="Persistent">Persistente </string>
+    <string name="Overwhelming">Opressor </string>
 </resources>

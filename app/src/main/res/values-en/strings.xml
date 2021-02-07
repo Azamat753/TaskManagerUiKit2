@@ -110,7 +110,7 @@
     <string name="add_password">Set a password</string>
     <string name="qst_not_found">Set a question</string>
     <string name="answer_not_found">Set a answer</string>
-    <string name="create_secrect_word">Create a secret word</string>
+    <string name="create_secret_word">Create a secret word</string>
     <string name="enter_secret_word">Enter the secret word</string>
     <string name="invalid_entered">Invalid data entered</string>
     <string name="attention">Attention!</string>
@@ -144,4 +144,13 @@
     <string name="delete_task">You can delete an unnecessary task:</string>
     <string name="achievement_app">Achievements</string>
     <string name="completed">completed</string>
+    <string name="hippo">hippo</string>
+    <string name="patronum">Expecto patronum</string>
+    <string name="write_reviews">Write a review</string>
+    <string name="review_on_app">Planner app review</string>
+    <string name="hello">Hello! </string>
+    <string name="Attaboy">Attaboy </string>
+    <string name="Persistent">Настойчивый </string>
+    <string name="Overwhelming">Overwhelming </string>
+    <string name="crane">Crane</string>
 </resources>
