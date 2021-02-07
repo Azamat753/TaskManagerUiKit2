@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.PersonalModel;
 import com.lawlett.taskmanageruikit.tasksPage.personalTask.recyclerview.PersonalAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -27,6 +28,7 @@ import com.lawlett.taskmanageruikit.utils.PersonDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener {
@@ -228,10 +230,17 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
     private void setLevel(int size) {
         if (size < 26) {
             if (size % 5 == 0) {
-                String level = "Молодец " + size / 5;
+                int lvl = size / 5;
+                String level = "Молодец " + lvl;
+                addToLocalDate(lvl,level);
                 showDialogLevel(level);
             }
         }
+    }
+
+    private void addToLocalDate(int id,String level){
+        LevelModel levelModel = new LevelModel(id,new Date(System.currentTimeMillis()),level);
+        App.getDataBase().levelDao().insert(levelModel);
     }
 
     private void showDialogLevel(String l) {

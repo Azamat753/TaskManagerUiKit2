@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
 import com.lawlett.taskmanageruikit.utils.App;
@@ -28,6 +29,7 @@ import com.lawlett.taskmanageruikit.utils.MeetDoneSizePreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMCheckedListener {
@@ -215,10 +217,17 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
     private void setLevel(int size) {
         if (size < 26) {
             if (size % 5 == 0) {
-                String level = "Молодец " + size / 5;
+                int lvl = size / 5;
+                String level = "Молодец " + lvl;
+                addToLocalDate(lvl,level);
                 showDialogLevel(level);
             }
         }
+    }
+
+    private void addToLocalDate(int id,String level){
+        LevelModel levelModel = new LevelModel(id,new Date(System.currentTimeMillis()),level);
+        App.getDataBase().levelDao().insert(levelModel);
     }
 
     private void showDialogLevel(String l) {
