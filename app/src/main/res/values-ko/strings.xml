@@ -149,8 +149,10 @@
     <string name="create_secret_word">비밀 단어 만들기</string>
     <string name="enter_secret_word">비밀 단어를 입력</string>
     <string name="write_reviews">리뷰를 작성</string>
-    <string name="Attaboy">잘 했어 </string>
+    <string name="attaboy">잘 했어 </string>
     <string name="Persistent">지속성 있는 </string>
     <string name="Overwhelming">압도적 </string>
     <string name="crane">두루미</string>
+    <string name="important_message">중요한 메시지!</string>
+    <string name="you_got">당신은 제목을 얻었다: </string>
 </resources>

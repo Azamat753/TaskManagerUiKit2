@@ -43,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener,ActionForDialog {
+public class PersonalActivity extends AppCompatActivity implements PersonalAdapter.ICheckedListener, ActionForDialog {
     EditText editText;
     PersonalAdapter adapter;
     PersonalModel personalModel;
@@ -219,6 +219,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                     knopka = false;
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -268,10 +269,10 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
 
     public void changeView() {
         TextView toolbar = findViewById(R.id.toolbar_title);
-        if(TaskDialogPreference.getPersonTitle().isEmpty()){
+        if (TaskDialogPreference.getPersonTitle().isEmpty()) {
             toolbar.setText(R.string.personal);
-        }else{
-        toolbar.setText(TaskDialogPreference.getPersonTitle());
+        } else {
+            toolbar.setText(TaskDialogPreference.getPersonTitle());
         }
     }
 
@@ -294,7 +295,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         incrementAllDone();
     }
 
-    private void incrementAllDone(){
+    private void incrementAllDone() {
         int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
         DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
@@ -305,29 +306,44 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         int updateSize = currentSize - 1;
         if (updateSize >= 0) {
             DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
-        }    }
+        }
+    }
 
     private void setLevel(int size) {
         if (size < 26) {
             if (size % 5 == 0) {
                 int lvl = size / 5;
-                String level = "Молодец " + lvl;
-                addToLocalDate(lvl,level);
+                String level = getString(R.string.attaboy) + lvl;
+                addToLocalDate(lvl, level);
+                showDialogLevel(level);
+            }
+        } else if (size > 26 && size < 51) {
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Persistent) + lev;
+                addToLocalDate(lev, level);
+                showDialogLevel(level);
+            }
+        } else if (size > 51 && size < 76) {
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Overwhelming) + lev;
+                addToLocalDate(lev, level);
                 showDialogLevel(level);
             }
         }
     }
 
-    private void addToLocalDate(int id,String level){
-        LevelModel levelModel = new LevelModel(id,new Date(System.currentTimeMillis()),level);
+    private void addToLocalDate(int id, String level) {
+        LevelModel levelModel = new LevelModel(id, new Date(System.currentTimeMillis()), level);
         App.getDataBase().levelDao().insert(levelModel);
     }
 
     private void showDialogLevel(String l) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Важное сообщение!")
-                .setMessage("Вы получили звание: " + l)
-                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.important_message))
+                .setMessage(getString(R.string.you_got) + l)
+                .setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Закрываем окно
                         dialog.cancel();
@@ -349,6 +365,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         App.getDataBase().personalDao().deleteAll(list);
         PersonDoneSizePreference.getInstance(PersonalActivity.this).clearSettings();
     }
+
     public void micPersonalTask(View view) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,

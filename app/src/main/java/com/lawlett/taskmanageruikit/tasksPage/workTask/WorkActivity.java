@@ -202,13 +202,11 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
-//                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.INVISIBLE);
                     imageAdd.setVisibility(View.VISIBLE);
                     knopka = true;
                 }
                 if (editText.getText().toString().isEmpty() && knopka) {
-//                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.INVISIBLE);
                     imageMic.setVisibility(View.VISIBLE);
                     knopka = false;
@@ -249,7 +247,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
 
     public void recordDataRoom() {
         if (editText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Пусто", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.empty), Toast.LENGTH_SHORT).show();
         } else {
             workModel = new WorkModel(editText.getText().toString().trim(), false);
             App.getDataBase().workDao().insert(workModel);
@@ -284,7 +282,7 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
         if (size < 26) {
             if (size % 5 == 0) {
                 int lvl = size / 5;
-                String level = getString(R.string.Attaboy) + lvl;
+                String level = getString(R.string.attaboy) + lvl;
                 addToLocalDate(lvl, level);
                 showDialogLevel(level);
             }
@@ -312,9 +310,9 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
 
     private void showDialogLevel(String l) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Важное сообщение!")
-                .setMessage("Вы получили звание: " + l)
-                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.important_message))
+                .setMessage(getString(R.string.you_got) + l)
+                .setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Закрываем окно
                         dialog.cancel();

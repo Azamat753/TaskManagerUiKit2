@@ -149,8 +149,10 @@
     <string name="completed">бүттү</string>
     <string name="review_on_app">Рlanner Өтүнмө боюнча кайтарым байланыш</string>
     <string name="hello">Салам!  </string>
-    <string name="Attaboy">Азамат </string>
+    <string name="attaboy">Азамат </string>
     <string name="Persistent">Туруктуу </string>
     <string name="Overwhelming">Жеңүүчү </string>
     <string name="write_reviews">Пикир жазуу</string>
+    <string name="important_message">Маанилүү билдирүү!</string>
+    <string name="you_got">Сиз наамды алдыңыз: </string>
 </resources>

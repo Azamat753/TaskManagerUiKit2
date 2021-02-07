@@ -149,8 +149,10 @@
     <string name="write_reviews">Write a review</string>
     <string name="review_on_app">Planner app review</string>
     <string name="hello">Hello! </string>
-    <string name="Attaboy">Attaboy </string>
+    <string name="attaboy">Attaboy </string>
     <string name="Persistent">Настойчивый </string>
     <string name="Overwhelming">Overwhelming </string>
     <string name="crane">Crane</string>
+    <string name="important_message">Important message!</string>
+    <string name="you_got">You got the rank \"</string>
 </resources>

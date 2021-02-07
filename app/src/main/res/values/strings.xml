@@ -146,10 +146,12 @@
     <string name="write_reviews">Написать отзыв</string>
     <string name="review_on_app">Отзыв на приложение Planner</string>
     <string name="hello">Здравствуйте </string>
-    <string name="Attaboy">Молодец </string>
+    <string name="attaboy">Молодец </string>
     <string name="Persistent">Настойчивый </string>
     <string name="Overwhelming">Преодолеватель </string>
     <string name="crane">Журавль</string>
     <string name="hippo">Бегемот</string>
     <string name="patronum">Экспекто патронум</string>
+    <string name="important_message">Важное сообщение!</string>
+    <string name="you_got">\"You got the title: \"</string>
 </resources>

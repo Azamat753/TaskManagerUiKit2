@@ -207,13 +207,11 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
-//                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.INVISIBLE);
                     imageAdd.setVisibility(View.VISIBLE);
                     knopka = true;
                 }
                 if (editText.getText().toString().isEmpty() && knopka) {
-//                    imageMic.startAnimation(animationAlpha);
                     imageAdd.setVisibility(View.INVISIBLE);
                     imageMic.setVisibility(View.VISIBLE);
                     knopka = false;
@@ -294,13 +292,26 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         if (size < 26) {
             if (size % 5 == 0) {
                 int lvl = size / 5;
-                String level = "Молодец " + lvl;
-                addToLocalDate(lvl,level);
+                String level = getString(R.string.attaboy) + lvl;
+                addToLocalDate(lvl, level);
+                showDialogLevel(level);
+            }
+        } else if (size > 26 && size < 51) {
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Persistent) + lev;
+                addToLocalDate(lev, level);
+                showDialogLevel(level);
+            }
+        }else if (size>51 &&size <76){
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Overwhelming) + lev;
+                addToLocalDate(lev, level);
                 showDialogLevel(level);
             }
         }
     }
-
     private void addToLocalDate(int id,String level){
         LevelModel levelModel = new LevelModel(id,new Date(System.currentTimeMillis()),level);
         App.getDataBase().levelDao().insert(levelModel);
@@ -308,9 +319,9 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
 
     private void showDialogLevel(String l) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Важное сообщение!")
-                .setMessage("Вы получили звание: " + l)
-                .setPositiveButton("ОК", new DialogInterface.OnClickListener() {
+        builder.setTitle(getString(R.string.important_message))
+                .setMessage(getString(R.string.you_got) + l)
+                .setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Закрываем окно
                         dialog.cancel();

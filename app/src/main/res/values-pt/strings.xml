@@ -150,7 +150,9 @@
     <string name="review_on_app">Feedback sobre o aplicativo Planner</string>
     <string name="hello">Olá! </string>
     <string name="write_reviews">Escreva uma crítica</string>
-    <string name="Attaboy">Bem feito </string>
+    <string name="attaboy">Bem feito </string>
     <string name="Persistent">Persistente </string>
     <string name="Overwhelming">Opressor </string>
+    <string name="important_message">Mensagem importante!</string>
+    <string name="you_got">Você tem o título: </string>
 </resources>

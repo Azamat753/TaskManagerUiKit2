@@ -147,10 +147,12 @@
     <string name="write_reviews">Написати відгук</string>
     <string name="review_on_app">Відгук на додаток Planner</string>
     <string name="hello">Вітаємо </string>
-    <string name="Attaboy">Молодець </string>
+    <string name="attaboy">Молодець </string>
     <string name="Persistent">Наполегливий </string>
     <string name="Overwhelming">Преодолеватель </string>
     <string name="crane">Журавель</string>
     <string name="hippo">Бегемот</string>
     <string name="patronum">Экспекто патронум</string>
+    <string name="important_message">Mensagem importante!</string>
+    <string name="you_got">Você tem o título: </string>
 </resources>

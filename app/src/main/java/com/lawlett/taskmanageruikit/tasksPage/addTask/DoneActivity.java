@@ -22,16 +22,19 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lawlett.taskmanageruikit.R;
+import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.tasksPage.addTask.adapter.DoneAdapter;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.DoneModel;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.AddDoneSizePreference;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
+import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
 import com.lawlett.taskmanageruikit.utils.TaskDialogPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,7 +44,7 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
     DoneModel doneModel;
     EditText editText;
     int pos, previousData, currentData, updateData;
-    ImageView doneBack, addTask,imageMic;
+    ImageView doneBack, addTask, imageMic;
     private static final int REQUEST_CODE_SPEECH_INPUT = 22;
     boolean knopka = false;
 
@@ -70,7 +73,7 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
 
         editText = findViewById(R.id.editText_done);
         addTask = findViewById(R.id.add_task_done);
-        imageMic=findViewById(R.id.mic_task_done);
+        imageMic = findViewById(R.id.mic_task_done);
         editListener();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -192,13 +195,21 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
     private void incrementDone() {
         previousData = AddDoneSizePreference.getInstance(this).getDataSize();
         AddDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
+        incrementAllDone();
+    }
 
+    private void incrementAllDone() {
+        int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
+        setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
     private void decrementDone() {
-        currentData = AddDoneSizePreference.getInstance(this).getDataSize();
-        updateData = currentData - 1;
-        AddDoneSizePreference.getInstance(this).saveDataSize(updateData);
+        int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        int updateSize = currentSize - 1;
+        if (updateSize >= 0) {
+            DoneTasksPreferences.getInstance(this).saveDataSize(updateSize);
+        }
     }
 
     @Override
@@ -216,13 +227,11 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence != null && !knopka && !editText.getText().toString().trim().isEmpty()) {
-//                    imageAdd.startAnimation(animationAlpha);
                     imageMic.setVisibility(View.INVISIBLE);
                     addTask.setVisibility(View.VISIBLE);
                     knopka = true;
                 }
                 if (editText.getText().toString().isEmpty() && knopka) {
-//                    imageMic.startAnimation(animationAlpha);
                     addTask.setVisibility(View.INVISIBLE);
                     imageMic.setVisibility(View.VISIBLE);
                     knopka = false;
@@ -248,6 +257,7 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
             Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -257,5 +267,49 @@ public class DoneActivity extends AppCompatActivity implements DoneAdapter.IMChe
             assert result != null;
             editText.setText(editText.getText() + " " + result.get(0));
         }
+    }
+
+    private void setLevel(int size) {
+        if (size < 26) {
+            if (size % 5 == 0) {
+                int lvl = size / 5;
+                String level = getString(R.string.attaboy) + lvl;
+                addToLocalDate(lvl, level);
+                showDialogLevel(level);
+            }
+        } else if (size > 26 && size < 51) {
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Persistent) + lev;
+                addToLocalDate(lev, level);
+                showDialogLevel(level);
+            }
+        } else if (size > 51 && size < 76) {
+            if (size % 5 == 0) {
+                int lev = size / 5;
+                String level = getString(R.string.Overwhelming) + lev;
+                addToLocalDate(lev, level);
+                showDialogLevel(level);
+            }
+        }
+    }
+
+    private void addToLocalDate(int id, String level) {
+        LevelModel levelModel = new LevelModel(id, new Date(System.currentTimeMillis()), level);
+        App.getDataBase().levelDao().insert(levelModel);
+    }
+
+    private void showDialogLevel(String l) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.important_message))
+                .setMessage(getString(R.string.you_got) + l)
+                .setPositiveButton(getString(R.string.apply), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Закрываем окно
+                        dialog.cancel();
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 }
