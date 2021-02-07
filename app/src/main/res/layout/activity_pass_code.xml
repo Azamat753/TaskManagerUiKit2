@@ -29,46 +29,46 @@
         tools:ignore="MissingConstraints">
 
 
-        <TextView
-            android:id="@+id/text_create_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/create_question"
-            android:textColor="@color/myWhite"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/text_create_question"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/create_question"-->
+<!--            android:textColor="@color/myWhite"-->
+<!--            android:textSize="30sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            />-->
 
-        <EditText
-            android:id="@+id/edit_question_create"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:hint="@string/qst_example"
-            android:textColorHint="@color/hint_color"
-            android:background="@drawable/edittext_background"
-            android:textAlignment="center"
-            android:textColor="@color/myWhite"
-            android:layout_marginTop="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_create_question"
-            />
+<!--        <EditText-->
+<!--            android:id="@+id/edit_question_create"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:hint="@string/qst_example"-->
+<!--            android:textColorHint="@color/hint_color"-->
+<!--            android:background="@drawable/edittext_background"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/myWhite"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/text_create_question"-->
+<!--            />-->
 
         <TextView
             android:id="@+id/text_create_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_question_answer"
+            android:text="@string/create_secrect_word"
+            android:gravity="center_horizontal"
             android:textColor="@color/myWhite"
             android:textSize="30sp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_question_create"
             />
 
         <EditText

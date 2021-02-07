@@ -111,6 +111,8 @@
     <string name="qst_not_found">Digite sua pergunta</string>
     <string name="invalid_entered">Dados inválidos inseridos</string>
     <string name="answer_not_found">Digite sua resposta</string>
+    <string name="create_secrect_word">Crie uma palavra secreta</string>
+    <string name="enter_secret_word">Digite a palavra secreta</string>
     <string name="attention">Atenção!</string>
     <string name="task_dialog_message">Tem certeza de que deseja excluir?</string>
     <string name="Cancel">Cancelamento</string>
