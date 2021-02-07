@@ -216,8 +216,9 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         incrementAllDone();
     }
 
-    private void incrementAllDone() {
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousPersonalDone + 1);
+    private void incrementAllDone(){
+        int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 

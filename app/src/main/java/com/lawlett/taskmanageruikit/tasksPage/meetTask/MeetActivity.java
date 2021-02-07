@@ -245,7 +245,8 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
     }
 
     private void incrementAllDone(){
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 

@@ -243,7 +243,8 @@ public class WorkActivity extends AppCompatActivity implements WorkAdapter.IWChe
     }
 
     private void incrementAllDone(){
-        DoneTasksPreferences.getInstance(this).saveDataSize(previousData + 1);
+        int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
