@@ -31,6 +31,7 @@ import com.lawlett.taskmanageruikit.achievement.models.LevelModel;
 import com.lawlett.taskmanageruikit.tasksPage.data.model.MeetModel;
 import com.lawlett.taskmanageruikit.tasksPage.meetTask.recyclerview.MeetAdapter;
 import com.lawlett.taskmanageruikit.utils.ActionForDialog;
+import com.lawlett.taskmanageruikit.utils.ActionForDialog;
 import com.lawlett.taskmanageruikit.utils.App;
 import com.lawlett.taskmanageruikit.utils.DialogHelper;
 import com.lawlett.taskmanageruikit.utils.DoneTasksPreferences;
@@ -164,11 +165,11 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
                 final int DIRECTION_RIGHT = 1;
                 final int DIRECTION_LEFT = 0;
 
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive) {
-                    int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
-                    int absoluteDisplacement = Math.abs((int) dX);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && isCurrentlyActive){
+                    int direction = dX > 0? DIRECTION_RIGHT : DIRECTION_LEFT;
+                    int absoluteDisplacement = Math.abs((int)dX);
 
-                    switch (direction) {
+                    switch (direction){
 
                         case DIRECTION_RIGHT:
 
@@ -320,13 +321,13 @@ public class MeetActivity extends AppCompatActivity implements MeetAdapter.IMChe
         builder.show();
     }
 
-    private void incrementAllDone() {
-        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
-        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
+    private void incrementAllDone(){
+        int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
-    private void decrementAllDone() {
+    private void decrementAllDone(){
         int currentSize = DoneTasksPreferences.getInstance(this).getDataSize();
         int updateSize = currentSize - 1;
         if (updateSize >= 0) {

@@ -120,6 +120,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                 }
                 adapter.notifyItemMoved(fromPosition, toPosition);
                 return true;
+
             }
 
             @Override
@@ -153,7 +154,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                             }
                         }).show();
                 adapter.notifyDataSetChanged();
-                }
+            }
 
             @SuppressLint("ResourceAsColor")
             @Override
@@ -166,7 +167,7 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
                     int direction = dX > 0 ? DIRECTION_RIGHT : DIRECTION_LEFT;
                     int absoluteDisplacement = Math.abs((int) dX);
 
-                    switch (direction){
+                    switch (direction) {
 
                         case DIRECTION_RIGHT:
 
@@ -293,9 +294,9 @@ public class PersonalActivity extends AppCompatActivity implements PersonalAdapt
         incrementAllDone();
     }
 
-    private void incrementAllDone() {
-        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
-        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
+    private void incrementAllDone(){
+        int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 

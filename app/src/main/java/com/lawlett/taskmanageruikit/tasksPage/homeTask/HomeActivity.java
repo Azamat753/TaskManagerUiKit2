@@ -285,8 +285,8 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
     }
 
     private void incrementAllDone(){
-        int currentSize1 = DoneTasksPreferences.getInstance(this).getDataSize();
-        DoneTasksPreferences.getInstance(this).saveDataSize(currentSize1 + 1);
+        int previousSize = DoneTasksPreferences.getInstance(this).getDataSize();
+        DoneTasksPreferences.getInstance(this).saveDataSize(previousSize + 1);
         setLevel(DoneTasksPreferences.getInstance(this).getDataSize());
     }
 
@@ -302,7 +302,6 @@ public class HomeActivity extends AppCompatActivity implements HomeAdapter.IHChe
         HomeDoneSizePreference.getInstance(this).saveDataSize(previousData + 1);
         incrementAllDone();
     }
-
     private void decrementDone() {
         currentData = HomeDoneSizePreference.getInstance(this).getDataSize();
         updateData = currentData - 1;

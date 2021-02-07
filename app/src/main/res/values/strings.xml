@@ -103,6 +103,7 @@
     <string name="to_delete">Удалить</string>
     <string name="color_dont_choosed">Цвет не выбран</string>
     <string name="share_app">Поделиться</string>
+    <string name="achievement_app">Достижения</string>
     <string name="add_title">Введите текст</string>
     <string name="add_icon">Выберите картинку: </string>
     <string name="answer_qst">Ответьте на вопрос</string>
@@ -141,7 +142,6 @@
     <string name="helper_dialog_text">Вы можете поменять название и картинку категории на долгое нажатие:</string>
     <string name="move_tasks">Вы можете поменять задачи местами</string>
     <string name="delete_task">Вы можете удалить ненужную задачу:</string>
-    <string name="achievement_app">достижения</string>
     <string name="completed">выполненных</string>
     <string name="write_reviews">Написать отзыв</string>
     <string name="review_on_app">Отзыв на приложение Planner</string>
