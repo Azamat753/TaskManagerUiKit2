@@ -9,9 +9,7 @@
     <TextView
         android:id="@+id/item_help_title"
         android:text="@string/helper_dialog_text"
-        android:textSize="20sp"
-        android:textColor="@color/myWhite"
-        android:padding="10dp"
+        style="@style/helpText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

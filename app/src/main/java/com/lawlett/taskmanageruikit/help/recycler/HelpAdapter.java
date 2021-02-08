@@ -58,12 +58,6 @@ public class HelpAdapter extends RecyclerView.Adapter<HelpAdapter.HelpViewHolder
             super(itemView);
             helpTitle = itemView.findViewById(R.id.item_help_title);
             itemHelp = itemView.findViewById(R.id.item_help_recycler);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    onItemClickListener.onItemClick(getAdapterPosition());
-//                }
-//            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

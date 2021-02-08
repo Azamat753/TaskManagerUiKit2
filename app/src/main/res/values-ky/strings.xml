@@ -123,4 +123,12 @@
     <string name="completed">выполненных</string>
     <string name="done">Done</string>
     <string name="help_bubble">Нажмите чтобы увидеть подсказки</string>
+    <string name="timer_text">Вы можете использовать таймер</string>
+    <string name="stopwatch_text">Вы можете использовать секундомер</string>
+    <string name="dialog_title">Смена картинки и названия</string>
+    <string name="move_title">Смена положения задачи</string>
+    <string name="delete_title">Удаление задачи</string>
+    <string name="timer_title">Таймер</string>
+    <string name="stopwatch_title">Секундомер</string>
+    <string name="intro">Интро</string>
 </resources>

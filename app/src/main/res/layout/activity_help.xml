@@ -6,14 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".help.HelpActivity">
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/helpRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_help_recycler"/>
-
-
-
 
 </LinearLayout>
