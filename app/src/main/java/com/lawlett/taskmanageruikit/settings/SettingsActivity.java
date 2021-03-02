@@ -28,6 +28,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.lawlett.taskmanageruikit.R;
 import com.lawlett.taskmanageruikit.achievement.AchievementActivity;
+import com.lawlett.taskmanageruikit.sign.SignInActivity;
 import com.lawlett.taskmanageruikit.splash.SplashActivity;
 import com.lawlett.taskmanageruikit.utils.LanguagePreference;
 import com.lawlett.taskmanageruikit.utils.PassCodeActivity;
@@ -42,7 +43,7 @@ import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout, achievement_layout,reviews;
+    LinearLayout language_tv, clear_password_layout, clearMinutes_layout, share_layout, achievement_layout,reviews,googleSignIn;
     ImageView magick;
     ListView listView;
     public static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
@@ -64,6 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
         share_layout = findViewById(R.id.five_layout);
         imageSettings = findViewById(R.id.image_settings);
         reviews=findViewById(R.id.six_layout);
+        googleSignIn=findViewById(R.id.seven_layout);
 
         achievement_layout = findViewById(R.id.achievement_layout);
         magick = findViewById(R.id.btn_magick);
@@ -202,6 +204,8 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(mailIntent, "Send mail..."));
             }
         });
+
+        googleSignIn.setOnClickListener(v -> startActivity(new Intent(SettingsActivity.this, SignInActivity.class)));
 
     }
 
